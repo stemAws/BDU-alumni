@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
 const userRoutes = require('./src/routes/user-routes');
+const adminRoutes = require('./src/routes/admin-routes')
 
 app.use(express.json());
 
 app.use('/', userRoutes);
+app.use('/', adminRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
