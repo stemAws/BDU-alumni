@@ -1,4 +1,4 @@
-const alumniService = require("../services/userService");
+const alumniService = require("../services/user-services");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const firebaseConfig = require("../config/firebaseConfig");
@@ -17,7 +17,7 @@ firebsae.initializeApp(firebaseConfig);
 const storage = getStorage();
 
 
-async function getAllAlumni(req, res) {
+exports.getAllAlumni = async function (req, res) {
   try {
     const alumni = await alumniService.getAllAlumni();
     res.json(alumni);
@@ -27,7 +27,7 @@ async function getAllAlumni(req, res) {
   }
 }
 
-async function addAlumni(req, res) {
+exports.addAlumni = async function (req, res) {
   try {
     const affectedRows = await alumniService.addAlumni(req.body);
     res.status(201).json({ message: "Alumni added successfully", affectedRows });
@@ -37,7 +37,7 @@ async function addAlumni(req, res) {
   }
 }
 
-async function getAlumniProfile(req, res) {
+exports.getAlumniProfile = async function (req, res) {
   try {
     const token = req.params.id;
     console.log("Received token:", token);
@@ -50,7 +50,7 @@ async function getAlumniProfile(req, res) {
   }
 }
 
-async function alumniSignIn(req, res) {
+exports.alumniSignIn = async function (req, res) {
   try {
     const { username, password } = req.body;
     const authenticationResult = await alumniService.authenticateUser(
@@ -79,7 +79,7 @@ async function alumniSignIn(req, res) {
   }
 }
 
-async function adminSignIn(req, res) {
+exports.adminSignIn = async function (req, res) {
   try {
     const { username, password } = req.body;
     const authenticationResult = await alumniService.authenticateAdmin(
@@ -103,7 +103,7 @@ async function adminSignIn(req, res) {
   }
 }
 
-async function uploadProfilePicture(req, res) {
+exports.uploadProfilePicture = async function (req, res) {
     const file = req.file;
 
     if (!file) {
@@ -152,7 +152,7 @@ async function uploadProfilePicture(req, res) {
     }
 }
 
-async function uploadCoverPicture(req, res) {
+exports.uploadCoverPicture = async function (req, res) {
     const file = req.file;
 
     if (!file) {
@@ -202,7 +202,7 @@ async function uploadCoverPicture(req, res) {
     }
 }
 
-async function getProfilePicture(req, res) {
+exports.getProfilePicture = async function (req, res) {
     const idOrUsername = req.params.idOrUsername;
 
     try {
@@ -227,7 +227,7 @@ async function getProfilePicture(req, res) {
     }
 }
 
-async function getCoverPicture(req, res) {
+exports.getCoverPicture = async function (req, res) {
     const idOrUsername = req.params.idOrUsername;
 
     try {
@@ -252,7 +252,7 @@ async function getCoverPicture(req, res) {
     }
 }
 
-async function getAlumniByUsername(req, res) {
+exports.getAlumniByUsername = async function (req, res) {
     const username = req.params.username;
 
     try {
@@ -264,7 +264,7 @@ async function getAlumniByUsername(req, res) {
     }
 }
 
-async function updateAlumni(req, res) {
+exports.updateAlumni = async function (req, res) {
     try {
         const alumniID = req.params.id;
         const updateData = req.body;
@@ -284,7 +284,7 @@ async function updateAlumni(req, res) {
       }
 }
 
-async function checkUsernameAvailability(req, res) {
+exports.checkUsernameAvailability = async function (req, res) {
     try {
         const { username } = req.body;
         const alumniID = req.params.alumniID || null;
@@ -301,7 +301,7 @@ async function checkUsernameAvailability(req, res) {
       }
 }
 
-async function checkEmailAvailability(req, res) {
+exports.checkEmailAvailability = async function (req, res) {
     try {
         const { email } = req.body;
         const alumniID = req.params.alumniID || null;
@@ -315,7 +315,7 @@ async function checkEmailAvailability(req, res) {
       }
 }
 
-async function checkPassword(req, res) {
+exports.checkPassword = async function (req, res) {
     try {
         let { oldPassword } = req.body;
         const alumniID = req.params.alumniID;
@@ -332,7 +332,7 @@ async function checkPassword(req, res) {
       }
 }
 
-async function changePassword(req, res) {
+exports.changePassword = async function (req, res) {
     try {
         const { newPassword } = req.body;
         const alumniID = req.params.alumniID;
@@ -353,7 +353,7 @@ async function changePassword(req, res) {
       }
 }
 
-async function getNotableAlumni(req, res) {
+exports.getNotableAlumni = async function (req, res) {
     try {
         const alumniData = await alumniService.getNotable();
         res.json(alumniData);
@@ -363,7 +363,7 @@ async function getNotableAlumni(req, res) {
       }
 }
 
-async function updateNotable(req, res) {
+exports.updateNotable = async function (req, res) {
     try {
         const { isNotable } = req.body;
         const alumniID = req.params.alumniID;
@@ -381,7 +381,7 @@ async function updateNotable(req, res) {
       }
 }
 
-async function resetPassword(req, res) {
+exports.resetPassword = async function (req, res) {
     try {
         const { email } = req.body;
     
@@ -395,24 +395,3 @@ async function resetPassword(req, res) {
         res.status(500).json({ error: 'An error occurred while resetting password and sending email.' });
       }
 }
-
-module.exports = {
-  getAllAlumni,
-  addAlumni,
-  getAlumniProfile,
-  alumniSignIn,
-  adminSignIn,
-  uploadProfilePicture,
-  uploadCoverPicture,
-  getProfilePicture,
-  getCoverPicture,
-  getAlumniByUsername,
-  updateAlumni,
-  checkUsernameAvailability,
-  checkEmailAvailability,
-  checkPassword,
-  changePassword,
-  getNotableAlumni,
-  updateNotable,
-  resetPassword,
-};
