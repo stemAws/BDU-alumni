@@ -1,5 +1,5 @@
 // Import the database module
-const db = require("../db");
+const db = require("../models/db");
 
 const addEvent = async (
   title,

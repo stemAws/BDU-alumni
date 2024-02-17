@@ -1,5 +1,5 @@
 // Import the database module
-const db = require('../db');
+const db = require('../models/db');
 
 // Add feedback to the feedback table
 const addFeedback = async (fullName, email, message) => {

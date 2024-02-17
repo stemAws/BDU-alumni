@@ -1,5 +1,5 @@
 // Import the database module
-const db = require("../db");
+const db = require("../models/db");
 
 // Create a new gallery entry in the gallery table
 const createGallery = async ({ images, event, year }) => {

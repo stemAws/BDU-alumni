@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const galleryController = require("../controllers/galleryController");
+const galleryController = require("../controllers/media-controller");
 
 const router = express.Router();
 

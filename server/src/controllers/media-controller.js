@@ -6,7 +6,7 @@ const {
   uploadBytes,
   getDownloadURL,
 } = require("firebase/storage");
-const firebaseConfig = require("../firebaseConfig");
+const firebaseConfig = require("../config/firebaseConfig");
 const firebase = require("firebase/app");
 
 firebase.initializeApp(firebaseConfig);

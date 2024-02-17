@@ -2,7 +2,7 @@ const eventsService = require('../services/event-services');
 const path = require("path");
 
 const { getStorage, ref, uploadBytes, getDownloadURL } = require("firebase/storage");
-const firebaseConfig = require("../firebaseConfig");
+const firebaseConfig = require("../config/firebaseConfig");
 const firebsae = require("firebase/app");
 firebsae.initializeApp(firebaseConfig);
 const storage = getStorage();
