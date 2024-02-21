@@ -1,7 +1,8 @@
 const eventsService = require('../services/event-services');
 const path = require("path");
+const sharp = require('sharp');
 
-const { getStorage, ref, uploadBytes, getDownloadURL } = require("firebase/storage");
+const { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } = require("firebase/storage");
 const firebaseConfig = require("../config/firebaseConfig");
 const firebsae = require("firebase/app");
 firebsae.initializeApp(firebaseConfig);
@@ -15,7 +16,9 @@ exports.createAdminEvent = async (req, res) => {
 
     if (req.file) {
       const fileRef = ref(storage, imagePath);
-      await uploadBytes(fileRef, req.file.buffer);
+      resizedFile = await sharp(req.file.buffer).jpeg({ quality: 50 }).toBuffer()
+
+      await uploadBytes(fileRef, resizedFile);
       downloadURL = await getDownloadURL(fileRef);
     }
 
@@ -68,6 +71,17 @@ exports.updateAdminEventById = async (req, res) => {
 
 exports.deleteAdminEventById = async (req, res) => {
   try {
+    let eventImage = await eventsService.getEventById(req.params.id);
+    eventImage = eventImage.imagePath;
+
+    const eventRef = ref(storage, eventImage);
+        try {
+          await deleteObject(eventRef);
+          console.log("deleted successfully");
+        } catch (deleteError) {
+          console.error("Error deleting", deleteError);
+        }
+
     const affectedRows = await eventsService.deleteEvent(req.params.id);
     if (affectedRows === 0) res.status(404).json("No record by the given id");
     else res.send("Event deleted.");
