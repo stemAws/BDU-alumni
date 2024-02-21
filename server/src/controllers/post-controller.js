@@ -1,11 +1,13 @@
 const postService = require("../services/post-services");
 const path = require("path");
+const sharp = require('sharp');
 
 const {
   getStorage,
   ref,
   uploadBytes,
   getDownloadURL,
+  deleteObject,
 } = require("firebase/storage");
 const firebaseConfig = require("../config/firebaseConfig");
 const firebase = require("firebase/app");
@@ -27,7 +29,9 @@ exports.createPost = async (req, res) => {
       )}`;
       const fileRef = ref(storage, filePath);
 
-      await uploadBytes(fileRef, req.file.buffer);
+      const resizedFile = await sharp(req.file.buffer).jpeg({ quality: 40 }).toBuffer()
+
+      await uploadBytes(fileRef, resizedFile);
       downloadURL = await getDownloadURL(fileRef);
     }
 
@@ -93,7 +97,7 @@ exports.getPostsByUsernameOrId = async (req, res) => {
     if (isNaN(idOrUsername)) {
       post = await postService.getPostsByUsername(idOrUsername);
     } else {
-      post = await postService.getPostById(idOrUsername);
+      post = await postService.getPostByAlumniId(idOrUsername);
     }
 
     if (!post) {
@@ -113,6 +117,15 @@ exports.deletePost = async (req, res) => {
   try {
     const { id } = req.params;
 
+    const post = await postService.getPostImage(id);
+
+    const currentProfilePhotoRef = ref(storage, post.image);
+        try {
+          await deleteObject(currentProfilePhotoRef);
+          console.log("photo deleted successfully");
+        } catch (deleteError) {
+          console.error("Error deleting post photo:", deleteError);
+        }
     const affectedRows = await postService.deletePost(id);
 
     if (affectedRows === 0) {

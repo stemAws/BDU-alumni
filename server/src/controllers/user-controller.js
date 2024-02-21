@@ -1,6 +1,7 @@
 const alumniService = require("../services/user-services");
 const jwt = require("jsonwebtoken");
 const path = require("path");
+const sharp = require('sharp');
 const firebaseConfig = require("../config/firebaseConfig");
 require('dotenv').config();
 
@@ -111,6 +112,8 @@ exports.uploadProfilePicture = async function (req, res) {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
+    const resizedFile = await sharp(file.buffer).jpeg({ quality: 20 }).toBuffer()
+
     const alumniID = req.params.id;
     const filePath = `profilePictures/${alumniID}-${Date.now()}${path.extname(
       file.originalname
@@ -118,7 +121,7 @@ exports.uploadProfilePicture = async function (req, res) {
     const fileRef = ref(storage, filePath);
 
     try {
-      await uploadBytes(fileRef, file.buffer);
+      await uploadBytes(fileRef, resizedFile);
 
       const downloadURL = await getDownloadURL(fileRef);
 
@@ -160,6 +163,8 @@ exports.uploadCoverPicture = async function (req, res) {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
+    const resizedFile = await sharp(file.buffer).jpeg({ quality: 20 }).toBuffer();
+
     const alumniID = req.params.id;
     const filePath = `coverPictures/${alumniID}-${Date.now()}${path.extname(
       file.originalname
@@ -167,7 +172,7 @@ exports.uploadCoverPicture = async function (req, res) {
     const fileRef = ref(storage, filePath);
 
     try {
-      await uploadBytes(fileRef, file.buffer);
+      await uploadBytes(fileRef, resizedFile);
 
       const downloadURL = await getDownloadURL(fileRef);
 

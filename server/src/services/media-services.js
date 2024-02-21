@@ -44,13 +44,11 @@ const deleteGallery = async (galleryID) => {
   }
 };
 
-// Update a gallery entry by galleryID in the gallery table
 const updateGallery = async (galleryID, updatedGallery) => {
   const {
     event,
     year,
-    // , images
-  } = updatedGallery;
+    } = updatedGallery;
 
   try {
     const [result] = await db.query(
@@ -63,7 +61,6 @@ const updateGallery = async (galleryID, updatedGallery) => {
         galleryID = ?
     `,
       [
-        // JSON.stringify(images),
         event,
         year,
         galleryID,
@@ -76,26 +73,10 @@ const updateGallery = async (galleryID, updatedGallery) => {
   }
 };
 
-// Delete a specific image from the images array in the gallery table
-// const deleteGalleryImage = async (galleryID, imageIndex) => {
-//   try {
-//     const [result] = await db.query(
-//       "UPDATE gallery SET images = JSON_REMOVE(images, ?) WHERE galleryID = ?",
-//       [imageIndex, galleryID]
-//     );
-//     return result;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-
-// Export the functions
 module.exports = {
   createGallery,
   getAllGallery,
   getGalleryById,
   deleteGallery,
   updateGallery,
-  // deleteGalleryImage
 };

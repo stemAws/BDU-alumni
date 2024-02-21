@@ -26,9 +26,9 @@ const updateSuggestedByAdmin = async function (postId, updateSuggestByAdmin) {
   return result.affectedRows;
 };
 
-const getPostById =  async function (postId) {
+const getPostByAlumniId =  async function (alumniID) {
   try {
-    const [rows] = await db.query('SELECT * FROM posts WHERE alumniID = ?', [postId]);
+    const [rows] = await db.query('SELECT * FROM posts WHERE alumniID = ?', [alumniID]);
 
     if (rows.length === 0) {
       throw new Error('Post not found');
@@ -102,13 +102,19 @@ const updatePost = async function(postId, updatedPostData) {
   return result.affectedRows;
 }
 
+const getPostImage = async function(postID) {
+  const result = await db.query('SELECT image FROM posts where postId = ?', postID)
+  return result[0][0];
+}
+
 module.exports = {
   createPost,
-  getPostById,
+  getPostByAlumniId,
   getAllPosts,
   getPostsByUsername,
   getAddedStories,
   updateSuggestedByAdmin,
   deletePost,
-  updatePost
+  updatePost,
+  getPostImage
 };
