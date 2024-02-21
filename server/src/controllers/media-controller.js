@@ -1,12 +1,13 @@
+const sharp = require('sharp');
 const galleryService = require("../services/media-services");
-
+const firebaseConfig = require("../config/firebaseConfig");
 const {
   getStorage,
   ref,
   uploadBytes,
   getDownloadURL,
+  deleteObject,
 } = require("firebase/storage");
-const firebaseConfig = require("../config/firebaseConfig");
 const firebase = require("firebase/app");
 
 firebase.initializeApp(firebaseConfig);
@@ -21,9 +22,12 @@ exports.uploadGallery = async (req, res) => {
     const imageUrls = [];
 
     for (const image of images) {
+      const resizedImageBuffer = await sharp(image.buffer).jpeg({ quality: 50 }).toBuffer();
+
       const filePath = `gallery/${Date.now()}-${image.originalname}`;
       const fileRef = ref(storage, filePath);
-      await uploadBytes(fileRef, image.buffer);
+      await uploadBytes(fileRef, resizedImageBuffer);
+
       const downloadURL = await getDownloadURL(fileRef);
       imageUrls.push(downloadURL);
     }
@@ -70,15 +74,27 @@ exports.getGalleryById = async (req, res) => {
 
 exports.deleteGalleryById = async (req, res) => {
   const id = req.params.id;
+  
   try {
-    const photo = await galleryService.deleteGallery(id);
-    if (!photo) {
-      res.status(404).json({ error: "No record found for the given ID" });
-    } else {
-      res.send(photo);
+    const gallery = await galleryService.getGalleryById(id);
+    
+    for (const imageUrl of gallery.images) {
+      try {        
+        const fileRef = ref(storage, imageUrl);
+        
+        await deleteObject(fileRef);
+        console.log("deleted successfully");
+      } catch (error) {
+        console.error("Error deleting image:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
     }
+
+    await galleryService.deleteGallery(id);
+    
+    res.json({ message: "Gallery and associated images deleted successfully" });
   } catch (error) {
-    console.error("Error fetching gallery by ID:", error);
+    console.error("Error deleting gallery:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

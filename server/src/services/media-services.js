@@ -1,7 +1,5 @@
-// Import the database module
 const db = require("../models/db");
 
-// Create a new gallery entry in the gallery table
 const createGallery = async ({ images, event, year }) => {
   try {
     const [result] = await db.query(
@@ -15,19 +13,17 @@ const createGallery = async ({ images, event, year }) => {
   }
 };
 
-// Retrieve a gallery entry by galleryID from the gallery table
 const getGalleryById = async (gID) => {
   try {
     const result = await db.query("SELECT * FROM gallery WHERE galleryID = ?", [
       gID,
     ]);
-    return result[0];
+    return result[0][0];
   } catch (error) {
     throw error;
   }
 };
 
-// Retrieve all gallery entries from the gallery table
 const getAllGallery = async () => {
   try {
     const [result] = await db.query("SELECT * FROM gallery");
@@ -37,7 +33,6 @@ const getAllGallery = async () => {
   }
 };
 
-// Delete a gallery entry by galleryID from the gallery table
 const deleteGallery = async (galleryID) => {
   try {
     const [result] = await db.query("DELETE FROM gallery WHERE galleryID = ?", [
