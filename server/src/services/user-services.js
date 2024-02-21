@@ -224,6 +224,7 @@ const authenticateUser = async (username, password) => {
           "UPDATE alumni SET lastLogin = CURRENT_TIMESTAMP WHERE alumniID = ?",
           [userId]
         );
+                
         return { success: true };
       }
     }

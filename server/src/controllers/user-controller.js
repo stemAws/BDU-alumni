@@ -2,6 +2,7 @@ const alumniService = require("../services/user-services");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const firebaseConfig = require("../config/firebaseConfig");
+require('dotenv').config();
 
 const firebsae = require("firebase/app");
 const {
