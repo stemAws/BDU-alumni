@@ -63,17 +63,17 @@ exports.alumniSignIn = async function (req, res) {
     if (authenticationResult.success) {
       const token = await alumniService.getAlumniID(username);
       const realToken = jwt.sign({ token }, process.env.secretKey, {
-        expiresIn: "1w",
+          expiresIn: "30d",
       });
-
+    
       res.status(200).json({
-        success: true,
-        message: "Authentication successful",
-        token,
-        realToken,
+          success: true,
+          message: "Authentication successful",
+          token,
+          realToken,
       });
     } else {
-      res.status(401).json({ success: false, message: "Authentication failed" });
+        res.status(401).json({ success: false, message: "Authentication failed" });
     }
   } catch (error) {
     console.error("Error during authentication:", error);
