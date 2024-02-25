@@ -286,6 +286,39 @@ CREATE TABLE Donations (
         ON UPDATE CASCADE
 );
 
+CREATE TABLE volunteerOpportunity (
+    opportunityId INT AUTO_INCREMENT PRIMARY KEY,
+    adminId INT,
+    description TEXT,
+    location VARCHAR(255),
+    startDate DATE,
+    endDate DATE,
+    contact VARCHAR(255),
+    categories VARCHAR(20),
+    status VARCHAR(20),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    noOfVolunteersNeeded INT,
+    noOfVolunteersRegistered INT,
+    registeringURL VARCHAR(255),
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE volunteers (
+    volunteerId INT AUTO_INCREMENT PRIMARY KEY,
+    opportunityId INT NOT NULL,
+    alumniId INT NOT NULL,
+    PRIMARY KEY (opportunityId, alumniId),
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId), 
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (opportunityId) REFERENCES volunteerOpportunity(opportunityId)  
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
 
 
 
