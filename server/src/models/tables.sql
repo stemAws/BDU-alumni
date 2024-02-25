@@ -272,6 +272,21 @@ CREATE TABLE chapterMembers (
         ON UPDATE CASCADE
 );
 
+CREATE TABLE Donations (
+    campaignId INT AUTO_INCREMENT PRIMARY KEY,
+    adminId INT,
+    campaignName VARCHAR(255) NOT NULL,
+    description TEXT,
+    link VARCHAR(255),
+    amount DECIMAL(10,2) NOT NULL,
+    createdAt DATETIME NOT NULL,
+    updatedAt DATETIME NOT NULL,
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
 
 
 
