@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const db = require("../config/db");
+=======
+const db = require('../config/db');
+>>>>>>> d0257d685b34a4d7e75c639c4327d16ddee7a0a5
 
 exports.createDonation = async function (title, link, description) {
   try {

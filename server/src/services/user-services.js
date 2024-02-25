@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 const db = require("../config/db"), bcrypt = require("bcrypt"), transporter = require('../config/mailerConfig')
+=======
+const db = require('../config/db');
+const bcrypt = require("bcrypt");
+const transporter = require('../config/mailerConfig')
+>>>>>>> d0257d685b34a4d7e75c639c4327d16ddee7a0a5
 
 exports.getAlumniID = async (username) => {
   const [result] = await db.query(
