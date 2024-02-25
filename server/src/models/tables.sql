@@ -150,3 +150,36 @@ CREATE TABLE Event (
         ON UPDATE CASCADE
 );
 
+CREATE TABLE EventAttendance (
+    eventAttendanceId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    alumniId INT,
+    eventId INT,
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (eventId) REFERENCES Event(eventId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE RSVPStatus (
+    RSVPId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    eventAttendanceId INT,
+    alumniId INT,
+    eventId INT,
+    confirmed BOOLEAN,
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (eventId) REFERENCES Event(eventId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (eventAttendanceId) REFERENCES EventAttendance(eventAttendanceId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
+
+
+
