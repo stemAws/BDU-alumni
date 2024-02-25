@@ -1,17 +1,8 @@
 const db = require('../config/db');
 
-const addEvent = async (
-  title,
-  description,
-  start_date,
-  end_date,
-  organizer,
-  image_path,
-  eventLink
-) => {
+exports.addEvent = async (title, description, start_date, end_date, organizer, image_path, eventLink) => {
   try {
-    let query;
-    let params;
+    let query, params;
 
     if (image_path) {
       query =
@@ -40,14 +31,14 @@ const addEvent = async (
   }
 };
 
-const getAllEvents = async () => {
+exports.getAllEvents = async () => {
   const [events] =
     await db.query(`SELECT *, DATE_FORMAT(startDate, '%Y-%m-%d') AS startDate,
   DATE_FORMAT(endDate, '%Y-%m-%d') AS endDate FROM events`);
   return events;
 };
 
-const getEvents = async () => {
+exports.getEvents = async () => {
   const query = `SELECT eventId, title, 
     DATE_FORMAT(startDate, '%Y-%m-%d') AS startDate,
     DATE_FORMAT(endDate, '%Y-%m-%d') AS endDate,
@@ -56,7 +47,7 @@ const getEvents = async () => {
   return events;
 };
 
-const getEventById = async (eventID) => {
+exports.getEventById = async (eventID) => {
   const [events] = await db.query(
     `SELECT *, DATE_FORMAT(startDate, '%Y-%m-%d') AS startDate,
   DATE_FORMAT(endDate, '%Y-%m-%d') AS endDate FROM events WHERE eventId = ?`,
@@ -65,9 +56,8 @@ const getEventById = async (eventID) => {
   return events.length > 0 ? events[0] : null;
 };
 
-const updateEvent = async (eventId, updatedEvent) => {
-  const { title, description, startDate, endDate, organizer, eventLink } =
-    updatedEvent;
+exports.updateEvent = async (eventId, updatedEvent) => {
+  const { title, description, startDate, endDate, organizer, eventLink } = updatedEvent;
 
   const [result] = await db.query(
     `
@@ -88,7 +78,7 @@ const updateEvent = async (eventId, updatedEvent) => {
   return result.affectedRows;
 };
 
-const deleteEvent = async (eventId) => {
+exports.deleteEvent = async (eventId) => {
   const [result] = await db.query("DELETE FROM events WHERE eventId = ?", [
     eventId,
   ]);
@@ -98,14 +88,4 @@ const deleteEvent = async (eventId) => {
   }
 
   return { success: true, message: "Event deleted successfully" };
-};
-
-// Export the functions
-module.exports = {
-  addEvent,
-  getAllEvents,
-  getEvents,
-  getEventById,
-  updateEvent,
-  deleteEvent,
 };

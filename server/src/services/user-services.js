@@ -2,7 +2,7 @@ const db = require('../config/db');
 const bcrypt = require("bcrypt");
 const transporter = require('../config/mailerConfig')
 
-const getAlumniID = async (username) => {
+exports.getAlumniID = async (username) => {
   const [result] = await db.query(
     "SELECT alumniID FROM alumni WHERE username = ?",
     [username]
@@ -12,7 +12,7 @@ const getAlumniID = async (username) => {
   return alumniID;
 };
 
-const getAlumni = async (username) => {
+exports.getAlumni = async (username) => {
   const [result] = await db.query(
     "SELECT alumniID FROM alumni WHERE username = ?",
     [username]
@@ -22,7 +22,7 @@ const getAlumni = async (username) => {
   return alumniID;
 };
 
-const getAllAlumni = async () => {
+exports.getAllAlumni = async () => {
   try {
     const queryResult = await db.query(
       "SELECT username, CONCAT(firstName, ' ', lastName) AS name FROM alumni"
@@ -37,7 +37,7 @@ const getAllAlumni = async () => {
   }
 };
 
-const GetAlumniDetailsByID = async (id) => {
+exports.GetAlumniDetailsByID = async (id) => {
   try {
     const [alumni] = await db.query(
       `
@@ -56,7 +56,7 @@ const GetAlumniDetailsByID = async (id) => {
   }
 };
 
-const deleteAlumni = async (id) => {
+exports.deleteAlumni = async (id) => {
   try {
     const [checkRows] = await db.query(
       "SELECT COUNT(*) AS count FROM alumni WHERE alumniID = ?",
@@ -101,19 +101,8 @@ const deleteAlumni = async (id) => {
   }
 };
 
-const addAlumni = async (alumniData) => {
-  const {
-    firstName,
-    lastName,
-    gender,
-    email,
-    role,
-    username,
-    password,
-    graduationYear,
-    staffRole,
-    hiredDate,
-    leftDate,
+exports.addAlumni = async (alumniData) => {
+  const {firstName, lastName, gender, email, role, username, password, graduationYear, staffRole, hiredDate, leftDate,
   } = alumniData;
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -142,41 +131,13 @@ const addAlumni = async (alumniData) => {
   return roleAffectedRows;
 };
 
-const updateAlumni = async (id, alumniData) => {
+exports.updateAlumni = async (id, alumniData) => {
   try {
-    const {
-      firstName,
-      lastName,
-      gender,
-      dateOfBirth,
-      email,
-      phoneNumber,
-      address,
-      additionalInfo,
-      username,
-      enrollmentYear,
-      graduationYear,
-      staffRole,
-      hiredDate,
-      leftDate,
-      socialMediaHandles,
-    } = alumniData;
+    const {firstName, lastName, gender, dateOfBirth, email, phoneNumber, address, additionalInfo, username, enrollmentYear, graduationYear, staffRole, hiredDate, leftDate, socialMediaHandles} = alumniData;
 
     const [{ affectedRows: alumniAffectedRows }] = await db.query(
       "UPDATE alumni SET firstName=?, lastName=?, gender=?, dateOfBirth=?, email=?, phoneNumber=?, address=?, additionalInfo=?, username=?, socialMediaHandles=? WHERE alumniID=?",
-      [
-        firstName,
-        lastName,
-        gender,
-        dateOfBirth,
-        email,
-        phoneNumber,
-        address,
-        additionalInfo,
-        username,
-        JSON.stringify(socialMediaHandles),
-        id,
-      ]
+      [firstName, lastName, gender, dateOfBirth, email, phoneNumber, address, additionalInfo, username, JSON.stringify(socialMediaHandles), id]
     );
 
     const [{ role }] = await db.query(
@@ -207,7 +168,7 @@ const updateAlumni = async (id, alumniData) => {
   }
 };
 
-const authenticateUser = async (username, password) => {
+exports.authenticateUser = async (username, password) => {
   try {
     const [result] = await db.query(
       "SELECT * FROM alumni WHERE username = ? AND verified = 1",
@@ -235,7 +196,7 @@ const authenticateUser = async (username, password) => {
   }
 };
 
-const authenticateAdmin = async (req, username, password) => {
+exports.authenticateAdmin = async (req, username, password) => {
   try {
     const [result] = await db.query(
       "SELECT * FROM alumni WHERE username = ? AND verified = 1 AND isAdmin = 1",
@@ -257,7 +218,7 @@ const authenticateAdmin = async (req, username, password) => {
   }
 };
 
-const updateAlumniProfilePhoto = async (alumniID, profilePhoto) => {
+exports.updateAlumniProfilePhoto = async (alumniID, profilePhoto) => {
   try {
     const [{ affectedRows }] = await db.query(
       "UPDATE alumni SET profilePhoto = ? WHERE alumniID = ?",
@@ -270,7 +231,7 @@ const updateAlumniProfilePhoto = async (alumniID, profilePhoto) => {
   }
 };
 
-const updateAlumniCoverPhoto = async (alumniID, coverPhoto) => {
+exports.updateAlumniCoverPhoto = async (alumniID, coverPhoto) => {
   try {
     const [{ affectedRows }] = await db.query(
       "UPDATE alumni SET coverPhoto = ? WHERE alumniID = ?",
@@ -283,12 +244,10 @@ const updateAlumniCoverPhoto = async (alumniID, coverPhoto) => {
   }
 };
 
-const getAlumniByUsername = async (username) => {
+exports.getAlumniByUsername = async (username) => {
   try {
     const [alumni] = await db.query(
-      `SELECT *, 
-    DATE_FORMAT(dateOfBirth, '%Y-%m-%d') AS dateOfBirth
-  FROM alumni WHERE username = ?`,
+      `SELECT *, DATE_FORMAT(dateOfBirth, '%Y-%m-%d') AS dateOfBirth FROM alumni WHERE username = ?`,
       [username]
     );
     return alumni.length > 0 ? alumni[0] : null;
@@ -298,7 +257,7 @@ const getAlumniByUsername = async (username) => {
   }
 };
 
-const getAlumniProfilePhotoById = async (alumniID) => {
+exports.getAlumniProfilePhotoById = async (alumniID) => {
   try {
     const [alumni] = await db.query(
       "SELECT profilePhoto FROM alumni WHERE alumniID = ?",
@@ -311,7 +270,7 @@ const getAlumniProfilePhotoById = async (alumniID) => {
   }
 };
 
-const getAlumniCoverPhotoById = async (alumniID) => {
+exports.getAlumniCoverPhotoById = async (alumniID) => {
   try {
     const [alumni] = await db.query(
       "SELECT coverPhoto FROM alumni WHERE alumniID = ?",
@@ -324,7 +283,7 @@ const getAlumniCoverPhotoById = async (alumniID) => {
   }
 };
 
-const getAlumniData = async (username) => {
+exports.getAlumniData = async (username) => {
   try {
     const [alumniData] = await db.query(
       `SELECT a.*, 
@@ -344,7 +303,7 @@ const getAlumniData = async (username) => {
   }
 };
 
-const isUsernameTaken = async (username, alumniID = null) => {
+exports.isUsernameTaken = async (username, alumniID = null) => {
   try {
     let query = "SELECT COUNT(*) as count FROM alumni WHERE username = ?";
 
@@ -364,7 +323,7 @@ const isUsernameTaken = async (username, alumniID = null) => {
   }
 };
 
-const isEmailTaken = async (email, alumniID = null) => {
+exports.isEmailTaken = async (email, alumniID = null) => {
   try {
     let query = "SELECT COUNT(*) as count FROM alumni WHERE email = ?";
 
@@ -384,7 +343,7 @@ const isEmailTaken = async (email, alumniID = null) => {
   }
 };
 
-const changePassword = async (alumniID, newPassword) => {
+exports.changePassword = async (alumniID, newPassword) => {
   try {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
@@ -399,7 +358,7 @@ const changePassword = async (alumniID, newPassword) => {
   }
 };
 
-const getPassword = async (alumniID, oldPassword) => {
+exports.getPassword = async (alumniID, oldPassword) => {
   try {
     const result = await db.query("SELECT password FROM alumni WHERE alumniID = ?", alumniID);
 
@@ -416,7 +375,7 @@ const getPassword = async (alumniID, oldPassword) => {
   }
 };
 
-const getNotable = async () => {
+exports.getNotable = async () => {
   try {
     let query = "SELECT firstName, lastName, profilePhoto FROM alumni WHERE notable = 1";
 
@@ -428,7 +387,7 @@ const getNotable = async () => {
   }
 };
 
-const updateNotable = async (alumniID, isNotable) => {
+exports.updateNotable = async (alumniID, isNotable) => {
   try {
     const [{ affectedRows }] = await db.query(
       "UPDATE alumni SET notable = ? WHERE alumniID = ?",
@@ -441,7 +400,7 @@ const updateNotable = async (alumniID, isNotable) => {
   }
 };
 
-const sendEmail = async (to, subject, text, html) => {
+exports.sendEmail = async (to, subject, text, html) => {
   const mailOptions = {
     from: 'bahirdarstemalumni@gmail.com',
     to: to,
@@ -459,7 +418,7 @@ const sendEmail = async (to, subject, text, html) => {
   }
 }
 
-const changepasstodefualt = async (email) => {
+exports.changepasstodefualt = async (email) => {
   try {
     const [userData] = await db.query("SELECT lastName FROM alumni WHERE email = ?", [email]);
 
@@ -481,29 +440,3 @@ const changepasstodefualt = async (email) => {
     throw error;
   }
 }
-
-module.exports = {
-  getAlumniID,
-  getAlumni,
-  getAllAlumni,
-  GetAlumniDetailsByID,
-  deleteAlumni,
-  addAlumni,
-  updateAlumni,
-  authenticateUser,
-  updateAlumniProfilePhoto,
-  updateAlumniCoverPhoto,
-  getAlumniByUsername,
-  getAlumniProfilePhotoById,
-  getAlumniCoverPhotoById,
-  getAlumniData,
-  isUsernameTaken,
-  isEmailTaken,
-  authenticateAdmin,
-  changePassword,
-  getPassword,
-  getNotable,
-  updateNotable,
-  changepasstodefualt,
-  sendEmail
-};

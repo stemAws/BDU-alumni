@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-const createPost = async function (alumniID, content, image, suggestToAdmin) {
+exports.createPost = async function (alumniID, content, image, suggestToAdmin) {
   try {
     const [result] = await db.query(
       'INSERT INTO posts (alumniID, content, image, suggestToAdmin) VALUES (?, ?, ?, ?)',
@@ -14,19 +14,15 @@ const createPost = async function (alumniID, content, image, suggestToAdmin) {
   }
 }
 
-const updateSuggestedByAdmin = async function (postId, updateSuggestByAdmin) {
+exports.updateSuggestedByAdmin = async function (postId, updateSuggestByAdmin) {
   const { suggestedByAdmin } = updateSuggestByAdmin;
 
-  const [result] = await db.query(`
-    UPDATE posts
-    SET suggestedByAdmin = ?
-    WHERE postId = ?
-  `, [suggestedByAdmin, postId]);
+  const [result] = await db.query("UPDATE posts SET suggestedByAdmin = ? WHERE postId = ?", [suggestedByAdmin, postId]);
 
   return result.affectedRows;
 };
 
-const getPostByAlumniId =  async function (alumniID) {
+exports.getPostByAlumniId =  async function (alumniID) {
   try {
     const [rows] = await db.query('SELECT * FROM posts WHERE alumniID = ?', [alumniID]);
 
@@ -41,7 +37,7 @@ const getPostByAlumniId =  async function (alumniID) {
   }
 }
 
-const getAllPosts = async function  () {
+exports.getAllPosts = async function  () {
   try {
     const [posts] = await db.query("SELECT * FROM posts");
 
@@ -52,7 +48,7 @@ const getAllPosts = async function  () {
   }
 };
 
-const getAddedStories = async function  () {
+exports.getAddedStories = async function  () {
   try {
     const [posts] = await db.query("SELECT * FROM posts WHERE suggestedByAdmin = 1");
 
@@ -63,14 +59,9 @@ const getAddedStories = async function  () {
   }
 };
 
-const getPostsByUsername = async function (username) {
+exports.getPostsByUsername = async function (username) {
   try {
-    const [post] = await db.query(`
-      SELECT P.*
-      FROM posts P
-      JOIN alumni A ON P.alumniID = A.alumniID
-      WHERE A.username = ?
-    `, [username]);
+    const [post] = await db.query("SELECT P.* FROM posts P JOIN alumni A ON P.alumniID = A.alumniID WHERE A.username = ?", [username]);
 
     return post;
   } catch (error) {
@@ -79,7 +70,7 @@ const getPostsByUsername = async function (username) {
   }
 };
 
-const deletePost = async function (postId) {
+exports.deletePost = async function (postId) {
   try {
     const [result] = await db.query('DELETE FROM posts WHERE postId = ?', [postId]);
 
@@ -90,31 +81,15 @@ const deletePost = async function (postId) {
   }
 }
 
-const updatePost = async function(postId, updatedPostData) {
+exports.updatePost = async function(postId, updatedPostData) {
   const { content, suggestToAdmin } = updatedPostData;
 
-  const [result] = await db.query(`
-    UPDATE posts
-    SET content = ?, suggestToAdmin = ?
-    WHERE postId = ?
-  `, [content, suggestToAdmin, postId]);
+  const [result] = await db.query("UPDATE posts SET content = ?, suggestToAdmin = ? WHERE postId = ?", [content, suggestToAdmin, postId]);
 
   return result.affectedRows;
 }
 
-const getPostImage = async function(postID) {
+exports.getPostImage = async function(postID) {
   const result = await db.query('SELECT image FROM posts where postId = ?', postID)
   return result[0][0];
 }
-
-module.exports = {
-  createPost,
-  getPostByAlumniId,
-  getAllPosts,
-  getPostsByUsername,
-  getAddedStories,
-  updateSuggestedByAdmin,
-  deletePost,
-  updatePost,
-  getPostImage
-};
