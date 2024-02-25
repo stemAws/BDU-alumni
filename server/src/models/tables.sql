@@ -79,3 +79,12 @@ CREATE TABLE Post (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+CREATE TABLE comment (
+    commentId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    postId INT UNIQUE,
+    content TEXT,
+    FOREIGN KEY (postId) REFERENCES Post(postId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
