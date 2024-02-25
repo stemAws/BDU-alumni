@@ -218,6 +218,8 @@ exports.authenticateAdmin = async (req, username, password) => {
   }
 };
 
+
+
 exports.updateAlumniProfilePhoto = async (alumniID, profilePhoto) => {
   try {
     const [{ affectedRows }] = await db.query(
