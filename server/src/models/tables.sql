@@ -110,7 +110,7 @@ CREATE TABLE Comment (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE news (
+CREATE TABLE News (
     newsId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     adminId INT,
     title VARCHAR(100),
@@ -124,4 +124,5 @@ CREATE TABLE news (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
 
