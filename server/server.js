@@ -1,6 +1,8 @@
 const express = require('express'),
 cors = require('cors'),
-{notFound, errorHandler} = require('./src/middleware/error-middleware'),
+{notFound, errorHandler} = require('./src/middleware/error-middleware'), 
+{ verifyToken } = require('./src/middleware/auth-middleware');
+
 PORT = process.env.PORT || 3005,
 
 app = express();
@@ -25,6 +27,10 @@ app.use('/', require('./src/routes/google-routes'));
 app.use('/', require('./src/routes/media-routes'));
 app.use('/', require('./src/routes/post-routes'));
 app.use('/', require('./src/routes/user-routes'));
+
+app.post('/verify-token', verifyToken, (req, res) => {
+  res.status(200);
+});
 
 app.use(notFound);
 app.use(errorHandler);
