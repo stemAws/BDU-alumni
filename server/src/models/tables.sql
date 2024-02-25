@@ -6,8 +6,8 @@ CREATE TABLE Alumni (
     phoneNumber VARCHAR(20),
     profilePicture VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE 
-    lastLogin TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     currentLocation VARCHAR(255),
     bio TEXT,
     isNotable BOOLEAN,
@@ -17,4 +17,16 @@ CREATE TABLE Alumni (
     password VARCHAR(255),
     privacySetting VARCHAR(10),
     verified BOOLEAN
+);
+
+CREATE TABLE Custom (
+    customId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    alumniId INT UNIQUE,
+    constactInfo BOOLEAN DEFAULT 0,
+    educationalBackground BOOLEAN DEFAULT 0,
+    workExperience BOOLEAN DEFAULT 0,
+    posts BOOLEAN DEFAULT 0,
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
