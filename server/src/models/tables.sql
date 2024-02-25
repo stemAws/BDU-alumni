@@ -63,3 +63,19 @@ CREATE TABLE Experience (
         ON UPDATE CASCADE
 );
 
+CREATE TABLE Post (
+    postId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    alumniId INT,
+    content TEXT,
+    mediaPath VARCHAR(255),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    likes INT,
+    commentCounts INT,
+    suggestToAdmin BOOLEAN,
+    featured BOOLEAN,
+    category VARCHAR(50),
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
