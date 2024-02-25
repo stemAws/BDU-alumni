@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-// Import the database connection module
->>>>>>> d0257d685b34a4d7e75c639c4327d16ddee7a0a5
 const db = require('../config/db');
 
 exports.getEducationById = async (id) => {
