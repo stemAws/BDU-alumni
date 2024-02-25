@@ -179,6 +179,27 @@ CREATE TABLE RSVPStatus (
         ON UPDATE CASCADE
 );
 
+CREATE TABLE JobPosting (
+    jobPostingId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    alumniId INT,
+    jobTitle VARCHAR(100),
+    description Text,
+    industry VARCHAR(50),
+    companyAddress VARCHAR(255),
+    employmentType VARCHAR(50),
+    deadline Date,
+    email VARCHAR(100),
+    phoneNumber VARCHAR(20),
+    linkedIn VARCHAR(255),
+    offerStatus VARCHAR(15),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
 
 
 
