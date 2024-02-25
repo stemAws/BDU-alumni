@@ -1,8 +1,6 @@
-// Import the database connection module
 const db = require('../config/db');
 
-// Function to get education information by alumni ID
-const getEducationById = async (id) => {
+exports.getEducationById = async (id) => {
     const [education] = await db.query(`
         SELECT 
             educationID,
@@ -20,8 +18,7 @@ const getEducationById = async (id) => {
     return education;
 };
 
-// Function to get education information by username
-const getEducationByUsername = async (username) => {
+exports.getEducationByUsername = async (username) => {
     try {
         const [education] = await db.query(`
             SELECT 
@@ -40,9 +37,7 @@ const getEducationByUsername = async (username) => {
     }
 };
 
-
-// Function to delete education record by education ID
-const deleteEducation = async (id) => {
+exports.deleteEducation = async (id) => {
     const { affectedRows } = await db.query("DELETE FROM education WHERE educationID = ?", [id]);
 
     if (affectedRows === 0) {
@@ -52,8 +47,7 @@ const deleteEducation = async (id) => {
     return affectedRows;
 };
 
-// Function to add a new education record
-const addEducation = async (education) => {
+exports.addEducation = async (education) => {
     const { affectedRows } = await db.query("INSERT INTO education (alumniID, institution, degree, fieldOfStudy, startYear, endYear, stillLearning) VALUES (?, ?, ?, ?, ?, ?, ?)", [
         education.token,
         education.institution,
@@ -67,8 +61,7 @@ const addEducation = async (education) => {
     return affectedRows;
 };
 
-// Function to update an existing education record by education ID
-const updateEducation = async (educationID, education) => {
+exports.updateEducation = async (educationID, education) => {
     const affectedRows  = await db.query("UPDATE education SET institution = ?, degree = ?, fieldOfStudy = ?, startYear = ?, endYear = ?, stillLearning = ? WHERE educationID = ?", [
         education.institution,
         education.degree,
@@ -85,10 +78,3 @@ const updateEducation = async (educationID, education) => {
 
     return affectedRows;
 };
-
-module.exports = {
-    getEducationById,
-    getEducationByUsername,
-    deleteEducation,
-    addEducation, updateEducation
-}
