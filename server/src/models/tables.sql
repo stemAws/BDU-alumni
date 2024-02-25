@@ -110,5 +110,18 @@ CREATE TABLE Comment (
         ON UPDATE CASCADE
 );
 
-
+CREATE TABLE news (
+    newsId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    adminId INT,
+    title VARCHAR(100),
+    content TEXT,
+    anouncementDate Date,
+    category VARCHAR(50),
+    mediaPath VARCHAR(255),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
 
