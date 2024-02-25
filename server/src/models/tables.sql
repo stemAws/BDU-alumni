@@ -218,6 +218,68 @@ CREATE TABLE ProgramListing(
         ON UPDATE CASCADE   
 );
 
+CREATE TABLE MentorshipProgram (
+    mentorshipProgramID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    adminId INT,
+    programName VARCHAR(255) NOT NULL,
+    description TEXT,
+    industry VARCHAR(100),
+    deadline DATE,
+    startDate DATE,
+    endDate DATE,
+    programStatus VARCHAR(20),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    registerURL VARCHAR(255),
+    contact VARCHAR(100), 
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE Chapters (
+    chapterId INT AUTO_INCREMENT PRIMARY KEY,
+    alumniId INT NOT NULL,
+    chapterName VARCHAR(255) NOT NULL,
+    description TEXT,
+    region VARCHAR(100),
+    interestGroup VARCHAR(100),
+    foundingDate DATE,
+    presidentID INT,
+    email VARCHAR(255),
+    socialMedia VARCHAR(255),
+    website VARCHAR(255),
+    registerURL VARCHAR(255),
+    count INT,
+    status VARCHAR(50),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE 
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE chapterMembers (
+    chapterId INT,
+    alumniId INT,
+    status VARCHAR(255),
+    PRIMARY KEY (chapterId, alumniId),
+    FOREIGN KEY (chapterId) REFERENCES chapters(alumniId), 
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (alumniId) REFERENCES alumni(alumniId)  
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
+
+
+
+
+
+
+
 
 
 
