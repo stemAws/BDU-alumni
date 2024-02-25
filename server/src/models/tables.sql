@@ -30,3 +30,21 @@ CREATE TABLE Custom (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+CREATE TABLE Education (
+    educationId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    alumniId INT,
+    institution VARCHAR(100),
+    degree VARCHAR(50),
+    major VARCHAR(50),
+    minor VARCHAR(50),
+    admission VARCHAR(50),
+    stillLearning BOOLEAN,
+    graduatingYear DATE,
+    awards VARCHAR(50),
+    researchPublications TEXT,
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
