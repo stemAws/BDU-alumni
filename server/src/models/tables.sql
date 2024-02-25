@@ -191,12 +191,31 @@ CREATE TABLE JobPosting (
     email VARCHAR(100),
     phoneNumber VARCHAR(20),
     linkedIn VARCHAR(255),
-    offerStatus VARCHAR(15),
+    offerStatus VARCHAR(20),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
         ON DELETE CASCADE
         ON UPDATE CASCADE
+);
+
+CREATE TABLE ProgramListing(
+    programID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    adminId INT,
+    programName VARCHAR(100),
+    faculty VARCHAR(100),
+    department VARCHAR(100),
+    description Text,
+    degree VARCHAR(20),
+    admission VARCHAR(20),
+    duration VARCHAR(100),
+    tuition DOUBLE,
+    constactInfo Text,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE   
 );
 
 
