@@ -1,6 +1,6 @@
-const db = require("../models/db");
+const db = require("../config/db");
 
-const createGallery = async ({ images, event, year }) => {
+exports.createGallery = async ({ images, event, year }) => {
   try {
     const [result] = await db.query(
       "INSERT INTO gallery (images, event, year) VALUES (?, ?, ?)",
@@ -13,7 +13,7 @@ const createGallery = async ({ images, event, year }) => {
   }
 };
 
-const getGalleryById = async (gID) => {
+exports.getGalleryById = async (gID) => {
   try {
     const result = await db.query("SELECT * FROM gallery WHERE galleryID = ?", [
       gID,
@@ -24,7 +24,7 @@ const getGalleryById = async (gID) => {
   }
 };
 
-const getAllGallery = async () => {
+exports.getAllGallery = async () => {
   try {
     const [result] = await db.query("SELECT * FROM gallery");
     return result;
@@ -33,7 +33,7 @@ const getAllGallery = async () => {
   }
 };
 
-const deleteGallery = async (galleryID) => {
+exports.deleteGallery = async (galleryID) => {
   try {
     const [result] = await db.query("DELETE FROM gallery WHERE galleryID = ?", [
       galleryID,
@@ -44,39 +44,18 @@ const deleteGallery = async (galleryID) => {
   }
 };
 
-const updateGallery = async (galleryID, updatedGallery) => {
+exports.updateGallery = async (galleryID, updatedGallery) => {
   const {
     event,
     year,
     } = updatedGallery;
 
   try {
-    const [result] = await db.query(
-      `
-      UPDATE gallery
-      SET
-        event = ?,
-        year = ?
-      WHERE
-        galleryID = ?
-    `,
-      [
-        event,
-        year,
-        galleryID,
-      ]
+    const [result] = await db.query("UPDATE gallery SET event = ?, year = ? WHERE galleryID = ?", [event, year, galleryID]
     );
     return result.affectedRows;
   } catch (error) {
     console.error("Error updating gallery in service:", error);
     throw error;
   }
-};
-
-module.exports = {
-  createGallery,
-  getAllGallery,
-  getGalleryById,
-  deleteGallery,
-  updateGallery,
 };

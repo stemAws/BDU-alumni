@@ -1,5 +1,5 @@
 const passport = require('../config/passport-config');
-const db = require('../models/db');
+const db = require('../config/db');
 
 exports.authenticateGoogle = passport.authenticate('google', { scope: ['profile', 'email'] });
 

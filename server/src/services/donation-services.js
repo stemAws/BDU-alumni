@@ -1,6 +1,6 @@
-const db = require("../models/db");
+const db = require("../config/db");
 
-const createDonation = async function (title, link, description) {
+exports.createDonation = async function (title, link, description) {
   try {
     const [result] = await db.query(
       "INSERT INTO donation (title, link, description) VALUES (?, ?, ?)",
@@ -14,7 +14,7 @@ const createDonation = async function (title, link, description) {
   }
 };
 
-const updateDonation = async function (id, updateDonation) {
+exports.updateDonation = async function (id, updateDonation) {
   const { title, link, description } = updateDonation;
 
   const [result] = await db.query(
@@ -29,7 +29,7 @@ const updateDonation = async function (id, updateDonation) {
   return result.affectedRows;
 };
 
-const getDonationById = async function (id) {
+exports.getDonationById = async function (id) {
   try {
     const [rows] = await db.query("SELECT * FROM donation WHERE id = ?", [
       id,
@@ -46,7 +46,7 @@ const getDonationById = async function (id) {
   }
 };
 
-const getAllDonation = async function () {
+exports.getAllDonation = async function () {
   try {
     const [donation] = await db.query("SELECT * FROM donation");
 
@@ -57,7 +57,7 @@ const getAllDonation = async function () {
   }
 };
 
-const deleteDonation = async function (id) {
+exports.deleteDonation = async function (id) {
   try {
     const [result] = await db.query("DELETE FROM donation WHERE id = ?", [
       id,
@@ -68,13 +68,4 @@ const deleteDonation = async function (id) {
     console.error("Error deleting post:", error);
     throw error;
   }
-};
-
-
-module.exports = {
-  createDonation,
-  getDonationById,
-  getAllDonation,
-  updateDonation,
-  deleteDonation
 };
