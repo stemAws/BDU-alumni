@@ -6,7 +6,7 @@ const { verifyToken } = require("../middleware/auth-middleware");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.get("/alumni", UserController.getAllAlumni);
+router.get("/alumni", verifyToken, UserController.getAllAlumni);
 router.post("/alumni", UserController.addAlumni);
 router.get("/alumni/profile/:id", UserController.getAlumniProfile);
 router.post("/alumni/signin", UserController.alumniSignIn);
