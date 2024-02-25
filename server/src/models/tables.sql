@@ -5,6 +5,7 @@ CREATE TABLE Person (
     email VARCHAR(100),
     phoneNumber VARCHAR(20),
     profilePicture VARCHAR(255),
+    coverPicture VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -124,5 +125,82 @@ CREATE TABLE News (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+CREATE TABLE Event (
+    eventId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    adminId INT,
+    title VARCHAR(100),
+    content TEXT,
+    category VARCHAR(50),
+    startDate DATE,
+    endDate DATE,
+    eventLocation TEXT,
+    country VARCHAR(50),
+    organizer VARCHAR(100),
+    constactInfo Text,
+    eventCapacity INT,
+    featuredSpeakers VARCHAR(255),
+    eventURL VARCHAR(255),
+    registerURL VARCHAR(255),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    mediaPath VARCHAR(255),
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE EventAttendance (
+    eventAttendanceId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    alumniId INT,
+    eventId INT,
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (eventId) REFERENCES Event(eventId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE RSVPStatus (
+    RSVPId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    eventAttendanceId INT,
+    alumniId INT,
+    eventId INT,
+    confirmed BOOLEAN,
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (eventId) REFERENCES Event(eventId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (eventAttendanceId) REFERENCES EventAttendance(eventAttendanceId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE JobPosting (
+    jobPostingId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    alumniId INT,
+    jobTitle VARCHAR(100),
+    description Text,
+    industry VARCHAR(50),
+    companyAddress VARCHAR(255),
+    employmentType VARCHAR(50),
+    deadline Date,
+    email VARCHAR(100),
+    phoneNumber VARCHAR(20),
+    linkedIn VARCHAR(255),
+    offerStatus VARCHAR(15),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
+
+
 
 
