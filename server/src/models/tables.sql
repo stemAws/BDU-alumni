@@ -39,10 +39,25 @@ CREATE TABLE Education (
     major VARCHAR(50),
     minor VARCHAR(50),
     admission VARCHAR(50),
-    stillLearning BOOLEAN,
     graduatingYear DATE,
     awards VARCHAR(50),
     researchPublications TEXT,
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE Experience (
+    experienceId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    alumniId INT,
+    position VARCHAR(50),
+    company VARCHAR(100),
+    industry VARCHAR(50),
+    startDate DATE,
+    endDate DATE,
+    description TEXT,
+    employmentType VARCHAR(50),
+    projects TEXT,
     FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
         ON DELETE CASCADE
         ON UPDATE CASCADE
