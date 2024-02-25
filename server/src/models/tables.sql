@@ -238,7 +238,7 @@ CREATE TABLE MentorshipProgram (
 );
 
 CREATE TABLE Chapters (
-    chapterId INT AUTO_INCREMENT PRIMARY KEY,
+    chapterId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     alumniId INT NOT NULL,
     chapterName VARCHAR(255) NOT NULL,
     description TEXT,
@@ -273,7 +273,7 @@ CREATE TABLE chapterMembers (
 );
 
 CREATE TABLE Donations (
-    campaignId INT AUTO_INCREMENT PRIMARY KEY,
+    campaignId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     adminId INT,
     campaignName VARCHAR(255) NOT NULL,
     description TEXT,
@@ -287,7 +287,7 @@ CREATE TABLE Donations (
 );
 
 CREATE TABLE volunteerOpportunity (
-    opportunityId INT AUTO_INCREMENT PRIMARY KEY,
+    opportunityId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     adminId INT,
     description TEXT,
     location VARCHAR(255),
@@ -307,7 +307,7 @@ CREATE TABLE volunteerOpportunity (
 );
 
 CREATE TABLE volunteers (
-    volunteerId INT AUTO_INCREMENT PRIMARY KEY,
+    volunteerId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     opportunityId INT NOT NULL,
     alumniId INT NOT NULL,
     PRIMARY KEY (opportunityId, alumniId),
@@ -318,6 +318,91 @@ CREATE TABLE volunteers (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+CREATE TABLE alumniOfficeInfo (
+    officeId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    adminId INT,
+    officeName VARCHAR(100) NOT NULL,
+    address VARCHAR(255),
+    phone VARCHAR(20),
+    email VARCHAR(100),
+    fax VARCHAR(20),
+    officeHours VARCHAR(255),
+    contactFormURL VARCHAR(255),
+    description TEXT,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)  
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE Feedback (
+    feedbackId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    adminId INT,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    submittedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(20),
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)  
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE Gallery (
+    galleryId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    adminId INT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    mediaType ENUM('image', 'sound', 'video') NOT NULL,
+    media VARCHAR(255) NOT NULL,
+    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)  
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE socialMedia (
+    socialMediaId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    adminId INT,
+    platform VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)  
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE discussionBoard (
+    boardId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    alumniId INT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    createdBy VARCHAR(255),
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    links TEXT,
+    FOREIGN KEY (adminId) REFERENCES Alumni(alumniId)  
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE ratings (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    page VARCHAR(255),
+    usabilityRating INT,
+    contentQualityRating INT,
+    overallExperienceRating INT,
+    surveyDate DATE
+);
+
+
+
+
 
 
 
