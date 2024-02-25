@@ -1,5 +1,5 @@
-CREATE TABLE Alumni (
-    alumniId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+CREATE TABLE Person (
+    personId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     fullName VARCHAR(100),
     gender CHAR(1),
     email VARCHAR(100),
@@ -8,15 +8,33 @@ CREATE TABLE Alumni (
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    username VARCHAR(50) UNIQUE,
+    password VARCHAR(255),
+    bio TEXT
+); 
+
+CREATE TABLE Alumni (
+    alumniId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    personId INT UNIQUE,
     currentLocation VARCHAR(255),
-    bio TEXT,
     isNotable BOOLEAN,
     recieveNewsletter BOOLEAN,
     socialMedia TEXT,
-    username VARCHAR(50) UNIQUE,
-    password VARCHAR(255),
     privacySetting VARCHAR(10),
-    verified BOOLEAN
+    verified BOOLEAN,
+    FOREIGN KEY (personId) REFERENCES Person(personId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE WebsiteAdmin (
+    adminId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    personId INT UNIQUE,
+    role TEXT,
+    isActive BOOLEAN,
+    FOREIGN KEY (personId) REFERENCES Person(personId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE Custom (
@@ -58,6 +76,7 @@ CREATE TABLE Experience (
     description TEXT,
     employmentType VARCHAR(50),
     projects TEXT,
+    stillWorking BOOLEAN,
     FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
         ON DELETE CASCADE
         ON UPDATE CASCADE
@@ -80,7 +99,7 @@ CREATE TABLE Post (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE comment (
+CREATE TABLE Comment (
     commentId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     postId INT UNIQUE,
     content TEXT,
@@ -91,13 +110,5 @@ CREATE TABLE comment (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE WebsiteAdmin (
-    adminId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    alumniId INT UNIQUE,
-    role TEXT,
-    isActive BOOLEAN,
-    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
+
 
