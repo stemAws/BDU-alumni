@@ -5,6 +5,7 @@ CREATE TABLE Person (
     email VARCHAR(100),
     phoneNumber VARCHAR(20),
     profilePicture VARCHAR(255),
+    coverPicture VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -125,4 +126,27 @@ CREATE TABLE News (
         ON UPDATE CASCADE
 );
 
+CREATE TABLE Event (
+    eventId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    adminId INT,
+    title VARCHAR(100),
+    content TEXT,
+    category VARCHAR(50),
+    startDate DATE,
+    endDate DATE,
+    eventLocation TEXT,
+    country VARCHAR(50),
+    organizer VARCHAR(100),
+    constactInfo Text,
+    eventCapacity INT,
+    featuredSpeakers VARCHAR(255),
+    eventURL VARCHAR(255),
+    registerURL VARCHAR(255),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    mediaPath VARCHAR(255),
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
 
