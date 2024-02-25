@@ -19,6 +19,7 @@ const storage = getStorage();
 exports.createPost = async (req, res) => {
   const { content, suggestToAdmin } = req.body;
   const alumniID = req.params.alumniID;
+  console.log(content);
 
   try {
     let downloadURL = null;
