@@ -1,4 +1,4 @@
-const db = require("../models/db");
+const db = require('../config/db');
 
 const createGallery = async ({ images, event, year }) => {
   try {

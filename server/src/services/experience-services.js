@@ -1,5 +1,5 @@
 // Import the database connection module
-const db = require("../models/db");
+const db = require('../config/db');
 
 // Function to get education information by alumni ID
 const getExperienceById = async (id) => {

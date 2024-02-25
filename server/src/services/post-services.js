@@ -1,4 +1,4 @@
-const db = require('../models/db');
+const db = require('../config/db');
 
 const createPost = async function (alumniID, content, image, suggestToAdmin) {
   try {
