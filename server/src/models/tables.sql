@@ -1,28 +1,28 @@
 CREATE TABLE Person (
     personId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    fullName VARCHAR(100),
+    fullName VARCHAR(100), -- nicee for not making first , last middle thing cus we can handle that frontend lay.
     gender CHAR(1),
     email VARCHAR(100),
-    phoneNumber VARCHAR(20),
+    phoneNumber VARCHAR(20), -- this and the next 2 should be on the alumni... cuz we don't need the admin photo and thing
     profilePicture VARCHAR(255),
     coverPicture VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- not necessary tbh
     lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     username VARCHAR(50) UNIQUE,
     password VARCHAR(255),
-    bio TEXT
-); 
+    bio TEXT -- we can move this to the alumni table
+);
 
 CREATE TABLE Alumni (
     alumniId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     personId INT UNIQUE,
     currentLocation VARCHAR(255),
     isNotable BOOLEAN,
-    recieveNewsletter BOOLEAN,
+    recieveNewsletter BOOLEAN, -- we can move this to custom
     socialMedia TEXT,
-    privacySetting VARCHAR(10),
-    verified BOOLEAN,
+    privacySetting VARCHAR(10), -- ??
+    verified BOOLEAN, -- i moved this to the person 
     FOREIGN KEY (personId) REFERENCES Person(personId)
         ON DELETE CASCADE
         ON UPDATE CASCADE
@@ -31,8 +31,8 @@ CREATE TABLE Alumni (
 CREATE TABLE WebsiteAdmin (
     adminId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     personId INT UNIQUE,
-    role TEXT,
-    isActive BOOLEAN,
+    role TEXT, 
+    isActive BOOLEAN, -- don't need this instead we can count their activities like mn yakkl approve adergu, mn yakl aderegu mnamn kinda thing
     FOREIGN KEY (personId) REFERENCES Person(personId)
         ON DELETE CASCADE
         ON UPDATE CASCADE
@@ -42,7 +42,7 @@ CREATE TABLE Custom (
     customId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     alumniId INT UNIQUE,
     constactInfo BOOLEAN DEFAULT 0,
-    educationalBackground BOOLEAN DEFAULT 0,
+    educationalBackground BOOLEAN DEFAULT 0, -- should not be hiding their edu and exp
     workExperience BOOLEAN DEFAULT 0,
     posts BOOLEAN DEFAULT 0,
     FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)

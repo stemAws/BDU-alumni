@@ -1,7 +1,7 @@
-const express = require('express'),
-cors = require('cors'),
-{notFound, errorHandler} = require('./src/middleware/error-middleware'), 
-{verifyToken} = require('./src/middleware/auth-middleware');
+const express = require('express')
+const cors = require('cors')
+const {notFound, errorHandler} = require('./src/middleware/error-middleware')
+const {verifyToken} = require('./src/middleware/auth-middleware');
 
 PORT = process.env.PORT || 3005,
 
