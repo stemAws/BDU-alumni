@@ -35,7 +35,6 @@ exports.updateExperience = async (experience) => {
       experience.experienceId
     ]
   );
-  console.log(affectedRows[0].affectedRows);
 
   return affectedRows[0].affectedRows;
 };
@@ -49,12 +48,11 @@ exports.getExperience = async (id) => {
 };
 
 exports.deleteExperience = async (id) => {
-  let {affectedRows} = await db.query(
+  let affectedRows = await db.query(
     "DELETE FROM experience WHERE experienceID = ?",
     [id]
   );
-  console.log(affectedRows)
-  return affectedRows;
+  return affectedRows[0].affectedRows;
 };
 
 

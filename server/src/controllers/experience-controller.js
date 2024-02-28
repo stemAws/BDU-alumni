@@ -34,7 +34,7 @@ exports.getExperience = async (req, res) => {
         const experience = await experienceService.getExperience(req.params.alumniId);
 
         if (experience) {
-            res.status(200).json({ success: true, experience });
+            res.status(200).json(experience);
         } else {
             res.status(404).json({ success: false, error: 'No record found for the given ID or username' });
         }
