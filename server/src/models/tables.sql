@@ -60,6 +60,7 @@ CREATE TABLE Education (
     admission VARCHAR(50),
     graduatingYear DATE,
     awards VARCHAR(50),
+    stillLearning BOOLEAN, --  included this.
     researchPublications TEXT,
     FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
         ON DELETE CASCADE

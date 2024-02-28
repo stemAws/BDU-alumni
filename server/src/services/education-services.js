@@ -1,40 +1,35 @@
 const db = require('../config/db');
 
-exports.getEducationById = async (id) => {
-    const [education] = await db.query(`
-        SELECT 
-            educationID,
-            alumniID,
-            institution,
-            degree,
-            fieldOfStudy,
-            DATE_FORMAT(startYear, '%Y-%m-%d') AS startYear,
-            DATE_FORMAT(endYear, '%Y-%m-%d') AS endYear,
-            stillLearning
-        FROM education 
-        WHERE alumniID = ?
-    `, [id]);
+exports.addEducation = async (education) => {
+    const { affectedRows } = await db.query("INSERT INTO education (alumniId, institution, degree, major, minor, admission, graduatingYear, awards, researchPublications) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+        education.alumniId,
+        education.institution,
+        education.degree,
+        education.major,
+        education.minor,
+        education.admission,
+        education.graduatingYear,
+        education.awards,
+        education.researchPublications
+    ]);        
 
-    return education;
+    return affectedRows;
 };
 
-exports.getEducationByUsername = async (username) => {
-    try {
-        const [education] = await db.query(`
-            SELECT 
-                E.*,
-                DATE_FORMAT(E.startYear, '%Y-%m-%d') AS startYear,
-                DATE_FORMAT(E.endYear, '%Y-%m-%d') AS endYear
-            FROM education E
-            JOIN alumni A ON E.alumniID = A.alumniID
-            WHERE A.username = ?
-        `, [username]);
+exports.updateEducation = async (education) => {
+    const affectedRows = await db.query("UPDATE education SET institution = ?, degree = ?, major = ?, minor = ?, admission = ?, graduatingYear = ?, awards = ?, researchPublications = ? WHERE educationId = ?", [
+        education.institution,
+        education.degree,
+        education.major,
+        education.minor,
+        education.admission,
+        education.graduatingYear,
+        education.awards,
+        education.researchPublications,
+        education.educationID
+    ]);
 
-        return education;
-    } catch (error) {
-        console.error('Error fetching education by username:', error);
-        throw error;
-    }
+    return affectedRows[0].affectedRows;
 };
 
 exports.deleteEducation = async (id) => {
@@ -47,34 +42,9 @@ exports.deleteEducation = async (id) => {
     return affectedRows;
 };
 
-exports.addEducation = async (education) => {
-    const { affectedRows } = await db.query("INSERT INTO education (alumniID, institution, degree, fieldOfStudy, startYear, endYear, stillLearning) VALUES (?, ?, ?, ?, ?, ?, ?)", [
-        education.token,
-        education.institution,
-        education.degree,
-        education.fieldOfStudy,
-        education.startDate,
-        education.endDate || null,
-        education.stillLearning
-    ]);
-
-    return affectedRows;
-};
-
-exports.updateEducation = async (educationID, education) => {
-    const affectedRows  = await db.query("UPDATE education SET institution = ?, degree = ?, fieldOfStudy = ?, startYear = ?, endYear = ?, stillLearning = ? WHERE educationID = ?", [
-        education.institution,
-        education.degree,
-        education.fieldOfStudy,
-        education.startYear,
-        education.endYear || null,
-        education.stillLearning,
-        educationID
-    ]);
-
-    if (affectedRows === 0) {
-        throw new Error(`No record found with educationID ${educationID}`);
-    }
-
-    return affectedRows;
+exports.getEducation = async (id) => {
+    const [education] = await db.query(`
+    SELECT * FROM Education WHERE alumniId = ?`, [id]);
+    
+    return education;
 };

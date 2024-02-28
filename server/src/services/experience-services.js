@@ -20,7 +20,7 @@ exports.addExperience = async (experience) => {
 };
 
 exports.updateExperience = async (experience) => {
-  let affectedRows  = await db.query(
+  const affectedRows  = await db.query(
     "UPDATE experience SET position = ?, company = ?, industry = ?, startDate = ?, endDate = ?, description = ?, employmentType = ?, projects = ?, stillWorking = ? WHERE experienceId = ?",
     [
       experience.position,
