@@ -153,6 +153,46 @@ exports.updateAlumni = async (id, alumniData) => {
   }
 };
 
+exports.isUsernameTaken = async (username, alumniID = null) => {
+  try {
+    let query = "SELECT COUNT(*) as count FROM alumni WHERE username = ?";
+
+    const params = [username];
+
+    if (alumniID !== null) {
+      query += " AND alumniID <> ?";
+      params.push(alumniID);
+    }
+
+    const [rows] = await db.query(query, params);
+
+    const count = rows[0].count;
+    return count > 0;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.isEmailTaken = async (email, alumniID = null) => {
+  try {
+    let query = "SELECT COUNT(*) as count FROM alumni WHERE email = ?";
+
+    const params = [email];
+
+    if (alumniID !== null) {
+      query += " AND alumniID <> ?";
+      params.push(alumniID);
+    }
+
+    const [rows] = await db.query(query, params);
+
+    const count = rows[0].count;
+    return count > 0;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 // exports.deleteAlumni = async (id) => {
 //   try {
@@ -200,142 +240,33 @@ exports.updateAlumni = async (id, alumniData) => {
 // };
 
 
+exports.changePassword = async (personID, oldPassword, newPassword) => {
+  try {
+    const [result] = await db.query("SELECT password FROM person WHERE personID = ?", personID);
+    if (!result || !result.length) {
+      throw new Error('Person not found');
+    }
+    const hashedPassword = result[0].password;
+
+    const passwordMatch = await bcrypt.compare(oldPassword, hashedPassword);
+    if (passwordMatch) {
+      throw new Error('Current password is incorrect');
+    }
+
+    const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const [{ affectedRows }] = await db.query(
+      "UPDATE person SET password = ? WHERE personID = ?",
+      [newHashedPassword, personID]);
+
+    return affectedRows;
+  } catch (error) {
+    console.error("Error updating password:", error);
+    throw error;
+  }
+};
 
 
-
-
-
-
-// exports.getAlumniByUsername = async (username) => {
-//   try {
-//     const [alumni] = await db.query(
-//       `SELECT *, DATE_FORMAT(dateOfBirth, '%Y-%m-%d') AS dateOfBirth FROM alumni WHERE username = ?`,
-//       [username]
-//     );
-//     return alumni.length > 0 ? alumni[0] : null;
-//   } catch (error) {
-//     console.error("Error fetching alumni by username:", error);
-//     throw error;
-//   }
-// };
-
-// exports.getAlumniProfilePhotoById = async (alumniID) => {
-//   try {
-//     const [alumni] = await db.query(
-//       "SELECT profilePhoto FROM alumni WHERE alumniID = ?",
-//       [alumniID]
-//     );
-//     return alumni.length > 0 ? alumni[0].profilePhoto : null;
-//   } catch (error) {
-//     console.error("Error fetching alumni profile photo:", error);
-//     throw error;
-//   }
-// };
-
-// exports.getAlumniCoverPhotoById = async (alumniID) => {
-//   try {
-//     const [alumni] = await db.query(
-//       "SELECT coverPhoto FROM alumni WHERE alumniID = ?",
-//       [alumniID]
-//     );
-//     return alumni.length > 0 ? alumni[0].coverPhoto : null;
-//   } catch (error) {
-//     console.error("Error fetching alumni cover photo:", error);
-//     throw error;
-//   }
-// };
-
-// exports.getAlumniData = async (username) => {
-//   try {
-//     const [alumniData] = await db.query(
-//       `SELECT a.*, 
-//       s.graduationYear,
-//       st.role as staffRole,
-//       DATE_FORMAT(a.dateOfBirth, '%Y-%m-%d') AS dateOfBirth
-//       FROM alumni a
-//       LEFT JOIN student s ON a.alumniID = s.alumniID
-//       LEFT JOIN staff st ON a.alumniID = st.alumniID
-//       WHERE a.username = ?`,
-//       [username]
-//     );
-
-//     return alumniData;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-// exports.isUsernameTaken = async (username, alumniID = null) => {
-//   try {
-//     let query = "SELECT COUNT(*) as count FROM alumni WHERE username = ?";
-
-//     const params = [username];
-
-//     if (alumniID !== null) {
-//       query += " AND alumniID <> ?";
-//       params.push(alumniID);
-//     }
-
-//     const [rows] = await db.query(query, params);
-
-//     const count = rows[0].count;
-//     return count > 0;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-// exports.isEmailTaken = async (email, alumniID = null) => {
-//   try {
-//     let query = "SELECT COUNT(*) as count FROM alumni WHERE email = ?";
-
-//     const params = [email];
-
-//     if (alumniID !== null) {
-//       query += " AND alumniID <> ?";
-//       params.push(alumniID);
-//     }
-
-//     const [rows] = await db.query(query, params);
-
-//     const count = rows[0].count;
-//     return count > 0;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-// exports.changePassword = async (alumniID, newPassword) => {
-//   try {
-//     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-//     const [{ affectedRows }] = await db.query(
-//       "UPDATE alumni SET password = ? WHERE alumniID = ?",
-//       [hashedPassword, alumniID]
-//     );
-//     return affectedRows;
-//   } catch (error) {
-//     console.error("Error updating password:", error);
-//     throw error;
-//   }
-// };
-
-// exports.getPassword = async (alumniID, oldPassword) => {
-//   try {
-//     const result = await db.query("SELECT password FROM alumni WHERE alumniID = ?", alumniID);
-
-//     const password = result[0][0].password;
-
-//     console.log("Plain text password:", oldPassword);
-//     console.log("Hashed password from database:", password);
-
-//     const passwordMatch = await bcrypt.compare(oldPassword, password);
-
-//     return passwordMatch;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
 
 // exports.getNotable = async () => {
 //   try {

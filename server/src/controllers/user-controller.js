@@ -245,74 +245,58 @@ exports.updateAlumni = async function (req, res) {
       }
 }
 
-// exports.checkUsernameAvailability = async function (req, res) {
-//     try {
-//         const { username } = req.body;
-//         const alumniID = req.params.alumniID || null;
+exports.checkUsernameAvailability = async function (req, res) {
+    try {
+        const { username } = req.body;
+        const alumniID = req.params.alumniID || null;
     
-//         const isUsernameTaken = await alumniService.isUsernameTaken(
-//           username,
-//           alumniID
-//         );
+        const isUsernameTaken = await alumniService.isUsernameTaken(
+          username,
+          alumniID
+        );
     
-//         res.json({ isUsernameTaken });
-//       } catch (error) {
-//         console.error("Error checking username availability:", error);
-//         res.status(500).json({ error: "Internal Server Error" });
-//       }
-// }
+        res.json({ isUsernameTaken });
+      } catch (error) {
+        console.error("Error checking username availability:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+}
 
-// exports.checkEmailAvailability = async function (req, res) {
-//     try {
-//         const { email } = req.body;
-//         const alumniID = req.params.alumniID || null;
+exports.checkEmailAvailability = async function (req, res) {
+    try {
+        const { email } = req.body;
+        const alumniID = req.params.alumniID || null;
     
-//         const isEmailTaken = await alumniService.isEmailTaken(email, alumniID);
+        const isEmailTaken = await alumniService.isEmailTaken(email, alumniID);
     
-//         res.json({ isEmailTaken });
-//       } catch (error) {
-//         console.error("Error checking email availability:", error);
-//         res.status(500).json({ error: "Internal Server Error" });
-//       }
-// }
+        res.json({ isEmailTaken });
+      } catch (error) {
+        console.error("Error checking email availability:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+}
 
-// exports.checkPassword = async function (req, res) {
-//     try {
-//         let { oldPassword } = req.body;
-//         const alumniID = req.params.alumniID;
+exports.changePassword = async function (req, res) { // : fix it
+    try {
+        const { newPassword, oldPassword } = req.body;
+        const alumniID = req.params.alumniID;
     
-//         const passwordExists = await alumniService.getPassword(
-//           alumniID,
-//           oldPassword
-//         );
+        const affectedRows = await alumniService.changePassword(
+          alumniID,
+          newPassword,
+          oldPassword
+        );
     
-//         res.json({ passwordExists });
-//       } catch (error) {
-//         console.error("Error checking password:", error);
-//         res.status(500).json({ error: "Internal Server Error" });
-//       }
-// }
-
-// exports.changePassword = async function (req, res) {
-//     try {
-//         const { newPassword } = req.body;
-//         const alumniID = req.params.alumniID;
+        if (affectedRows === 0) {
+          return res.status(404).json({ error: "Alumni not found" });
+        }
     
-//         const affectedRows = await alumniService.changePassword(
-//           alumniID,
-//           newPassword
-//         );
-    
-//         if (affectedRows === 0) {
-//           return res.status(404).json({ error: "Alumni not found" });
-//         }
-    
-//         res.json({ success: "Password change successful" });
-//       } catch (error) {
-//         console.error("Error changing password:", error);
-//         res.status(500).json({ error: "Internal Server Error" });
-//       }
-// }
+        res.json({ success: "Password change successful" });
+      } catch (error) {
+        console.error("Error changing password:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+}
 
 // exports.getNotableAlumni = async function (req, res) {
 //     try {

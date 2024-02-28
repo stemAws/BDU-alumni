@@ -6,6 +6,7 @@ const { verifyToken } = require("../middleware/auth-middleware");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
+// all id are personIDs
 
 router.post("/addUser", UserController.addUser);
 router.post("/signin", UserController.signIn);
@@ -17,10 +18,9 @@ router.post("/uploadCoverPicture/:id", upload.single('coverPicture'), UserContro
 router.get("/getProfilePicture/:idOrUsername", UserController.getProfilePicture);
 router.get("/getCoverPicture/:idOrUsername", UserController.getCoverPicture);
 router.put("/alumni/:id", UserController.updateAlumni);
-// router.post("/check-username/:alumniID?", UserController.checkUsernameAvailability);
-// router.post("/check-email/:alumniID?", UserController.checkEmailAvailability);
-// router.post("/check-password/:alumniID", UserController.checkPassword);
-// router.put("/change-password/:alumniID", UserController.changePassword);
+router.post("/check-username/:alumniID?", UserController.checkUsernameAvailability);
+router.post("/check-email/:alumniID?", UserController.checkEmailAvailability);
+router.put("/change-password/:alumniID", UserController.changePassword);
 // router.get("/notable", UserController.getNotableAlumni);
 // router.put("/notable/:alumniID", UserController.updateNotable);
 // router.post("/reset-password", UserController.resetPassword);
