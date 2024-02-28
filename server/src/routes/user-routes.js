@@ -23,6 +23,7 @@ router.post("/check-email/:alumniID?", UserController.checkEmailAvailability);
 router.put("/change-password/:alumniID", UserController.changePassword);
 // router.get("/notable", UserController.getNotableAlumni);
 // router.put("/notable/:alumniID", UserController.updateNotable);
-// router.post("/reset-password", UserController.resetPassword);
+router.post("/reset-password", UserController.resetPassword);
+router.post("/confirm-password-change", UserController.confirmPasswordChange);
 
 module.exports = router;

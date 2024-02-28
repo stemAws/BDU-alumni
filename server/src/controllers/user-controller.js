@@ -326,17 +326,38 @@ exports.changePassword = async function (req, res) { // : fix it
 //       }
 // }
 
-// exports.resetPassword = async function (req, res) {
-//     try {
-//         const { email } = req.body;
+exports.resetPassword = async function (req, res) { // problem what if the user that is requesting not really the account owner? will it be changed to defualt. I will fix this, not today
+    try {
+        const { email } = req.body;
     
-//         const defaultPassword = await alumniService.changepasstodefualt(email);
+        const confirmationToken = await alumniService.sendConfirmation(email);
     
-//         await alumniService.sendEmail(email, 'Your password has been reset', `Your password has been reset to: ${defaultPassword}. Please login now and change your password.`);
+        await alumniService.sendEmail(email, 'password reset request accepted!', `Your confirmation code is: ${confirmationToken}.`);
     
-//         res.status(200).json({ message: 'Password reset email sent successfully.' });
-//       } catch (error) {
-//         console.error('Error occurred while resetting password and sending email:', error);
-//         res.status(500).json({ error: 'An error occurred while resetting password and sending email.' });
-//       }
-// }
+        res.status(200).json({ message: 'Password reset email sent successfully.' });
+      } catch (error) {
+        console.error('Error occurred while resetting password and sending email:', error);
+        res.status(500).json({ error: 'An error occurred while resetting password and sending email.' });
+      }
+}
+
+exports.confirmPasswordChange = async function (req, res) {
+  const { email, confirmationToken, newPassword } = req.body;
+
+    try {
+        const decoded = jwt.verify(confirmationToken, process.env.secretKey);
+        const { email: tokenEmail } = decoded;
+
+        if (tokenEmail !== email) {
+            throw new Error('Invalid confirmation token');
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await db.query("UPDATE person SET password = ? WHERE email = ?", [hashedPassword, email]);
+
+        res.status(200).json({ message: 'Password changed successfully' });
+    } catch (error) {
+        console.error('Error confirming password change:', error);
+        res.status(400).json({ error: 'Invalid or expired confirmation token' });
+    }
+}

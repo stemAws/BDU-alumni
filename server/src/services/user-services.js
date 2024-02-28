@@ -240,16 +240,19 @@ exports.isEmailTaken = async (email, alumniID = null) => {
 // };
 
 
-exports.changePassword = async (personID, oldPassword, newPassword) => {
+exports.changePassword = async (personID, oldPassword, newPassword) => { // not working i am so confused
   try {
     const [result] = await db.query("SELECT password FROM person WHERE personID = ?", personID);
     if (!result || !result.length) {
       throw new Error('Person not found');
     }
     const hashedPassword = result[0].password;
-
+    console.log(hashedPassword)
+    console.log(oldPassword)
     const passwordMatch = await bcrypt.compare(oldPassword, hashedPassword);
-    if (passwordMatch) {
+    console.log(passwordMatch)
+    
+    if (!passwordMatch) {
       throw new Error('Current password is incorrect');
     }
 
@@ -293,43 +296,42 @@ exports.changePassword = async (personID, oldPassword, newPassword) => {
 //   }
 // };
 
-// exports.sendEmail = async (to, subject, text, html) => {
-//   const mailOptions = {
-//     from: 'bahirdarstemalumni@gmail.com',
-//     to: to,
-//     subject: subject,
-//     text: text,
-//     html: html
-//   };
+exports.sendEmail = async (to, subject, text, html) => {
+  const mailOptions = {
+    from: 'bahirdarstemalumni@gmail.com',
+    to: to,
+    subject: subject,
+    text: text,
+    html: html
+  };
 
-//   try {
-//     const info = await transporter.sendMail(mailOptions);
-//     console.log('Email sent successfully:', info.response);
-//   } catch (error) {
-//     console.error('Error occurred while sending email:', error);
-//     throw error;
-//   }
-// }
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', info.response);
+  } catch (error) {
+    console.error('Error occurred while sending email:', error);
+    throw error;
+  }
+}
 
-// exports.changepasstodefualt = async (email) => {
-//   try {
-//     const [userData] = await db.query("SELECT lastName FROM alumni WHERE email = ?", [email]);
+exports.sendConfirmation = async (email) => {
+  try {
+    const [result] = await db.query("SELECT COUNT(*) AS userCount FROM person WHERE email = ?", [email]);
+    const userCount = result[0].userCount;
 
-//     if (userData.length > 0) {
-//       const user = userData[0];
-      
-//       const defaultPassword = user.lastName + '123';
+    if (userCount > 0) {      
+      const confirmationToken = generateConfirmationToken(email);
+      return confirmationToken;
+    } else {
+      throw new Error('User with the provided email address does not exist.');
+    }
+  } catch (error) {
+    console.error("Error changing password to default:", error);
+    throw error;
+  }
+}
 
-//       const hashedPassword = await bcrypt.hash(defaultPassword, 10);
-
-//       await db.query("UPDATE alumni SET password = ? WHERE email = ?", [hashedPassword, email]);
-
-//       return defaultPassword;
-//     } else {
-//       throw new Error('User with the provided email address does not exist.');
-//     }
-//   } catch (error) {
-//     console.error("Error changing password to default:", error);
-//     throw error;
-//   }
-// }
+function generateConfirmationToken(email) {
+  const token = jwt.sign({email}, process.env.secretKey, { expiresIn: '1h' });
+  return token;
+}
