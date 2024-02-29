@@ -9,8 +9,7 @@ async function verifyToken(req, res, next, returnSuccessMessage = false) {
         }
 
         const decoded = jwt.verify(token, process.env.secretKey);
-        req.user = decoded;
-
+        
         const personId = decoded.token;
 
         if (req.headers.personid == personId) {
