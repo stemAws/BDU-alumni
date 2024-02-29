@@ -1,6 +1,8 @@
 const db = require('../config/db');
 const bcrypt = require("bcrypt");
 const transporter = require('../config/mailerConfig')
+const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
 exports.addUser = async (alumniData) => {
   const { fullName, gender, email, role, username, password, verified } = alumniData;
@@ -321,6 +323,7 @@ exports.sendConfirmation = async (email) => {
 
     if (userCount > 0) {      
       const confirmationToken = generateConfirmationToken(email);
+
       return confirmationToken;
     } else {
       throw new Error('User with the provided email address does not exist.');
@@ -335,3 +338,22 @@ function generateConfirmationToken(email) {
   const token = jwt.sign({email}, process.env.secretKey, { expiresIn: '1h' });
   return token;
 }
+
+exports.confirmPasswordChange = async function (email, confirmationToken, newPassword) {
+  try {
+      const decoded = jwt.verify(confirmationToken, process.env.secretKey);
+      const { email: tokenEmail } = decoded;
+
+      if (tokenEmail !== email) {
+          throw new Error('Invalid confirmation token');
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await db.query("UPDATE person SET password = ? WHERE email = ?", [hashedPassword, email]);
+
+      return { success: true, message: 'Password changed successfully' };
+  } catch (error) {
+      console.error('Error confirming password change:', error);
+      return { success: false, error: 'Invalid or expired confirmation token' };
+  }
+};

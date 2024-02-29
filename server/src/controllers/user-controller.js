@@ -332,7 +332,7 @@ exports.resetPassword = async function (req, res) { // problem what if the user 
     
         const confirmationToken = await alumniService.sendConfirmation(email);
     
-        await alumniService.sendEmail(email, 'password reset request accepted!', `Your confirmation code is: ${confirmationToken}.`);
+        await alumniService.sendEmail(email, 'password reset request accepted!', `Your confirmation code is: ${confirmationToken}`);
     
         res.status(200).json({ message: 'Password reset email sent successfully.' });
       } catch (error) {
@@ -344,20 +344,15 @@ exports.resetPassword = async function (req, res) { // problem what if the user 
 exports.confirmPasswordChange = async function (req, res) {
   const { email, confirmationToken, newPassword } = req.body;
 
-    try {
-        const decoded = jwt.verify(confirmationToken, process.env.secretKey);
-        const { email: tokenEmail } = decoded;
-
-        if (tokenEmail !== email) {
-            throw new Error('Invalid confirmation token');
-        }
-
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        await db.query("UPDATE person SET password = ? WHERE email = ?", [hashedPassword, email]);
-
-        res.status(200).json({ message: 'Password changed successfully' });
-    } catch (error) {
-        console.error('Error confirming password change:', error);
-        res.status(400).json({ error: 'Invalid or expired confirmation token' });
-    }
-}
+  try {
+      const result = await alumniService.confirmPasswordChange(email, confirmationToken, newPassword);
+      if (result.success) {
+          res.status(200).json({ message: result.message });
+      } else {
+          res.status(400).json({ error: result.error });
+      }
+  } catch (error) {
+      console.error('Error confirming password change:', error);
+      res.status(500).json({ error: 'An error occurred while confirming password change' });
+  }
+};
