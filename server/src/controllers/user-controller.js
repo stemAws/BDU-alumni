@@ -81,17 +81,20 @@ exports.getAllAlumni = async function (req, res) {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
+exports.deleteAlumni = async function (req, res) {
+  try {
+    const deleted = await alumniService.deleteAlumni(req.params.id);
+    
+    if (deleted) {
+      res.status(200).json({ message: "Alumni deleted successfully" });
+    } else {
+      res.status(404).json({ error: "Alumni not found" });
+    }
+  } catch (error) {
+    console.error("Error deleting alumni:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 exports.uploadProfilePicture = async function (req, res) {
     const file = req.file;

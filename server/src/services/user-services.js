@@ -195,51 +195,15 @@ exports.isEmailTaken = async (email, alumniID = null) => {
   }
 };
 
+exports.deleteAlumni = async (id) => {
+  try {
+    const result = await db.query("DELETE FROM person WHERE personID = ?", [id]);
+    return result[0].affectedRows;
+  } catch (error) {
+    throw error;
+  }
+};
 
-// exports.deleteAlumni = async (id) => {
-//   try {
-//     const [checkRows] = await db.query(
-//       "SELECT COUNT(*) AS count FROM alumni WHERE alumniID = ?",
-//       [id]
-//     );
-//     const alumniExists = checkRows[0]?.count > 0;
-
-//     if (alumniExists) {
-//       const [studentRows] = await db.query(
-//         "SELECT COUNT(*) AS count FROM student WHERE alumniID = ?",
-//         [id]
-//       );
-//       const isStudent = studentRows[0]?.count > 0;
-
-//       const [staffRows] = await db.query(
-//         "SELECT COUNT(*) AS count FROM staff WHERE alumniID = ?",
-//         [id]
-//       );
-//       const isStaff = staffRows[0]?.count > 0;
-
-//       if (isStudent) {
-//         await db.query("DELETE FROM student WHERE alumniID = ?", [id]);
-//       }
-
-//       if (isStaff) {
-//         await db.query("DELETE FROM staff WHERE alumniID = ?", [id]);
-//       }
-
-//       const [{ affectedRows }] = await db.query(
-//         "DELETE FROM alumni WHERE alumniID = ?",
-//         [id]
-//       );
-
-//       return affectedRows;
-//     } else {
-//       // alumninot found
-//       throw new Error("Alumni not found for the given alumniID");
-//     }
-//   } catch (error) {
-//     console.error("Error deleting alumni:", error);
-//     throw error;
-//   }
-// };
 
 
 exports.changePassword = async (personID, oldPassword, newPassword) => { // not working i am so confused

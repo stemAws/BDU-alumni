@@ -12,6 +12,7 @@ router.post("/addUser", UserController.addUser);
 router.post("/signin", UserController.signIn);
 router.get("/alumni/:id", UserController.getAlumniProfile);
 router.get("/alumni", UserController.getAllAlumni);
+router.delete("/alumni/:id", UserController.deleteAlumni)
 
 router.post("/uploadProfilePicture/:id", upload.single('profilePicture'), UserController.uploadProfilePicture);
 router.post("/uploadCoverPicture/:id", upload.single('coverPicture'), UserController.uploadCoverPicture);
