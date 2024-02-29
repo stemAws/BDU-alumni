@@ -39,7 +39,7 @@ exports.signIn = async function (req, res) {
 
     if (authenticationResult.success) {
       let token = await alumniService.getAlumniProfile(username);
-      token = token[0].alumniId;
+      token = token[0].personId;
       const realToken = jwt.sign({ token }, process.env.secretKey, {
           expiresIn: "30d",
       });

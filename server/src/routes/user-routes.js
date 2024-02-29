@@ -11,11 +11,11 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post("/addUser", UserController.addUser);
 router.post("/signin", UserController.signIn);
 router.get("/alumni/:id", UserController.getAlumniProfile);
-router.get("/alumni", UserController.getAllAlumni);
-router.delete("/alumni/:id", UserController.deleteAlumni)
+router.get("/alumni", verifyToken, UserController.getAllAlumni);
+router.delete("/alumni/:id", UserController.deleteAlumni); // needs a MW that will check if the requster is admin or not. 
 
-router.post("/uploadProfilePicture/:id", upload.single('profilePicture'), UserController.uploadProfilePicture);
-router.post("/uploadCoverPicture/:id", upload.single('coverPicture'), UserController.uploadCoverPicture);
+router.post("/uploadProfilePicture/:id", verifyToken, upload.single('profilePicture'), UserController.uploadProfilePicture);
+router.post("/uploadCoverPicture/:id", verifyToken, upload.single('coverPicture'), UserController.uploadCoverPicture);
 router.get("/getProfilePicture/:idOrUsername", UserController.getProfilePicture);
 router.get("/getCoverPicture/:idOrUsername", UserController.getCoverPicture);
 router.put("/alumni/:id", UserController.updateAlumni);
