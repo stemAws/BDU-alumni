@@ -24,12 +24,8 @@
     left: 0;
     width: 100%;
     height: fit-content;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     background-color: #000000a3;
-    mix-blend-mode: overlay;
-    z-index: 1100;
+   
 }
 .wellcome-text{
     color: #fff;
@@ -60,3 +56,11 @@ margin: 0;
     gap: 10px;
     
 }
+.nav-lists ul li:hover{
+color: #00B2FF;
+cursor: pointer;
+}
+.nav-lists ul li:hover{
+    color: #00B2FF;
+    cursor: pointer;
+    }

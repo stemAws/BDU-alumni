@@ -6,12 +6,9 @@ const Header = () => {
     <div className="overlay">
       <div className='header-container'>
         <NavBar />
-        <div className="overlay"> <img className='background-img'src={background} alt="" />
-        {/* <div className="overlay"></div> */}
-        </div>
-       
+        <img className='background-img'src={background} alt="" />
         <div className="wellcome-text">
-            <p className="top-title">Wellcome to Bahir Dar University</p>
+            <p className="top-title">Welcome to Bahir Dar University</p>
             <p className="bottom-title">This is the official site of Bahir Dar university alumni</p>
         </div>
     </div>
