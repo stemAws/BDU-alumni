@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const experienceController = require('../controllers/experience-controller');
+const { verifyToken } = require("../middleware/auth-middleware");
 
-router.get('/experiences/:idOrUsername', experienceController.getExperienceByIdOrUsername);
-router.delete('/experiences/:id', experienceController.deleteExperienceById);
-router.post('/experiences', experienceController.addExperience);
-router.put('/experiences/:experienceID', experienceController.updateExperienceById);
+router.post('/experiences', verifyToken, experienceController.addExperience);
+router.put('/experiences', verifyToken, experienceController.updateExperience);
+router.delete('/experiences/:experienceId', verifyToken, experienceController.deleteExperienceById);
+router.get('/experiences/:alumniId', experienceController.getExperience); // from effeciency perspective sometimes we have to skip the get verifications.
 
 module.exports = router;
