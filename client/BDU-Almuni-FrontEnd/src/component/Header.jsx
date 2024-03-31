@@ -3,7 +3,8 @@ import '../styles/header.css'
 import background from '../assets/images/photo_2024-02-25_15-58-46.jpg'
 const Header = () => {
   return (
-    <div className="overlay">
+    <div>
+      <div className="overlay">
       <div className='header-container'>
         <NavBar />
         <img className='background-img'src={background} alt="" />
@@ -13,6 +14,8 @@ const Header = () => {
         </div>
     </div>
     </div>
+    </div>
+    
   )
 }
 

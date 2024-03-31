@@ -1,25 +1,30 @@
-
+import '../styles/newsAndUpdates.css'
 const NewsAndUpdates = () => {
   return (
     <div className="news-and-updates-container">
         <div className="nUTitle">
-          <p>News And Updates</p>
+          <div className="circle-bg"></div>
+          <p><span className='blue-text'>News</span> And Updates</p>
         </div>
+        <div className="news-bottom">
         <div className="left-side">
           <div className="big-news-img-container">
             <div className="big-new-img">
             <img src="" alt="" />
             </div>
-            <div className="news-category">
-            <p>catagory</p>
+            <div className="catagory-detail">
+              <div className="news-category">
+              catagory
+              </div>
+              <p className="news-small-detail">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium, sunt alias. Fugit dolor, mollitia eum vitae a odio hic molestias distinctio in vel soluta voluptatem tempora icing elit...</p>
+              <p className="news-date">feb 12 - 2024</p>
             </div>
-            <p className="news-small-detail">great news</p>
-            <p className="news-date">feb 12 - 2024</p>
+            
           </div>
           <div className="headline-container">
           <div className="headline-box">HeadLine</div>
           <div className="headline-texts">
-            <p>he was a rich man</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto pariatur elit am</p>
           </div>
           </div>
         </div>
@@ -33,12 +38,30 @@ const NewsAndUpdates = () => {
         </div>
         <div className="categorized-news-container">
         <div className="each-news">
-          <div className="small-news-img"></div>
-          <p className="news-detail">it was crazy</p>
-          <p className="news-date">feb 12 - 2024</p>
+          <div className="small-news-img">
+            <img src="" alt="" />
+          </div>
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor praesentium ...
+          <span className="news-date-side">feb 12 - 2024</span></p>
+        </div>
+        <div className="each-news">
+          <div className="small-news-img">
+            <img src="" alt="" />
+          </div>
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor praesentium ...
+          <span className="news-date-side">feb 12 - 2024</span></p>
+        </div>
+        <div className="each-news">
+          <div className="small-news-img">
+            <img src="" alt="" />
+          </div>
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor praesentium ...
+          <span className="news-date-side">feb 12 - 2024</span></p>
         </div>
         </div>
         </div>
+        </div>
+        
     </div>
   )
 }

@@ -1,0 +1,142 @@
+.news-and-updates-container{
+    position: relative;
+    margin-top: 50px;
+}
+.nUTitle{
+    position: relative;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+   
+}
+.nUTitle>.circle-bg{
+    position: absolute;
+    background-color: #CAEFFF;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-right: 65px;
+    z-index: -1;
+}
+.nUTitle>p{
+    font: 400 40px 'Inter';
+}
+.blue-text{
+    color: #00B2FF;
+}
+.news-bottom{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+.left-side{
+    width: 40%;
+
+}
+.big-news-img-container{
+    height: 400px;
+    /* background-color: #f50000; */
+    width: 100%;
+}
+.big-new-img{
+    background-color: #00000047;
+    height: 100%;
+    width: 100%;
+}
+.big-new-img>img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.catagory-detail{
+    margin: -125px 0 0 20px;
+}
+.news-category{
+    background-color: #009EE3;
+    padding: 5px;
+    width: fit-content;
+    text-transform: capitalize;
+    color: #e7e7e7;
+    margin-left: 5px;
+}
+.news-small-detail{
+    color: #505050;
+    padding: 5px;
+    font-size: 16px;
+}
+.news-date{
+    text-transform: capitalize;
+    color: #707070;
+    padding-left: 5px;
+}
+.headline-container{
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+.headline-box{
+    background-color: #0C8CE9;
+    width: fit-content;
+    color: #fff;
+     padding: 5px; 
+     margin-right: 10px;
+}
+.right-side{
+    width: 40%;
+}
+.news-timing-nav>ul{
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    height: 30px;
+    align-items: center;
+}
+.news-timing-nav{
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+.news-timing-nav>ul{
+    border-bottom: 1px solid #6c6c6c6f;
+    width: 170px;
+    text-transform: capitalize;
+    font: 400 12px 'Inter';
+    list-style: none;
+    display: flex;
+    
+}
+
+.news-timing-nav ul li{
+    position: relative;
+    min-width: fit-content;
+    cursor: pointer;
+    padding: 0;
+}
+.categorized-news-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.each-news{
+    display: flex;
+    width: 400px;
+    height: 120px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+}
+.small-news-img{
+    width: 250px;
+    height: 150px;
+}
+.news-detail{
+    padding-top: 15px;
+    color: #727272;
+    width: 65%;
+}
+.news-date-side{
+    text-transform: capitalize;
+    display: block;
+    margin-top: 10px;
+}
