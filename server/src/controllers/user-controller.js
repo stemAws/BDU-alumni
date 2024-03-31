@@ -46,11 +46,11 @@ exports.signIn = async function (req, res) {
         expiresIn: "30d",
       });
 
+      res.cookie('token', realToken, { httpOnly: true }).cookie('id', token, { httpOnly: true });  
+    
       res.status(200).json({
-        success: true,
-        message: "Authentication successful",
-        token,
-        realToken,
+          success: true,
+          message: "Authentication successful",
       });
     } else {
       res
