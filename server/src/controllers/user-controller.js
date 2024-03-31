@@ -43,12 +43,12 @@ exports.signIn = async function (req, res) {
       const realToken = jwt.sign({ token }, process.env.secretKey, {
           expiresIn: "30d",
       });
+
+      res.cookie('token', realToken, { httpOnly: true }).cookie('id', token, { httpOnly: true });  
     
       res.status(200).json({
           success: true,
           message: "Authentication successful",
-          token,
-          realToken,
       });
     } else {
         res.status(401).json({ success: false, message: "Authentication failed" });

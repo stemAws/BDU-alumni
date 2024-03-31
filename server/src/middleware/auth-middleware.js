@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 async function verifyToken(req, res, next, returnSuccessMessage = false) {
-    try {
-        const token = req.headers.authorization;
+ try {
+        const token = req.cookies.token;
 
         if (!token) {
             return res.status(403).json({ error: 'Token not provided' });
@@ -12,11 +12,11 @@ async function verifyToken(req, res, next, returnSuccessMessage = false) {
         
         const personId = decoded.token;
 
-        if (req.headers.personid == personId) {
+        if (req.cookies.id == personId) {
             if (returnSuccessMessage) {
                 return res.status(200).json({ message: 'Token verified successfully' });
             }
-        next();
+            next();
         } else {
             return res.status(403).json({ error: 'Unauthorized access' });
         }
