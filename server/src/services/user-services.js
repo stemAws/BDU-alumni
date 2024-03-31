@@ -1,41 +1,50 @@
-const db = require('../config/db');
+const db = require("../config/db");
 const bcrypt = require("bcrypt");
-const transporter = require('../config/mailerConfig')
+const transporter = require("../config/mailerConfig");
 const jwt = require("jsonwebtoken");
-require('dotenv').config();
+require("dotenv").config();
 
 exports.addUser = async (alumniData) => {
-  const { fullName, gender, email, role, username, password, verified } = alumniData;
+  const { fullName, gender, email, role, username, password, verified } =
+    alumniData;
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await db.query(`
+  await db.query(
+    `
     INSERT INTO Person (fullName, gender, email, username, password, verified)
-    VALUES (?, ?, ?, ?, ?, ?);`, [fullName, gender, email, username, hashedPassword, verified]);
+    VALUES (?, ?, ?, ?, ?, ?);`,
+    [fullName, gender, email, username, hashedPassword, verified]
+  );
 
-  if (role === 'alumni') {
+  if (role === "alumni") {
     await db.query(`INSERT INTO Alumni (personId)
-    VALUES (LAST_INSERT_ID());`)
-  } else if (role === 'admin') {
+    VALUES (LAST_INSERT_ID());`);
+    await db.query(`INSERT INTO custom (alumniId)
+    VALUES (LAST_INSERT_ID());`);
+  } else if (role === "admin") {
     await db.query(`
     INSERT INTO WebsiteAdmin (personId)
-    VALUES (LAST_INSERT_ID());`)
+    VALUES (LAST_INSERT_ID());`);
   } else {
-    throw new Error('Unsupported role');
+    throw new Error("Unsupported role");
   }
 };
 
 exports.authenticateUser = async (username, password, isAdmin) => {
   try {
     let result;
-    if(isAdmin){
+    if (isAdmin) {
       [result] = await db.query(
-        "SELECT * FROM Person WHERE username = ? AND verified = ? AND isAdmin = ?", [username, 1, 1]);
-    }
-    else{
+        "SELECT * FROM Person WHERE username = ? AND verified = ? AND isAdmin = ?",
+        [username, 1, 1]
+      );
+    } else {
       [result] = await db.query(
-        "SELECT * FROM Person WHERE username = ? AND verified = ?", [username, 1]);
+        "SELECT * FROM Person WHERE username = ? AND verified = ?",
+        [username, 1]
+      );
     }
-    
+
     if (result.length > 0) {
       const hashedPassword = result[0].password;
       const passwordMatch = await bcrypt.compare(password, hashedPassword);
@@ -46,7 +55,7 @@ exports.authenticateUser = async (username, password, isAdmin) => {
           "UPDATE Person SET lastLogin = CURRENT_TIMESTAMP WHERE personId = ?",
           [userId]
         );
-                
+
         return { success: true };
       }
     }
@@ -85,11 +94,10 @@ exports.getAlumniProfile = async (id) => {
       return null;
     }
   } catch (error) {
-    console.error('Error retrieving alumni information:', error);
+    console.error("Error retrieving alumni information:", error);
     return null;
   }
 };
-
 
 exports.getAllAlumni = async () => {
   try {
@@ -132,7 +140,19 @@ exports.updateAlumniCoverPhoto = async (alumniID, coverPhoto) => {
 
 exports.updateAlumni = async (id, alumniData) => {
   try {
-    const { fullName, gender, email, phoneNumber, username, bio, currentLocation, isNotable, recieveNewsletter, socialMedia, privacySetting } = alumniData;
+    const {
+      fullName,
+      gender,
+      email,
+      phoneNumber,
+      username,
+      bio,
+      currentLocation,
+      isNotable,
+      recieveNewsletter,
+      socialMedia,
+      privacySetting,
+    } = alumniData;
 
     await db.query(
       `UPDATE Person
@@ -145,7 +165,14 @@ exports.updateAlumni = async (id, alumniData) => {
       `UPDATE Alumni
        SET currentLocation = ?, isNotable = ?, recieveNewsletter = ?, socialMedia = ?, privacySetting = ?
        WHERE personId = ?`,
-      [currentLocation, isNotable, recieveNewsletter, socialMedia, privacySetting, id]
+      [
+        currentLocation,
+        isNotable,
+        recieveNewsletter,
+        socialMedia,
+        privacySetting,
+        id,
+      ]
     );
 
     return { success: true };
@@ -197,36 +224,41 @@ exports.isEmailTaken = async (email, alumniID = null) => {
 
 exports.deleteAlumni = async (id) => {
   try {
-    const result = await db.query("DELETE FROM person WHERE personID = ?", [id]);
+    const result = await db.query("DELETE FROM person WHERE personID = ?", [
+      id,
+    ]);
     return result[0].affectedRows;
   } catch (error) {
     throw error;
   }
 };
 
-
-
-exports.changePassword = async (personID, oldPassword, newPassword) => { // not working i am so confused
+exports.changePassword = async (personID, oldPassword, newPassword) => {
+  // not working i am so confused
   try {
-    const [result] = await db.query("SELECT password FROM person WHERE personID = ?", personID);
+    const [result] = await db.query(
+      "SELECT password FROM person WHERE personID = ?",
+      personID
+    );
     if (!result || !result.length) {
-      throw new Error('Person not found');
+      throw new Error("Person not found");
     }
     const hashedPassword = result[0].password;
-    console.log(hashedPassword)
-    console.log(oldPassword)
+    console.log(hashedPassword);
+    console.log(oldPassword);
     const passwordMatch = await bcrypt.compare(oldPassword, hashedPassword);
-    console.log(passwordMatch)
-    
+    console.log(passwordMatch);
+
     if (!passwordMatch) {
-      throw new Error('Current password is incorrect');
+      throw new Error("Current password is incorrect");
     }
 
     const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
     const [{ affectedRows }] = await db.query(
       "UPDATE person SET password = ? WHERE personID = ?",
-      [newHashedPassword, personID]);
+      [newHashedPassword, personID]
+    );
 
     return affectedRows;
   } catch (error) {
@@ -234,8 +266,6 @@ exports.changePassword = async (personID, oldPassword, newPassword) => { // not 
     throw error;
   }
 };
-
-
 
 // exports.getNotable = async () => {
 //   try {
@@ -264,60 +294,84 @@ exports.changePassword = async (personID, oldPassword, newPassword) => { // not 
 
 exports.sendEmail = async (to, subject, text, html) => {
   const mailOptions = {
-    from: 'bahirdarstemalumni@gmail.com',
+    from: "bahirdarstemalumni@gmail.com",
     to: to,
     subject: subject,
     text: text,
-    html: html
+    html: html,
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully:', info.response);
+    console.log("Email sent successfully:", info.response);
   } catch (error) {
-    console.error('Error occurred while sending email:', error);
+    console.error("Error occurred while sending email:", error);
     throw error;
   }
-}
+};
 
 exports.sendConfirmation = async (email) => {
   try {
-    const [result] = await db.query("SELECT COUNT(*) AS userCount FROM person WHERE email = ?", [email]);
+    const [result] = await db.query(
+      "SELECT COUNT(*) AS userCount FROM person WHERE email = ?",
+      [email]
+    );
     const userCount = result[0].userCount;
 
-    if (userCount > 0) {      
+    if (userCount > 0) {
       const confirmationToken = generateConfirmationToken(email);
 
       return confirmationToken;
     } else {
-      throw new Error('User with the provided email address does not exist.');
+      throw new Error("User with the provided email address does not exist.");
     }
   } catch (error) {
     console.error("Error changing password to default:", error);
     throw error;
   }
-}
+};
 
 function generateConfirmationToken(email) {
-  const token = jwt.sign({email}, process.env.secretKey, { expiresIn: '1h' });
+  const token = jwt.sign({ email }, process.env.secretKey, { expiresIn: "1h" });
   return token;
 }
 
-exports.confirmPasswordChange = async function (email, confirmationToken, newPassword) {
+exports.confirmPasswordChange = async function (
+  email,
+  confirmationToken,
+  newPassword
+) {
   try {
-      const decoded = jwt.verify(confirmationToken, process.env.secretKey);
-      const { email: tokenEmail } = decoded;
+    const decoded = jwt.verify(confirmationToken, process.env.secretKey);
+    const { email: tokenEmail } = decoded;
 
-      if (tokenEmail !== email) {
-          throw new Error('Invalid confirmation token');
-      }
+    if (tokenEmail !== email) {
+      throw new Error("Invalid confirmation token");
+    }
 
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
-      await db.query("UPDATE person SET password = ? WHERE email = ?", [hashedPassword, email]);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await db.query("UPDATE person SET password = ? WHERE email = ?", [
+      hashedPassword,
+      email,
+    ]);
 
-      return { success: true, message: 'Password changed successfully' };
+    return { success: true, message: "Password changed successfully" };
   } catch (error) {
-      console.error('Error confirming password change:', error);
-      return { success: false, error: 'Invalid or expired confirmation token' };
+    console.error("Error confirming password change:", error);
+    return { success: false, error: "Invalid or expired confirmation token" };
+  }
+};
+
+exports.updateCustom = async (alumniId, privacyData) => {
+  try {
+    const { phoneNumber, recieveNewsLetter } = privacyData;
+    await db.query(
+      `UPDATE custom SET showPhoneNumber = ?, recieveNewsLetter = ? WHERE alumniId = ?`, 
+      [phoneNumber, recieveNewsLetter, alumniId]
+    );
+    return { success: true, message: "Custom settings updated successfully." }; 
+  } catch (error) {
+    console.error("Error updating custom: ", error);
+    throw error;
   }
 };

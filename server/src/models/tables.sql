@@ -37,13 +37,13 @@ CREATE TABLE WebsiteAdmin (
 CREATE TABLE Custom (
     customId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     alumniId INT UNIQUE,
-    contactInfo BOOLEAN DEFAULT 0,
-    posts BOOLEAN DEFAULT 0,
-    recieveNewsletter BOOLEAN, 
+    showPhoneNumber BOOLEAN DEFAULT 0,
+    recieveNewsLetter BOOLEAN DEFAULT 1, 
     FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
 
 CREATE TABLE Education (
     educationId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
