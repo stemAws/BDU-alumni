@@ -1,0 +1,84 @@
+.home{
+  flex: 4;
+}
+.NotableAlumniContainer{
+  color: black;
+  margin-top: 20px;
+  width: 100vw;
+  height: 300px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  /* white-space: nowrap; */
+  overflow-x: auto;
+}
+.NotableAlumniContainer h3{
+padding: 20px;
+}
+.NotableAlumni{
+  /* gap: 20px; */
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  margin: 20px;
+}
+.IndividualNotableAlumni{
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+  
+  width: 300px;
+  min-width: fit-content;
+  color: black;
+  height: fit-content;
+  padding: 20px;
+  /* -webkit-box-shadow: 0px 0px 5px  rgba(138, 137, 137, 0.5);
+  box-shadow: 0px 0px 5px  rgba(0, 0, 0, 0.5); */
+  border-radius: 10px;
+  border: 1px solid #bbbbbb;
+  gap: 10px;
+  overflow: hidden;
+}
+.alumniDetail{
+  font: 300 18px 'Poppins';
+  margin: 10px;
+}
+.alumniDetail p{
+  margin: 4px;
+  padding: 0;
+  display: inline;
+}
+.alumniDetail a{
+  color: rgb(70, 68, 68);
+  font-family: unset;
+}
+.img{
+  height: 60px;
+}
+.link-cont{
+  margin: 20px;
+}
+/* .link-cont a{
+  padding-top: 10px;
+  margin-top: 10px;
+} */
+@media (max-width:650px){
+  .NotableAlumniContainer{
+      color: black;
+      margin-top: 60px;
+      width: 100%;
+      height: 400px;
+      -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+      box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+      /* white-space: nowrap; */
+      /* overflow-y: auto; */
+  }
+  .NotableAlumni {
+  /* gap: 20px; */
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  overflow-y: auto;
+}
+}
