@@ -1,4 +1,8 @@
 import '../styles/newsAndUpdates.css'
+import newsimg from '../assets/images/photo_2024-02-25_23-41-53.jpg'
+import newsSmallImg from '../assets/images/photo_2024-02-25_23-38-22.jpg'
+import newsSmallImg2 from '../assets/images/photo_2024-02-27_14-20-33.jpg'
+import newsSmallImg3 from '../assets/images/photo_2024-02-25_16-12-11.jpg'
 const NewsAndUpdates = () => {
   return (
     <div className="news-and-updates-container">
@@ -10,7 +14,7 @@ const NewsAndUpdates = () => {
         <div className="left-side">
           <div className="big-news-img-container">
             <div className="big-new-img">
-            <img src="" alt="" />
+            <img src={newsimg} alt="" />
             </div>
             <div className="catagory-detail">
               <div className="news-category">
@@ -39,23 +43,30 @@ const NewsAndUpdates = () => {
         <div className="categorized-news-container">
         <div className="each-news">
           <div className="small-news-img">
-            <img src="" alt="" />
+            <img src={newsSmallImg} alt="" />
           </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor praesentium ...
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
           <span className="news-date-side">feb 12 - 2024</span></p>
         </div>
         <div className="each-news">
           <div className="small-news-img">
-            <img src="" alt="" />
+            <img src={newsSmallImg2} alt="" />
           </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor praesentium ...
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
           <span className="news-date-side">feb 12 - 2024</span></p>
         </div>
         <div className="each-news">
           <div className="small-news-img">
-            <img src="" alt="" />
+            <img src={newsSmallImg3} alt="" />
           </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor praesentium ...
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
+          <span className="news-date-side">feb 12 - 2024</span></p>
+        </div>
+        <div className="each-news">
+          <div className="small-news-img">
+            <img src={newsSmallImg} alt="" />
+          </div>
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
           <span className="news-date-side">feb 12 - 2024</span></p>
         </div>
         </div>
