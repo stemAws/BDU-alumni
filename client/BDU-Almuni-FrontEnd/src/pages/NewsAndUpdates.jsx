@@ -61,7 +61,6 @@ const NewsAndUpdates = () => {
         </div>
         </div>
         </div>
-        
     </div>
   )
 }
