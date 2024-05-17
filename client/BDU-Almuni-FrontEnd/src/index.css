@@ -16,3 +16,19 @@ h1,h2,h3,h4,h5,h6,p{
 ::-webkit-scrollbar {
   width: 0px;
 }
+.btn{
+  background-color: #fff;
+  font: 100  14px 'Saira', sans-serif ;
+  width: 90px;
+  height: 30px;
+  cursor: pointer;
+  transition: transform 80ms ease-in;
+  border-radius: 10px;
+}
+
+.btn:active{
+  transform: scale(0.95);
+}
+.btn:focus{
+  outline: none;
+}
