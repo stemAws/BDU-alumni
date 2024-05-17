@@ -1,5 +1,8 @@
-
+import Button from "./Button"
+import { useContext } from "react"
+import { SigninContext } from "../pages/MainPage"
 const NavBar = () => {
+  const { signin, setsignin } = useContext(SigninContext);
   return (
     <div className="navBar-container">
         <div className="logo"></div>
@@ -15,6 +18,7 @@ const NavBar = () => {
                 <li>chapters</li>
                 <li>about</li>
             </ul>
+            <Button onClick={()=>setsignin(true)} id={"signin-btn"} text={"Sign In"} />
         </nav>
     </div>
   )
