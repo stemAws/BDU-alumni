@@ -46,6 +46,10 @@
     position: relative;
 padding: 0;
 margin: 0;
+display: flex;
+gap: 10px;
+height: 50px;
+align-items: center;
 }
 .nav-lists>ul{
     text-transform: uppercase;
@@ -80,3 +84,11 @@ transition: width 0.5s ease;
             width: 100%;
           }
 
+ #signin-btn{
+            background-color: #0C8CE9;
+            width: 90px;
+            height: 30px;
+            color: #ffffff;
+            border: none;
+
+        }

@@ -1,0 +1,544 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&family=Saira+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Saira:wght@100;200;300;400&display=swap');
+.sign_container{
+    position: absolute;
+    top: 0;
+height: 100%;
+transition: all 0.6s ease-in-out;
+}
+
+.sign_up{
+    color: #000000;
+    left: 0;
+    width: 50%;
+    z-index: 23;
+    opacity: 0;
+}
+.sign_with_google{  
+    box-sizing:content-box;
+     display: flex;
+   justify-content: flex-start;
+   align-items: center;
+    background-color: #00000088;
+    width: 180px;
+    height: fit-content;
+    padding:0;
+    margin: 10px 0 10px 100px;
+    border-radius: 20px;
+    font: 300 14px 'saira';
+    color: #fff;
+}
+.hello_wellcome{
+    margin-bottom: 20px;
+}
+.google_icon {
+    margin-right: 5px;
+    background-color: #00000088;
+    width: 30px;
+    height: 30px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+    border-radius: 20px;
+    border: 1px solid #9c9a9ab5;
+}
+.sign_Container .icon{
+    margin: 2px 2px 0px 97%;
+    border-radius: 50%;
+    width: 21px;
+    height: 21px;
+    text-align: center;
+    padding-top: 1px;
+}
+.sign_in .sign_with_google {
+    margin-left: 0;
+    
+}
+.sign_with_google:hover {
+    background-color: #00000079;
+    cursor: pointer;
+}
+.sign_with_google:hover > .google_icon{
+    background-color: #00000079;
+    cursor: pointer;
+}
+.overlay_container{
+    position: absolute;
+    top: 0;
+    /* left: 50%; */
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+}
+.overlaySign{
+    background-color:#0C8CE9;
+    color: #fff;
+    position: relative;
+    left:-100%;
+    height:100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+.overlay_panel{
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+    text-align: center;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+
+}
+.overlay_panel .btn{
+    background-color: transparent;
+    border:1px solid #ffffff;
+    margin-top: 20px;
+}
+.overlay_panel>h1{
+    font:normal 30px 'Saira Condensed';
+    line-height: 0;
+}
+.overlay_right{
+    right: 0;
+    transform: translateX(0);
+}
+.overlay_left{
+    transform: translateX();
+
+}
+.pop_container.right_panel_active .signin_container{
+    transform: translateX(100%);
+}
+.pop_container.right_panel_active .overlay_container{
+    transform: translateX(-100%);
+}
+.pop_container.right_panel_active .sign_up{
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 30;
+}
+.pop_container.right_panel_active .overlaySign{
+    transform: translateX(50%);
+
+}
+.signup_form{
+   margin-left: 50px;
+  
+}
+.form_input{
+    z-index: 0;
+    outline: none;
+}
+.sign_up>h1{
+    font:normal 35px 'Saira Condensed';
+    margin:10px 0 0 100px;
+}
+.sign_in h1 {
+    margin:70px 0 0 0;
+}
+.signup_form .inputs{
+    background-image: none;
+    padding: 0 40px 0 20px;
+}
+.sign_up>.question{
+    margin: 20px;
+}
+.sign_up .btn{
+    margin: 20px 0  0 50px;
+}
+.error{
+    color: red;
+    margin: 0 0 0 15px;
+    display: none;
+}
+.signup_form .inputs:invalid[focused="true"]{
+    border: 1px solid red;
+}
+.signup_form .inputs:invalid[focused="true"] ~ .error{
+display: block;
+}
+.signin_overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.pop_container{
+    background: rgb(255, 255, 255);
+box-shadow: 0px 4px 100px 23px #000000;
+position: relative;
+overflow:hidden ;
+width:800px;
+max-width: 800px;
+z-index: 21;
+height: 550px;
+}
+.sign_in{
+position: relative;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 20px;
+width: 50%;
+height: 400px;
+z-index: 25;
+color: #000000;
+padding-right: 10px;
+margin:60px 0 0 0; 
+left: 50%;
+}
+ .authentication_Failed{
+    color: red;
+    margin-left: 20px;
+    font: 300 12px 'saira';
+}
+.sign_up .authentication_Failed{
+    margin:-30px 0 20px 20%;
+}
+.created_success{
+    margin-top: 50%;
+    color: green;
+    font-family: 'saira';
+}
+.head_to_left{
+margin-left: 9%;
+font-family: 'saira';
+}
+.sign_up div .inputs{
+    margin-bottom: 5px;
+}
+.sign_in>a{
+    color: #000000;
+    align-self: flex-start;
+    margin-left: 70px;
+    font-family: 'saira';
+}
+.inputs{
+    box-sizing: border-box;
+    width:300px;
+    height: 40px;
+    border-radius: 50px;
+    padding: 0 40px;   
+    background: rgba(162, 194, 218, 0.06) url('/src/components/asset/img/user\ \(3\).png') 10px center no-repeat;
+    border: 1px solid #758FA2;
+    background-size: 20px; 
+}
+
+  .inputs[type="date"]::after {
+    content: attr(placeholder);
+    color: rgb(111, 111, 111);
+  }
+ .student{
+    display: flex;
+    margin-left: 20px;
+ }
+ .staff{
+    display: flex;
+    margin-left: 20px;
+ }
+.role{
+    display: flex;
+    flex-direction: row;
+    font:300 14px 'Saira';
+    width: 275px;
+    height: 40px;
+    border:1px solid #758FA2;
+    border-radius: 20px;
+    padding: 0 0 0 20px;
+    align-items: center;
+}
+.overlay_panel .icon {
+    width: 20px;
+    height: 20px;
+    margin:0 0 520px 370px;
+    border-radius: 20px;
+    position: absolute;
+}
+.sign_up .icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    margin: 5px 0 0 375px;
+}
+.sign_up .icon>img{
+    margin-left: 5px;
+}
+.icon:hover{
+    background-color: rgb(78, 163, 223);
+    cursor: pointer;
+}
+.icon>img{
+    width: 10px;
+    height: 10px;
+   
+}
+.overlay_panel.overlay_left>.icon{
+    display: none;
+}
+.sign_in>.icon{
+    display: none;
+}
+.password{
+    background-image: url(/src/components/asset/img/padlock.png);
+}
+.sign_in>.btn{
+    margin-left: 185px;
+    
+}
+.sign_in h1{
+font:normal 40px 'Saira Condensed';
+line-height: 90%;
+text-transform: uppercase;
+margin: 0 0 30px 0;
+}
+.question{
+    font:300 12px 'Saira';
+    text-transform: capitalize;
+    width: 300px;
+}
+.pass{
+    box-sizing: border-box;
+    width:300px;
+    height: 40px;
+    border-radius: 50px;
+    z-index: 100;
+
+}
+.pass .eye-icon {
+    width: 20px;
+    height: 20px;
+    position: relative;
+  left: 270px;
+   bottom: 30px;
+}
+
+@media(min-width:650px) and (max-width:800px){
+
+    .pop_container{
+        width:650px;
+        margin: 0 0 0 20px;
+      }
+    .sign_in > h1{
+        font-size: 25px;
+        margin:20px 0 20px 0px;
+        text-align: center;
+    }
+    .sign_in .inputs{
+        width: 260px;
+        margin-left: 40px;
+    }
+    .overlay_panel>h1{
+        font-size: 25px;
+    }
+    .sign_up h1{
+        font-size: 25px;
+        margin: 30px 0 30px 0px;
+        text-align: center;
+    }
+    .sign_up .inputs{
+        width: 260px;
+    }
+    .role{
+        width: 240px;
+    }
+    .overlay_panel .icon {
+        margin:0 0 520px 300px;
+        
+    }
+    .sign_up .icon {
+        margin: 5px 0 0 300px;
+    }
+    .sign_up .icon>img{
+        margin-left: 5px;
+    }
+}
+@media (max-width:649px) {
+    .pop_container{
+        flex-direction: column;
+        width: 370px;
+        height: 640px;
+        border-radius: 20px;
+       
+    }
+    .sign_Container .icon {
+        margin: 5px 0 0 93%;
+    }
+    .sign_in h1 {
+        margin: 80px 0 20px 0;
+    }
+    .sign_in .inputs{
+        margin-bottom: 0;
+    }
+    .sign_up .icon {
+        margin: 20px 0 0 50px;
+    }
+    .sign_up h1{
+        font-size: 24px;
+        margin: 50px 0 10px 0px;
+        text-align: center;
+    }
+    .signup_form{
+        margin-left: 40px;
+    }
+    .sign_up .inputs{
+        height: 40px;
+        margin-left: 0px;
+    }
+    .sign_up .btn{
+        margin-top: 10px;
+    }
+    
+    .signin_container{
+        position: absolute;
+        width: 100%;
+    }
+    .sign_in{
+        position: relative;
+        width: 100%;
+        height: 50%; 
+        top: 50%;
+        z-index: 2;
+        margin-top: 0;
+        left: 0;
+    }
+    
+    .sign_up{
+        position: relative;
+        width: 100%;
+        height: 50%; 
+        top: 0;
+        z-index: 1;
+        opacity: 0;
+
+    }
+    .sign_up>h1{
+        margin-top: 15px;
+    }
+
+    .overlay_container{
+        position: absolute;
+        width: 100%;
+        height: 30%;
+        left: 0;
+        top: 70%;
+        overflow: hidden;
+        transition: transform 0.6s ease-in-out;
+        z-index: 100;
+    }
+    .overlaySign{
+        position: relative;
+        top: -100%;
+        left: 0%;
+        width: 100%;
+        height: 200%;
+        transform: translateY(0);
+        transition: transform 0.6s ease-in-out;
+    }
+
+    .overlay_panel{
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 50%;
+        width: 100%;
+        text-align: center;
+        transform: translateY(0);
+        transition: transform 0.6s ease-in-out;
+    
+    }
+    .overlay_panel .btn{
+        background-color: transparent;
+        border:1px solid #ffffff;
+        margin-top: 20px;
+    }
+    .overlay_right{
+        top: 50%;
+        transform: translateY(0);
+    }
+    .overlay_left{
+        transform: translateY(-20%);
+        justify-content: flex-end;
+    }
+    .pop_container.right_panel_active .signin_container{
+        transform: translateY(200%);
+    }
+    .pop_container.right_panel_active .overlay_container{
+        transform: translateY(-250%);
+    }
+    .pop_container.right_panel_active .sign_up{
+        transform: translateY(30%);
+        opacity: 1;
+        z-index: 30;
+    }
+    .pop_container.right_panel_active .overlaySign{
+        transform: translateY(50%);
+    
+    }
+
+    .overlay_panel .question{
+       font-size: 10px;
+       margin-top: 5px;
+    }
+    .overlay_panel>h1{
+        font-size: 25px;
+        margin-bottom: 5px;
+    }
+    .overlay_panel .icon {
+       display: none;
+        
+    }
+    .sign_up .icon {
+        display: none;
+    }
+    .sign_up .icon>img{
+        display: none;
+
+    }
+    .overlay_panel.overlay_left>.icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+        margin: 5px 0 100px 340px;
+    }
+    .overlay_panel.overlay_left>.icon>img{
+        margin-left: 5px;
+    }
+
+    .sign_in>.icon {
+        display: block;
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+        margin: 5px 0 0px 340px;
+    }
+    .sign_in>.icon>img{
+        margin-left: 5px;
+    }
+}
+
+
+
+
+
+
+
+
