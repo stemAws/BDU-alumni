@@ -17,11 +17,13 @@ const NewsAndUpdates = () => {
             <img src={newsimg} alt="" />
             </div>
             <div className="catagory-detail">
+              <div>
               <div className="news-category">
-              catagory
+              Technology
               </div>
-              <p className="news-small-detail">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium, sunt alias. Fugit dolor, mollitia eum vitae a odio hic molestias distinctio in vel soluta voluptatem tempora icing elit...</p>
-              <p className="news-date">feb 12 - 2024</p>
+              <p className="news-small-detail">Berhane Mewa who is a former graduate of Poly-TechnicLorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+              </div>
+              <p className="news-date">Bahir dar University, Washera Hall FEB 25 2023 </p>
             </div>
             
           </div>
@@ -58,6 +60,13 @@ const NewsAndUpdates = () => {
         <div className="each-news">
           <div className="small-news-img">
             <img src={newsSmallImg3} alt="" />
+          </div>
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
+          <span className="news-date-side">feb 12 - 2024</span></p>
+        </div>
+        <div className="each-news">
+          <div className="small-news-img">
+            <img src={newsSmallImg} alt="" />
           </div>
           <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
           <span className="news-date-side">feb 12 - 2024</span></p>
