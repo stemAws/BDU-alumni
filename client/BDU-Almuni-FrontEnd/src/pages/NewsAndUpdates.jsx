@@ -3,7 +3,21 @@ import newsimg from '../assets/images/photo_2024-02-25_23-41-53.jpg'
 import newsSmallImg from '../assets/images/photo_2024-02-25_23-38-22.jpg'
 import newsSmallImg2 from '../assets/images/photo_2024-02-27_14-20-33.jpg'
 import newsSmallImg3 from '../assets/images/photo_2024-02-25_16-12-11.jpg'
+import { useEffect, useState } from 'react'
 const NewsAndUpdates = () => {
+  const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
+  const headlines = [
+    "Breaking News: Lorem ipsum dolor sit amet consectetur adipisicing elit." ,
+    "Weather Alert: Magni veritatis quidem quibusdam quam doloribus minus eveniet mollitia tempora",
+    "Sports: fugiat eos consectetur consequuntur inventore",
+    "Technology: fugiat eos consectetur consequuntur inventore aspernatur, libero aliquam fuga odit in consequatur"
+  ];
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeadlineIndex(prevIndex => (prevIndex + 1) % headlines.length);
+    },3000); 
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="news-and-updates-container">
         <div className="nUTitle">
@@ -30,7 +44,7 @@ const NewsAndUpdates = () => {
           <div className="headline-container">
           <div className="headline-box">HeadLine</div>
           <div className="headline-texts">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto pariatur elit am</p>
+            <p>{headlines[currentHeadlineIndex]}</p>
           </div>
           </div>
         </div>
@@ -81,6 +95,14 @@ const NewsAndUpdates = () => {
         </div>
         </div>
         </div>
+      <div className="top-stories">
+      <div className="circle-bg"></div>
+      <div className="the-line"></div>
+      <div className="line-cover"></div>
+      <p className="top-stories-title">
+        <span className="blue-text">TOP</span>STORIES
+      </p>
+      </div>
     </div>
   )
 }
