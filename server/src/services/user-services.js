@@ -366,12 +366,33 @@ exports.updateCustom = async (alumniId, privacyData) => {
   try {
     const { phoneNumber, recieveNewsLetter } = privacyData;
     await db.query(
-      `UPDATE custom SET showPhoneNumber = ?, recieveNewsLetter = ? WHERE alumniId = ?`, 
+      `UPDATE custom SET showPhoneNumber = ?, recieveNewsLetter = ? WHERE alumniId = ?`,
       [phoneNumber, recieveNewsLetter, alumniId]
     );
-    return { success: true, message: "Custom settings updated successfully." }; 
+    return { success: true, message: "Custom settings updated successfully." };
   } catch (error) {
     console.error("Error updating custom: ", error);
+    throw error;
+  }
+};
+
+exports.getAlumniDirectory = async (searchBy, searchByValue) => {
+  try {
+    let q = `SELECT fullName, username, profilePicture FROM education ed JOIN experience ex JOIN alumni a JOIN person p WHERE ed.alumniId = a.alumniId AND a.personId = p.personId AND ex.alumniId = ed.alumniId AND ed.institution = 'Bahir Dar University'`;
+    if (searchBy === "department") {
+      q += ` AND ed.major = "${searchByValue}"`;
+    } else if (searchBy === "degree") {
+      q += ` AND ed.degree = "${searchByValue}"`;
+    } else if (searchBy === "graduatingYear") {
+      q += ` AND ed.graduatingYear = "${searchByValue}"`;
+    } else if (searchBy === "industry") {
+      q += ` AND ex.industry = "${searchByValue}"`;
+    }
+    const queryResult = await db.query(q);
+
+    return queryResult[0];
+  } catch (error) {
+    console.error("Error fetching alumni:", error);
     throw error;
   }
 };
