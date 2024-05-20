@@ -57,5 +57,6 @@ router.post(
   UserController.confirmPasswordChange
 );
 router.put("/updateCustom/:alumniId", UserController.updateCustomSetting);
+router.get('/alumni-directory', UserController.searchAlumni)
 
 module.exports = router;
