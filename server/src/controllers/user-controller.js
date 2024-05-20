@@ -411,3 +411,14 @@ exports.updateCustomSetting = async function (req, res) {
     res.status(500).json({ error: "An error occurred while updating custom setting" });
   }
 };
+
+exports.searchAlumni = async function (req, res) {
+  try {
+    const {searchBy, searchByValue } = req.body;
+    const alumni = await alumniService.getAlumniDirectory(searchBy, searchByValue);
+    res.json(alumni);
+  } catch (error) {
+    console.error("Error fetching alumni:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
