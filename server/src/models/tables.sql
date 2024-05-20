@@ -351,7 +351,7 @@ CREATE TABLE Gallery (
     adminId INT,
     title VARCHAR(255) NOT NULL,
     description TEXT,
-    mediaType ENUM('image', 'sound', 'video') NOT NULL,
+    department VARCHAR(255),
     media VARCHAR(255) NOT NULL,
     createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
