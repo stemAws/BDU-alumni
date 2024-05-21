@@ -1,0 +1,131 @@
+.donation_overlay{
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0a0a0a8a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+}
+.donate_container{
+    width: 700px;
+    margin-top: 30px;
+    height: fit-content;
+    max-height: 90vh;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #232323;
+    overflow: scroll;
+}
+.close{
+    color: #ffffff;
+    align-self:flex-end ;
+    position: fixed;
+}
+.close:hover{
+    color: #ff5f5f;
+    cursor: pointer;
+}
+.each_donation_section{
+    box-sizing: border-box;
+    /* margin-top: 40px; */
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 98%;
+    min-height: 230px;
+    border: 1px solid #c1c0c0;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    color: #d2d2d2;
+    border-radius: 10px;
+    overflow: clip;
+}
+.each_donation_section.stem{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.2fr 0fr 1fr;
+    gap: 5px;
+}
+.each_donation_section img{
+    width:100%;
+    height: 100%;
+    grid-row: span 4;
+    object-fit: cover;
+}
+.each_donation_section .donate_title{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    font: bold 24px 'saira';
+    text-transform: uppercase;
+    /* margin:50px 0 20px 50px; */
+    /* min-width: max-content;  */
+    width: 50%;
+}
+.donate_title .the_text{
+word-break: break-all;
+}
+.donate_title svg{
+    min-width: fit-content;
+}
+.desc_btn{
+    width: 50%;
+}
+.each_donation_section.stem{
+    padding: 0;
+    min-height:238px  ;
+    margin-top: 20px;
+}
+.each_donation_section.stem>.donate_title{
+    font: bold 22px 'saira';
+    min-width: max-content;
+    margin: 55px 0 0 10px;
+}
+.each_donation_section>.btn{
+    margin-left: 122px;
+}
+.each_donation_section.stem>.btn{
+    margin-left: 12px;
+}
+.each_donation_section p{
+    font: normal 14px 'saira'; 
+
+    }
+.description{
+    width: 90%;
+    height: fit-content;
+    margin-left: 10px;
+    
+}
+@media (max-width:650px){
+    .each_donation_section>.btn {
+        margin-left: 49px;
+    }
+    .each_donation_section>.donate_title {
+        font-size: 12px ;
+    }
+    .each_donation_section.stem>.donate_title {
+        font-size: 12px ;
+        margin-left: 0;
+    }
+    .each_donation_section.stem>.btn {
+        margin-left: 30px;
+    }
+    .each_donation_section>p {
+        font:  11px 'saira';
+    }
+    .donate_container{
+        height: 40vh;
+    }
+}
+.donation_descrip{
+    height: fit-content;
+    max-height: 160px;
+    overflow: scroll;
+}

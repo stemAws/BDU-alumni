@@ -180,7 +180,7 @@ border: 1px solid #b7b7b7;
 border-radius: 10px;
 border: 1px solid #b7b7b7;
 background-color: transparent;
-font: 100 14px 'saira';
+font: 100 14px 'Inter';
 color: #e0e0e0;
   }
   .button>.btn:hover{
@@ -194,7 +194,7 @@ color: #e0e0e0;
   }
   .input_file label::before {
     content: ''; 
-    font:100 16px 'saira'; 
+    font:100 16px 'Inter'; 
   }
   .input_file:hover>label{
     margin-top:60px;
@@ -254,6 +254,7 @@ color: #e0e0e0;
     height: 100%;
     background-color: #ffffff;
     border-top: 1px solid #858585b4;
+    margin-top: 36px;
 }
 .name_edit{
   box-sizing: border-box;
@@ -263,7 +264,7 @@ color: #e0e0e0;
 }
 .User_profile_container .name_edit .TopText{
  position: relative;
-  font:400 20px 'saira';
+  font:400 20px 'Inter';
   background-color:transparent;
   border: 0;
   color: #ffffff;
@@ -275,7 +276,7 @@ color: #e0e0e0;
   outline: none;
 }
 .User_profile_container #bio{
-  font:200 15px 'saira';
+  font:200 15px 'Inter';
   margin: 0 0 10px 30px;
   width: fit-content;
   background-color:transparent;
@@ -306,14 +307,14 @@ color: #e0e0e0;
     box-sizing: border-box;
     display: flex;
     background-color:#f0f0f0;
-    color: #0000009e;
+    color: #000000;
     flex-direction: column;
     height:fit-content ;
     width: 70%;
     border-radius: 10px;
     /* margin-left: 10px; */
     padding: 10px;
-    font:100 16px 'saira';
+    font:200 16px 'Inter';
 }
 .learning_place{
   display: flex;
@@ -340,10 +341,10 @@ position: relative;
   flex-direction: column;
   padding-left: 20px;
   margin-top: 0px;
-  color: #969595;
+  color: #000000;
 }
 .personal_info.onprofile>ul .full_name{
-font: 400 20px 'saira';
+font: 400 20px 'Inter';
 text-transform: capitalize;
 }
 .learn_and_work{
@@ -369,23 +370,23 @@ cursor: pointer;
  width: 50%;
  margin-left:10px ;
  padding-left:20px ;
- font-family: 'saira';
+ font-family: 'Inter';
 } */
 .personal_info h1{
-    font: 300 24px 'Saira', sans-serif ;
+    font: 300 24px 'Inter', sans-serif ;
     margin: 0;
     line-height: 150%;
     display:inline;
 }
 .personal_info_title{
-    font: 300 24px 'Saira', sans-serif ;
+    font: 300 24px 'Inter', sans-serif ;
     margin: 10px;
     line-height: 150%;
     display:inline;
 }
 .personal_info ul{
     list-style: none;
-    font: 100 16px 'Saira', sans-serif ;
+    font: 200 16px 'Inter', sans-serif ;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr ;
     grid-template-rows: repeat(4,1fr);
@@ -462,7 +463,7 @@ margin:0px 0 10px 13px;
     width: max-content;
     height: 40px;
     background-color:transparent;
-    color: #fff;
+    color: #2b2b2b;
     padding: 10px;
     border-radius: 10px;
     border:1px solid #000;
@@ -546,7 +547,7 @@ margin:0px 0 10px 13px;
         margin: 5px 0 0 5px;
       }
       .personal_info{
-        font: 100 13px 'saira';
+        font: 100 13px 'Inter';
       }
       
       .personal_info.onprofile>ul .full_name{

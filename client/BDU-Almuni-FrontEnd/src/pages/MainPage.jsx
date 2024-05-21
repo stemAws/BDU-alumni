@@ -7,6 +7,7 @@ import { useState,createContext } from 'react';
 import Header from '../component/Header'
 import NewsAndUpdates from './NewsAndUpdates';
 import Editprofile from './Profile/Editprofile'
+import Footer from '../component/Footer';
 export const SigninContext = createContext();
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
@@ -29,6 +30,7 @@ const MainPage = () => {
           <Route path="/newsAndUpdates"  Component = {NewsAndUpdates} />
           <Route path="/editProfile/:username"  Component = {Editprofile} />
           </Routes>
+          <Footer/>
     </div>
   )
 }
