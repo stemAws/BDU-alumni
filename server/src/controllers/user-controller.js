@@ -317,33 +317,33 @@ exports.changePassword = async function (req, res) {
   }
 };
 
-// exports.getNotableAlumni = async function (req, res) {
-//     try {
-//         const alumniData = await alumniService.getNotable();
-//         res.json(alumniData);
-//       } catch (error) {
-//         console.error(error);
-//         res.status(500).send("Internal Server Error");
-//       }
-// }
+exports.getNotableAlumni = async function (req, res) {
+    try {
+        const alumniData = await alumniService.getNotable();
+        res.json(alumniData);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+      }
+}
 
-// exports.updateNotable = async function (req, res) {
-//     try {
-//         const { isNotable } = req.body;
-//         const alumniID = req.params.alumniID;
+exports.updateNotable = async function (req, res) {
+    try {
+        const { isNotable } = req.body;
+        const alumniID = req.params.alumniID;
 
-//         const affectedRows = await alumniService.updateNotable(alumniID, isNotable);
+        const affectedRows = await alumniService.updateNotable(alumniID, isNotable);
 
-//         if (affectedRows === 0) {
-//           return res.status(404).json({ error: "Alumni not found" });
-//         }
+        if (affectedRows === 0) {
+          return res.status(404).json({ error: "Alumni not found" });
+        }
 
-//         res.json({ success: "Notable change successful" });
-//       } catch (error) {
-//         console.error("Error changing notable:", error);
-//         res.status(500).json({ error: "Internal Server Error" });
-//       }
-// }
+        res.json({ success: "Notable change successful" });
+      } catch (error) {
+        console.error("Error changing notable:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+}
 
 exports.resetPassword = async function (req, res) {
   // problem what if the user that is requesting not really the account owner? will it be changed to defualt. I will fix this, not today
