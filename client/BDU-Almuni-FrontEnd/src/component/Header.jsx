@@ -1,12 +1,12 @@
 import NavBar from "./NavBar"
 import '../styles/header.css'
 import background from '../assets/images/photo_2024-02-25_15-58-46.jpg'
-const Header = () => {
+const Header = ({loginState}) => {
   return (
     <div>
       <div className="overlay">
       <div className='header-container'>
-        <NavBar />
+        <NavBar loginState={loginState} />
         <img className='background-img'src={background} alt="" />
         <div className="wellcome-text">
             <p className="top-title">Welcome to Bahir Dar University</p>

@@ -1,5 +1,39 @@
 import '../styles/newsAndUpdates.css'
+import newsimg from '../assets/images/photo_2024-02-25_23-41-53.jpg'
+import newsSmallImg from '../assets/images/photo_2024-02-25_23-38-22.jpg'
+import newsSmallImg2 from '../assets/images/photo_2024-02-27_14-20-33.jpg'
+import newsSmallImg3 from '../assets/images/photo_2024-02-25_16-12-11.jpg'
+import { useInView } from 'react-intersection-observer';
+import { useEffect, useState } from 'react'
 const NewsAndUpdates = () => {
+  const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
+  const [exitingView, setExitingView] = useState(false);
+  const headlines = [
+    "Breaking News: Lorem ipsum dolor sit amet consectetur adipisicing elit." ,
+    "Weather Alert: Magni veritatis quidem quibusdam quam doloribus minus eveniet mollitia tempora",
+    "Sports: fugiat eos consectetur consequuntur inventore",
+    "Technology: fugiat eos consectetur consequuntur inventore aspernatur, libero aliquam fuga odit in consequatur"
+  ];
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeadlineIndex(prevIndex => (prevIndex + 1) % headlines.length);
+    },3000); 
+    return () => clearInterval(interval);
+  }, []);
+  const handleIntersection = (entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        setExitingView(true);
+      } else {
+        setExitingView(false);
+      }
+    });
+  };
+  const { ref, inView } = useInView({
+          triggerOnce: true,
+          threshold: 0.05,
+          onChange:handleIntersection 
+        });
   return (
     <div className="news-and-updates-container">
         <div className="nUTitle">
@@ -10,21 +44,23 @@ const NewsAndUpdates = () => {
         <div className="left-side">
           <div className="big-news-img-container">
             <div className="big-new-img">
-            <img src="" alt="" />
+            <img src={newsimg} alt="" />
             </div>
             <div className="catagory-detail">
+              <div>
               <div className="news-category">
-              catagory
+              Technology
               </div>
-              <p className="news-small-detail">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium, sunt alias. Fugit dolor, mollitia eum vitae a odio hic molestias distinctio in vel soluta voluptatem tempora icing elit...</p>
-              <p className="news-date">feb 12 - 2024</p>
+              <p className="news-small-detail">Berhane Mewa who is a former graduate of Poly-TechnicLorem ipsum dolor sit amet consectetur adipisicing elit...</p>
+              </div>
+              <p className="news-date">Bahir dar University, Washera Hall FEB 25 2023 </p>
             </div>
             
           </div>
           <div className="headline-container">
           <div className="headline-box">HeadLine</div>
           <div className="headline-texts">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto pariatur elit am</p>
+            <p>{headlines[currentHeadlineIndex]}</p>
           </div>
           </div>
         </div>
@@ -39,29 +75,42 @@ const NewsAndUpdates = () => {
         <div className="categorized-news-container">
         <div className="each-news">
           <div className="small-news-img">
-            <img src="" alt="" />
+            <img src={newsSmallImg} alt="" />
           </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor praesentium ...
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
           <span className="news-date-side">feb 12 - 2024</span></p>
         </div>
         <div className="each-news">
           <div className="small-news-img">
-            <img src="" alt="" />
+            <img src={newsSmallImg2} alt="" />
           </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor praesentium ...
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
           <span className="news-date-side">feb 12 - 2024</span></p>
         </div>
         <div className="each-news">
           <div className="small-news-img">
-            <img src="" alt="" />
+            <img src={newsSmallImg3} alt="" />
           </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor praesentium ...
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
+          <span className="news-date-side">feb 12 - 2024</span></p>
+        </div>
+        <div className="each-news">
+          <div className="small-news-img">
+            <img src={newsSmallImg} alt="" />
+          </div>
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
+          <span className="news-date-side">feb 12 - 2024</span></p>
+        </div>
+        <div className="each-news">
+          <div className="small-news-img">
+            <img src={newsSmallImg} alt="" />
+          </div>
+          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
           <span className="news-date-side">feb 12 - 2024</span></p>
         </div>
         </div>
         </div>
         </div>
-        
     </div>
   )
 }

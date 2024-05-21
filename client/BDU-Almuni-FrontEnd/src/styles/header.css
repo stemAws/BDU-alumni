@@ -24,28 +24,38 @@
     left: 0;
     width: 100%;
     height: fit-content;
-    background-color: #000000a3;
+    background-color: #0000007c;
    
 }
-.wellcome-text{
-    color: #fff;
+.wellcome-text{ 
+    position: relative;
     display: flex;
     flex-direction: column;
+    color: #fff;
     align-items: center;
     font: 400 48px 'Inter';
-    margin-top:110px;
+    top: 110px;
 }
 .wellcome-text .bottom-title{
     font:100 24px 'Inter';
 }
 .navBar-container{
+    position: fixed;
     display: flex;
     justify-content: space-around;
+   z-index: 10;
+    width: 100%;
+    margin: 0;
+    background-color: transparent;
 }
 .nav-lists{
     position: relative;
 padding: 0;
 margin: 0;
+display: flex;
+gap: 10px;
+height: 50px;
+align-items: center;
 }
 .nav-lists>ul{
     text-transform: uppercase;
@@ -80,3 +90,11 @@ transition: width 0.5s ease;
             width: 100%;
           }
 
+ #signin-btn{
+            background-color: #0C8CE9;
+            width: 90px;
+            height: 30px;
+            color: #ffffff;
+            border: none;
+
+        }
