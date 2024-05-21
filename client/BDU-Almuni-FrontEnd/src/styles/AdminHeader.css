@@ -1,0 +1,54 @@
+.admin-flex_container{
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    width: 100%;
+    align-items: center;
+    position: fixed;
+    z-index: 2; 
+    top: 0;
+    color: white ;
+  }
+  .admin-logoNameContainer{
+    display: flex;
+    list-style-type: none;
+    font:  'Inter';
+    color: rgb(11, 194, 245);
+  }
+  .navs{
+    position: relative;
+    padding: 10px;
+  }
+  .navs>ul{
+    text-transform: uppercase;
+    color: #fff;
+    font: 400 12px 'Inter';
+    list-style: none;
+    display: flex;
+    gap: 10px;
+  }
+  .navs ul li:hover{
+    color: #00B2FF;
+    cursor: pointer;
+    }
+
+    .navs ul li{
+        position: relative;
+        min-width: fit-content;
+        }
+
+    .navs li::before {
+        content: "";
+        background-color: #0C8CE9;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 0.5px; 
+        transition: width 0.5s ease;
+        }
+
+        .navs ul li:hover::before {
+            width: 100%;
+          }

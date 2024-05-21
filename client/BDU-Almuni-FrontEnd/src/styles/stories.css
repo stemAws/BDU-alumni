@@ -55,6 +55,22 @@ margin-top: 20px;
 }
 .events>.circle-bg{
     background-color: #000000;
+    transition: all 1s ease;
+    z-index: -1;
+}
+  
+.events>.circle-bg.wide {
+    width: 100%; 
+    border-radius: 0;
+    height: 1200px;
+    margin-top:70% ;
+    margin-left: 65px;
+  }
+  .events>.circle-bg.return{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+
 }
 .event-title{
 position: relative;
@@ -68,4 +84,5 @@ margin-left: -50px;
 .events>.line-cover{
     width: 170px;
     margin-left: -52px;
+    z-index: -2;
 }
