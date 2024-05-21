@@ -5,7 +5,7 @@
 
     width: 500px;
     height: fit-content;
-    background-color: #000000;
+    background-color: #dadada;
     border: 1px solid #373737;
     border-radius: 10px;
     z-index: 1;
@@ -19,7 +19,7 @@
 .contactInfo_container.warning {
     display: flex;
     flex-direction: column;
-    background-color: #000000d3;
+    background-color: #ffffffd3;
     align-items: center;
     justify-content: center;
     gap: 20px;
@@ -37,7 +37,7 @@
     font: 400 16px 'saira';
     text-transform: capitalize;
     border-bottom:1px solid #373737;
-    color: #ffffff;
+    color: #000000;
 }
 .contact_bottom{
     box-sizing: border-box;

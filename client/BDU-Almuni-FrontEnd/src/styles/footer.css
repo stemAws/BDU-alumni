@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&family=Roboto:wght@100&family=Inter+Condensed&family=Inter:wght@100&display=swap');
+.container{
+  background-color: #2a2a2a;
+  width: 100%;
+  height: fit-content;
+  color: rgb(255, 255, 255);
+  margin-top: 0;
+  overflow: clip ;
+
+}
+
+.logoNameContainer{
+  position: relative;
+  list-style: none;
+  display: flex;
+  font-family: 'Inter Condensed', sans-serif;
+  height: 0;
+  align-items:flex-end;
+  gap: 10px;
+  margin-top: 50px;
+  margin-left: 30px;
+}
+.logo{
+  width: 20px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#logo{
+  width: 50;
+  height: 70px;
+  object-fit: cover;
+}
+  .stemCenterText{
+    font-weight:normal;
+    font-size: 24px;
+  }
+  .alumniText{
+     font:lighter 23px 'Inter', sans-serif;
+  }
+  .separator{
+    background-color: #0C8CE9;
+    height: 30px;
+    width: 3px;
+  }
+  .nav_item{
+    display: flex;
+    align-items: center;
+  }
+  footer.container{
+    display: flex;
+    margin: 0px 0 0 0;
+    height: 300px;
+    justify-content: space-between;
+    z-index: 1;
+  }
+  .left_and_middle{
+    display: flex;
+    width: 59%;
+    
+    justify-content: space-between;
+  }
+  .left_footer_container{
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    min-width: 410px;
+   align-items: flex-start;
+   padding: 0 0 0 50px;
+  }
+  footer .logoNameContainer{
+    margin: 130px 0 0 0;
+    background-color: #fff;
+    z-index: 10;
+    padding-left: 0;
+  }
+  footer .nav_item{
+    line-height: 190%;
+  }
+  
+  .moto{
+    font:normal 20px 'Inter', sans-serif;   
+  }
+  .support_container{
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+    height: 32px ;
+    margin-top: 30px ;
+    align-items: center;
+  }
+  .support_text{
+    font: 600 16px 'Inter', sans-serif;
+    color: rgba(255, 255, 255, 0.7);
+    margin-right: 10px;
+  }
+.middle_footer_container  {
+  margin: 40px 20px 0 0;
+  width: 26%;
+  object-fit: cover;
+  flex-shrink: 1;
+}
+.right_footer_container{
+width: 41%;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.social_media_links{
+  display: flex;
+margin-top: 55px ;
+justify-content: space-between;
+width: 180px;
+height: 63px;
+align-self: center;
+margin-left: -43px;
+/* width:200px */
+}
+.social_media_links img{
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff;
+  border-radius: 50px;
+  border: 1px solid #ffffff;
+}
+.contact_us{
+  align-self: center;
+  margin:10px 0 0 70px;
+}
+.contact_us_title{
+
+  text-transform: uppercase;
+  font: 600 22PX 'Inter', sans-serif;
+  margin-bottom: 10px;
+}
+.contact_us_field{
+  line-height: 100%;
+  font: 600 16PX 'Inter', sans-serif;
+  display: block;
+  margin: 3px 0px;
+  
+}
+
+.contact_us_data{
+  font: 50 14px 'Inter', sans-serif;
+ display: inline;
+}
+a{
+  text-decoration: none;
+  color: #ffffff;
+}
+footer a:hover{
+  color: #0C8CE9;
+}
+.contact_us_data>span{
+  display: block;
+}
+
+.copy_right{
+  font: 550 12px'Inter', sans-serif;
+  color: rgba(255, 255, 255, 0.644);
+  margin:20px 0 0 -910px;
+ 
+}
+
+.social_media_links img:hover{
+  background-color: #0C8CE9;
+  cursor: pointer;
+  border-color: #0C8CE9;
+}
+.small-screen-navbar-overlay {
+  position: fixed;
+  top: 0;
+  left: 45%;
+  width: 70%;
+  height: 100vh;
+  background-color: #010101da;
+  
+  transition: 0.5s ease;
+  z-index: 999;
+}
+
+.small-screen-navbar-overlay .overlay-close{
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 20px;
+}
+
+.overlay-close{
+  cursor: pointer;
+  position: absolute;
+  top: 50px;
+  left: 20px;
+}
+.forget_password{
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.forget_password>div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  flex-direction:column;
+  gap: 10px;
+  font: 300 16px 'Inter';
+  border: 1px solid #3a3a3a;
+  padding: 10px;
+  border-radius: 10px;
+  width: 500px;
+}
+.forget_password>div>p{
+  margin-left: 20px;
+}
+.forget_password>div>.success{
+  color: #019dff;
+}
+.forget_password>div>h3{
+  margin: 0;
+}
+.lock{
+  margin-top: -30px;
+  background-color: #fff;
+}
