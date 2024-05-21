@@ -387,6 +387,8 @@ exports.getAlumniDirectory = async (searchBy, searchByValue) => {
       q += ` AND ed.graduatingYear = "${searchByValue}"`;
     } else if (searchBy === "industry") {
       q += ` AND ex.industry = "${searchByValue}"`;
+    } else if (searchBy === "location") {
+      q = ` SELECT fullName, username, profilePicture FROM education ed JOIN alumni a JOIN person p WHERE ed.alumniId = a.alumniId AND a.personId = p.personId AND ed.institution = 'Bahir Dar University' AND a.currentLocation = 'USA' AND a.currentLocation = "${searchByValue}"`;
     }
     const queryResult = await db.query(q);
 
