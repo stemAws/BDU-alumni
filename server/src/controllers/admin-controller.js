@@ -97,13 +97,23 @@ exports.getAlumni = async (req, res) => {
 
 exports.getDegree = async (req, res) => {
   try {
-    const result = await adminService.getDegreeCount();
+    const result = await adminService.getDegreeCount(graduatingYear);
     res.json(result);
   } catch (error) {
-    console.error('Error fetching alumni:', error);
+    console.error('Error fetching degree:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
+exports.getAdmission = async (req, res) => {
+  try {
+    const {graduatingYear} = req.body;
+    const result = await adminService.getAdmissionCount(graduatingYear);
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching admission:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 
