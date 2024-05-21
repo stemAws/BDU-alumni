@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import FormInput from "./FormInput";
 import Button from "./Button";
 import AuthService from "./AuthService";
-const Signin = ({ closeSignin,setsignin }) => {
+const Signin = ({ closeSignin,setsignin,setloginState }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [visible,setVisible] = useState(false);
@@ -39,16 +39,20 @@ const Signin = ({ closeSignin,setsignin }) => {
         setloading(false)
       });
   };
+  const handleSignInfake =()=>{
+    setsignin(false);
+    setloginState(true);
+  }
  
-  const handleGoogleSignin = async (e) => {
-    e.preventDefault();
-    try {
-      window.location.href = `https://alumni-website-production.up.railway.app/auth/google`;
+  // const handleGoogleSignin = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     window.location.href = `https://alumni-website-production.up.railway.app/auth/google`;
       
-    } catch (error) {
-      console.error('Error during Google sign-in:', error);
-    }
-  };
+  //   } catch (error) {
+  //     console.error('Error during Google sign-in:', error);
+  //   }
+  // };
   return (
     <div className="signin_overlay">
       <div id='pop_container' className="pop_container">
@@ -65,7 +69,9 @@ const Signin = ({ closeSignin,setsignin }) => {
         <form className="sign_in">
         <h1>LOGIN</h1>
          {errorPopup?<p className="authentication_Failed">Wrong username or password, please try again</p>:''}
-         <div className="sign_with_google" onClick={handleGoogleSignin}><div className="google_icon" ><FaGoogle color="#fff"/></div><p>Sign in with Google</p></div>
+         <div className="sign_with_google" 
+        //  onClick={handleGoogleSignin}
+         ><div className="google_icon" ><FaGoogle color="#fff"/></div><p>Sign in with Google</p></div>
          <FormInput
               type="text"
               placeholder="Username"
@@ -90,7 +96,7 @@ const Signin = ({ closeSignin,setsignin }) => {
               </div>
             </div>
             {/* <Link to ='/forgetPassword' onClick={()=>setSigninOpen(false)}>Forget password?</Link> */}
-            <Button disabled={loading} text={loading?"Loging...":"LOGIN"} onClick={handleSignIn} />
+            <Button disabled={loading} text={loading?"Loging...":"LOGIN"} onClick={handleSignInfake} />
         </form>
         </div>
       </div>
