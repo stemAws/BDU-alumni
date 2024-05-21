@@ -192,7 +192,21 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
 }
 .top-stories>.circle-bg{
     background-color: #fafafa;
-    
+    transition: all 1s ease;
+    z-index: -1;
+}
+.top-stories>.circle-bg.wide{
+    width: 100%; 
+    border-radius: 0;
+    height: 1200px;
+    margin-top:70% ;
+    margin-left: 65px;
+}
+.top-stories>.circle-bg.return{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+
 }
 .top-stories>.top-stories-title{
     font:400 40px "Inter";
@@ -205,6 +219,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     width: 100%;
     height: 2px;
     position: absolute;
+    z-index: -2;
    
 }
 .line-cover{
@@ -216,4 +231,5 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
 }
 .top-stories>.line-cover{
     margin-left: -60px;
+    z-index: -2;
 }

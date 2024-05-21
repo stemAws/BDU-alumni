@@ -3,9 +3,11 @@ import newsimg from '../assets/images/photo_2024-02-25_23-41-53.jpg'
 import newsSmallImg from '../assets/images/photo_2024-02-25_23-38-22.jpg'
 import newsSmallImg2 from '../assets/images/photo_2024-02-27_14-20-33.jpg'
 import newsSmallImg3 from '../assets/images/photo_2024-02-25_16-12-11.jpg'
+import { useInView } from 'react-intersection-observer';
 import { useEffect, useState } from 'react'
 const NewsAndUpdates = () => {
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
+  const [exitingView, setExitingView] = useState(false);
   const headlines = [
     "Breaking News: Lorem ipsum dolor sit amet consectetur adipisicing elit." ,
     "Weather Alert: Magni veritatis quidem quibusdam quam doloribus minus eveniet mollitia tempora",
@@ -18,6 +20,20 @@ const NewsAndUpdates = () => {
     },3000); 
     return () => clearInterval(interval);
   }, []);
+  const handleIntersection = (entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        setExitingView(true);
+      } else {
+        setExitingView(false);
+      }
+    });
+  };
+  const { ref, inView } = useInView({
+          triggerOnce: true,
+          threshold: 0.05,
+          onChange:handleIntersection 
+        });
   return (
     <div className="news-and-updates-container">
         <div className="nUTitle">
@@ -96,7 +112,7 @@ const NewsAndUpdates = () => {
         </div>
         </div>
       <div className="top-stories">
-      <div className="circle-bg"></div>
+      <div  ref={ref} className={`circle-bg ${inView ? 'wide' : exitingView ? 'return' : ''}`} ></div>
       <div className="the-line"></div>
       <div className="line-cover"></div>
       <p className="top-stories-title">
