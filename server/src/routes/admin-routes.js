@@ -15,6 +15,7 @@ router.get('/userDataByCountry', adminController.getUserDataByCountry);
 router.post('/addDonation', adminController.addDonation);
 router.get('/getDonations', adminController.getDonations);
 router.get('/get-alumni', adminController.getAlumni);
-router.get('/degree-count', adminController.getDegree)
+router.get('/degree-count', adminController.getDegree);
+router.get('/admission-count', adminController.getAdmission);
 
 module.exports = router;
