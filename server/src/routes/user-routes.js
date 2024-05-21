@@ -3,7 +3,6 @@ const router = express.Router();
 const UserController = require("../controllers/user-controller");
 const multer = require("multer");
 const { verifyToken } = require("../middleware/auth-middleware");
-const { updateCustom } = require("../services/user-services");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
