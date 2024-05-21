@@ -48,8 +48,8 @@ router.put(
   verifyToken,
   UserController.changePassword
 );
-// router.get("/notable", UserController.getNotableAlumni);
-// router.put("/notable/:alumniID", UserController.updateNotable);
+router.get("/notable", UserController.getNotableAlumni);
+router.put("/notable/:alumniID", UserController.updateNotable);
 router.post("/reset-password", verifyToken, UserController.resetPassword);
 router.post(
   "/confirm-password-change",
