@@ -8,6 +8,7 @@ import Header from '../component/Header'
 import NewsAndUpdates from './NewsAndUpdates';
 import Editprofile from './Profile/Editprofile'
 import Footer from '../component/Footer';
+import ContactUS from "./ContactUs"
 export const SigninContext = createContext();
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
@@ -29,6 +30,7 @@ const MainPage = () => {
           <Route path="/events"  Component = {Events} />
           <Route path="/newsAndUpdates"  Component = {NewsAndUpdates} />
           <Route path="/editProfile/:username"  Component = {Editprofile} />
+          <Route path="/contactus"  Component = {ContactUS} />
           </Routes>
           <Footer/>
     </div>

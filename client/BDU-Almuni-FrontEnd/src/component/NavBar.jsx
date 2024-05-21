@@ -49,6 +49,7 @@ const NavBar = ({loginState}) => {
                 <li> <Link to="/">community</Link></li>
                 <li> <Link to="/">history</Link></li>
                 <li> <Link to="/">chapters</Link></li>
+                <li> <Link to="/contactus">Contact us</Link></li>
                 <li> <Link to="/">about</Link></li>
                 <div className="searchBar_container">
                 <SearchBar setOutput={setOutput}/>
