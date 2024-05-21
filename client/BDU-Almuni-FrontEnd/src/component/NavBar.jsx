@@ -1,6 +1,6 @@
 import Button from "./Button"
 import { useContext, useState } from "react"
-import { SigninContext } from "../pages/MainPage"
+import { SigninContext } from "../pages/MainBody"
 import background from '../assets/images/photo_2024-02-25_15-58-46.jpg'
 import Profilepopup from "./Profilepopup"
 import SearchResult from "./SearchResult"

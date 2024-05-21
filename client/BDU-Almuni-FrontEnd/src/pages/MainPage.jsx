@@ -1,25 +1,18 @@
-import { useState,createContext } from 'react';
-import Header from '../component/Header'
-import Signin from '../component/Signin'
-import NewsAndUpdates from './NewsAndUpdates'
+
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import MainBody from './MainBody';
 import Stories from './Stories';
 import Events from './Events';
-export const SigninContext = createContext();
 const MainPage = () => {
-  const [signin, setsignin] = useState(false);
-  const [loginState, setloginState] = useState(false);
   return (
     <div>
-      <SigninContext.Provider value={{ signin, setsignin}}>
-        <Header loginState={loginState}/>
-        </SigninContext.Provider>
-        
-        <NewsAndUpdates />
-        {
-          signin&&<Signin setloginState={setloginState} setsignin={setsignin}/>
-        }
-        <Stories/>
-       <Events/>
+        <Router >
+          <Routes>
+          <Route path="/" exact Component = {MainBody} />
+          <Route path="/Stories"  Component = {Stories} />
+          <Route path="/Events"  Component = {Events} />
+          </Routes>
+        </Router>
     </div>
   )
 }

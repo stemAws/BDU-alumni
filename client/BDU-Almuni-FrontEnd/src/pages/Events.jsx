@@ -2,9 +2,36 @@ import"../styles/events.css"
 import newsimg2 from '../assets/images/photo_2024-02-25_23-36-59.jpg';
 import newsimg from '../assets/images/photo_2024-02-27_14-20-52.jpg';
 import Button from "../component/Button";
+import { useInView } from 'react-intersection-observer';
+import { useState } from "react";
 const Events = () => {
+    
+  const [exitingView, setExitingView] = useState(false);
+
+  const handleIntersection = (entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        setExitingView(true);
+      } else {
+        setExitingView(false);
+      }
+    });
+  };
+  const { ref, inView } = useInView({
+          triggerOnce: true,
+          threshold: 0.01,
+          onChange:handleIntersection 
+        });
   return (
     <div className="events-container">
+         <div className="events">
+      <div ref={ref} className={`circle-bg ${inView ? 'wide' : ''} ${exitingView ? 'return' : ''}`}  ></div>
+      <div className="the-line"></div>
+      <div className="line-cover"></div>
+      <p className="event-title">
+        EVENTS
+      </p>
+      </div>
        <div className="each-event type1">
         <img src={newsimg2} alt="" className="events-img" />
         <div className="separetor"></div>

@@ -26,6 +26,14 @@ const Stories = () => {
         });
   return (
     <>
+    <div className="top-stories">
+      <div  ref={ref} className={`circle-bg ${inView ? 'wide' : exitingView ? 'return' : ''}`} ></div>
+      <div className="the-line"></div>
+      <div className="line-cover"></div>
+      <p className="top-stories-title">
+        <span className="blue-text">TOP</span>STORIES
+      </p>
+      </div>
     <div className="stories-container">
         <div className="each-story">
                 <img className="story-img"src={newsimg2} alt="" />
@@ -55,14 +63,6 @@ const Stories = () => {
             </div>
         </div>
     </div>
-    <div className="events">
-      <div ref={ref} className={`circle-bg ${inView ? 'wide' : ''} ${exitingView ? 'return' : ''}`}  ></div>
-      <div className="the-line"></div>
-      <div className="line-cover"></div>
-      <p className="event-title">
-        EVENTS
-      </p>
-      </div>
     </>
   )
 }

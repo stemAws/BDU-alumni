@@ -111,14 +111,6 @@ const NewsAndUpdates = () => {
         </div>
         </div>
         </div>
-      <div className="top-stories">
-      <div  ref={ref} className={`circle-bg ${inView ? 'wide' : exitingView ? 'return' : ''}`} ></div>
-      <div className="the-line"></div>
-      <div className="line-cover"></div>
-      <p className="top-stories-title">
-        <span className="blue-text">TOP</span>STORIES
-      </p>
-      </div>
     </div>
   )
 }
