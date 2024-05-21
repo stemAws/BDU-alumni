@@ -95,3 +95,15 @@ exports.getAlumni = async (req, res) => {
   }
 };
 
+exports.getDegree = async (req, res) => {
+  try {
+    const result = await adminService.getDegreeCount();
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching alumni:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
