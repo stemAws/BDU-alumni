@@ -120,16 +120,20 @@ exports.getAlumniList = async () => {
   }
 };
 
-exports.getDegreeCount = async () => {
+exports.getDegreeCount = async (graduatingYear) => {
   try {
-    const query = `
+    let query = `
       SELECT
         COUNT(CASE WHEN degree = 'Associate' THEN 1 END) as Associate,
         COUNT(CASE WHEN degree = 'Bachelor' THEN 1 END) as Bachelor,
         COUNT(CASE WHEN degree = 'Master' THEN 1 END) as Master,
         COUNT(CASE WHEN degree = 'Doctorate' THEN 1 END) as Doctorate,
         COUNT(CASE WHEN degree NOT IN ('Associate', 'Bachelor', 'Master', 'Doctorate') THEN 1 END) as Other
-      FROM education;`;
+      FROM education `;
+
+    if (graduatingYear != null) {
+      query += ` WHERE graduatingYear = ${graduatingYear}`;
+    }
 
     // Execute the query
     const [degreeCounts] = await db.query(query);
@@ -151,9 +155,9 @@ exports.getAdmissionCount = async (graduatingYear) => {
         COUNT(CASE WHEN admission = 'Summer' THEN 1 END) as Summer,
         COUNT(CASE WHEN admission NOT IN ('Extension', 'Regular', 'Summer') THEN 1 END) as Other
       FROM education`;
-      if(graduatingYear != null){
-        query += ` WHERE graduatingYear = ${graduatingYear}`
-      }
+    if (graduatingYear != null) {
+      query += ` WHERE graduatingYear = ${graduatingYear}`;
+    }
 
     // Execute the query
     const [result] = await db.query(query);
@@ -165,4 +169,3 @@ exports.getAdmissionCount = async (graduatingYear) => {
     throw error;
   }
 };
-
