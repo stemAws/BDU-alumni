@@ -120,4 +120,24 @@ exports.getAlumniList = async () => {
   }
 };
 
+exports.getDegreeCount = async () => {
+  try {
+    const query = `
+      SELECT
+        COUNT(CASE WHEN degree = 'Associate' THEN 1 END) as Associate,
+        COUNT(CASE WHEN degree = 'Bachelor' THEN 1 END) as Bachelor,
+        COUNT(CASE WHEN degree = 'Master' THEN 1 END) as Master,
+        COUNT(CASE WHEN degree = 'Doctorate' THEN 1 END) as Doctorate,
+        COUNT(CASE WHEN degree NOT IN ('Associate', 'Bachelor', 'Master', 'Doctorate') THEN 1 END) as Other
+      FROM education;`;
 
+    // Execute the query
+    const [degreeCounts] = await db.query(query);
+
+    // Return the result
+    return degreeCounts;
+  } catch (error) {
+    console.error("Error fetching degree counts:", error);
+    throw error;
+  }
+};
