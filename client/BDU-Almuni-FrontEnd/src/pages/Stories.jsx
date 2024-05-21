@@ -26,7 +26,7 @@ const Stories = () => {
         });
   return (
     <>
-    <div className="top-stories">
+    <div className="top-stories body">
       <div  ref={ref} className={`circle-bg ${inView ? 'wide' : exitingView ? 'return' : ''}`} ></div>
       <div className="the-line"></div>
       <div className="line-cover"></div>

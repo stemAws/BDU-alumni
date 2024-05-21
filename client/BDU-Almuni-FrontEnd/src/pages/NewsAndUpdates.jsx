@@ -35,7 +35,7 @@ const NewsAndUpdates = () => {
           onChange:handleIntersection 
         });
   return (
-    <div className="news-and-updates-container">
+    <div className="news-and-updates-container body">
         <div className="nUTitle">
           <div className="circle-bg"></div>
           <p><span className='blue-text'>News</span> And Updates</p>
