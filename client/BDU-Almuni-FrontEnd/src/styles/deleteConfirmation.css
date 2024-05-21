@@ -1,0 +1,59 @@
+.delete_overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000a7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.delete_container{
+box-sizing: border-box;
+background-color: #303030;
+color: #fff;
+padding: 10px;
+height: 150px;
+}
+.delete_Header{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #717171;
+    margin-bottom: 10px;
+}
+.delete_top{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.delete_close:hover{
+    cursor: pointer;
+    color: #e47070;
+}
+.delete_bottom{
+    height: calc(100% - 30px);
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.delete_bottom>div>.btn{
+    background-color: transparent;
+    border: 1px solid #0C8CE9;
+    border-radius: 10px;
+}
+.delete_bottom>div>.btn.yes{
+    background-color: #0C8CE9;
+    border: 0;
+}
+.delete_bottom>div>.btn.yes:hover{
+    background-color: #62b0e8;
+    border: 0;
+}
+.delete_bottom>div>.btn.no:hover{
+    border: 1px solid  #e47070;
+    color: #e47070;
+}
