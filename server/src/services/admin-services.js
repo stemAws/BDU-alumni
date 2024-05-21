@@ -141,3 +141,28 @@ exports.getDegreeCount = async () => {
     throw error;
   }
 };
+
+exports.getAdmissionCount = async (graduatingYear) => {
+  try {
+    let query = `
+      SELECT
+        COUNT(CASE WHEN admission = 'Extension' THEN 1 END) as Extension,
+        COUNT(CASE WHEN admission = 'Regular' THEN 1 END) as Regular,
+        COUNT(CASE WHEN admission = 'Summer' THEN 1 END) as Summer,
+        COUNT(CASE WHEN admission NOT IN ('Extension', 'Regular', 'Summer') THEN 1 END) as Other
+      FROM education`;
+      if(graduatingYear != null){
+        query += ` WHERE graduatingYear = ${graduatingYear}`
+      }
+
+    // Execute the query
+    const [result] = await db.query(query);
+
+    // Return the result
+    return result;
+  } catch (error) {
+    console.error("Error fetching admission counts:", error);
+    throw error;
+  }
+};
+
