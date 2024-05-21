@@ -14,5 +14,7 @@ router.get('/geoData', verifyToken, adminController.getGeoData);
 router.get('/userDataByCountry', adminController.getUserDataByCountry);
 router.post('/addDonation', adminController.addDonation);
 router.get('/getDonations', adminController.getDonations);
-router.get('/getAlumni', adminController.getAlumni);
+router.get('/get-alumni', adminController.getAlumni);
+router.get('/degree-count', adminController.getDegree)
+
 module.exports = router;
