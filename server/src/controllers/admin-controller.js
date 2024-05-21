@@ -84,3 +84,14 @@ exports.getDonations = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+exports.getAlumni = async (req, res) => {
+  try {
+    const alumniData = await adminService.getAlumniList();
+    res.json(alumniData);
+  } catch (error) {
+    console.error('Error fetching alumni:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
