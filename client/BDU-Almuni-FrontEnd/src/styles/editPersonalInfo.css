@@ -1,0 +1,122 @@
+.personal_info_container{
+    box-sizing: border-box;
+    height: fit-content;
+    width: 500px;
+    background-color: #eaeaea;
+    border: 1px solid #373737;
+    border-radius: 10px;
+    padding: 10px;
+    font: 400 16px 'saira';
+    z-index: 2;
+}
+.personal_info_container_ghost{
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    margin-left: 150px;
+    
+}
+.personal_info_container.warning {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffffe9;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: absolute;
+    top: 0;
+    height: 500px;
+}
+.overlay_pop>div{
+    position: relative;
+}
+.personal_info_top{
+    display: flex;
+    justify-content: space-between;
+    border-bottom:1px solid #373737;
+    padding-bottom: 5px;
+}
+.personal_info_bottom{
+    display: flex;
+    flex-direction: column;
+   
+}
+.personal_info_bottom>ul{
+    list-style: none;
+}
+#personal_info_input{
+    position: relative;
+    z-index: 1;
+    color: #000000;
+    border: 1px solid #7e7d7d;
+}
+.edit_socail_links{
+    margin-bottom: 25px;
+    margin-left: -30px;
+    border: 1px inset #7e7d7d;
+    border-radius: 10px;
+    display: flex;
+    height: 40px;
+    align-items: center;
+    padding-left: 10px;
+    gap: 5px;
+}
+.edit_socail_links:hover{
+cursor: pointer;
+}
+.personal_info_buttons{
+display: flex;
+justify-content: space-around;
+}
+.pI_btn{
+    height: 30px;
+    width: 200px;
+    color: #000000;
+    border-radius: 5px;
+    border: 1px solid #000000;
+    background-color: transparent;
+}
+.submit_personal_info:hover{
+    border: 1px solid #4fa4e1;
+    color: #4fa4e1;
+    cursor: pointer;
+}
+.discard_personal_info:hover{
+    color: #f15050;
+    border: 1px solid #f15050;
+    cursor: pointer;
+}
+.address{
+    margin-bottom: 10px;
+}
+#countrySelect{
+    
+    background-color: #dadada;
+    color: #fff;
+    margin-left: 10px;
+    height: 40px;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+@media (max-width:650px){
+    .personal_info_container{
+        width: 346px;
+    }
+    #countrySelect{
+        width: 200px;
+    }
+    .pI_btn{
+        width: 160px;
+    }
+    .personal_info_buttons{
+        gap: 10px;
+    }
+    .personal_info_container.warning {
+        height: 481px;
+        position: absolute;
+        top: 0;
+    }
+    .personal_info_container_ghost{
+        margin: 0;
+    }
+}
