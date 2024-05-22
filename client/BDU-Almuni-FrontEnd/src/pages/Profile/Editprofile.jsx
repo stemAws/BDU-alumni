@@ -33,9 +33,9 @@ const Editprofile = () => {
   const[education,setEducation]=useState([])
   const[activities,setActivities]=useState([])
   const [placeholders,setPlaceholders]=useState([{
-    firstName:'first name',
-    lastName:'last name',
-    gender:'M/F',
+    firstName:'kebede',
+    lastName:'alemu',
+    gender:'M',
     dateOfBirth:'',
     email:'',
     phoneNumber:'',
@@ -875,7 +875,7 @@ const getStoryById = async(id)=>{
        showAddExperiance={showAddExperiance}
        />
        {showAddExperiance && <AddExperiance loading={loading} updateExperiance={updateExperiance} showEditExperiance={showEditExperiance} experiances={experiance} onAdd={addExperiance} showAddExperiance={setshowAddExperiance}/>}
-        {experiances?.length>0? 
+        {experiances?.length>=0? 
         <Experiances 
         experiances={experiances} 
         onDelete={deleteExperiance}
