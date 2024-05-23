@@ -381,7 +381,9 @@ exports.getAlumniDirectory = async (searchBy, searchByValue) => {
     let q = `SELECT fullName, username, profilePicture FROM education ed JOIN experience ex JOIN alumni a JOIN person p WHERE ed.alumniId = a.alumniId AND a.personId = p.personId AND ex.alumniId = ed.alumniId AND ed.institution = 'Bahir Dar University'`;
     if (searchBy === "department") {
       q += ` AND ed.major = "${searchByValue}"`;
-    } else if (searchBy === "degree") {
+    } else if (searchBy === "name") {
+      q += ` AND p.fullName = "${searchByValue}"`;
+    }else if (searchBy === "degree") {
       q += ` AND ed.degree = "${searchByValue}"`;
     } else if (searchBy === "graduatingYear") {
       q += ` AND ed.graduatingYear = "${searchByValue}"`;
