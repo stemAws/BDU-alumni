@@ -103,7 +103,7 @@ exports.getAlumni = async (req, res) => {
 
 exports.getDegree = async (req, res) => {
   try {
-    const {graduatingYear} = req.body;
+    const { graduatingYear } = req.body;
     const result = await adminService.getDegreeCount(graduatingYear);
     res.json(result);
   } catch (error) {
@@ -134,4 +134,12 @@ exports.getMajors = async (req, res) => {
   }
 };
 
-
+exports.getJob = async (req, res) => {
+  try {
+    const result = await adminService.getJobCount();
+    res.json(result);
+  } catch (error) {
+    console.error("Error fetching majors:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
