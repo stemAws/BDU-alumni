@@ -24,5 +24,6 @@ router.get("/admission-count", adminController.getAdmission);
 router.get("/majors-count", adminController.getMajors);
 router.get("/job-count", adminController.getJob);
 router.get("/industry-count", adminController.getIndustry);
+router.get("/company-count", adminController.getCompany)
 
 module.exports = router;
