@@ -198,7 +198,7 @@ exports.getJobCount = async () => {
     // Return the result
     return result;
   } catch (error) {
-    console.error("Error fetching majors counts:", error);
+    console.error("Error fetching job counts:", error);
     throw error;
   }
 };
@@ -213,7 +213,22 @@ exports.getIndustryCount = async () => {
     // Return the result
     return result;
   } catch (error) {
-    console.error("Error fetching majors counts:", error);
+    console.error("Error fetching company counts:", error);
+    throw error;
+  }
+};
+
+exports.getCompanyCount = async () => {
+  try {
+    let query = `SELECT company, COUNT(*) as count FROM experience GROUP BY company ORDER BY count DESC LIMIT 10 `;
+
+    // Execute the query
+    const [result] = await db.query(query);
+
+    // Return the result
+    return result;
+  } catch (error) {
+    console.error("Error fetching company counts:", error);
     throw error;
   }
 };
