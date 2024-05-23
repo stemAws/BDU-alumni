@@ -153,3 +153,13 @@ exports.getIndustry = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+exports.getCompany = async (req, res) => {
+  try {
+    const result = await adminService.getCompanyCount();
+    res.json(result);
+  } catch (error) {
+    console.error("Error fetching company count:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
