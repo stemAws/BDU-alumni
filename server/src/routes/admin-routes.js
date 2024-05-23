@@ -17,5 +17,6 @@ router.get('/getDonations', adminController.getDonations);
 router.get('/get-alumni', adminController.getAlumni);
 router.get('/degree-count', adminController.getDegree);
 router.get('/admission-count', adminController.getAdmission);
+router.get('/majors-count', adminController.getMajors);
 
 module.exports = router;
