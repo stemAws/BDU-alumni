@@ -203,3 +203,18 @@ exports.getJobCount = async () => {
   }
 };
 
+exports.getIndustryCount = async () => {
+  try {
+    let query = `SELECT industry, COUNT(*) as count FROM experience GROUP BY industry ORDER BY count DESC LIMIT 10 `;
+
+    // Execute the query
+    const [result] = await db.query(query);
+
+    // Return the result
+    return result;
+  } catch (error) {
+    console.error("Error fetching majors counts:", error);
+    throw error;
+  }
+};
+
