@@ -1,0 +1,98 @@
+.JO-flex-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.job-offer-container{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+
+}
+.job-offer{
+    grid-column: span 2;
+    text-align: center;
+    font:400 40px 'Inter';
+}
+.each-job-offer{
+    display: flex;
+    flex-direction: column;
+    background-color: #fafafa;
+    width: 600px;
+    padding: 20px;
+}
+.JO-top{
+    display: flex;
+    justify-content: space-between;
+    color: #555555;
+    border-bottom: 1px solid #dedede;
+    height: 40px;
+    align-items: center;
+}
+.company-detail{
+    display: flex;
+    gap: 10px;
+    width: 200px;
+    align-items: center;
+}
+.company-logo{
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+
+}
+.company-name{
+    text-transform: uppercase;
+}
+.JO-upload-date{
+    font-size: 13px;
+}
+.JO-bottom{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px;
+}
+.job-title{
+    text-transform: uppercase;
+    text-align: center;
+    color: #777777;
+    overflow: hidden;
+    text-wrap: nowrap;
+}
+.job-description{
+    color: #979797;
+    max-height: 100px;
+    height: fit-content;
+    overflow: hidden;
+}
+.job-need{
+    display: flex;
+    gap: 10px;
+    text-transform: capitalize;
+    color: #777777;
+}
+.JO-btns{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+.JO-btns >.btn{
+    width: 120px;
+    height: 40px;
+}
+#JO-apply{
+    border: 0;
+    color: #ffffff;
+    background-color: #00B2FF;
+}
+#JO-read-more{
+    background-color: #E8E8E8;
+    border: 1px solid #c5c5c5;
+    color: #858585;
+}
