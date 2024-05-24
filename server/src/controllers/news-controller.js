@@ -52,4 +52,24 @@ exports.createNews = async (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
     }
   };
+
+  
+exports.updateNews = async (req, res) => {
+    try {
+      const newsId = req.params.newsId;
+      const updatedNewstData = req.body;
+  
+      const affectedRows = await newsService.updateANews(newsId, updatedNewstData);
+  
+      if (affectedRows === 0) {
+        return res.status(404).json({ error: `No record with the given id: ${newsId}` });
+      }
+  
+      return res.json({ message: "News updated successfully" });
+    } catch (error) {
+      console.error("Error updating news:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+  
   
