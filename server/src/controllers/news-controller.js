@@ -40,4 +40,16 @@ exports.createNews = async (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
     }
   };
+
+  exports.getNewsById = async (req, res) => {
+    try {
+      const news = await newsService.getANews(req.params.newsId);
+      
+      if (!news) res.status(404).json("No record by the given id");
+      else res.send(news);
+    } catch (error) {
+      console.error("Error fetching news by ID:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
   
