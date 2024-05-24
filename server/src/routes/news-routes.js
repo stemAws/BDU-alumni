@@ -6,6 +6,8 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 
 router.post("/add-news/:adminId", upload.single("image"), newsController.createNews);
+router.get("/all-news", newsController.getAllNews);
+
 
 
 module.exports = router;
