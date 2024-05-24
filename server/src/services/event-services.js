@@ -16,7 +16,7 @@ exports.addEvent = async (
 
     if (image_path) {
       query =
-        "INSERT INTO events (title, content, startDate, endDate, organizer, imagePath, eventLink, category, eventLocation) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
+        "INSERT INTO event (title, content, startDate, endDate, organizer, imagePath, eventLink, category, eventLocation) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
       params = [
         title,
         content,
@@ -30,7 +30,7 @@ exports.addEvent = async (
       ];
     } else {
       query =
-        "INSERT INTO events (title, description, startDate, endDate, organizer, eventLink,category, eventLocation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO event (title, description, startDate, endDate, organizer, eventLink,category, eventLocation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
       params = [title, description, start_date, end_date, organizer, eventLink, category, eventLink];
     }
 
@@ -46,7 +46,7 @@ exports.addEvent = async (
 exports.getAllEvents = async () => {
   const [events] =
     await db.query(`SELECT *, DATE_FORMAT(startDate, '%Y-%m-%d') AS startDate,
-  DATE_FORMAT(endDate, '%Y-%m-%d') AS endDate FROM events`);
+  DATE_FORMAT(endDate, '%Y-%m-%d') AS endDate FROM event`);
   return events;
 };
 
@@ -62,7 +62,7 @@ exports.getEvents = async () => {
 exports.getEventById = async (eventID) => {
   const [events] = await db.query(
     `SELECT *, DATE_FORMAT(startDate, '%Y-%m-%d') AS startDate,
-  DATE_FORMAT(endDate, '%Y-%m-%d') AS endDate FROM events WHERE eventId = ?`,
+  DATE_FORMAT(endDate, '%Y-%m-%d') AS endDate FROM event WHERE eventId = ?`,
     [eventID]
   );
   return events.length > 0 ? events[0] : null;
@@ -74,7 +74,7 @@ exports.updateEvent = async (eventId, updatedEvent) => {
 
   const [result] = await db.query(
     `
-        UPDATE events
+        UPDATE event
         SET
             title = ?,
             description = ?,
@@ -94,7 +94,7 @@ exports.updateEvent = async (eventId, updatedEvent) => {
 };
 
 exports.deleteEvent = async (eventId) => {
-  const [result] = await db.query("DELETE FROM events WHERE eventId = ?", [
+  const [result] = await db.query("DELETE FROM event WHERE eventId = ?", [
     eventId,
   ]);
 
