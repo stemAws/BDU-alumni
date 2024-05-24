@@ -31,6 +31,14 @@ exports.getNews = async () => {
   return news;
 };
 
+exports.NewsList = async () => {
+  const [news] = await db.query(
+    `SELECT title, category, fullName FROM news n JOIN websiteadmin w JOIN person p WHERE n.adminId = w.adminId AND p.personId = w.personId`
+  );
+
+  return news;
+};
+
 exports.getANews = async (newsId) => {
   const [news] = await db.query(
     `SELECT title, content, category, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt FROM news WHERE newsId = ?`,
