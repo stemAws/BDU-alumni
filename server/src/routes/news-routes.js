@@ -9,6 +9,7 @@ router.post("/add-news/:adminId", upload.single("image"), newsController.createN
 router.get("/all-news", newsController.getAllNews);
 router.get("/news-list", newsController.getNewsList);
 router.get("/get-news/:newsId", newsController.getNewsById);
+router.get("/search-news", newsController.searchNews)
 router.put("/edit-news/:newsId", newsController.updateNews);
 router.delete("/delete-news/:newsId", newsController.deleteNews);
 
