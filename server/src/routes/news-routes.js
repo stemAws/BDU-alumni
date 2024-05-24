@@ -8,6 +8,8 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post("/add-news/:adminId", upload.single("image"), newsController.createNews);
 router.get("/all-news", newsController.getAllNews);
 router.get("/get-news/:newsId", newsController.getNewsById);
+router.put("/edit-news/:newsId", newsController.updateNews);
+
 
 
 
