@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
 import '../styles/profile.css';
-
+import { Link } from "react-router-dom";
 const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetails ,loading,error}) => {
   return (
     <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={showdetail ? 'profile_detail' : 'hidden_detail'}>
@@ -35,9 +35,9 @@ const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetai
 
           <div className="buttons">
 
-          {/* <Link to={`/Editprofile/kebe`}> */}
+          <Link to={`/Editprofile/kebe`}>
             <Button text={"Edit"} />
-            {/* </Link> */}
+            </Link>
             <div  className="logout"><a href="/"><Button text="Log Out" /></a></div>
 
           </div>

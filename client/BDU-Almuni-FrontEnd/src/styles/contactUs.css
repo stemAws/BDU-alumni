@@ -1,0 +1,162 @@
+
+.contactus_container{
+    box-sizing: border-box;
+    margin: 50px 0 50px 0;
+    color: #000;
+    font-family: 'Inter';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+}
+.contactus_container .contactus_title{
+    width: 100%;
+    text-align: center;
+    font-family: 'Inter';
+    margin-bottom: 40px;
+}
+.contactus_container .cards{
+    display: flex;
+    width: 70%;
+    height: 70vh;
+    box-shadow: 0px 0px 60px 30px rgba(0, 0, 0, 0.03);
+    
+}
+.contactus_container .cards .left_side{
+box-sizing: border-box;
+display: flex;
+justify-content: center;
+align-items: center;
+width: 40%;
+flex-direction: column;
+background-color: #000000;
+border-radius: 10px;
+color: #fff;
+
+}
+.information >a{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.contactus_container .cards .left_side .contactus_info{
+font-size: 32px;
+justify-self: flex-start;
+margin-bottom: 20px;
+text-transform: capitalize;
+
+}
+.contactus_container .cards .left_side .information{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font:200 15px 'Inter';
+    margin-left: 20px;
+    
+}
+.contactus_container .cards .left_side .social_media{
+   
+    box-sizing: content-box;
+    display: flex;
+    gap: 10px;
+   margin: 50px 0 0 0px;
+
+}
+.contactus_container .cards .left_side .social_media div {
+   cursor: pointer;
+   height: 30px;
+   border-radius: 30px;
+}
+.contactus_container .cards .right_side{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+.contactus_container .cards .right_side .contactUs_form{
+    font: 300 16px 'Inter';
+    width: 80%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.contactus_container .cards .right_side .contactUs_form .contact_input{
+    display: block;
+    border: 0;
+    border-bottom: 1px solid;
+    margin:0 0 10px 0px;
+    transition: 0.5s ease-in-out;
+    font: 200 16px 'Inter';
+    color: #676767;
+
+}
+.contactus_container .cards .right_side .contactUs_form .contact_input:focus{
+    border-bottom: 1px solid #0C8CE9;
+    outline: none;
+}
+
+.contactus_container .cards .right_side .contactUs_form .send_message{
+    height: 30px;
+    background-color:transparent;
+    border: 1px solid;
+    margin-top:50px ;
+    border-radius: 5px;
+}
+.contactus_container .cards .right_side .contactUs_form .send_message:hover{
+    color: #0C8CE9;
+    cursor: pointer;
+    border: 1px solid #0C8CE9;
+}
+@media(max-width:650px) {
+    .contactus_container{
+        margin-top: 0px;
+    }
+    .contactus_container .cards{
+        flex-direction: column;
+        justify-content: space-between;
+        height: 450px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .contactus_container .cards .right_side .contactUs_form {
+        justify-content: center;
+        
+    }
+    .contactus_container .cards .left_side {
+        width: 100%;
+        height: 40%;
+        border-radius: 0;
+        justify-content: unset;
+        padding-top: 15px;
+    }
+    .contactus_container .cards .left_side .contactus_info{
+        font-size:18px ;
+    }
+    .contact_label{
+        font-size: 13px;
+    }
+    .contactus_container .cards .left_side .information{
+        font-size:11px ;
+    }
+    .contactus_container .cards .left_side .social_media {
+        margin-top: 10px;
+    }
+    .contactus_container .cards .left_side .social_media div>a>*{
+        height: 20px;
+     }
+    .contactus_container .contactus_title{
+        font-size: 16px;
+    }
+    .contactus_container .cards .right_side{
+        align-items: unset;
+        width: 100%;
+        height: 60%;
+    }
+    .contactus_container .cards .right_side .contactUs_form .contact_input {
+        height: 15px;
+    }
+    
+}

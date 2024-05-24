@@ -23,7 +23,7 @@ const Events = () => {
           onChange:handleIntersection 
         });
   return (
-    <div className="events-container">
+    <div className="events-container body">
          <div className="events">
       <div ref={ref} className={`circle-bg ${inView ? 'wide' : ''} ${exitingView ? 'return' : ''}`}  ></div>
       <div className="the-line"></div>
