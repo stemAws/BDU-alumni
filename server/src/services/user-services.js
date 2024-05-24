@@ -267,30 +267,30 @@ exports.changePassword = async (personID, oldPassword, newPassword) => {
   }
 };
 
-// exports.getNotable = async () => {
-//   try {
-//     let query = "SELECT firstName, lastName, profilePhoto FROM alumni WHERE notable = 1";
+exports.getNotable = async () => {
+  try {
+    let query = "SELECT fullName, username, profilePicture, alumniId, isNotable FROM person p JOIN alumni a WHERE a.alumniId = p.personId AND isNotable = 1";
 
-//     const [notableAlumni] = await db.query(query);
+    const [notableAlumni] = await db.query(query);
 
-//     return notableAlumni;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
+    return notableAlumni;
+  } catch (error) {
+    throw error;
+  }
+};
 
-// exports.updateNotable = async (alumniID, isNotable) => {
-//   try {
-//     const [{ affectedRows }] = await db.query(
-//       "UPDATE alumni SET notable = ? WHERE alumniID = ?",
-//       [isNotable, alumniID]
-//     );
-//     return affectedRows;
-//   } catch (error) {
-//     console.error("Error updating password:", error);
-//     throw error;
-//   }
-// };
+exports.updateNotable = async (alumniID, isNotable) => {
+  try {
+    const [{ affectedRows }] = await db.query(
+      "UPDATE alumni SET isNotable = ? WHERE alumniID = ?",
+      [isNotable, alumniID]
+    );
+    return affectedRows;
+  } catch (error) {
+    console.error("Error updating password:", error);
+    throw error;
+  }
+};
 
 exports.sendEmail = async (to, subject, text, html) => {
   const mailOptions = {
@@ -381,12 +381,16 @@ exports.getAlumniDirectory = async (searchBy, searchByValue) => {
     let q = `SELECT fullName, username, profilePicture FROM education ed JOIN experience ex JOIN alumni a JOIN person p WHERE ed.alumniId = a.alumniId AND a.personId = p.personId AND ex.alumniId = ed.alumniId AND ed.institution = 'Bahir Dar University'`;
     if (searchBy === "department") {
       q += ` AND ed.major = "${searchByValue}"`;
-    } else if (searchBy === "degree") {
+    } else if (searchBy === "name") {
+      q += ` AND p.fullName = "${searchByValue}"`;
+    }else if (searchBy === "degree") {
       q += ` AND ed.degree = "${searchByValue}"`;
     } else if (searchBy === "graduatingYear") {
       q += ` AND ed.graduatingYear = "${searchByValue}"`;
     } else if (searchBy === "industry") {
       q += ` AND ex.industry = "${searchByValue}"`;
+    } else if (searchBy === "location") {
+      q = ` SELECT fullName, username, profilePicture FROM education ed JOIN alumni a JOIN person p WHERE ed.alumniId = a.alumniId AND a.personId = p.personId AND ed.institution = 'Bahir Dar University' AND a.currentLocation = 'USA' AND a.currentLocation = "${searchByValue}"`;
     }
     const queryResult = await db.query(q);
 

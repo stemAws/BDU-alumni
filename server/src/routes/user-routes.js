@@ -3,7 +3,6 @@ const router = express.Router();
 const UserController = require("../controllers/user-controller");
 const multer = require("multer");
 const { verifyToken } = require("../middleware/auth-middleware");
-const { updateCustom } = require("../services/user-services");
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -48,8 +47,8 @@ router.put(
   verifyToken,
   UserController.changePassword
 );
-// router.get("/notable", UserController.getNotableAlumni);
-// router.put("/notable/:alumniID", UserController.updateNotable);
+router.get("/notable", UserController.getNotableAlumni);
+router.put("/notable/:alumniID", UserController.updateNotable);
 router.post("/reset-password", verifyToken, UserController.resetPassword);
 router.post(
   "/confirm-password-change",
@@ -57,6 +56,6 @@ router.post(
   UserController.confirmPasswordChange
 );
 router.put("/updateCustom/:alumniId", UserController.updateCustomSetting);
-router.get('/alumni-directory', UserController.searchAlumni)
+router.get("/alumni-directory", UserController.searchAlumni);
 
 module.exports = router;

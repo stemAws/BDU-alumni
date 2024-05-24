@@ -46,11 +46,13 @@ exports.signIn = async function (req, res) {
         expiresIn: "30d",
       });
 
-      res.cookie('token', realToken, { httpOnly: true }).cookie('id', token, { httpOnly: true });  
-    
+      res
+        .cookie("token", realToken, { httpOnly: true })
+        .cookie("id", token, { httpOnly: true });
+
       res.status(200).json({
-          success: true,
-          message: "Authentication successful",
+        success: true,
+        message: "Authentication successful",
       });
     } else {
       res
@@ -317,33 +319,33 @@ exports.changePassword = async function (req, res) {
   }
 };
 
-// exports.getNotableAlumni = async function (req, res) {
-//     try {
-//         const alumniData = await alumniService.getNotable();
-//         res.json(alumniData);
-//       } catch (error) {
-//         console.error(error);
-//         res.status(500).send("Internal Server Error");
-//       }
-// }
+exports.getNotableAlumni = async function (req, res) {
+  try {
+    const alumniData = await alumniService.getNotable();
+    res.json(alumniData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
 
-// exports.updateNotable = async function (req, res) {
-//     try {
-//         const { isNotable } = req.body;
-//         const alumniID = req.params.alumniID;
+exports.updateNotable = async function (req, res) {
+  try {
+    const { isNotable } = req.body;
+    const alumniID = req.params.alumniID;
 
-//         const affectedRows = await alumniService.updateNotable(alumniID, isNotable);
+    const affectedRows = await alumniService.updateNotable(alumniID, isNotable);
 
-//         if (affectedRows === 0) {
-//           return res.status(404).json({ error: "Alumni not found" });
-//         }
+    if (affectedRows === 0) {
+      return res.status(404).json({ error: "Alumni not found" });
+    }
 
-//         res.json({ success: "Notable change successful" });
-//       } catch (error) {
-//         console.error("Error changing notable:", error);
-//         res.status(500).json({ error: "Internal Server Error" });
-//       }
-// }
+    res.json({ success: "Notable change successful" });
+  } catch (error) {
+    console.error("Error changing notable:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 exports.resetPassword = async function (req, res) {
   // problem what if the user that is requesting not really the account owner? will it be changed to defualt. I will fix this, not today
@@ -397,10 +399,10 @@ exports.confirmPasswordChange = async function (req, res) {
 exports.updateCustomSetting = async function (req, res) {
   const { phoneNumber, recieveNewsLetter } = req.body; // Corrected variable name
   try {
-    const result = await alumniService.updateCustom(
-      req.params.alumniId, 
-      { phoneNumber, recieveNewsLetter }
-    );
+    const result = await alumniService.updateCustom(req.params.alumniId, {
+      phoneNumber,
+      recieveNewsLetter,
+    });
     if (result.success) {
       res.status(200).json({ message: result.message });
     } else {
@@ -408,14 +410,19 @@ exports.updateCustomSetting = async function (req, res) {
     }
   } catch (error) {
     console.error("Error updating custom setting:", error);
-    res.status(500).json({ error: "An error occurred while updating custom setting" });
+    res
+      .status(500)
+      .json({ error: "An error occurred while updating custom setting" });
   }
 };
 
 exports.searchAlumni = async function (req, res) {
   try {
-    const {searchBy, searchByValue } = req.body;
-    const alumni = await alumniService.getAlumniDirectory(searchBy, searchByValue);
+    const { searchBy, searchByValue } = req.body;
+    const alumni = await alumniService.getAlumniDirectory(
+      searchBy,
+      searchByValue
+    );
     res.json(alumni);
   } catch (error) {
     console.error("Error fetching alumni:", error);
