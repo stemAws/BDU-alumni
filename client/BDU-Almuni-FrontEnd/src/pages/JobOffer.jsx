@@ -2,7 +2,10 @@ import {FaBaby, FaCalendarAlt} from 'react-icons/fa'
 import Button  from "../component/Button";
 import '../styles/jobOffer.css'
 import logo from "../assets/images/photo_2024-02-27_14-20-52.jpg";
+import { useState } from 'react';
+import JobOfferPopup from '../component/JobOfferPopup';
 const JobOffer = () => {
+    const [openJODetail, setopenJODetail] = useState(false);
   return (
     <div className="JO-flex-container">
     <div className="job-offer-container body">
@@ -110,12 +113,17 @@ const JobOffer = () => {
                 </div>
                 <div className="JO-btns">
                     <Button text={"Apply"} id={"JO-apply"} />
-                    <Button text={"Read More"} id={"JO-read-more"} />
+                    <Button onClick={()=>setopenJODetail(true)} text={"Read More"} id={"JO-read-more"} />
 
                 </div>
             </div>
         </div>
     </div>
+    {
+        openJODetail&&(
+            <JobOfferPopup setopenJODetail={setopenJODetail} />
+        )
+    }
     </div>
   )
 }
