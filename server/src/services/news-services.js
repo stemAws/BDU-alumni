@@ -78,3 +78,19 @@ exports.deleteANews = async (newsId) => {
 
   return { success: true, message: "News deleted successfully" };
 };
+
+exports.searchNewsBy = async (title, category) => {
+  try {
+    let q = `SELECT *, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt,
+    DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM news WHERE title LIKE '%${title}%'`;
+    if (category != null) {
+      q += ` AND category = "${category}"`;
+    } 
+    const queryResult = await db.query(q);
+
+    return queryResult[0];
+  } catch (error) {
+    console.error("Error fetching alumni:", error);
+    throw error;
+  }
+};
