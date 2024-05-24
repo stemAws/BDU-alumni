@@ -35,3 +35,9 @@ exports.addNews = async (
     throw error;
   }
 };
+
+exports.getNews = async () => {
+  const [events] =
+    await db.query(`SELECT *, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM news`);
+  return events;
+};
