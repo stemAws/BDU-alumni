@@ -30,4 +30,14 @@ exports.createNews = async (req, res) => {
       res.status(500).json({ error: "Internal Server Error", message: error.message });
     }
   };
+
+  exports.getAllNews = async (req, res) => {
+    try {
+      const news = await newsService.getNews();
+      res.send(news);
+    } catch (error) {
+      console.error("Error fetching news:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
   
