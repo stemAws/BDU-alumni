@@ -58,3 +58,15 @@ exports.updateANews = async (newsId, updatedNews) => {
 
   return result.affectedRows;
 };
+
+exports.deleteANews = async (newsId) => {
+  const [result] = await db.query("DELETE FROM news WHERE newsId = ?", [
+    newsId,
+  ]);
+
+  if (result.affectedRows === 0) {
+    return { success: false, message: "No record by the given id" };
+  }
+
+  return { success: true, message: "News deleted successfully" };
+};
