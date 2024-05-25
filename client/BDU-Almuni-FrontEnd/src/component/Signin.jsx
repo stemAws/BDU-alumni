@@ -27,7 +27,7 @@ const Signin = ({ closeSignin,setsignin,setloginState }) => {
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          AuthService.login(data.token,data.realToken); 
+          // AuthService.login(data.token,data.realToken); 
           setsignin(false)
           window.location.reload()
         } else {

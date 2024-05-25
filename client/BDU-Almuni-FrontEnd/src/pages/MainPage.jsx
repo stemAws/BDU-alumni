@@ -3,24 +3,39 @@ import MainBody from './MainBody';
 import Stories from './Stories';
 import Events from './Events';
 import Signin from '../component/Signin';
-import { useState,createContext } from 'react';
+import { useState,createContext, useEffect } from 'react';
 import Header from '../component/Header'
 import NewsAndUpdates from './NewsAndUpdates';
 import Editprofile from './Profile/Editprofile'
 import Footer from '../component/Footer';
 import ContactUS from "./ContactUs"
 import JobOffer from './JobOffer';
+import AuthService from '../component/AuthService';
+import Cookies from 'js-cookie';
 export const SigninContext = createContext();
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
   const [loginState, setloginState] = useState(false);
+  useEffect(() => { 
+    console.log(AuthService.isAuthenticated('user'),"eeeeee")
+    console.log(Cookies.get('id'),"cook") 
+    if(AuthService.isAuthenticated("user")){
+     
+      setloginState(true)
+    }
+    else
+    setloginState(false)
+  }, [])
+  const handleLogout = () => {
+    AuthService.logout('user');
+  };
   return (
     <div>
       
         
         
           <SigninContext.Provider value={{ signin, setsignin}}>
-        <Header loginState={loginState}/>
+        <Header logout={handleLogout} loginState={loginState}/>
         </SigninContext.Provider>
         {
           signin&&<Signin setloginState={setloginState} setsignin={setsignin}/>
