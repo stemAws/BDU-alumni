@@ -1,4 +1,4 @@
-import { FaBaby, FaCalendarAlt } from "react-icons/fa"
+import { FaUsers, FaCalendarAlt } from "react-icons/fa"
 import Button from "./Button"
 
 const EachJob = ({jobOffer,setopenJODetail,onReadMore}) => {
@@ -16,7 +16,7 @@ const EachJob = ({jobOffer,setopenJODetail,onReadMore}) => {
                 </p>
                 <p className="job-description">{jobOffer.jobDescription}</p>
                 <div className="job-need">
-                    <FaBaby />
+                    <FaUsers />
                     <p className="people-needed">{jobOffer.peopleNeeded} people needed</p>
                 </div>
                 <div className="job-need">

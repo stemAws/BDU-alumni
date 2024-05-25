@@ -1,7 +1,6 @@
 import EachEvent from "./EachEvent"
 
 const MultipleEvents = ({events}) => {
-    console.log(events)
   return (
    <>
    {
