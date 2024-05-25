@@ -19,7 +19,7 @@ exports.addUser = async (alumniData) => {
   if (role === "alumni") {
     await db.query(`INSERT INTO Alumni (personId)
     VALUES (LAST_INSERT_ID());`);
-    await db.query(`INSERT INTO custom (alumniId)
+    await db.query(`INSERT INTO Custom (alumniId)
     VALUES (LAST_INSERT_ID());`);
   } else if (role === "admin") {
     await db.query(`
@@ -366,7 +366,7 @@ exports.updateCustom = async (alumniId, privacyData) => {
   try {
     const { phoneNumber, recieveNewsLetter } = privacyData;
     await db.query(
-      `UPDATE custom SET showPhoneNumber = ?, recieveNewsLetter = ? WHERE alumniId = ?`,
+      `UPDATE Custom SET showPhoneNumber = ?, recieveNewsLetter = ? WHERE alumniId = ?`,
       [phoneNumber, recieveNewsLetter, alumniId]
     );
     return { success: true, message: "Custom settings updated successfully." };

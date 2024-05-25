@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 exports.addEducation = async (education) => {
-    const { affectedRows } = await db.query("INSERT INTO education (alumniId, institution, degree, major, minor, admission, graduatingYear, awards, researchPublications) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+    const { affectedRows } = await db.query("INSERT INTO Education (alumniId, institution, degree, major, minor, admission, graduatingYear, awards, researchPublications) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [
         education.alumniId,
         education.institution,
         education.degree,
@@ -17,7 +17,7 @@ exports.addEducation = async (education) => {
 };
 
 exports.updateEducation = async (education) => {
-    const affectedRows = await db.query("UPDATE education SET institution = ?, degree = ?, major = ?, minor = ?, admission = ?, graduatingYear = ?, awards = ?, researchPublications = ? WHERE educationId = ?", [
+    const affectedRows = await db.query("UPDATE Education SET institution = ?, degree = ?, major = ?, minor = ?, admission = ?, graduatingYear = ?, awards = ?, researchPublications = ? WHERE educationId = ?", [
         education.institution,
         education.degree,
         education.major,
@@ -33,7 +33,7 @@ exports.updateEducation = async (education) => {
 };
 
 exports.deleteEducation = async (id) => {
-    const { affectedRows } = await db.query("DELETE FROM education WHERE educationID = ?", [id]);
+    const { affectedRows } = await db.query("DELETE FROM Education WHERE educationID = ?", [id]);
 
     if (affectedRows === 0) {
         throw new Error(`No record found with educationID ${id}`);
