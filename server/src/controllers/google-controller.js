@@ -12,12 +12,12 @@ exports.failed = async (req, res) => {
 };
 
 exports.profile = async (req, res) => {
+    console.log(req.user.emails[0].value)
     try {
-        const [result] = await db.query('SELECT personId FROM person WHERE email = ?', [req.user.emails[0].value]);
+        const [result] = await db.query('SELECT personId FROM Person WHERE email = ?', [req.user.emails[0].value]);
+        let token = result[0].personId
 
         if (result.length > 0) {
-            let token = result[0].personId;
-
             const realToken = jwt.sign({token}, process.env.secretKey, {
                 expiresIn: "30d",
             });
@@ -26,13 +26,9 @@ exports.profile = async (req, res) => {
 
             res.redirect(`http://localhost:5173/`);
         }
-
-        else {
-            res.redirect(`http://localhost:5173/`);
-        }
     } catch (error) {
         console.error(error);
-        res.redirect(`http://localhost:5173/`);
+        res.redirect(`http://localhost:5173/email_not_registered_IN_OUR_DB`);
     }
 };
 
