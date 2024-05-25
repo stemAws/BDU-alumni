@@ -1,7 +1,6 @@
 import CategorizedNews from "./CategorizedNews"
 
 const MultipleCategorizedNews = ({multiplecataNews}) => {
-    console.log(multiplecataNews,"multi news")
   return (
     <>
         {
