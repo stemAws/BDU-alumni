@@ -5,9 +5,9 @@
     height: 900px;
     width: 100%;
     gap: 30px;
-    /* background-color: #0a0a0a; */
     color: #ffffff;
     padding: 10px;
+    margin-bottom: 20px;
 }
 .each-event{
     display: flex;
