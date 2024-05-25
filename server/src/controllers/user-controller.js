@@ -48,7 +48,7 @@ exports.signIn = async function (req, res) {
 
       res
         .cookie("token", realToken, { httpOnly: true })
-        .cookie("id", token, { httpOnly: true });
+        .cookie("id", token, { httpOnly: false });
 
       res.status(200).json({
         success: true,

@@ -2,12 +2,14 @@ import NavBar from "./NavBar"
 import '../styles/header.css'
 import { useLocation } from "react-router-dom";
 import background from '../assets/images/photo_2024-02-25_15-58-46.jpg'
-const Header = ({loginState}) => {
+const Header = ({loginState,logout}) => {
   const location = useLocation();
   return (
     <div>
       <div className="overlay">
-        <NavBar loginState={loginState} />
+        <NavBar 
+        logout={logout}
+        loginState={loginState} />
         {location.pathname === '/' && (
       <div className='header-container'>
         <img className='background-img'src={background} alt="" />

@@ -26,10 +26,11 @@ const AuthService = {
     }
     else if (position==='user'){
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/removecookies`, {
-          method: 'GET',
-          credentials: 'include' 
-        });
+        // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/removecookies`, {
+        //   method: 'GET',
+        //   credentials: 'include' 
+        // });
+        Cookies.remove("id")
       } catch (error) {
         console.error("Error during logout:", error);
       }
