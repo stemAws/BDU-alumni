@@ -6,14 +6,25 @@ import Profilepopup from "./Profilepopup"
 import SearchResult from "./SearchResult"
 import SearchBar from "./SearchBar"
 import { Link, useLocation } from 'react-router-dom';
+import NavDropDown from "./NavDropDown"
+import { FaCaretDown, FaCaretUp } from "react-icons/fa"
 const NavBar = ({loginState}) => {
   const { signin, setsignin } = useContext(SigninContext);
   const[detilPop,setdetailPop]=useState(false);
   const[outPut, setOutput] = useState("");
+  const [dropDown, setdropDown] = useState(false);
+  const [dropDown2, setdropDown2] = useState(false);
   const showdetail=()=>{
     setdetailPop(!detilPop);
    }
-   
+   const showdropDown=()=>{
+    setdropDown(!dropDown)
+    setdropDown2(false);
+   }
+   const showdropDown2=()=>{
+    setdropDown2(!dropDown2)
+    setdropDown(false);
+   }
   const handleMouseEnter = () => {
     setdetailPop(true);
   };
@@ -23,34 +34,75 @@ const NavBar = ({loginState}) => {
       setdetailPop(false);
     }, 300);
   };
-  // const location = useLocation();
+  const handleDropMouseEnter = () => {
+    setdropDown(true);
+  };
 
-  // const getNavStyle = () => {
-  //   switch (location.pathname) {
-  //     case '/':
-  //       return { backgroundColor: 'transparent' };
-  //     case '/Stories':
-  //       return { backgroundColor: 'green' };
-  //     case '/Events':
-  //       return { backgroundColor: 'red' };
-  //     default:
-  //       return { backgroundColor: 'transparent' };
-  //   }
-  // };
+  const handleDropMouseLeave = () => {
+    setTimeout(() => {
+      setdropDown(false);
+    }, 300);
+  };
+  const handleDropMouseEnter2 = () => {
+    setdropDown2(true);
+  };
+
+  const handleDropMouseLeave2 = () => {
+    setTimeout(() => {
+      setdropDown2(false);
+    }, 300);
+  };
+  const closeDrops=()=>{
+    setdropDown(false);
+    setdropDown2(false);
+  }
+
+
   return (
     <div className="navBar-container">
         <div className="logo"></div>
         <nav className="nav-lists">
-            <ul >
-                <li> <Link to="/newsAndUpdates">News and updates</Link></li>
-                <li> <Link to="/Stories">stories</Link></li>
-                <li> <Link to="/Events">events</Link></li>
-                <li> <Link to="/">Gallery</Link></li>
-                <li> <Link to="/">community</Link></li>
-                <li> <Link to="/">history</Link></li>
-                <li> <Link to="/">chapters</Link></li>
-                <li> <Link to="/contactus">Contact us</Link></li>
-                <li> <Link to="/">about</Link></li>
+            <ul className="nav-list-conatiner">
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/newsAndUpdates">News and updates</Link></li>
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/Stories">stories</Link></li>
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/Events">events</Link></li>
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/">Gallery</Link></li>
+                <li className="each-nav-list"> <Link onClick={()=>showdropDown()}>community 
+                {
+                  dropDown?<FaCaretUp/>:
+                  <FaCaretDown/>
+                }
+                 </Link>
+                 {
+              dropDown&&(
+              <NavDropDown 
+              onMouseEnter={handleDropMouseEnter} 
+              onMouseLeave={handleDropMouseLeave}
+              className={"dropDown-container drop1"}
+              forLi={"community"}
+              />
+            )
+              }
+                 </li>
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/">chapters</Link></li>
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/contactus">Contact us</Link></li>
+                <li className="each-nav-list"> <Link onClick={()=>showdropDown2()}>about
+                {
+                  dropDown2?<FaCaretUp/>:
+                  <FaCaretDown/>
+                }
+                </Link>
+                {
+              dropDown2&&(
+              <NavDropDown 
+              onMouseEnter={handleDropMouseEnter2} 
+              onMouseLeave={handleDropMouseLeave2}
+              className={"dropDown-container drop2"}
+              forLi={"about"}
+              />
+            )
+              }
+                </li>
                 <div className="searchBar_container">
                 <SearchBar setOutput={setOutput}/>
                 <SearchResult outPut={outPut}/>
@@ -74,7 +126,7 @@ const NavBar = ({loginState}) => {
               </div>
               
               </div>:<Button id={"signin-btn"} onClick={()=>setsignin(true)} text='SIGN IN'/>}
-            {/* <Button onClick={()=>setsignin(true)} id={"signin-btn"} text={"Sign In"} /> */}
+            
         </nav>
     </div>
   )

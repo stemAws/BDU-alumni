@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 const AddExperiance = ({updateExperiance,showEditExperiance,experiances,onAdd,showAddExperiance,loading}) => {
     const [jobTitle,setJobTitle]=useState('')
+    const [industry,setindustry]=useState('')
     const [employmentType,setEmploymentType]=useState('')
     const [companyName,setcompanyName]=useState('')
     const [startDate,setstartDate]=useState('')
@@ -21,7 +22,7 @@ const onSubmit=(e)=>{
           setJobTitleError(true)
           return;
         }
-        onAdd({token,jobTitle,employmentType,companyName,startDate,endDate,stillWorking})
+        onAdd({token,jobTitle,industry,employmentType,companyName,startDate,endDate,stillWorking})
         showAddExperiance(false)
         
 }
@@ -36,13 +37,14 @@ const onupdate=(e)=>{
     setJobTitleError(true)
     return;
   }
-  updateExperiance(jobTitle,employmentType,companyName,startDate,endDate,stillWorking,id);
+  updateExperiance(jobTitle,industry,employmentType,companyName,startDate,endDate,stillWorking,id);
 }
 const onDiscard= () =>{
   showAddExperiance(false)
 }
 useEffect(()=>{
   setJobTitle(showEditExperiance?experiances[0]?.jobTitle:'')
+  setindustry(showEditExperiance?experiances[0]?.industry:'')
 setEmploymentType(showEditExperiance?experiances[0]?.employmentType:'')
 setcompanyName(showEditExperiance?experiances[0]?.companyName:'')
 setstartDate(showEditExperiance?experiances[0]?.startDate:'')
@@ -86,7 +88,46 @@ setStillWorking(showEditExperiance?experiances[0]?.stillWorking:false)
         required
         />
         </div>
-
+        <div className='form_control'>
+          <label htmlFor="industry">Type of Industry</label>
+          <select 
+          id="industry" 
+          value={industry||''} 
+          onChange={(e)=>setindustry(e.target.value)}>
+            <option value="" disabled hidden>Select Type of industry</option>
+            <option value="Healthcare and Social Assistance">Healthcare and Social Assistance</option>
+        <option value="Retail Trade">Retail Trade</option>
+        <option value="Manufacturing">Manufacturing</option>
+        <option value="Educational Services">Educational Services</option>
+        <option value="Professional, Scientific, and Technical Services">Professional, Scientific, and Technical Services</option>
+        <option value="Construction">Construction</option>
+        <option value="Finance and Insurance">Finance and Insurance</option>
+        <option value="Accommodation and Food Services">Accommodation and Food Services</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Transportation and Warehousing">Transportation and Warehousing</option>
+        <option value="Agriculture, Forestry, Fishing, and Hunting">Agriculture, Forestry, Fishing, and Hunting</option>
+        <option value="Public Administration">Public Administration</option>
+        <option value="Wholesale Trade">Wholesale Trade</option>
+        <option value="Real Estate and Rental and Leasing">Real Estate and Rental and Leasing</option>
+        <option value="Arts, Entertainment, and Recreation">Arts, Entertainment, and Recreation</option>
+        <option value="Mining, Quarrying, and Oil and Gas Extraction">Mining, Quarrying, and Oil and Gas Extraction</option>
+        <option value="Utilities">Utilities</option>
+        <option value="Administrative and Support and Waste Management Services">Administrative and Support and Waste Management Services</option>
+        <option value="Management of Companies and Enterprises">Management of Companies and Enterprises</option>
+        <option value="Telecommunications">Telecommunications</option>
+        <option value="Pharmaceuticals and Biotechnology">Pharmaceuticals and Biotechnology</option>
+        <option value="Aerospace and Defense">Aerospace and Defense</option>
+        <option value="Automotive">Automotive</option>
+        <option value="Chemical Manufacturing">Chemical Manufacturing</option>
+        <option value="Electronics and Electrical Equipment">Electronics and Electrical Equipment</option>
+        <option value="Textiles and Apparel">Textiles and Apparel</option>
+        <option value="Food and Beverage Manufacturing">Food and Beverage Manufacturing</option>
+        <option value="Media and Publishing">Media and Publishing</option>
+        <option value="Logistics and Supply Chain">Logistics and Supply Chain</option>
+        <option value="Hospitality and Tourism">Hospitality and Tourism</option>
+        <option value="Other">Other</option>
+          </select>
+        </div>
         <div className="form_control form_control_check">
         <label>I am currently working here</label>
         <input  

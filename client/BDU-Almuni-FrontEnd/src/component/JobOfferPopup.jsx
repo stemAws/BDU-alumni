@@ -1,5 +1,5 @@
 import logo from "../assets/images/photo_2024-02-27_14-20-52.jpg";
-import {FaBaby, FaCalendarAlt, FaTimes} from 'react-icons/fa';
+import {FaUsers, FaCalendarAlt, FaTimes} from 'react-icons/fa';
 import Button  from "../component/Button";
 import "../styles/jobOfferPopup.css";
 const JobOfferPopup = ({jobOffer,setopenJODetail}) => {
@@ -21,7 +21,7 @@ const JobOfferPopup = ({jobOffer,setopenJODetail}) => {
                 </p>
                 <p className="job-description detail">{jobOffer.jobDescription}</p>
                 <div className="job-need">
-                    <FaBaby />
+                    <FaUsers />
                     <p className="people-needed">{jobOffer.peopleNeeded} people needed</p>
                 </div>
                 <div className="job-need">
