@@ -1,0 +1,80 @@
+.events-container{
+
+    display: flex;
+    flex-direction: column;
+    height: 900px;
+    width: 100%;
+    gap: 30px;
+    color: #ffffff;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.each-event{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45%;
+    width: 100%;
+    gap: 20px;
+    padding: 10px;
+    background-color: #ffffff0c;
+    border-radius: 10px;
+}
+.each-event.type1{
+    padding-left: 155px;
+}
+.events-img{
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+}
+.separetor{
+    height: 95%;
+    width: 3px;
+    background-color: #00B2FF;
+    align-self: center;
+}
+.event-description{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 60%;
+    justify-content: flex-start;
+}
+.description-title{
+    font: 600 18px "Inter";
+    text-transform: uppercase;
+    margin-top: 10px;
+    height: 23px;
+    width: 430px;
+    overflow: hidden;
+}
+.description-text{
+    display: flex;
+    gap: 40px;
+    height: 200px;
+}
+.event-text{
+    width: 400px;
+    height: 155px;
+    overflow: hidden;
+    color: #9f9f9fb1;
+}
+.event-date{
+border: 1px solid rgba(208, 208, 208, 0.263);
+border-radius: 12px;
+color: rgba(170, 169, 169, 0.658);
+height: fit-content;
+padding: 10px;
+align-self: center;
+}
+
+.each-event.type2 .event-description{
+    width: fit-content;
+}
+#event-btn{
+   background-color: #00B2FF;
+   color: #ffffff;
+   margin-top: -30px;
+}

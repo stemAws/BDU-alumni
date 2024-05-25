@@ -1,49 +1,89 @@
-.stories {
-    background: white;
-    color: black;
-    margin:0 2rem;
-    transition: max-height 0.3s ease-in-out;
-    margin-top: 20px;
-  }
-  .stroy-container{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    height: fit-content;
-  }
-  .individual-stories {
-    border: 1px solid blueviolet;
-    height: fit-content;
-}
-  
-  .stories_heading {
-    text-transform: uppercase;
-    font-size: 40px;
-    color: rgb(63, 63, 63);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 0 2rem 3rem;
-  }
-  .stories_heading span{
-    color: rgb(0, 200, 255);
-    padding: 10px;
-  }
- .img-container img{
-    max-height: 320px;
- }
-.story-discription{
-    color: white;
+.stories-container{
     position: relative;
-    width: 260px;
-    background-color: rgba(124, 124, 124, 0.511);
-    border-radius: 10px;
-    padding: 10px;
-    margin: -80px 40px ;
-    z-index: 1;
+    display: flex;
+    height: 450px;
+    width: 100%;
+    overflow-x: scroll;
+    justify-content: space-around;
+}
+.each-story{
     display: flex;
     flex-direction: column;
+    width: 30%;
+    height: 400px; 
 }
-.story-discription a{
-    align-self: center;
+.story-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.story-description-container{
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 372px;
+height: 231px;
+margin-top: -150px;
+margin-left: 10%;
+background: rgba(206, 205, 205, 0.807);
+box-shadow: 0px 8px 16px rgba(17, 74, 131, 0.4);
+border-radius: 22px;
+justify-content: center;
+}
+.story-text{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 27px;
+    color: #FFFFFF;
+    width: 320px;
+    margin-top: 20px;
+    height: 80px;
+    overflow: hidden;
+}
+.story-readmore{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #00B2FF;
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 40px;
+}
+.events{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.events>.circle-bg{
+    background-color: #000000;
+    transition: all 1s ease;
+    z-index: -1;
+}
+  
+.events>.circle-bg.wide {
+    width: 100%; 
+    border-radius: 0;
+    height: 1200px;
+    margin-top:70% ;
+    margin-left: 65px;
+  }
+  .events>.circle-bg.return{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+
+}
+.event-title{
+position: relative;
+color: #fefefe;
+z-index: 1;
+color: #FFFFFF;
+mix-blend-mode: exclusion;
+font-size: 40px;
+margin-left: -50px;
+}
+.events>.line-cover{
+    width: 170px;
+    margin-left: -52px;
+    z-index: -2;
 }
