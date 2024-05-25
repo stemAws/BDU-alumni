@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 const AddEducation = ({updateEducation,showEditEducation,educations,onAddEdu,showAddEducation,loading}) => {
     const [institution,setInstitution]=useState('')
     const [degree,setDegree]=useState('')
+    const [admission,setadmission]=useState('')
     const [fieldOfStudy,setfieldOfStudy]=useState('')
     const [startDate,setstartDate]=useState('')
     const [endDate,setendDate]=useState('')
@@ -22,7 +23,7 @@ const onSubmit=(e)=>{
           setfieldOfStudyError(true)
           return;
         }
-        onAddEdu({token,institution,degree,fieldOfStudy,startDate,endDate,stillLearning})
+        onAddEdu({token,institution,admission,degree,fieldOfStudy,startDate,endDate,stillLearning})
         showAddEducation(false)
 }
 const onupdate=(e)=>{
@@ -36,7 +37,7 @@ const onupdate=(e)=>{
     setfieldOfStudyError(true)
     return;
   }
-  updateEducation(institution,degree,fieldOfStudy,startDate,endDate,stillLearning,id);
+  updateEducation(institution,degree,admission,fieldOfStudy,startDate,endDate,stillLearning,id);
 }
 const onDiscard= () =>{
   showAddEducation(false)
@@ -44,6 +45,7 @@ const onDiscard= () =>{
 useEffect(()=>{
   setInstitution(showEditEducation?educations[0]?.institution:'')
   setDegree(showEditEducation?educations[0]?.degree:'')
+  setadmission(showEditEducation?educations[0]?.admission:'')
   setfieldOfStudy(showEditEducation?educations[0]?.fieldOfStudy:'')
   setstartDate(showEditEducation?educations[0]?.startYear:'')
   setendDate(showEditEducation?educations[0]?.endYear:'')
@@ -61,7 +63,19 @@ useEffect(()=>{
         required
         />
         </div>
-
+        <div className='form_control'>
+          <label htmlFor="admission">Type of Admission</label>
+          <select 
+          id="admission" 
+          value={admission||''} 
+          onChange={(e)=>setadmission(e.target.value)}>
+            <option value="" disabled hidden>Select Type of Admission</option>
+            <option value="Bachelor">Regular</option>
+            <option value="Master">Summer</option>
+            <option value="Associate">Extension</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
         <div className='form_control'>
           <label htmlFor="Type_of_Degree">Type of Degree</label>
           <select 

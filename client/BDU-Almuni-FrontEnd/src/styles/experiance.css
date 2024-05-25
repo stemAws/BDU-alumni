@@ -109,6 +109,15 @@ margin-top: 5px;
   border-radius: 10px;
   padding: 5px;
 }
+#admission {
+  margin-left: 10px;
+  border: 1px solid #504f4f;
+  background-color: #f0f0f0;
+  height: 40px;
+  color: #6c6c6c;
+  border-radius: 10px;
+  padding: 5px;
+}
 .add_form .save_button:hover{
   border: 1px solid #4fa4e1;
   color: #4fa4e1;

@@ -365,7 +365,7 @@ const getEducationById = async(id)=>{
   const desiredEducation = educations.find(edu => edu.educationID === id);
   setEducation([desiredEducation])
 }
-const updateEducation = async (institution,degree,fieldOfStudy,startDate,endDate,stillLearning,id)=>{
+const updateEducation = async (institution,degree,admission,fieldOfStudy,startDate,endDate,stillLearning,id)=>{
   try {
     setloading(true)
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/education/${id}`, {
@@ -377,6 +377,7 @@ const updateEducation = async (institution,degree,fieldOfStudy,startDate,endDate
         body: JSON.stringify({
           institution:institution,
           degree:degree,
+          admission:admission,
           fieldOfStudy:fieldOfStudy,
           startYear:startDate,
           endYear:endDate,
@@ -411,7 +412,7 @@ const updateEducation = async (institution,degree,fieldOfStudy,startDate,endDate
   };
 
 
-  const addEducation = async ({token,institution,degree,fieldOfStudy,startDate,endDate,stillLearning}) => {
+  const addEducation = async ({token,institution,degree,admission,fieldOfStudy,startDate,endDate,stillLearning}) => {
     try {
       setloading(true)
       const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/education`,{
@@ -424,6 +425,7 @@ const updateEducation = async (institution,degree,fieldOfStudy,startDate,endDate
       token,
       institution,
       degree,
+      admission,
       fieldOfStudy,
       startDate,
       endDate,
