@@ -1,127 +1,68 @@
-import {FaBaby, FaCalendarAlt} from 'react-icons/fa'
-import Button  from "../component/Button";
 import '../styles/jobOffer.css'
 import logo from "../assets/images/photo_2024-02-27_14-20-52.jpg";
 import { useState } from 'react';
 import JobOfferPopup from '../component/JobOfferPopup';
+import JobOffers from '../component/JobOffers';
 const JobOffer = () => {
     const [openJODetail, setopenJODetail] = useState(false);
+    const [jobOffers, setjobOffers] = useState([{
+        id:1,
+        logo:`..${logo}`,
+        companyName:"company name",
+        uploadDate:"Feb 10 2024",
+        jobTitle:"job title new",
+        jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
+        peopleNeeded:10,
+        deadline: "FEb 25 2024"
+    },
+    {
+        id:2,
+        logo:`..${logo}`,
+        companyName:"company name",
+        uploadDate:"Feb 10 2024",
+        jobTitle:"job title",
+        jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
+        peopleNeeded:10,
+        deadline: "FEb 25 2024"
+    },
+    {
+        id:3,
+        logo:`..${logo}`,
+        companyName:"company name",
+        uploadDate:"Feb 10 2024",
+        jobTitle:"job title",
+        jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
+        peopleNeeded:10,
+        deadline: "FEb 25 2024"
+    },
+    {
+        id:4,
+        logo:`..${logo}`,
+        companyName:"company name",
+        uploadDate:"Feb 10 2024",
+        jobTitle:"job title",
+        jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
+        peopleNeeded:10,
+        deadline: "FEb 25 2024"
+    }]);
+    const [jobOffer, setjobOffer] = useState([{}]);
+    const jobToReadMore=(jobID)=>{
+setjobOffer(jobOffers.find((jOff=>jOff.id===jobID)))
+console.log(jobOffer,"i think")
+    }
   return (
     <div className="JO-flex-container">
     <div className="job-offer-container body">
         <p className="job-offer"><span className='blue-text'>JOB</span> OFFER</p>
-        <div className="each-job-offer">
-            <div className="JO-top">
-                <div className="company-detail"><img src={logo} alt="" className="company-logo" />
-                <p className="company-name">company name</p>
-                </div>
-                <p className="JO-upload-date">Feb 10 2024</p>
-            </div>
-            <div className="JO-bottom">
-                <p className="job-title">
-                    job title
-                </p>
-                <p className="job-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, animi labore. Temporibus cumque quia quos reiciendis! Atque dicta, laboriosam unde omnis quidem aliquam perspiciatis id officia ipsum eius accusantium praesentium</p>
-                <div className="job-need">
-                    <FaBaby />
-                    <p className="people-needed">10 people needed</p>
-                </div>
-                <div className="job-need">
-                    <FaCalendarAlt />
-                    <p className="JO-up-to">up to FEb 25 2024</p>
-                </div>
-                <div className="JO-btns">
-                    <Button text={"Apply"} id={"JO-apply"} />
-                    <Button text={"Read More"} id={"JO-read-more"} />
-
-                </div>
-            </div>
-        </div>
-        <div className="each-job-offer">
-            <div className="JO-top">
-                <div className="company-detail"><img src={logo} alt="" className="company-logo" />
-                <p className="company-name">company name</p>
-                </div>
-                <p className="JO-upload-date">Feb 10 2024</p>
-            </div>
-            <div className="JO-bottom">
-                <p className="job-title">
-                    job title
-                </p>
-                <p className="job-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, animi labore. Temporibus cumque quia quos reiciendis! Atque dicta, laboriosam unde omnis quidem aliquam perspiciatis id officia ipsum eius accusantium praesentium</p>
-                <div className="job-need">
-                    <FaBaby />
-                    <p className="people-needed">10 people needed</p>
-                </div>
-                <div className="job-need">
-                    <FaCalendarAlt />
-                    <p className="JO-up-to">up to FEb 25 2024</p>
-                </div>
-                <div className="JO-btns">
-                    <Button text={"Apply"} id={"JO-apply"} />
-                    <Button text={"Read More"} id={"JO-read-more"} />
-
-                </div>
-            </div>
-        </div>
-        <div className="each-job-offer">
-            <div className="JO-top">
-                <div className="company-detail"><img src={logo} alt="" className="company-logo" />
-                <p className="company-name">company name</p>
-                </div>
-                <p className="JO-upload-date">Feb 10 2024</p>
-            </div>
-            <div className="JO-bottom">
-                <p className="job-title">
-                    job title
-                </p>
-                <p className="job-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, animi labore. Temporibus cumque quia quos reiciendis! Atque dicta, laboriosam unde omnis quidem aliquam perspiciatis id officia ipsum eius accusantium praesentium</p>
-                <div className="job-need">
-                    <FaBaby />
-                    <p className="people-needed">10 people needed</p>
-                </div>
-                <div className="job-need">
-                    <FaCalendarAlt />
-                    <p className="JO-up-to">up to FEb 25 2024</p>
-                </div>
-                <div className="JO-btns">
-                    <Button text={"Apply"} id={"JO-apply"} />
-                    <Button text={"Read More"} id={"JO-read-more"} />
-
-                </div>
-            </div>
-        </div> 
-        <div className="each-job-offer">
-            <div className="JO-top">
-                <div className="company-detail"><img src={logo} alt="" className="company-logo" />
-                <p className="company-name">company name</p>
-                </div>
-                <p className="JO-upload-date">Feb 10 2024</p>
-            </div>
-            <div className="JO-bottom">
-                <p className="job-title">
-                    job title
-                </p>
-                <p className="job-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, animi labore. Temporibus cumque quia quos reiciendis! Atque dicta, laboriosam unde omnis quidem aliquam perspiciatis id officia ipsum eius accusantium praesentium</p>
-                <div className="job-need">
-                    <FaBaby />
-                    <p className="people-needed">10 people needed</p>
-                </div>
-                <div className="job-need">
-                    <FaCalendarAlt />
-                    <p className="JO-up-to">up to FEb 25 2024</p>
-                </div>
-                <div className="JO-btns">
-                    <Button text={"Apply"} id={"JO-apply"} />
-                    <Button onClick={()=>setopenJODetail(true)} text={"Read More"} id={"JO-read-more"} />
-
-                </div>
-            </div>
-        </div>
+        {
+            jobOffers.length > 0 &&(
+                <JobOffers onReadMore={jobToReadMore} jobOffers={jobOffers} setopenJODetail={setopenJODetail} />
+            )
+        }
     </div>
     {
         openJODetail&&(
-            <JobOfferPopup setopenJODetail={setopenJODetail} />
+            <JobOfferPopup jobOffer={jobOffer} setopenJODetail={setopenJODetail} />
         )
     }
     </div>
