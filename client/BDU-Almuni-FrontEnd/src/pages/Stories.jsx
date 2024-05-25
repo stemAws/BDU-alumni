@@ -5,11 +5,27 @@ import newsimg2 from '../assets/images/photo_2024-02-25_15-47-18.jpg';
 import { useInView } from 'react-intersection-observer';
 import "../styles/stories.css"
 import { useState } from "react";
+import MultiStories from "../component/MultiStories";
 const Stories = () => {
         
     
   const [exitingView, setExitingView] = useState(false);
-
+  const [stories, setstories] = useState([{
+    img:`..${newsimg}`,
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ipsam perspiciatis enim ullam, repudiandae sint deserunt molestias assumenda tenetur, in amet nihil laboriosam molestiae placeat distinctio nam nemo eaque soluta"
+  },
+  {
+    img:`..${newsimg1}`,
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ipsam perspiciatis enim ullam, repudiandae sint deserunt molestias assumenda tenetur, in amet nihil laboriosam molestiae placeat distinctio nam nemo eaque soluta"
+  },
+  {
+    img:`..${newsimg2}`,
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ipsam perspiciatis enim ullam, repudiandae sint deserunt molestias assumenda tenetur, in amet nihil laboriosam molestiae placeat distinctio nam nemo eaque soluta"
+  },
+  {
+    img:`..${newsimg}`,
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ipsam perspiciatis enim ullam, repudiandae sint deserunt molestias assumenda tenetur, in amet nihil laboriosam molestiae placeat distinctio nam nemo eaque soluta"
+  }])
   const handleIntersection = (entries) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) {
@@ -35,33 +51,9 @@ const Stories = () => {
       </p>
       </div>
     <div className="stories-container">
-        <div className="each-story">
-                <img className="story-img"src={newsimg2} alt="" />
-            <div className="story-description-container">
-                <p className="story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
-                <p className="story-readmore">
-                    Read more <FaArrowRight/>
-                </p>
-            </div>
-        </div>
-        <div className="each-story">
-                <img className="story-img"src={newsimg} alt="" />
-            <div className="story-description-container">
-                <p className="story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
-                <p className="story-readmore">
-                    Read more <FaArrowRight />
-                </p>
-            </div>
-        </div>
-        <div className="each-story">
-                <img className="story-img"src={newsimg1} alt="" />
-            <div className="story-description-container">
-                <p className="story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
-                <p className="story-readmore">
-                    Read more <FaArrowRight/>
-                </p>
-            </div>
-        </div>
+        {
+          <MultiStories stories={stories} />
+        }
     </div>
     </>
   )

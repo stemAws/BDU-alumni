@@ -1,5 +1,4 @@
 import TodayNews from "./TodayNews"
-
 const MultipleTodayNews = ({multipleNews}) => {
   return (
     <>

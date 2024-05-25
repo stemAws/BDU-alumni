@@ -31,12 +31,14 @@ border-radius: 22px;
 justify-content: center;
 }
 .story-text{
-font-weight: 400;
-font-size: 16px;
-line-height: 27px;
-color: #FFFFFF;
-width: 320px;
-margin-top: 20px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 27px;
+    color: #FFFFFF;
+    width: 320px;
+    margin-top: 20px;
+    height: 80px;
+    overflow: hidden;
 }
 .story-readmore{
     display: flex;
