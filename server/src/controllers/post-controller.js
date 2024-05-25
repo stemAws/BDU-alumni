@@ -1,6 +1,6 @@
 const postService = require("../services/post-services");
 const path = require("path");
-const sharp = require('sharp');
+const sharp = require("sharp");
 
 const {
   getStorage,
@@ -18,26 +18,27 @@ const storage = getStorage();
 
 exports.createPost = async (req, res) => {
   const { content, suggestToAdmin } = req.body;
-  const alumniID = req.params.alumniID;
-  console.log(content);
+  const alumniId = req.params.alumniId;
 
   try {
     let downloadURL = null;
 
     if (req.file) {
-      const filePath = `posts/${alumniID}-${Date.now()}${path.extname(
+      const filePath = `posts/${alumniId}-${Date.now()}${path.extname(
         req.file.originalname
       )}`;
       const fileRef = ref(storage, filePath);
 
-      const resizedFile = await sharp(req.file.buffer).jpeg({ quality: 40 }).toBuffer()
+      const resizedFile = await sharp(req.file.buffer)
+        .jpeg({ quality: 40 })
+        .toBuffer();
 
       await uploadBytes(fileRef, resizedFile);
       downloadURL = await getDownloadURL(fileRef);
     }
 
     const postId = await postService.createPost(
-      alumniID,
+      alumniId,
       content,
       downloadURL,
       suggestToAdmin
@@ -72,16 +73,16 @@ exports.getAddedStories = async (req, res) => {
 
 exports.updateSuggestedByAdmin = async (req, res) => {
   try {
-    const { id } = req.params;
+    const postId = req.params.postId;
     const updatedPostData = req.body;
 
     const affectedRows = await postService.updateSuggestedByAdmin(
-      id,
+      postId,
       updatedPostData
     );
 
     if (affectedRows === 0) {
-      res.status(404).json(`No record with the given id: ${id}`);
+      res.status(404).json(`No record with the given id: ${postId}`);
     } else {
       res.json({ message: "Post's suggestedByAdmin updated successfully" });
     }
@@ -92,13 +93,13 @@ exports.updateSuggestedByAdmin = async (req, res) => {
 };
 
 exports.getPostsByUsernameOrId = async (req, res) => {
-  const idOrUsername = req.params.idOrUsername;
+  const alumniIdOrUsername = req.params.alumniIdOrUsername;
   try {
     let post;
-    if (isNaN(idOrUsername)) {
-      post = await postService.getPostsByUsername(idOrUsername);
+    if (isNaN(alumniIdOrUsername)) {
+      post = await postService.getPostsByUsername(alumniIdOrUsername);
     } else {
-      post = await postService.getPostByAlumniId(idOrUsername);
+      post = await postService.getPostByAlumniId(alumniIdOrUsername);
     }
 
     if (!post) {
@@ -113,24 +114,59 @@ exports.getPostsByUsernameOrId = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+// exports.deletePost = async (req, res) => {
+//   try {
+//     const { postId } = req.params;
 
+//     // Fetch post to get media path
+//     const post = await postService.getPostImage(postId);
+
+//     if (post) {
+//       const mediaRef = ref(storage, post.mediaPath);
+//       try {
+//         await deleteObject(mediaRef);
+//         console.log("Photo deleted successfully");
+//       } catch (deleteError) {
+//         console.error("Error deleting post photo:", deleteError);
+//         return res.status(500).json({ error: "Error deleting post photo" });
+//       }
+
+//       // Delete post record from database
+//       const affectedRows = await postService.deletePost(postId);
+
+//       if (affectedRows === 0) {
+//         res
+//           .status(404)
+//           .json({ message: `No record with the given id: ${postId}` });
+//       } else {
+//         res.json({ message: "Post deleted successfully" });
+//       }
+//     }
+//   } catch (error) {
+//     console.error("Error deleting post:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
 exports.deletePost = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { postId } = req.params;
 
-    const post = await postService.getPostImage(id);
+    const post = await postService.getPostImage(postId);
 
-    const currentProfilePhotoRef = ref(storage, post.image);
-        try {
-          await deleteObject(currentProfilePhotoRef);
-          console.log("photo deleted successfully");
-        } catch (deleteError) {
-          console.error("Error deleting post photo:", deleteError);
-        }
-    const affectedRows = await postService.deletePost(id);
+    if (post?.mediaPath) {
+      const mediaRef = ref(storage, post.mediaPath);
+      try {
+        await deleteObject(mediaRef);
+        console.log("Photo deleted successfully");
+      } catch (deleteError) {
+        console.error("Error deleting post photo:", deleteError);
+      }
+    }
+
+    const affectedRows = await postService.deletePost(postId);
 
     if (affectedRows === 0) {
-      res.status(404).json(`No record with the given id: ${id}`);
+      res.status(404).json({ message: `No record with the given id: ${postId}` });
     } else {
       res.json({ message: "Post deleted successfully" });
     }
@@ -140,15 +176,16 @@ exports.deletePost = async (req, res) => {
   }
 };
 
+
 exports.updatePost = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { postId } = req.params;
     const updatedPostData = req.body;
 
-    const affectedRows = await postService.updatePost(id, updatedPostData);
+    const affectedRows = await postService.updatePost(postId, updatedPostData);
 
     if (affectedRows === 0) {
-      res.status(404).json(`No record with the given id: ${id}`);
+      res.status(404).json(`No record with the given id: ${postId}`);
     } else {
       res.json({ message: "Post updated successfully" });
     }
