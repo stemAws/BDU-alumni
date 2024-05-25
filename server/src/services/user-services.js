@@ -313,7 +313,7 @@ exports.sendEmail = async (to, subject, text, html) => {
 exports.sendConfirmation = async (email) => {
   try {
     const [result] = await db.query(
-      "SELECT COUNT(*) AS userCount FROM person WHERE email = ?",
+      "SELECT COUNT(*) AS userCount FROM Person WHERE email = ?",
       [email]
     );
     const userCount = result[0].userCount;
