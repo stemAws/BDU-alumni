@@ -262,7 +262,7 @@ const forsocials=(value)=>{
       return [];
     }
   }
-  const addExperiance = async ({ token, jobTitle, employmentType, companyName, startDate, endDate, stillWorking }) => {
+  const addExperiance = async ({ token, jobTitle,industry, employmentType, companyName, startDate, endDate, stillWorking }) => {
     try {
       setloading(true)
     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/experiences`,{
@@ -274,6 +274,7 @@ const forsocials=(value)=>{
       body: JSON.stringify({
       token,
       jobTitle,
+      industry,
       employmentType,
       companyName,
       startDate,
@@ -322,7 +323,7 @@ const forsocials=(value)=>{
       
       
   }
-  const updateExperiance = async (jobTitle,employmentType,companyName,startDate,endDate,stillWorking,id) => {
+  const updateExperiance = async (jobTitle,industry,employmentType,companyName,startDate,endDate,stillWorking,id) => {
     try {
       setloading(true)
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/experiences/${id}`, {
@@ -333,6 +334,7 @@ const forsocials=(value)=>{
             credentials: 'include',
             body: JSON.stringify({
                 jobTitle: jobTitle,
+                industry:industry,
                 employmentType:employmentType,
                 companyName:companyName,
                 startDate: startDate,
