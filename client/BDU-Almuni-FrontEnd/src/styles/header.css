@@ -76,7 +76,9 @@ cursor: pointer;
 
 .nav-lists ul li{
     position: relative;
+    display: flex;
     min-width: fit-content;
+    align-items: center;
     }
     .nav-lists ul li a{
         text-decoration: none;
