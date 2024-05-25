@@ -6,6 +6,7 @@ import newsSmallImg3 from '../assets/images/photo_2024-02-25_16-12-11.jpg'
 import { useInView } from 'react-intersection-observer';
 import { useEffect, useState } from 'react'
 import MultipleTodayNews from '../component/MultipleTodayNews'
+import MultipleCategorizedNews from '../component/MultipleCategorizedNews'
 const NewsAndUpdates = () => {
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
   const [exitingView, setExitingView] = useState(false);
@@ -16,6 +17,34 @@ const NewsAndUpdates = () => {
     "Technology: fugiat eos consectetur consequuntur inventore aspernatur, libero aliquam fuga odit in consequatur"
   ];
   const [multipleNews, setmultipleNews] = useState([{
+    img:`..${newsimg}`,
+    category:"Technology",
+    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+    location:"Bahir dar University, Washera Hall",
+    date:"FEB 25 2023"
+  },
+  {
+    img:`..${newsSmallImg2}`,
+    category:"Technology",
+    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+    location:"Bahir dar University, Washera Hall",
+    date:"FEB 25 2023"
+  },
+  {
+    img:`..${newsSmallImg3}`,
+    category:"Technology",
+    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+    location:"Bahir dar University, Washera Hall",
+    date:"FEB 25 2023"
+  },
+  {
+    img:`..${newsSmallImg}`,
+    category:"Technology",
+    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+    location:"Bahir dar University, Washera Hall",
+    date:"FEB 25 2023"
+  },
+  {
     img:`..${newsimg}`,
     category:"Technology",
     description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
@@ -71,41 +100,11 @@ const NewsAndUpdates = () => {
           </ul>
         </div>
         <div className="categorized-news-container">
-        <div className="each-news">
-          <div className="small-news-img">
-            <img src={newsSmallImg} alt="" />
-          </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
-          <span className="news-date-side">feb 12 - 2024</span></p>
-        </div>
-        <div className="each-news">
-          <div className="small-news-img">
-            <img src={newsSmallImg2} alt="" />
-          </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
-          <span className="news-date-side">feb 12 - 2024</span></p>
-        </div>
-        <div className="each-news">
-          <div className="small-news-img">
-            <img src={newsSmallImg3} alt="" />
-          </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
-          <span className="news-date-side">feb 12 - 2024</span></p>
-        </div>
-        <div className="each-news">
-          <div className="small-news-img">
-            <img src={newsSmallImg} alt="" />
-          </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
-          <span className="news-date-side">feb 12 - 2024</span></p>
-        </div>
-        <div className="each-news">
-          <div className="small-news-img">
-            <img src={newsSmallImg} alt="" />
-          </div>
-          <p className="news-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit...
-          <span className="news-date-side">feb 12 - 2024</span></p>
-        </div>
+        {
+          multipleNews.length >0 &&(
+            <MultipleCategorizedNews multiplecataNews={multipleNews} />
+          )
+        }
         </div>
         </div>
         </div>

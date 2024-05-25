@@ -154,11 +154,17 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     padding-top: 15px;
     color: #727272;
     width: 45%;
+    height: 70px;
+   
+}
+.news-description{
+    height: 58px;
+    overflow: hidden;
 }
 .news-date-side{
     text-transform: capitalize;
-    display: block;
     margin-top: 10px;
+    font-size: 14px;
 }
 .headline-texts{
     width: 100%;
