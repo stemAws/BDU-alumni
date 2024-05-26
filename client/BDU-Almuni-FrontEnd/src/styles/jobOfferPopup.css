@@ -36,3 +36,14 @@ cursor: pointer;
     max-height: 300px;
     overflow: scroll;
 }
+.job-need-conatiner{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.job-need.JO{
+    margin-bottom: 10px;
+}
+.job-need.JO-deadline{
+    color: #ff7d7d;
+}

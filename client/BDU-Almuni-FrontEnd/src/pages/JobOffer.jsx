@@ -13,6 +13,10 @@ const JobOffer = () => {
         jobTitle:"job title new",
         jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
         peopleNeeded:10,
+        workingHours : "2:00 am-11:00 pm",
+        workingDays:"weekdays",
+        salary :20000,
+        address: "bahirdar, kebele 00",
         deadline: "FEb 25 2024"
     },
     {
@@ -23,6 +27,10 @@ const JobOffer = () => {
         jobTitle:"job title",
         jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
         peopleNeeded:10,
+        workingHours : "2:00 am-11:00 pm",
+        workingDays:"weekdays",
+        salary :20000,
+        address: "bahirdar, kebele 00",
         deadline: "FEb 25 2024"
     },
     {
@@ -33,6 +41,10 @@ const JobOffer = () => {
         jobTitle:"job title",
         jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
         peopleNeeded:10,
+        workingHours : "2:00 am-11:00 pm",
+        workingDays:"weekdays",
+        salary :20000,
+        address: "bahirdar, kebele 00",
         deadline: "FEb 25 2024"
     },
     {
@@ -41,8 +53,12 @@ const JobOffer = () => {
         companyName:"company name",
         uploadDate:"Feb 10 2024",
         jobTitle:"job title",
-        jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
+        jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
         peopleNeeded:10,
+        workingHours : "2:00 am-11:00 pm",
+        workingDays:"weekdays",
+        salary :20000,
+        address: "bahirdar, kebele 00",
         deadline: "FEb 25 2024"
     }]);
     const [jobOffer, setjobOffer] = useState([{}]);

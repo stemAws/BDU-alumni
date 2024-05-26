@@ -1,5 +1,5 @@
 import logo from "../assets/images/photo_2024-02-27_14-20-52.jpg";
-import {FaUsers, FaCalendarAlt, FaTimes} from 'react-icons/fa';
+import {FaUsers, FaCalendarAlt, FaTimes, FaMoneyBill, FaLocationArrow, FaMoneyBillAlt, FaMoneyCheck, FaMapMarker} from 'react-icons/fa';
 import Button  from "../component/Button";
 import "../styles/jobOfferPopup.css";
 const JobOfferPopup = ({jobOffer,setopenJODetail}) => {
@@ -20,14 +20,26 @@ const JobOfferPopup = ({jobOffer,setopenJODetail}) => {
                     {jobOffer.jobTitle}
                 </p>
                 <p className="job-description detail">{jobOffer.jobDescription}</p>
-                <div className="job-need">
+                <div className="job-need-conatiner">
+                    <div><div className="job-need JO">
                     <FaUsers />
                     <p className="people-needed">{jobOffer.peopleNeeded} people needed</p>
                 </div>
-                <div className="job-need">
+                <div className="job-need JO">
+                    <FaMoneyCheck />
+                    <p className="JO-up-to"> {jobOffer.salary}/month</p>
+                </div></div>
+                <div><div className="job-need JO">
+                    <FaMapMarker />
+                    <p className="JO-up-to">{jobOffer.address}</p>
+                </div>
+                <div className="job-need JO JO-deadline">
                     <FaCalendarAlt />
                     <p className="JO-up-to">up to {jobOffer.deadline}</p>
+                </div></div>
+                
                 </div>
+                
                 <div className="JO-btns">
                     <Button text={"Apply"} id={"JO-apply"} />
                 </div>
