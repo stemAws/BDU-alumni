@@ -179,7 +179,7 @@ const ProfilePage = () => {
           {experiances[0]&&<p className="work_place">{stillWorking()}
             </p>}
           <div className="learn_and_work"  >
-          <div className="address_contact_info">{personalInfo?.[0]?.address} 
+          <div className="address_contact_info">{personalInfo?.[0]?.currentLocation} 
         <p className="contact_info" onClick={()=>setShowContact(true)} >Contact info</p>
         </div>
         {educations?.length > 0 &&

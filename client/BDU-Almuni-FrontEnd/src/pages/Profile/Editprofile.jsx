@@ -38,7 +38,7 @@ const Editprofile = () => {
     dateOfBirth:'',
     email:'',
     phoneNumber:'',
-    address:'',
+    currentLocation:'',
     additionalInfo:'',
     username:'',
     password:'',
@@ -591,7 +591,7 @@ const getStoryById = async(id)=>{
                 dateOfBirth: placeholders[0].dateOfBirth,
                 email: placeholders[0].email,
                 phoneNumber: placeholders[0].phoneNumber,
-                address: placeholders[0].address,
+                currentLocation: placeholders[0].currentLocation,
                 additionalInfo: placeholders[0].additionalInfo,
                 username: placeholders[0].username,
                 password: placeholders[0].password,
@@ -811,7 +811,7 @@ const getStoryById = async(id)=>{
             </p>}
           <div className="learn_and_work"  >
           <div className="address_contact_info">
-            <p>{placeholders?.[0]?.address} </p>
+            <p>{placeholders?.[0]?.currentLocation} </p>
         </div>
         {educations?.length > 0 &&
           <div className="learning_place">

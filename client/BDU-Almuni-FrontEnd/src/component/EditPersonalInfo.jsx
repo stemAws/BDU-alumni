@@ -38,7 +38,7 @@ const EditPersonalInfo = ({handlePlaceholders,submitFile,personalInfo,forsocials
   
     const handleCountryChange = (event) => {
       setSelectedCountry(event.target.value);
-      handlePlaceholders(event.target.value, 'address');
+      handlePlaceholders(event.target.value, 'currentLocation');
     };
     const handleDiscard=()=>{
       if (inputDirty) {
@@ -50,7 +50,7 @@ const EditPersonalInfo = ({handlePlaceholders,submitFile,personalInfo,forsocials
     }
     useEffect(()=>{
 setPersonalData(personalInfo)
-setSelectedCountry(personalInfo[0].address)
+setSelectedCountry(personalInfo[0].currentLocation)
     },[personalInfo]);
     
     useEffect(() => {
