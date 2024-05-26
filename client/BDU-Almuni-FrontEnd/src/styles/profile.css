@@ -219,6 +219,9 @@ color: #e0e0e0;
     margin: 20px 0 0 0;
     justify-content: space-around;
 }
+.buttons a{
+  text-decoration: none;
+}
 .profile_detail .btn{
     margin: 0 ;
     border: 0;
@@ -245,7 +248,14 @@ color: #e0e0e0;
     display: none;
     transition: 0.5s ease-out;
 }
-
+.detail_out{
+  font: 400 16px "Inter";
+  
+}
+.detail_out a{
+  color: #000000;
+  text-decoration: none;
+}
 .detail_out:hover{
     opacity: 0.5;
     

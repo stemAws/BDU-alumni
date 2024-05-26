@@ -12,6 +12,8 @@ import ContactUS from "./ContactUs"
 import JobOffer from './JobOffer';
 import AuthService from '../component/AuthService';
 import Cookies from 'js-cookie';
+import ProfilePage from './Profile/ProfilePage';
+import ChangePassword from './ChangePassword';
 export const SigninContext = createContext();
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
@@ -47,7 +49,9 @@ const MainPage = () => {
           <Route path="/newsAndUpdates"  Component = {NewsAndUpdates} />
           <Route path="/jobOffer"  Component = {JobOffer} />
           <Route path="/editProfile/:username"  Component = {Editprofile} />
+          <Route path="/ProfilePage/:username"  Component = {ProfilePage} />
           <Route path="/contactus"  Component = {ContactUS} />
+          <Route path="/changePassword/:username"  Component = {ChangePassword} />
           </Routes>
           <Footer/>
     </div>

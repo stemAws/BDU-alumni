@@ -33,9 +33,9 @@ const Editprofile = () => {
   const[education,setEducation]=useState([])
   const[activities,setActivities]=useState([])
   const [placeholders,setPlaceholders]=useState([{
-    firstName:'kebede',
-    lastName:'alemu',
-    gender:'M',
+    firstName:'',
+    lastName:'',
+    gender:'',
     dateOfBirth:'',
     email:'',
     phoneNumber:'',
@@ -88,7 +88,7 @@ const forsocials=(value)=>{
   useEffect(()=>{
     const getPosts =async()=>{
     try {
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/posts/${username}`,{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${username}`,{
         credentials: 'include',
       });
       
@@ -108,7 +108,7 @@ const forsocials=(value)=>{
     }
     const getPersonalInfo= async()=>{
       try {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/alumni/${username}`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/${username}`,{
           credentials: 'include',
         }) 
         
@@ -142,7 +142,7 @@ const forsocials=(value)=>{
         const cookies = document.cookie;
         const match = cookies.match(/id=([^;]*)/);
         const token = match ? match[1] : null;
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/getProfilePicture/${token}`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getProfilePicture/${token}`,{
           credentials: 'include',
         });
     
@@ -168,7 +168,7 @@ const forsocials=(value)=>{
         const cookies = document.cookie;
         const match = cookies.match(/id=([^;]*)/);
         const token = match ? match[1] : null;
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/getCoverPicture/${token}`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getCoverPicture/${token}`,{
           credentials: 'include',
         });
     
@@ -217,7 +217,7 @@ const forsocials=(value)=>{
       const cookies = document.cookie;
       const match = cookies.match(/id=([^;]*)/);
       const token = match ? match[1] : null;
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/experiences/${token}`,{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${token}`,{
         credentials: 'include',
       });
       
@@ -243,7 +243,7 @@ const forsocials=(value)=>{
       const match = cookies.match(/id=([^;]*)/);
       const token = match ? match[1] : null;
   
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/education/${token}`,{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${token}`,{
         credentials: 'include',
       });
       
@@ -265,7 +265,7 @@ const forsocials=(value)=>{
   const addExperiance = async ({ token, jobTitle,industry, employmentType, companyName, startDate, endDate, stillWorking }) => {
     try {
       setloading(true)
-    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/experiences`,{
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences`,{
       method:'POST',
       headers:{
         'Content-type':'application/json',
@@ -298,7 +298,7 @@ const forsocials=(value)=>{
   }
   const deleteExperiance = async (id)=>{
     try {
-      const res=await fetch(`${process.env.REACT_APP_BACKEND_URL}/experiences/${id}`,{
+      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${id}`,{
     method:'DELETE',
     headers:{
       'Content-type':'application/json',
@@ -326,7 +326,7 @@ const forsocials=(value)=>{
   const updateExperiance = async (jobTitle,industry,employmentType,companyName,startDate,endDate,stillWorking,id) => {
     try {
       setloading(true)
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/experiences/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
@@ -370,7 +370,7 @@ const getEducationById = async(id)=>{
 const updateEducation = async (institution,degree,admission,fieldOfStudy,startDate,endDate,stillLearning,id)=>{
   try {
     setloading(true)
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/education/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${id}`, {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json',
@@ -417,7 +417,7 @@ const updateEducation = async (institution,degree,admission,fieldOfStudy,startDa
   const addEducation = async ({token,institution,degree,admission,fieldOfStudy,startDate,endDate,stillLearning}) => {
     try {
       setloading(true)
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/education`,{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education`,{
       method:'POST',
       headers:{
         'Content-type':'application/json',
@@ -450,7 +450,7 @@ const updateEducation = async (institution,degree,admission,fieldOfStudy,startDa
   }
   const deleteEducation = async (id)=>{
 try {
-  const res=await fetch(`${process.env.REACT_APP_BACKEND_URL}/education/${id}`,{
+  const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${id}`,{
     method:'DELETE',
     headers:{
       'Content-type':'application/json',
@@ -496,7 +496,7 @@ try {
 
     try {
       setloading(true)
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/posts/${token}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${token}`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
@@ -519,7 +519,7 @@ try {
 
 const deleteStory = async (id)=>{
   try {
-   const response= await fetch(`${process.env.REACT_APP_BACKEND_URL}/experiences/${id}`,{
+   const response= await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${id}`,{
       method:'DELETE',
       credentials: 'include',
       headers:{
@@ -549,7 +549,7 @@ const getStoryById = async(id)=>{
     const token = match ? match[1] : null;
   try {
     setloading(true)
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/check-email/${token}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-email/${token}`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -559,7 +559,7 @@ const getStoryById = async(id)=>{
         email: placeholders[0].email,
       }),
     });
-    const response2 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/check-username/${token}`, {
+    const response2 = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-username/${token}`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -581,7 +581,7 @@ const getStoryById = async(id)=>{
     }
     else {
             try {
-              const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/alumni/${token}`, {
+              const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/${token}`, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
@@ -659,7 +659,7 @@ const getStoryById = async(id)=>{
     console.log(token)
     try {
        setloading(true)
-      const res= await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/uploadProfilePicture/${token}`, {
+      const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/uploadProfilePicture/${token}`, {
         method: 'POST',
         credentials: 'include',
       
@@ -689,7 +689,7 @@ const getStoryById = async(id)=>{
   
     try {
       setloading(true)
-      const res=await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/uploadCoverPicture/${token}`, {
+      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/uploadCoverPicture/${token}`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
@@ -798,7 +798,7 @@ const getStoryById = async(id)=>{
         {placeholders?.length > 0 ? (
             <>
         <li className="name_edit"> 
-          <p className="full_name">{placeholders?.[0]?.firstName} {placeholders?.[0]?.lastName}</p>
+          <p className="full_name">{placeholders?.[0]?.fullName}</p>
           <div className='edit_save_icon' 
           >
                 {
