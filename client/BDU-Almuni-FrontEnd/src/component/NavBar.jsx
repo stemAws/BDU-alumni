@@ -8,7 +8,7 @@ import SearchBar from "./SearchBar"
 import { Link, useLocation } from 'react-router-dom';
 import NavDropDown from "./NavDropDown"
 import { FaCaretDown, FaCaretUp } from "react-icons/fa"
-const NavBar = ({loginState,logout}) => {
+const NavBar = ({loginState,logout,userDetails,error,loading}) => {
   const { signin, setsignin } = useContext(SigninContext);
   const[detilPop,setdetailPop]=useState(false);
   const[outPut, setOutput] = useState("");
@@ -118,9 +118,9 @@ const NavBar = ({loginState,logout}) => {
               onMouseEnter={handleMouseEnter} 
               onMouseLeave={handleMouseLeave}  
               showdetail={detilPop}
-              // userDetails={userDetails}
-              // loading={loading}
-              // error={error}
+              userDetails={userDetails}
+              loading={loading}
+              error={error}
               logout={logout}
               />
               </div>

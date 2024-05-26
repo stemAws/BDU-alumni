@@ -36,7 +36,7 @@ const ProfilePage = () => {
     }
     const fetchProfilePictureUrl = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/getProfilePicture/${username}`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getProfilePicture/${username}`,{
           credentials: 'include',
         });
         if (!res.ok) {
@@ -52,7 +52,7 @@ const ProfilePage = () => {
 
     const fetchBGPicture = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/getCoverPicture/${username}`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getCoverPicture/${username}`,{
           credentials: 'include',
         });
         if (!res.ok) {
@@ -74,7 +74,7 @@ const ProfilePage = () => {
   },[])
   const fetchPosts = async() =>{
     try {
-    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/posts/${username}`,{
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${username}`,{
       credentials: 'include',
     });
     const data= await res.json();
@@ -86,7 +86,7 @@ const ProfilePage = () => {
   }
   const fetchExperiances = async () => {
     try {
-    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/experiences/${username}`,{
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${username}`,{
       credentials: 'include',
     }) ;
     const data= await res.json();
@@ -99,7 +99,7 @@ const ProfilePage = () => {
 
   const fetchEducations = async () => {
     try {
-    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/education/${username}`,{
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${username}`,{
       credentials: 'include',
     }) ;
     const data= await res.json();
@@ -111,7 +111,7 @@ const ProfilePage = () => {
   }
   const fetchPersonalInfo = async () => {
     try {
-    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/alumni/${username}`,{
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/${username}`,{
       credentials: 'include',
     }) ;
     const data= await res.json();
@@ -151,7 +151,7 @@ const ProfilePage = () => {
     <div className="User_profile_container">
       <div  className="upper_slide">
       {imageUrl?<img className="profile_img" src={imageUrl} alt="profile image" />:<img className="profile_img" src={user} alt="profile image"  />}
-      {personalInfo?.length > 0 && (<p className="full_name">{personalInfo?.[0]?.firstName} {personalInfo?.[0]?.lastName}</p>)}
+      {personalInfo?.length > 0 && (<p className="full_name">{personalInfo?.[0]?.fullname} {personalInfo?.[0]?.lastName}</p>)}
        </div>
        {
         window.addEventListener('scroll',checkbox)
@@ -168,7 +168,7 @@ const ProfilePage = () => {
         {personalInfo?.length > 0 ? (
             <>
         <li> 
-          <p className="full_name">{personalInfo?.[0]?.firstName} {personalInfo?.[0]?.lastName}</p>
+          <p className="full_name">{personalInfo?.[0]?.fullName}</p>
           {
             personalInfo?.[0]?.role==='Student'&&(
                <p> {personalInfo?.[0]?.graduationYear} Batch</p>

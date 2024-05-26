@@ -3,46 +3,38 @@ import Button from './Button';
 import '../styles/profile.css';
 import { Link } from "react-router-dom";
 const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetails ,loading,error}) => {
+  console.log("wooooooooo",userDetails)
   return (
     <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={showdetail ? 'profile_detail' : 'hidden_detail'}>
-      {/* {loading ? (
+      {loading ? (
         <p>Loading user details...</p>
       ) : error ? (
         <p>{error}</p>
       ) : (
-        <> */}
-          {/* {userDetails && (
-            <> */}
-              {/* <div className='detail_out'>First Name: {userDetails.firstName}</div>
+        <>
+          {userDetails?.[0] && (
+            <>
+              <div className='detail_out'>First Name: {userDetails?.[0].firstName}</div>
               <hr />
-              <div className='detail_out'>Last Name: {userDetails.lastName}</div>
+              <div className='detail_out'>Last Name: {userDetails?.[0].lastName}</div>
               <hr />
-              <div className='detail_out'>Username: {userDetails.username}</div>
+              <div className='detail_out'>Username: {userDetails?.[0].username}</div>
               <hr />
-              <div className='detail_out'><Link to={`/changePassword/${userDetails?.username}`}>Change Password</Link></div>
-              <hr /> */}
-
-              <div className='detail_out'>First Name:</div>
+              <div className='detail_out'><Link to={`/changePassword/${userDetails?.[0]?.username}`}>Change Password</Link></div>
               <hr />
-              <div className='detail_out'>Last Name: </div>
-              <hr />
-              <div className='detail_out'>Username: </div>
-              <hr />
-              {/* <div className='detail_out'><Link to={`/changePassword/kebe`}>Change Password</Link></div> */}
-              <hr />
-            {/* </>
-          )} */}
+            </>
+          )}
 
           <div className="buttons">
 
-          <Link to={`/Editprofile/kebe`}>
+          <Link to={`/Editprofile/${userDetails?.[0].username}`}>
             <Button text={"Edit"} />
             </Link>
             <div onClick={logout} className="logout"><a href="/"><Button text="Log Out" /></a></div>
 
           </div>
-        {/* </> */}
-      {/* )}  */}
+        </>
+       )}  
     </div>
   );
 }
