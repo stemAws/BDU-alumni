@@ -43,7 +43,7 @@ const ContactInfo = ({display,personalInfo,close,forsocials,edit,handlePlacehold
     <div>
     <div className='contactInfo_container' >
         <div className="contact_top"> 
-        <p className="full_name">{personalInfo[0].firstName} {personalInfo[0].lastName}</p>
+        <p className="full_name">{personalInfo[0].fullName}</p>
         <FaTimes className='close_icon' onClick={()=>handleClose()}/>
         </div>
         <div className="contact_bottom">

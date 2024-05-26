@@ -151,7 +151,7 @@ const ProfilePage = () => {
     <div className="User_profile_container">
       <div  className="upper_slide">
       {imageUrl?<img className="profile_img" src={imageUrl} alt="profile image" />:<img className="profile_img" src={user} alt="profile image"  />}
-      {personalInfo?.length > 0 && (<p className="full_name">{personalInfo?.[0]?.fullname} {personalInfo?.[0]?.lastName}</p>)}
+      {personalInfo?.length > 0 && (<p className="full_name">{personalInfo?.[0].fullName}</p>)}
        </div>
        {
         window.addEventListener('scroll',checkbox)

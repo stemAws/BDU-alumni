@@ -69,21 +69,21 @@ const forsocials=(value)=>{
     },
   ]);
 }
-// const checkbox=()=>{
-//   const slide =document.querySelector('.upper_slide');
-//   const profile =document.querySelector(".personal_info.onprofile");
-//   if(profile){
-//   const bottom_profile = profile.getBoundingClientRect().bottom
-//   if(bottom_profile < 104.6 ){
-//     slide.classList.add('upper_slide_show')
-//   } 
-//   else if(bottom_profile >= 104.6)
-//   {
-//     slide.classList.remove("upper_slide_show")
-//   }
-// }
+const checkbox=()=>{
+  const slide =document.querySelector('.upper_slide');
+  const profile =document.querySelector(".personal_info.onprofile");
+  if(profile){
+  const bottom_profile = profile.getBoundingClientRect().bottom
+  if(bottom_profile < 104.6 ){
+    slide.classList.add('upper_slide_show')
+  } 
+  else if(bottom_profile >= 104.6)
+  {
+    slide.classList.remove("upper_slide_show")
+  }
+}
 
-// }
+}
   useEffect(()=>{
     const getPosts =async()=>{
     try {
@@ -726,13 +726,13 @@ const getStoryById = async(id)=>{
   
   return (
     <div className="User_profile_container">
-      {/* <div  className="upper_slide">
+      <div  className="upper_slide">
       {imageUrl?<img className="profile_img" src={imageUrl} alt="profile image" />:<img className="profile_img" src={user} alt="profile image"  />}
-      {placeholders?.length > 0 && (<p className="full_name">{placeholders[0].firstName} {placeholders[0].lastName}</p>)}
-       </div> */}
-       {/* {
+      {placeholders?.length > 0 && (<p className="full_name">{placeholders[0].fullName}</p>)}
+       </div>
+       {
         window.addEventListener('scroll',checkbox)
-       } */}
+       }
       {/* <ToastContainer  autoClose={1500}/> */}
       <section className="update_profile_fields">
       <section className="personal personal_onprofile">
