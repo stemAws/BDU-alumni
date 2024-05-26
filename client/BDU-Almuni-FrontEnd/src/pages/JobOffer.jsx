@@ -66,9 +66,10 @@ const JobOffer = () => {
 setjobOffer(jobOffers.find((jOff=>jOff.id===jobID)))
     }
   return (
-    <div className="JO-flex-container">
-    <div className="job-offer-container body">
-        <p className="job-offer"><span className='blue-text'>JOB</span> OFFER</p>
+    <div className="JO-flex-container body">
+    <p className="job-offer"><span className='blue-text'>JOB</span> OFFER</p>
+    <div className="job-offer-container ">
+        
         {
             jobOffers.length > 0 &&(
                 <JobOffers onReadMore={jobToReadMore} jobOffers={jobOffers} setopenJODetail={setopenJODetail} />

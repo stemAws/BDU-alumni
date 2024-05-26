@@ -1,31 +1,41 @@
 .JO-flex-container{
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
-    min-height: 100vh;
+    max-height: 100vh;
 }
 .job-offer-container{
     position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 0.1fr 1fr 1fr;
-    gap: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
     align-items: center;
     justify-content: center;
-
+max-width: 1230px;
 }
 .job-offer{
-    grid-column: span 2;
     text-align: center;
     font:400 40px 'Inter';
+    margin-bottom: 20px;
 }
 .each-job-offer{
     display: flex;
     flex-direction: column;
     background-color: #fafafa;
-    width: 600px;
+    min-width: 290px;
+    max-width: 500px;
     padding: 20px;
+    transition: min-width 0.4s ease-in-out;
+    height: 300px;
+}
+.each-job-offer:hover {
+    min-width: 700px;
+    flex-direction: row;
+    gap: 20px;
+
+
 }
 .JO-top{
     display: flex;
@@ -34,22 +44,43 @@
     border-bottom: 1px solid #dedede;
     height: 40px;
     align-items: center;
+    transition: all 0.4s ease-in-out;
+}
+.each-job-offer:hover .JO-top{
+    display: block;
+    border: none;
+    width: 50%;
+    height: 250px;
 }
 .company-detail{
     display: flex;
     gap: 10px;
     width: 200px;
     align-items: center;
+    transition: all 0.4s ease-in-out;
+}
+.each-job-offer:hover .company-detail{
+    display: block;
+    height: 90%;
+    width: 100%;
 }
 .company-logo{
     width: 30px;
     height: 30px;
     object-fit: cover;
     border-radius: 50%;
-
+transition: all 0s ease-in;
+}
+.each-job-offer:hover .company-logo{
+    width: 100%;
+    height: 90%;
+    object-fit: cover;
+    border-radius:unset;
 }
 .company-name{
     text-transform: uppercase;
+    width: 100%;
+    height: 20px;
     overflow: hidden;
 }
 .JO-upload-date{
@@ -61,6 +92,9 @@
     margin-top: 20px;
     gap: 10px;
 }
+.each-job-offer:hover .JO-bottom{
+    width: 40%;
+}
 .job-title{
     text-transform: uppercase;
     text-align: center;
@@ -70,9 +104,16 @@
 }
 .job-description{
     color: #979797;
-    max-height: 100px;
+    max-height: 80px;
     height: fit-content;
     overflow: hidden;
+}
+.each-job-offer:hover .job-description{
+    border: 1px solid #e2e2e2;
+    border-radius: 20px;
+    padding: 10px;
+    max-height: 150px;
+    overflow: scroll;
 }
 .job-need{
     display: flex;
@@ -80,6 +121,10 @@
     text-transform: capitalize;
     color: #777777;
     font-size: 14px;
+    transition: all 0.4s ease-in-out;
+}
+.each-job-offer:hover .job-need{
+    display: none;
 }
 .JO-btns{
     display: flex;
