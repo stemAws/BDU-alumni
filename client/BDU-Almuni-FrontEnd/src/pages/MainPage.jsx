@@ -19,8 +19,6 @@ const MainPage = () => {
   const [signin, setsignin] = useState(false);
   const [loginState, setloginState] = useState(false);
   useEffect(() => { 
-    console.log(AuthService.isAuthenticated('user'),"eeeeee")
-    console.log(Cookies.get('id'),"cook") 
     if(AuthService.isAuthenticated("user")){
      
       setloginState(true)

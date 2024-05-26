@@ -48,7 +48,6 @@ const JobOffer = () => {
     const [jobOffer, setjobOffer] = useState([{}]);
     const jobToReadMore=(jobID)=>{
 setjobOffer(jobOffers.find((jOff=>jOff.id===jobID)))
-console.log(jobOffer,"i think")
     }
   return (
     <div className="JO-flex-container">

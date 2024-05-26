@@ -63,7 +63,7 @@ const ContactUs = () => {
             <a target="_blank" rel="noopener noreferrer" href="tel:+251920424332" className="phone_num">
               <FaPhone  /> +251 920 424 332
             </a>
-            <a target="_blank" rel="noopener noreferrer" className ='email' href="mailto:bahirdarstemalumni@gmail.com"> <FaEnvelope />BahirdarUniversityalumni@gmail.com</a>
+            <a target="_blank" rel="noopener noreferrer" className ='email' href="mailto:BahirdarUniversityalumni@gmail.com"> <FaEnvelope />BahirdarUniversityalumni@gmail.com</a>
             <a href='/' target="_blank" rel="noopener noreferrer" className='location'>
               <FaMapMarker /> Bahir Dar, Amhara, Ethiopia 
             </a>

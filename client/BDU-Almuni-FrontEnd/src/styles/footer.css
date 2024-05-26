@@ -228,3 +228,228 @@ footer a:hover{
   margin-top: -30px;
   background-color: #fff;
 }
+
+@media(max-width:359px){
+  footer.container{
+    height: 60%;
+    margin: 0;
+    padding: 0;
+  }
+  .left_and_middle{
+    display: none;
+  }
+  .right_footer_container{
+    min-width: 100%;
+    align-items: center;
+    margin: 20px;
+    
+  }
+  .social_media_links{
+    gap: 0px;
+    margin:0px 0 0px 0px;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .social_media_links>img{
+    width: 40px;
+    height: 40px;
+  }
+  .contact_us{
+    margin: 10px 0px 0 0;
+    /* background-color: #fff; */
+    align-self: center;
+  }
+  .contact_us_title{
+    font-size: 70%;
+  }
+  .contact_us_field{
+    font-size: 70%;
+  }
+  .contact_us_data{
+    font-size: 70%;
+  }
+  .copy_right{
+    font-size: 55%;
+    margin:20px 0 0 0;
+  }
+}
+@media(max-width:715px)and (min-width:360px){
+  .left_and_middle{
+    width: 50%;
+  }
+  .middle_footer_container{
+    width: 50%;
+    height: 30%;
+    position: relative;
+   margin-top: 55px;
+    right: 78px;
+  }
+  .left_footer_container{
+    min-width: 50%;
+    margin: 0;
+    padding-left: 20px;
+    
+  }
+  .stemCenterText{
+    font-size: 70%;;
+    min-width: max-content;
+    margin-top: 5px;
+  }
+  .alumniText{
+    font-size: 70%;
+    margin-top: 5px;
+  }
+  .separator{
+    height: 15px;
+    width: 1.5px;
+    margin-top: 5px;
+  }
+  .moto{
+    font-size: 70%;
+    margin: 0;
+    min-width: 120px;
+  }
+  .blue_text{
+    margin: 0;
+    font-size: 14px;
+    
+  }
+  
+  .support_container{
+    width: max-content;
+    margin-top: 10px;
+    
+  }
+  .support_text{
+    font-size: 70%;
+    font-weight: lighter;
+  }
+  .support_container>.btn{
+    width: 56px;
+    height: 70%;
+    font-size: 70%;
+    z-index: 3;
+      }
+  .right_footer_container{
+    min-width: 50%;
+    margin-right: 50px;
+    
+  }
+  .social_media_links{
+    gap: 0;
+    width: 80%;
+    height: 80%;
+    margin:59px 0 0px 0px;
+    /* background-color: #fff; */
+    align-items: center;
+    align-self:center ;
+    justify-content:space-between;
+  }
+  .social_media_links>img{
+    width: 32px;
+    height: 32px;
+  }
+  .contact_us{
+    margin: 15px 5px 0 0;
+    /* background-color: #fff; */
+    align-self: flex-end;
+  }
+  .contact_us_title{
+    font-size: 70%;
+  }
+  .contact_us_field{
+    font-size: 70%;
+  }
+  .contact_us_data{
+    font-size: 70%;
+  }
+  .copy_right{
+    font-size: 55%;
+    margin:59px 0 0 -195px;
+  }
+}
+@media(min-width:715px) and (max-width:947px){
+  footer ul.logoNameContainer{
+   gap: 0;
+  
+  margin-top: 120px;
+   padding: 0;
+  }
+  .left_and_middle{
+    width: 70%;
+    justify-content:space-around;
+    
+  }
+  .middle_footer_container{
+    width: 100%;
+    height: 75%;
+   
+  }
+  .left_footer_container{
+    min-width: 50%;  
+  }
+  .stemCenterText{
+    font-size: 90%;
+  }
+  .alumniText{
+    font-size: 90%;
+    margin-top: 8px;
+  }
+  .separator{
+    height: 20px;
+    width: 2.5px;
+    margin-top: 5px;
+  }
+  .moto{
+    font-size: 90%;
+  }
+  .support_container{
+    width: 110%;
+  }
+  .support_text{
+    font-size: 70%;
+    
+  }
+  .support_container>.btn{
+    width: 90px;
+    height: 90%;
+    font-size: 80%;
+
+  }
+  .right_footer_container{
+    align-items: center;
+    width: 45%;
+    
+  }
+  .social_media_links{
+    min-width: 55%;
+    gap: 20px;
+    height: 20%;
+    margin:30px 90px 10px 0;
+    
+    
+  }
+  .social_media_links>img{
+    /* width: 90%;
+    height: 90%; */
+    align-self: center;
+  }
+  .contact_us{
+    margin: 15px 0 0 0;
+    /* background-color: #fff; */
+  }
+  .contact_us_title{
+    font-size: 90%;
+  }
+  .contact_us_field{
+    font-size: 90%;
+  }
+  .contact_us_data{
+    font-size: 90%;
+  }
+  .copy_right{
+    font-size: 75%;
+    margin:5px 0 0 -250px;
+  }
+  
+}

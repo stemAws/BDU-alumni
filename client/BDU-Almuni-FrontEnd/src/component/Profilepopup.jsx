@@ -3,7 +3,6 @@ import Button from './Button';
 import '../styles/profile.css';
 import { Link } from "react-router-dom";
 const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetails ,loading,error}) => {
-  console.log("wooooooooo",userDetails)
   return (
     <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={showdetail ? 'profile_detail' : 'hidden_detail'}>
       {loading ? (

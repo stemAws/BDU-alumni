@@ -220,7 +220,6 @@ const forsocials=(value)=>{
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${token}`,{
         credentials: 'include',
       });
-      
       if (res.status===403) {
         setnotauth(true);
       }
@@ -879,7 +878,7 @@ const getStoryById = async(id)=>{
        showAddExperiance={showAddExperiance}
        />
        {showAddExperiance && <AddExperiance loading={loading} updateExperiance={updateExperiance} showEditExperiance={showEditExperiance} experiances={experiance} onAdd={addExperiance} showAddExperiance={setshowAddExperiance}/>}
-        {experiances?.length>=0? 
+        {experiances?.length>0? 
         <Experiances 
         experiances={experiances} 
         onDelete={deleteExperiance}

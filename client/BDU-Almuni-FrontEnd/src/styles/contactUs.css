@@ -40,6 +40,8 @@ color: #fff;
     display: flex;
     gap: 5px;
     align-items: center;
+    text-decoration: none;
+    color: #fff;
 }
 .contactus_container .cards .left_side .contactus_info{
 font-size: 32px;
@@ -68,6 +70,10 @@ text-transform: capitalize;
    cursor: pointer;
    height: 30px;
    border-radius: 30px;
+}
+.contactus_container .cards .left_side .social_media a{
+    text-decoration: none;
+    color: unset;
 }
 .contactus_container .cards .right_side{
     display: flex;
