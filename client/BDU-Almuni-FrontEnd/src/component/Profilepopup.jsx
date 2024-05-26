@@ -3,6 +3,21 @@ import Button from './Button';
 import '../styles/profile.css';
 import { Link } from "react-router-dom";
 const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetails ,loading,error}) => {
+  const [firstName, setfirstName] = useState("")
+  const [lastName, setlastName] = useState("")
+  useEffect(() => {
+    const slicer=()=>{for (let i = 0; i <userDetails?.[0].fullName.length; i++) {
+      if (userDetails?.[0].fullName[i]===" " &&userDetails?.[0].fullName.length>0) {
+        setfirstName(userDetails?.[0].fullName.slice(0,i))
+         setlastName(userDetails?.[0].fullName.slice(i+1))
+      }
+      
+    }}
+    
+    
+  slicer();
+    
+  }, [userDetails?.[0]])
   return (
     <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={showdetail ? 'profile_detail' : 'hidden_detail'}>
       {loading ? (
@@ -13,9 +28,9 @@ const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetai
         <>
           {userDetails?.[0] && (
             <>
-              <div className='detail_out'>First Name: {userDetails?.[0].firstName}</div>
+              <div className='detail_out'>First Name: {firstName}</div>
               <hr />
-              <div className='detail_out'>Last Name: {userDetails?.[0].lastName}</div>
+              <div className='detail_out'>Last Name: {lastName}</div>
               <hr />
               <div className='detail_out'>Username: {userDetails?.[0].username}</div>
               <hr />
