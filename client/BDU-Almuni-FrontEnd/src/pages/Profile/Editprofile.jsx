@@ -33,8 +33,7 @@ const Editprofile = () => {
   const[education,setEducation]=useState([])
   const[activities,setActivities]=useState([])
   const [placeholders,setPlaceholders]=useState([{
-    firstName:'',
-    lastName:'',
+    fullName:'',
     gender:'',
     dateOfBirth:'',
     email:'',
@@ -587,8 +586,7 @@ const getStoryById = async(id)=>{
                   'Content-type': 'application/json', 
                 },
                 body: JSON.stringify({
-                firstName: placeholders[0].firstName,
-                lastName: placeholders[0].lastName,
+                fullName: placeholders[0].fullName,
                 gender: placeholders[0].gender,
                 dateOfBirth: placeholders[0].dateOfBirth,
                 email: placeholders[0].email,
@@ -622,7 +620,7 @@ const getStoryById = async(id)=>{
               setloading(false)
               console.error('Error updating alumni profile:', error);
             }
-    window.location.reload();
+    // window.location.reload();
   };
 } catch (error) {
   setloading(false)

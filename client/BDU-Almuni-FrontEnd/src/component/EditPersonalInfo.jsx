@@ -6,6 +6,9 @@ const EditPersonalInfo = ({handlePlaceholders,submitFile,personalInfo,forsocials
     const [socialLinks,setSocialLinks]=useState(false);
     const [Discardpopup,setDiscardpopup]=useState(false);
     const[personalData,setPersonalData]=useState([{}]);
+    const [firstName, setfirstName] = useState("")
+  const [lastName, setlastName] = useState("")
+  var fullName=firstName+' '+lastName;
     const countriesArray = [
       "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia",
       "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
@@ -50,7 +53,28 @@ setPersonalData(personalInfo)
 setSelectedCountry(personalInfo[0].address)
     },[personalInfo]);
     
-    
+    useEffect(() => {
+      const slicer=()=>{for (let i = 0; i <personalInfo?.[0].fullName.length; i++) {
+        if (personalInfo?.[0].fullName[i]===" " &&personalInfo?.[0].fullName.length>0) {
+          setfirstName(personalInfo?.[0].fullName.slice(0,i))
+           setlastName(personalInfo?.[0].fullName.slice(i+1))
+        }
+        
+      }}
+      
+      
+    slicer();
+      
+    }, [personalInfo?.[0]])
+    const handleName=(value,property)=>{
+      if(property==='firstName')
+        setfirstName(value)
+      else if(property==='lastName')
+        setlastName(value)
+      else
+      return
+    handlePlaceholders(fullName,"fullName")
+    }
   return (
     <div>
     <div className={socialLinks?'personal_info_container personal_info_container_ghost':'personal_info_container'}>
@@ -61,11 +85,11 @@ setSelectedCountry(personalInfo[0].address)
         <div className="personal_info_bottom">
         <ul>
         <li> First Name
-          <input id="personal_info_input" placeholder={personalInfo[0].firstName} value={personalData[0].firstName} onChange={(e) => handlePlaceholders(e.target.value, 'firstName')}type="text" />
+          <input id="personal_info_input" placeholder={firstName} value={firstName} onChange={(e) => handleName(e.target.value,"firstName")}type="text" />
           
         </li>
         <li> Last Name
-          <input id="personal_info_input" placeholder={personalInfo[0].lastName} value={personalData[0].lastName} onChange={(e) => handlePlaceholders(e.target.value,'lastName')}type="text" />
+          <input id="personal_info_input" placeholder={lastName} value={lastName} onChange={(e) => handleName(e.target.value,"lastName")}type="text" />
         </li>
         <li>
         <div className='address'>
