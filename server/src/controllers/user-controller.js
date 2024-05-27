@@ -5,7 +5,7 @@ const sharp = require("sharp");
 const firebaseConfig = require("../config/firebaseConfig");
 require("dotenv").config();
 
-const firebsae = require("firebase/app");
+const firebase = require("firebase/app");
 const {
   getStorage,
   ref,
@@ -14,7 +14,7 @@ const {
   deleteObject,
 } = require("firebase/storage");
 
-firebsae.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 const storage = getStorage();
 

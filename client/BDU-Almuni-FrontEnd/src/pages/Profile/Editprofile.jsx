@@ -656,7 +656,7 @@ const getStoryById = async(id)=>{
     console.log(token)
     try {
        setloading(true)
-      const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/uploadProfilePicture/${token}`, {
+      const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadProfilePicture/${token}`, {
         method: 'POST',
         credentials: 'include',
       
@@ -674,7 +674,7 @@ const getStoryById = async(id)=>{
       setloading(false)
     }
   
-    window.location.reload();
+    // window.location.reload();
   };
   const handleUploadCover = async () => {
     const formData = new FormData();
@@ -686,7 +686,7 @@ const getStoryById = async(id)=>{
   
     try {
       setloading(true)
-      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/uploadCoverPicture/${token}`, {
+      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadCoverPicture/${token}`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
