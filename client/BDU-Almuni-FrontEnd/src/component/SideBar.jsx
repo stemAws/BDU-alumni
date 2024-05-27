@@ -1,6 +1,6 @@
 import React from 'react'
 import '../styles/sidebar.css'
-
+import { Link } from 'react-router-dom';
 
 const SideBar = () => {
   return (
@@ -9,36 +9,63 @@ const SideBar = () => {
         <div className="sidebarMenu">
             <ul className="sidebarList">
                 <li className="sidebarListItem">
-                    User Analytics
+                <Link to='/admin/home'>
+                   User Analytics
+                </Link>
                 </li>
+
                <li className="sidebarListItem">
-                 Users
+               <Link to='/admin/users'>
+                  Users
+               </Link>
                </li>
+
                <li className="sidebarListItem">
+               <Link to='/admin/News'>
                 News and updates
+                </Link>
                 </li>
+
                 <li className="sidebarListItem">
-                Stories
+                <Link to='/admin/story'>
+                  Stories
+                </Link> 
                </li>
+
                <li className="sidebarListItem">
-                Events
+                  <Link to='/admin/Events'>
+                  Events
+                  </Link>
                </li>
+
                <li className="sidebarListItem">
-                Gallery
+                  <Link to='/admin/gallery'>
+                  Gallery
+                  </Link>
                </li>
+
                <li className="sidebarListItem">
+                <Link to='/admin/community'>
                 community
+                </Link>
                 </li>
+                
                <li className="sidebarListItem">
+                <Link to='/admin/chapters'>
                 chapters
+                </Link>
                 </li>
 
                <li className="sidebarListItem notifications">
-                Feedback
+                  <Link to='/admin/feedback'>
+                     Feedback
+                  </Link>
                 </li>
 
                 <li className="sidebarListItem notifications">
-                    Donation
+                  <Link to='/admin/donation'>
+                     Donation
+                  </Link>
                 </li>
            </ul>
                

@@ -5,6 +5,13 @@
     position: sticky;
     color: white;
 }
+.sidebarWrapper{
+  padding: 20px;
+  color: #ffffff;
+  top: 70px;
+  position: sticky;
+}
+
 .sidebarMenu{
     margin: 10px;
 }
@@ -21,6 +28,11 @@
     position: relative;
     width: fit-content;
     padding: 5px;
+}
+.sidebarListItem a {
+  color: inherit; /* Inherit the color from the parent */
+  text-decoration: none; /* Remove underline */
+  display: block; /* Make the link take up the full width of the list item */
 }
 .sidebarListItem::before{
   content: "";
