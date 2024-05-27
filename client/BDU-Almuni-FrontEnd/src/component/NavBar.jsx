@@ -34,7 +34,7 @@ const NavBar = ({loginState}) => {
                 <li>community</li>
                 <li>history</li>
                 <li>chapters</li>
-                <li>chapters</li>
+                <li>Explore</li>
                 <li>about</li>
                 <div className="searchBar_container">
                 <SearchBar setOutput={setOutput}/>

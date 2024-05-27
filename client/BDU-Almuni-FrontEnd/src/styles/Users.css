@@ -1,0 +1,27 @@
+.userListEdit{
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #0c8ce9;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+    transition: 0.5s ease;
+}
+.userListEdit:hover{
+    background-color: #0573c2;
+}
+.decline{
+    background-color: rgb(255, 20, 20);
+    transition: 0.5s ease;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+    margin: 5px;
+    transition: 0.5s ease;
+}
+.decline:hover{
+    background-color: rgb(229, 2, 2);
+}
