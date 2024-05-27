@@ -13,7 +13,7 @@ const Activity = ({personalInfo,activity,onEdit}) => {
     <Link to={`/post/${personalInfo?.[0]?.username}${onEdit ? '?source=edit' : ''}#p${activity.postID}`}><div className='task activity'>
       <div className="name_date">
         {personalInfo? (
-          <p className="full_name">{personalInfo?.[0]?.firstName} {personalInfo?.[0]?.lastName}</p>):''}
+          <p className="full_name">{personalInfo?.[0]?.fullName} </p>):''}
           <p className="Uploaded_date">Posted this  in {formattedDate} at {formattedTime}</p> </div>
           
           <div className="image_content">{activity.image && <div className="postimg"><img  src={`${activity.image}`} alt="" /></div>}
