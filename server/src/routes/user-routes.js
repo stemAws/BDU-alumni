@@ -4,8 +4,8 @@ const UserController = require("../controllers/user-controller");
 const multer = require("multer");
 const { verifyToken } = require("../middleware/auth-middleware");
 
-const upload = multer({ storage: multer.memoryStorage() });
-
+const storageEngine = multer.memoryStorage();
+const upload = multer({ storage: storageEngine });
 // all id are personIDs
 
 router.post("/addUser", UserController.addUser);
