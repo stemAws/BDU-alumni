@@ -61,7 +61,7 @@ exports.getAddedStories = async function  () {
 
 exports.getPostsByUsername = async function (username) {
   try {
-    const [post] = await db.query("SELECT P.* FROM Post P JOIN alumni A JOIN person PE WHERE P.alumniId = A.alumniId AND PE.personId = A.personId AND PE.username = ?", [username]);
+    const [post] = await db.query("SELECT P.* FROM Post P JOIN Alumni A JOIN Person PE WHERE P.alumniId = A.alumniId AND PE.personId = A.personId AND PE.username = ?", [username]);
 
     return post;
   } catch (error) {

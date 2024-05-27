@@ -118,7 +118,7 @@ exports.getAlumniProfilePhotoById = async function (alumniID) {
     const queryResult = await db.query('SELECT profilePicture FROM Alumni WHERE alumniID = ?', [alumniID]);
     
     if (queryResult.length > 0) {
-      return queryResult[0].profilePicture;
+      return queryResult[0][0].profilePicture;
     }
   } catch (error) {
     console.error("Error querying database:", error);
@@ -145,7 +145,7 @@ exports.getAlumniCoverPhotoById = async function (alumniID) {
     const queryResult = await db.query('SELECT coverPicture FROM Alumni WHERE alumniID = ?', [alumniID]);
     
     if (queryResult.length > 0) {
-      return queryResult[0].coverPicture;
+      return queryResult[0][0].coverPicture;
     }
   } catch (error) {
     console.error("Error querying database:", error);
@@ -156,7 +156,7 @@ exports.getAlumniCoverPhotoById = async function (alumniID) {
 exports.updateAlumniCoverPhoto = async (alumniID, coverPhoto) => {
   try {
     const [{ affectedRows }] = await db.query(
-      "UPDATE person SET coverPicture = ? WHERE personID = ?",
+      "UPDATE Alumni SET coverPicture = ? WHERE personID = ?",
       [coverPhoto, alumniID]
     );
     return affectedRows;

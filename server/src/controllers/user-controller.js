@@ -177,6 +177,8 @@ exports.uploadCoverPicture = async function (req, res) {
       alumniID
     );
 
+    console.log(currentCoverPhotoPath)
+
     if (currentCoverPhotoPath) {
       const currentCoverPhotoRef = ref(storage, currentCoverPhotoPath);
       try {
@@ -210,7 +212,8 @@ exports.getProfilePicture = async function (req, res) {
     const alumni = await alumniService.getAlumniProfile(
       req.params.idOrUsername
     );
-    const profilePhotoPath = alumni.profilePhoto;
+
+    const profilePhotoPath = alumni[0].profilePicture;
 
     if (!profilePhotoPath) {
       return res.send(
@@ -230,7 +233,7 @@ exports.getCoverPicture = async function (req, res) {
     const alumni = await alumniService.getAlumniProfile(
       req.params.idOrUsername
     );
-    const coverPhotoPath = alumni.coverPhoto;
+    const coverPhotoPath = alumni[0].coverPicture;
 
     if (!coverPhotoPath) {
       return res.send(
