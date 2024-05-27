@@ -96,7 +96,7 @@ const Signin = ({ closeSignin,setsignin,setloginState }) => {
                 }
               </div>
             </div>
-            {/* <Link to ='/forgetPassword' onClick={()=>setSigninOpen(false)}>Forget password?</Link> */}
+            <Link to ='/forgetPassword' onClick={()=>setsignin(false)}>Forget password?</Link>
             <Button disabled={loading} text={loading?"Loging...":"LOGIN"} onClick={handleSignIn} />
         </form>
         </div>
