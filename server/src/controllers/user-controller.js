@@ -48,7 +48,7 @@ exports.signIn = async function (req, res) {
 
       res
         .cookie("token", realToken, { httpOnly: true })
-        .cookie("id", token, { httpOnly: true });
+        .cookie("id", token, { httpOnly: false });
 
       res.status(200).json({
         success: true,
@@ -69,7 +69,7 @@ exports.getAlumniProfile = async function (req, res) {
   try {
     const token = req.params.id;
     const userDetails = await alumniService.getAlumniProfile(token);
-    const user = userDetails[0];
+    const user = userDetails;
     res.status(200).json(user);
   } catch (error) {
     console.error("Error fetching user profile:", error);

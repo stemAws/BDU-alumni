@@ -40,7 +40,7 @@ const SearchBar = ({setOutput}) => {
       
     const fetchData = async (value) => {
         try {
-          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/alumni/`,{
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/`,{
             credentials:'include',
           });
 

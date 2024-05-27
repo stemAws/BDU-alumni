@@ -1,46 +1,39 @@
 import Cookies from 'js-cookie';
 
 const AuthService = {
-  isAuthenticated: async(verifyToken) => {
+  isAuthenticated: (position) => {
+    if (position==='admin') {
+      return !!Cookies.get('adminId');
+    }
+    else if (position==='user'){
+      return !!Cookies.get('id');
+    }
+    
+  },
+
+
+
+  logout: async(position) => {
+    if (position==='admin') { 
       try {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/verify-token`,{
-          method:'POST',
-          headers:{
-            'Content-type':'application/json',
-            'Authorization': verifyToken,
-          },
-        }) ;
-        if (res.status === 200) {
-          return true
-        }
-        else{
-        return false
-        }
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/removeadmincookies`, {
+        method: 'GET',
+        credentials: 'include' 
+      });
+    } catch (error) {
+      console.error("Error during Admin logout:", error);
+    }
+    }
+    else if (position==='user'){
+      try {
+        // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/removecookies`, {
+        //   method: 'GET',
+        //   credentials: 'include' 
+        // });
+        Cookies.remove("id")
       } catch (error) {
-        console.error("Error Authenticating:", error);
-        return false
-      } 
-  },
-
-  login: (token,realToken,position) => {
-    if (position==='admin') {
-      Cookies.set('authTokenAdmin', token, { expires: 7}); 
-      localStorage.setItem('STEMAdmin', realToken);
-    }
-    else{
-    Cookies.set('authToken', token, { expires: 7}); 
-    localStorage.setItem('STEM', realToken);
-    }
-  },
-
-  logout: (position) => {
-    if (position==='admin') {
-      Cookies.remove('authTokenAdmin');
-      localStorage.removeItem('STEMAdmin');
-    }
-    else{
-      Cookies.remove('authToken');
-      localStorage.removeItem('STEM');
+        console.error("Error during logout:", error);
+      }
     }
     
   },

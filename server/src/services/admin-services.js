@@ -169,3 +169,67 @@ exports.getAdmissionCount = async (graduatingYear) => {
     throw error;
   }
 };
+
+exports.getMajorsCount = async (graduatingYear) => {
+  try {
+    const year =
+      graduatingYear != null ? ` AND graduatingYear = ${graduatingYear}` : "";
+    let query = `SELECT major, COUNT(*) as count FROM education WHERE institution = 'Bahir Dar University' ${year} GROUP BY major ORDER BY count DESC LIMIT 10 
+    `;
+
+    // Execute the query
+    const [result] = await db.query(query);
+
+    // Return the result
+    return result;
+  } catch (error) {
+    console.error("Error fetching majors counts:", error);
+    throw error;
+  }
+};
+
+exports.getJobCount = async () => {
+  try {
+    let query = `SELECT position, COUNT(*) as count FROM experience GROUP BY position ORDER BY count DESC LIMIT 10 `;
+
+    // Execute the query
+    const [result] = await db.query(query);
+
+    // Return the result
+    return result;
+  } catch (error) {
+    console.error("Error fetching job counts:", error);
+    throw error;
+  }
+};
+
+exports.getIndustryCount = async () => {
+  try {
+    let query = `SELECT industry, COUNT(*) as count FROM experience GROUP BY industry ORDER BY count DESC LIMIT 10 `;
+
+    // Execute the query
+    const [result] = await db.query(query);
+
+    // Return the result
+    return result;
+  } catch (error) {
+    console.error("Error fetching company counts:", error);
+    throw error;
+  }
+};
+
+exports.getCompanyCount = async () => {
+  try {
+    let query = `SELECT company, COUNT(*) as count FROM experience GROUP BY company ORDER BY count DESC LIMIT 10 `;
+
+    // Execute the query
+    const [result] = await db.query(query);
+
+    // Return the result
+    return result;
+  } catch (error) {
+    console.error("Error fetching company counts:", error);
+    throw error;
+  }
+};
+

@@ -2,7 +2,7 @@ const db = require("../config/db");
 
 exports.addExperience = async (experience) => {
   const affectedRows = await db.query(
-    "INSERT INTO experience (alumniId, position, company, industry, startDate, endDate, description, employmentType, projects, stillWorking) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO Experience (alumniId, position, company, industry, startDate, endDate, description, employmentType, projects, stillWorking) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       experience.alumniId,
       experience.position,
@@ -21,7 +21,7 @@ exports.addExperience = async (experience) => {
 
 exports.updateExperience = async (experience) => {
   const affectedRows  = await db.query(
-    "UPDATE experience SET position = ?, company = ?, industry = ?, startDate = ?, endDate = ?, description = ?, employmentType = ?, projects = ?, stillWorking = ? WHERE experienceId = ?",
+    "UPDATE Experience SET position = ?, company = ?, industry = ?, startDate = ?, endDate = ?, description = ?, employmentType = ?, projects = ?, stillWorking = ? WHERE experienceId = ?",
     [
       experience.position,
       experience.company,
@@ -41,7 +41,7 @@ exports.updateExperience = async (experience) => {
 
 exports.getExperience = async (id) => {
   const [experience] = await db.query(
-    "SELECT * FROM experience WHERE alumniID = ?",
+    "SELECT * FROM Experience WHERE alumniID = ?",
     [id]
   );
   return experience;
@@ -49,7 +49,7 @@ exports.getExperience = async (id) => {
 
 exports.deleteExperience = async (id) => {
   let affectedRows = await db.query(
-    "DELETE FROM experience WHERE experienceID = ?",
+    "DELETE FROM Experience WHERE experienceID = ?",
     [id]
   );
   return affectedRows[0].affectedRows;

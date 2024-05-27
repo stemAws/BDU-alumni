@@ -3,7 +3,7 @@ const db = require('../config/db');
 exports.createPost = async function (alumniID, content, image, suggestToAdmin) {
   try {
     const [result] = await db.query(
-      'INSERT INTO posts (alumniID, content, image, suggestToAdmin) VALUES (?, ?, ?, ?)',
+      'INSERT INTO post (alumniID, content, mediaPath, suggestToAdmin) VALUES (?, ?, ?, ?)',
       [alumniID, content, image, suggestToAdmin]
     );
 
@@ -17,14 +17,14 @@ exports.createPost = async function (alumniID, content, image, suggestToAdmin) {
 exports.updateSuggestedByAdmin = async function (postId, updateSuggestByAdmin) {
   const { suggestedByAdmin } = updateSuggestByAdmin;
 
-  const [result] = await db.query("UPDATE posts SET suggestedByAdmin = ? WHERE postId = ?", [suggestedByAdmin, postId]);
+  const [result] = await db.query("UPDATE post SET suggestedByAdmin = ? WHERE postId = ?", [suggestedByAdmin, postId]);
 
   return result.affectedRows;
 };
 
 exports.getPostByAlumniId =  async function (alumniID) {
   try {
-    const [rows] = await db.query('SELECT * FROM posts WHERE alumniID = ?', [alumniID]);
+    const [rows] = await db.query('SELECT * FROM post WHERE alumniID = ?', [alumniID]);
 
     if (rows.length === 0) {
       throw new Error('Post not found');
@@ -39,7 +39,7 @@ exports.getPostByAlumniId =  async function (alumniID) {
 
 exports.getAllPosts = async function  () {
   try {
-    const [posts] = await db.query("SELECT * FROM posts");
+    const [posts] = await db.query("SELECT * FROM post");
 
     return posts;
   } catch (error) {
@@ -50,7 +50,7 @@ exports.getAllPosts = async function  () {
 
 exports.getAddedStories = async function  () {
   try {
-    const [posts] = await db.query("SELECT * FROM posts WHERE suggestedByAdmin = 1");
+    const [posts] = await db.query("SELECT * FROM post WHERE suggestedByAdmin = 1");
 
     return posts;
   } catch (error) {
@@ -61,7 +61,7 @@ exports.getAddedStories = async function  () {
 
 exports.getPostsByUsername = async function (username) {
   try {
-    const [post] = await db.query("SELECT P.* FROM posts P JOIN alumni A ON P.alumniID = A.alumniID WHERE A.username = ?", [username]);
+    const [post] = await db.query("SELECT P.* FROM post P JOIN alumni A JOIN person PE WHERE P.alumniId = A.alumniId AND PE.personId = A.personId AND PE.username = ?", [username]);
 
     return post;
   } catch (error) {
@@ -70,9 +70,10 @@ exports.getPostsByUsername = async function (username) {
   }
 };
 
+
 exports.deletePost = async function (postId) {
   try {
-    const [result] = await db.query('DELETE FROM posts WHERE postId = ?', [postId]);
+    const [result] = await db.query('DELETE FROM post WHERE postId = ?', [postId]);
 
     return result.affectedRows;
   } catch (error) {
@@ -84,12 +85,12 @@ exports.deletePost = async function (postId) {
 exports.updatePost = async function(postId, updatedPostData) {
   const { content, suggestToAdmin } = updatedPostData;
 
-  const [result] = await db.query("UPDATE posts SET content = ?, suggestToAdmin = ? WHERE postId = ?", [content, suggestToAdmin, postId]);
+  const [result] = await db.query("UPDATE post SET content = ?, suggestToAdmin = ? WHERE postId = ?", [content, suggestToAdmin, postId]);
 
   return result.affectedRows;
 }
 
 exports.getPostImage = async function(postID) {
-  const result = await db.query('SELECT image FROM posts where postId = ?', postID)
+  const result = await db.query('SELECT mediaPath FROM post where postId = ?', [postID])
   return result[0][0];
 }

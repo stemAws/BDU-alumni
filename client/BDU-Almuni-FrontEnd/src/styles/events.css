@@ -4,11 +4,10 @@
     flex-direction: column;
     height: 900px;
     width: 100%;
-    margin-top: 40px;
     gap: 30px;
-    /* background-color: #0a0a0a; */
     color: #ffffff;
     padding: 10px;
+    margin-bottom: 20px;
 }
 .each-event{
     display: flex;
@@ -58,7 +57,7 @@
 }
 .event-text{
     width: 400px;
-    height: 200px;
+    height: 155px;
     overflow: hidden;
     color: #9f9f9fb1;
 }

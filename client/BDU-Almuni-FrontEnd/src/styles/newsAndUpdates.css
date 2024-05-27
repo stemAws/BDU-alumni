@@ -1,6 +1,5 @@
 .news-and-updates-container{
     position: relative;
-    margin-top: 50px;
 }
 .nUTitle{
     position: relative;
@@ -75,8 +74,10 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
 .news-small-detail{
     color: #ffffff;
     padding: 5px;
-    font: 400 30px "Inter";
+    font: 300 22px "Inter";
     position: relative;
+    height: 120px;
+    overflow: hidden;
 }
 .news-date{
     text-transform: capitalize;
@@ -153,11 +154,17 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     padding-top: 15px;
     color: #727272;
     width: 45%;
+    height: 70px;
+   
+}
+.news-description{
+    height: 58px;
+    overflow: hidden;
 }
 .news-date-side{
     text-transform: capitalize;
-    display: block;
     margin-top: 10px;
+    font-size: 14px;
 }
 .headline-texts{
     width: 100%;
@@ -188,7 +195,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 40px;
+    margin-bottom: 20px;
 }
 .top-stories>.circle-bg{
     background-color: #fafafa;
@@ -198,8 +205,8 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
 .top-stories>.circle-bg.wide{
     width: 100%; 
     border-radius: 0;
-    height: 1200px;
-    margin-top:70% ;
+    height: 600px;
+    margin-top:33% ;
     margin-left: 65px;
 }
 .top-stories>.circle-bg.return{

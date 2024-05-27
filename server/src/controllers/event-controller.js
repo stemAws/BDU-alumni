@@ -10,7 +10,7 @@ const storage = getStorage();
 
 exports.createAdminEvent = async (req, res) => {
   try {
-    const { title, description, startDate, endDate, organizer, eventLink } = req.body;
+    const { title, content, startDate, endDate, organizer, eventLink, category, eventLocation } = req.body;
     const imagePath = req.file ? `events/${Date.now()}${path.extname(req.file.originalname)}` : null;
     let downloadURL = null;
 
@@ -22,7 +22,7 @@ exports.createAdminEvent = async (req, res) => {
       downloadURL = await getDownloadURL(fileRef);
     }
 
-    const event = await eventsService.addEvent(title, description, startDate, endDate, organizer, downloadURL, eventLink);
+    const event = await eventsService.addEvent(title, content, startDate, endDate, organizer, downloadURL, eventLink, category, eventLocation);
     res.status(201).json({ message: "Event added successfully", event });
   } catch (error) {
     console.error("Error adding event:", error);
@@ -98,5 +98,16 @@ exports.getAllEvents = async (req, res) => {
   } catch (error) {
     console.error("Error fetching events:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.searchEvents = async (req, res) => {
+  try {
+    const {title, category} = req.body;
+    const events = await eventsService.searchEventsBy(title, category);
+    res.send(events);
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    res.status(500).json({ error: "Internal Server Error", details: error.message });
   }
 };

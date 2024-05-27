@@ -11,5 +11,7 @@ router.get("/adminEvents/:id", eventController.getAdminEventById);
 router.put("/adminEvents/:id", eventController.updateAdminEventById);
 router.delete("/adminEvents/:id", eventController.deleteAdminEventById);
 router.get("/events", eventController.getAllEvents);
+router.get("/search-events", eventController.searchEvents)
 
 module.exports = router;
+

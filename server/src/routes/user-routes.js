@@ -49,13 +49,13 @@ router.put(
 );
 router.get("/notable", UserController.getNotableAlumni);
 router.put("/notable/:alumniID", UserController.updateNotable);
-router.post("/reset-password", verifyToken, UserController.resetPassword);
+router.post("/reset-password", UserController.resetPassword);
 router.post(
   "/confirm-password-change",
   verifyToken,
   UserController.confirmPasswordChange
 );
 router.put("/updateCustom/:alumniId", UserController.updateCustomSetting);
-router.get('/alumni-directory', UserController.searchAlumni)
+router.get("/alumni-directory", UserController.searchAlumni);
 
 module.exports = router;

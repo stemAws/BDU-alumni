@@ -1,0 +1,49 @@
+.JO-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background-color: #00000071;
+
+}
+.JO-popup-container{
+    position: absolute;
+    width: 500px;
+    max-height: 600px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #cdcdcd;
+    z-index: 1;
+}
+.JO-close{
+    width: 100%;
+    text-align: end;
+    margin: -12px 0 -5px 10px;
+}
+.JO-close>svg{
+    color:#525252;
+}
+.JO-close>svg:hover{
+color: #d44e4e;
+cursor: pointer;
+}
+.job-description.detail{
+    max-height: 300px;
+    overflow: scroll;
+}
+.job-need-conatiner{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+.job-need.JO{
+    margin-bottom: 10px;
+}
+.job-need.JO-deadline{
+    color: #ff7d7d;
+}

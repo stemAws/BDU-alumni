@@ -17,7 +17,7 @@
     align-items:center ;
     border: none;
     justify-content: flex-start;
-    background-color: #000000d4;
+    background-color: transparent;
     transition: width 0.32s ease;
 }
 .search_input {
@@ -35,7 +35,7 @@
 position: absolute;
 top: 0px;
 left: 0px;
-background-color: #000000;
+background-color: #2a2a2a;
 width: 20px;
 height: 20px;
 margin-top: 2px;
