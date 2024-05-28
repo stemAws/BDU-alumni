@@ -2,12 +2,13 @@ import '../styles/Posts.css'
 import {  FaTrash, FaPen,FaLinkedinIn, FaLink, FaTelegramPlane, FaFacebookF  } from 'react-icons/fa';
 import { useState,useEffect, useContext } from 'react';
 import user from '../assets/images/photo_2024-02-25_15-47-18.jpg';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import EditPopup from '../component/EditPopup';
 import DeleteConfirmation from '../component/DeleteConfirmation'
 const Posts = (props) => {
   const { username } = useParams();
-  // const source = new URLSearchParams(props.location.search).get('source');
+  const location = useLocation();
+  const source = new URLSearchParams(location.search).get('source');
     // const [show, setShow] = useState(false);
     const [notauth, setnotauth] = useState(false)
     // const { isSigninOpen, setSigninOpen } = useContext(SigninContext);
@@ -55,7 +56,7 @@ const Posts = (props) => {
         };
         const fetchProfilePictureUrl = async () => {
           try {
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getProfilePicture/${username}`,{
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getProfilePicture/${username}`,{
               credentials: 'include'
             });
             if (res.ok) {
@@ -78,7 +79,7 @@ const Posts = (props) => {
         const fetchBGPicture = async () => {
           try {
            
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getCoverPicture/${username}`,{
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getCoverPicture/${username}`,{
               credentials: 'include',
             });
             if (res.ok) {
@@ -225,10 +226,10 @@ const Posts = (props) => {
     <div className='Posts'>
         <div className="profile_container">
             <div className="background">
-            {BgImageUrl?<img src={BgImageUrl} alt="profile image" />:<div className="backgroundImage default"></div>}
+            <img src={BgImageUrl} alt="profile image" />
             </div>
             <div className="profilepic">
-                {imageUrl?<img src={imageUrl} alt="profile image" />:<img src={user} alt="profile image" />}
+              <img src={imageUrl} alt="profile image" />
             </div>
             {userDetails && (
             <div className='userdetail'>
@@ -265,7 +266,7 @@ const Posts = (props) => {
                     <div className="date_proflepic">{imageUrl?<img className ="profile_img"src={imageUrl} alt="profile image" />:<img className ="profile_img" src={user} alt="profile image" />}
                     {userDetails && (<p className=" profile_name">{userDetails.fullName} </p>)}
                 </div><p className="date" >posted in <span>{handleDate(activity,'date')}</span></p>
-               {/* {source==='edit'&& 
+               {source==='edit'&& 
                 <div className="icons">
                 {!activity?.suggestedByAdmin?(<FaPen onClick={()=>
                                       { getStoryById(activity?.postID)
@@ -280,7 +281,7 @@ const Posts = (props) => {
               
                     
                 </div>
-} */}
+}
             </div>
             <div className={`post_text txt${index}`}>{activity.content}</div>
                    {activity?.content?.length>=275&&(<>
