@@ -1,22 +1,34 @@
 const db = require("../config/db");
 
 exports.addExperience = async (experience) => {
-  const affectedRows = await db.query(
-    "INSERT INTO Experience (alumniId, position, company, industry, startDate, endDate, description, employmentType, projects, stillWorking) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    [
-      experience.alumniId,
-      experience.position,
-      experience.company,
-      experience.industry,
-      experience.startDate,
-      experience.endDate,
-      experience.description,
-      experience.employmentType,
-      experience.projects,
-      experience.stillWorking
-    ]
+  const [[alumni]] = await db.query(
+    `SELECT alumniId
+    FROM Alumni
+    WHERE personId = ?`,
+    [experience.alumniId] // is actually personid
   );
-  return affectedRows[0].affectedRows;
+
+  if (alumni && alumni.alumniId) {
+    const affectedRows = await db.query(
+      `INSERT INTO Experience (alumniId, position, company, industry, startDate, endDate, description, employmentType, projects, stillWorking)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        alumni.alumniId,
+        experience.position,
+        experience.company,
+        experience.industry,
+        experience.startDate,
+        experience.endDate,
+        experience.description,
+        experience.employmentType,
+        experience.projects,
+        experience.stillWorking
+      ]
+    );
+    return affectedRows[0].affectedRows;
+  } else {
+    return 0;
+  }
 };
 
 exports.updateExperience = async (experience) => {
@@ -41,7 +53,10 @@ exports.updateExperience = async (experience) => {
 
 exports.getExperience = async (id) => {
   const [experience] = await db.query(
-    "SELECT * FROM Experience WHERE alumniID = ?",
+    `SELECT e.*
+    FROM Experience e
+    JOIN Alumni a ON e.alumniId = a.alumniId
+    WHERE a.personId = ?`,
     [id]
   );
   return experience;

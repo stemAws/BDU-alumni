@@ -1,20 +1,35 @@
 const db = require('../config/db');
 
 exports.addEducation = async (education) => {
-    const { affectedRows } = await db.query("INSERT INTO Education (alumniId, institution, degree, major, minor, admission, graduatingYear, awards, researchPublications) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [
-        education.alumniId,
-        education.institution,
-        education.degree,
-        education.major,
-        education.minor,
-        education.admission,
-        education.graduatingYear,
-        education.awards,
-        education.researchPublications
-    ]);        
+    const [[alumni]] = await db.query(
+        `SELECT alumniId
+        FROM Alumni
+        WHERE personId = ?`,
+        [education.alumniId] // personid actually
+    );
 
-    return affectedRows;
+    if (alumni && alumni.alumniId) {
+        const { affectedRows } = await db.query(
+            "INSERT INTO Education (alumniId, institution, degree, major, minor, admission, graduatingYear, awards, researchPublications) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [
+                alumni.alumniId,
+                education.institution,
+                education.degree,
+                education.major,
+                education.minor,
+                education.admission,
+                education.graduatingYear,
+                education.awards,
+                education.researchPublications
+            ]
+        );
+
+        return affectedRows;
+    } else {
+        return 0;
+    }
 };
+
 
 exports.updateEducation = async (education) => {
     const affectedRows = await db.query("UPDATE Education SET institution = ?, degree = ?, major = ?, minor = ?, admission = ?, graduatingYear = ?, awards = ?, researchPublications = ? WHERE educationId = ?", [

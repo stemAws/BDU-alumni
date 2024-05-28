@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams,Link } from 'react-router-dom';
-import user from '../../assets/images/photo_2024-02-25_15-58-46.jpg';
 import Experiances from "../../component/Experiances";
 import '../../styles/experiance.css'
 import Educations from "../../component/Educations";

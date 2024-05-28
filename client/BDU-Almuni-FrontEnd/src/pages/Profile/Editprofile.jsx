@@ -365,7 +365,7 @@ const getEducationById = async(id)=>{
   const desiredEducation = educations.find(edu => edu.educationID === id);
   setEducation([desiredEducation])
 }
-const updateEducation = async (institution,degree,admission,fieldOfStudy,startDate,endDate,stillLearning,id)=>{
+const updateEducation = async (institution,degree,admission,major,minor,graduatingYear,id)=>{
   try {
     setloading(true)
     const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${id}`, {
@@ -378,10 +378,9 @@ const updateEducation = async (institution,degree,admission,fieldOfStudy,startDa
           institution:institution,
           degree:degree,
           admission:admission,
-          fieldOfStudy:fieldOfStudy,
-          startYear:startDate,
-          endYear:endDate,
-          stillLearning:stillLearning,
+          major:major,
+          minor:minor,
+          graduatingYear:graduatingYear,
         }),
     });
 
@@ -412,7 +411,7 @@ const updateEducation = async (institution,degree,admission,fieldOfStudy,startDa
   };
 
 
-  const addEducation = async ({token,institution,degree,admission,fieldOfStudy,startDate,endDate,stillLearning}) => {
+  const addEducation = async ({token,institution,degree,admission,major,minor,graduatingYear}) => {
     try {
       setloading(true)
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education`,{
@@ -422,14 +421,13 @@ const updateEducation = async (institution,degree,admission,fieldOfStudy,startDa
       },
       credentials: 'include',
       body: JSON.stringify({
-      token,
+      personId:token,
       institution,
       degree,
       admission,
-      fieldOfStudy,
-      startDate,
-      endDate,
-      stillLearning:stillLearning===true?1:0,
+      major,
+      minor,
+      graduatingYear,
     }),
     }) ;
     if (res.status===403) {
@@ -737,7 +735,7 @@ const getStoryById = async(id)=>{
       <section className="update_profile_fields">
       <section className="personal personal_onprofile">
       <div className="personal_post">
-      <section className="personal_info onprofile">
+      <section className="personal_info onprofile bgc_overlay">
       <div className="backgroundImageHolder"><img className={placeholders?.[0]?.role==='Student'?"backgroundImage":"backgroundImage blue"} src={bgImageUrl} alt="background" />
       </div>
       <div className="backcamera" >
