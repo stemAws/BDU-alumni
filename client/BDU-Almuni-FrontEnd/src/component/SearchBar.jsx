@@ -1,4 +1,4 @@
-import { FaSearch} from 'react-icons/fa'
+import { FaArrowDown, FaCaretDown, FaFilter, FaSearch, FaSlidersH} from 'react-icons/fa'
 import "../styles/searchBar.css"
 import { useState } from 'react'
 const SearchBar = ({setOutput}) => {
@@ -21,7 +21,7 @@ const SearchBar = ({setOutput}) => {
     //             console.error('Error:', error);
     //         });
     // };
-
+const [searchBy, setsearchBy] = useState()
 
     const handleSearch=()=>{
         const searchContainers = document.querySelectorAll('.input_warper');
@@ -40,8 +40,13 @@ const SearchBar = ({setOutput}) => {
       
     const fetchData = async (value) => {
         try {
+          
           const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/`,{
             credentials:'include',
+          //   body: JSON.stringify({
+          //     searchBy:searchBy,
+          //     searchByValue:input
+          // }),
           });
 
             if (response.ok) {
@@ -63,7 +68,8 @@ const SearchBar = ({setOutput}) => {
         fetchData(value);
     }
   return (
-        <div className="input_warper">
+    <div className='search-with-filter'>
+    <div className="input_warper">
             <FaSearch onClick={handleSearch} className='search_icon' />
     <input 
     className='search_input' 
@@ -71,8 +77,26 @@ const SearchBar = ({setOutput}) => {
     type="text" 
     value={input}
     onChange={(e)=>handleChange(e.target.value)}
-    />
+    /> 
+        </div><div className='filter'>
+        <div className='filter-control'>
+          <FaSlidersH />
+          <select 
+          id="filter-types" 
+          value={searchBy||''} 
+          onChange={(e)=>setsearchBy(e.target.value)}>
+            <option value="" disabled hidden>Filter</option>
+            <option value="byName">Name</option>
+            <option value="byGraduatingYear">Graduating Year</option>
+            <option value="industry">Industry</option>
+            <option value="department">Department</option>
+            <option value="location">Location</option>
+          </select>
         </div>
+
+    </div>
+    </div>
+        
 
     
   )
