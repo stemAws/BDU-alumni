@@ -5,7 +5,7 @@ const Experiance = ({onclose,experiance,onDelete,onEdit,ondisplay}) => {
   const [deletePopup,setDeletePopup] =useState(false)
     return (
       <div className={`task ${experiance.stillWorking ? 'stillWorking':''}`}>
-          <h3 >{experiance.jobTitle} 
+          <h3 >{experiance.position} 
           {ondisplay?<div className="edit">
           <FaTrash className='trash_delete' onClick={()=>setDeletePopup(true)} size={13} />
           <FaPen className='pen_edit' onClick={()=>{onEdit(experiance.experienceID)
@@ -13,7 +13,7 @@ const Experiance = ({onclose,experiance,onDelete,onEdit,ondisplay}) => {
           </div>:''}
           
           </h3>
-          <h4> {experiance.employmentType} employ at {experiance.companyName}</h4>
+          <h4> {experiance.employmentType} employ at {experiance.company}</h4>
           <p>Started: {experiance.startDate}</p>
           {experiance.stillWorking ?"Still working here": <p>UpTo: {experiance.endDate}</p>}
           {
