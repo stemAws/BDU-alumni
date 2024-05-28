@@ -8,7 +8,7 @@ import SearchBar from "./SearchBar"
 import { Link, useLocation } from 'react-router-dom';
 import NavDropDown from "./NavDropDown"
 import { FaCaretDown, FaCaretUp } from "react-icons/fa"
-const NavBar = ({loginState,logout,userDetails,error,loading}) => {
+const NavBar = ({loginState,logout,userDetails,error,loading,imgUrl}) => {
   const { signin, setsignin } = useContext(SigninContext);
   const[detilPop,setdetailPop]=useState(false);
   const[outPut, setOutput] = useState("");
@@ -111,7 +111,7 @@ const NavBar = ({loginState,logout,userDetails,error,loading}) => {
             {loginState?
                 <div >
                 <div className='profileIcons'>
-                <img className="profile_img" src={background} alt="profile image" onClick={showdetail} />
+                <img className="profile_img" src={imgUrl} alt="profile image" onClick={showdetail} />
               </div>
               <div >
               <Profilepopup 
