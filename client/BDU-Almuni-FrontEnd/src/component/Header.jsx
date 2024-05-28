@@ -8,6 +8,7 @@ const Header = ({loginState,logout}) => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imageUrl, setimageUrl] = useState()
   useEffect(()=>{
     const fetchProfilePictureUrl = async () => {
       try {
@@ -23,7 +24,7 @@ const Header = ({loginState,logout}) => {
         }
   
         const url = await res.text();
-        setImageUrl(url);
+        setimageUrl(url);
       } catch (error) {
         console.error("Error fetching profile picture URL:", error);
       }
@@ -67,6 +68,7 @@ const Header = ({loginState,logout}) => {
         userDetails={userDetails}
         loading={loading}
         error={error}
+        imgUrl={imageUrl}
         />
 
         {location.pathname === '/' && (

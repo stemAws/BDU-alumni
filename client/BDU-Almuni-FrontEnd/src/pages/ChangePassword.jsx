@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react'
 import { useParams } from "react-router-dom";
 import FormInput from '../component/FormInput'
-// import { toast,ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Button from "../component/Button"
 import { FaFingerprint} from 'react-icons/fa';
 // import SigninWrapper from "../components/SigninWrapper";
@@ -76,7 +76,7 @@ const ChangePassword = () => {
           }
           const responsePassword = await response.json(); 
           if(!responsePassword.passwordExists){
-            // toast.error('wrong old password')
+            toast.error('wrong old password')
             setloading(false)
           }
           else {
@@ -91,7 +91,7 @@ const ChangePassword = () => {
               });
           
               if (res.ok) {
-                // toast.success('password changed successfully')
+                toast.success('password changed successfully')
                 setloading(false)
               } 
               else if (res.status===403) {
@@ -99,18 +99,18 @@ const ChangePassword = () => {
               }
               else {
                 console.error('Failed to change password:', response.statusText);
-                // toast.error('Failed to change password please try again')
+                toast.error('Failed to change password please try again')
                 setloading(false)
               }
             } catch (error) {
               console.error('Error during password changing:', error);
-              // toast.error('Failed to change password please try again')
+              toast.error('Failed to change password please try again')
               setloading(false)
             }
           }
         } catch (error) {
           console.error('Error during checking password:', error);
-          // toast.error('Failed to change password please try again')
+          toast.error('Failed to change password please try again')
           setloading(false)
         }
       
@@ -123,7 +123,7 @@ const ChangePassword = () => {
   return (
     
         <div className="chang_pass">
-            {/* <ToastContainer /> */}
+            <ToastContainer />
             <div className='change_pasword'>
             <FaFingerprint size={45} color='#3a3a3a' />
             <form className ='change_pasword_form'onSubmit={handleSubmit}>

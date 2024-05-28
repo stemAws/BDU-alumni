@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-// import { toast,ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
 import user from '../../assets/images/photo_2024-02-25_15-58-46.jpg';
 import Top from "../../component/Top";
@@ -270,14 +270,14 @@ const checkbox=()=>{
       },
       credentials: 'include',
       body: JSON.stringify({
-      token,
-      jobTitle,
+      alumniId: token,
+      position:jobTitle,
       industry,
       employmentType,
-      companyName,
+      company:companyName,
       startDate,
       endDate,
-      stillWorking,
+      stillWorking:stillWorking===true?1:0,
     }),
     }) ;
     if (res.status===403) {
@@ -429,7 +429,7 @@ const updateEducation = async (institution,degree,admission,fieldOfStudy,startDa
       fieldOfStudy,
       startDate,
       endDate,
-      stillLearning,
+      stillLearning:stillLearning===true?1:0,
     }),
     }) ;
     if (res.status===403) {
@@ -438,7 +438,7 @@ const updateEducation = async (institution,degree,admission,fieldOfStudy,startDa
     else if(res.ok){
     const data = await res.json()
     setEducations([...educations,data])
-    window.location.reload()
+    // window.location.reload()
     }
     } catch (error) {
       console.error('Error during adding education:', error);
@@ -727,18 +727,18 @@ const getStoryById = async(id)=>{
   return (
     <div className="User_profile_container">
       <div  className="upper_slide">
-      {imageUrl?<img className="profile_img" src={imageUrl} alt="profile image" />:<img className="profile_img" src={user} alt="profile image"  />}
+      <img className="profile_img" src={imageUrl} alt="profile image" />
       {placeholders?.length > 0 && (<p className="full_name">{placeholders[0].fullName}</p>)}
        </div>
        {
         window.addEventListener('scroll',checkbox)
        }
-      {/* <ToastContainer  autoClose={1500}/> */}
+      <ToastContainer  autoClose={1500}/>
       <section className="update_profile_fields">
       <section className="personal personal_onprofile">
       <div className="personal_post">
       <section className="personal_info onprofile">
-      <div className="backgroundImageHolder">{bgImageUrl?<img className={placeholders?.[0]?.role==='Student'?"backgroundImage":"backgroundImage blue"} src={bgImageUrl} alt="background" />:<div className="backgroundImage default"  ></div>}
+      <div className="backgroundImageHolder"><img className={placeholders?.[0]?.role==='Student'?"backgroundImage":"backgroundImage blue"} src={bgImageUrl} alt="background" />
       </div>
       <div className="backcamera" >
       <label htmlFor="file_Input">
@@ -763,7 +763,7 @@ const getStoryById = async(id)=>{
           </div>
         </div>
       )}
-      <div className="profileImageHolder toshow">{imageUrl?<img className={placeholders?.[0]?.role==='Student'?"profileImage":'profileImage blue'} src={imageUrl} alt="profile" />:<img className="profileImage" src={user} alt="profile" />}
+      <div className="profileImageHolder toshow"><img className={placeholders?.[0]?.role==='Student'?"profileImage":'profileImage blue'} src={imageUrl} alt="profile" />
       <div className="name_edit">
     </div>
       

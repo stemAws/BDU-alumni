@@ -149,7 +149,7 @@ const ProfilePage = () => {
   return (
     <div className="User_profile_container">
       <div  className="upper_slide">
-      {<img className="profile_img" src={imageUrl} alt="profile image" />}
+      <img className="profile_img" src={imageUrl} alt="profile image" />
       {personalInfo?.length > 0 && (<p className="full_name">{personalInfo?.[0].fullName}</p>)}
        </div>
        {
@@ -159,9 +159,9 @@ const ProfilePage = () => {
     <section className="personal personal_onprofile">
     <div className="personal_post">
       <section className="personal_info onprofile">
-        <div className={personalInfo?.[0]?.role==='Student'?"backgroundImageHolder":"backgroundImageHolder blue"}>{<img className="backgroundImage" src={bgImageUrl} alt="background image" />}
+        <div className={personalInfo?.[0]?.role==='Student'?"backgroundImageHolder":"backgroundImageHolder blue"}><img className="backgroundImage" src={bgImageUrl} alt="background image" />
       </div>
-        <div className={personalInfo?.[0]?.role==='Student'?"profileImageHolder toshow":"profileImageHolder toshow blue"} >{<img className="profileImage" src={imageUrl} alt="profile image" />}
+        <div className={personalInfo?.[0]?.role==='Student'?"profileImageHolder toshow":"profileImageHolder toshow blue"} ><img className="profileImage" src={imageUrl} alt="profile image" />
         </div>
         <ul>
         {personalInfo?.length > 0 ? (

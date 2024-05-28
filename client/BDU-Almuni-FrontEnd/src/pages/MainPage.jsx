@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import MainBody from './MainBody';
 import Stories from './Stories';
 import Events from './Events';
+import Gallery from './Gallery'
 import Signin from '../component/Signin';
 import { useState,createContext, useEffect } from 'react';
 import Header from '../component/Header'
@@ -47,6 +48,7 @@ const MainPage = () => {
           <Route path="/" exact Component = {MainBody} />
           <Route path="/stories"  Component = {Stories} />
           <Route path="/events"  Component = {Events} />
+          <Route path="/gallery"  Component = {Gallery} />
           <Route path="/newsAndUpdates"  Component = {NewsAndUpdates} />
           <Route path="/jobOffer"  Component = {JobOffer} />
           <Route path="/editProfile/:username"  Component = {Editprofile} />
