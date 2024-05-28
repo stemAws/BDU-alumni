@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import '../../styles/Users.css';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { Link } from 'react-router-dom';
     const columns = [
         { field: "id", headerName: "ID", width: 30 },
         { field: "firstname", headerName: "First Name", width: 100 },
@@ -108,6 +108,21 @@ export default function Users() {
   
   return (
     <div className='userlist'>
+
+<div className="addUserheader">
+          <input
+            className="search"
+            type="text"
+            placeholder="Search by first name"
+            // value={searchQuery}
+            // onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <h3> BahirDar University Alumni </h3>
+          <Link to="/admin/AddUser">
+            <button className="addUser">+ Add User</button>
+          </Link>
+        </div>
+
     <ThemeProvider theme={customTheme}>
     <Box sx={{ height: '100%', width: '100%' }}>
       <DataGrid
