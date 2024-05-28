@@ -4,22 +4,22 @@
     background: rgba(0, 0, 0, 0.9);
     position: sticky;
     color: white;
+    overflow-y: auto;
 }
 .sidebarWrapper{
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   color: #ffffff;
   top: 70px;
   position: sticky;
 }
 
 .sidebarMenu{
-    margin: 10px;
+    /* margin: 10px; */
     overflow-y: auto;
 }
 .sidebarList{
     list-style-type: none;
-    padding: 5px;
-    
+    /* padding: 5px; */ 
 }
 .sidebarListItem{
     margin-top: 10px;
