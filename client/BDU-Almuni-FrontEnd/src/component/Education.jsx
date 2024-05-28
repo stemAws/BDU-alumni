@@ -6,10 +6,10 @@ const Education = ({onclose,onEdit,education,onDelete,ondisplay}) => {
   const [deletePopup,setDeletePopup] =useState(false)
     return (
       <div className={`task ${education.stillLearning ? 'stillWorking':''}`}>
-          <h3 >{education.degree} in {education.fieldOfStudy}
+          <h3 >{education.degree} in {education.major}
           {ondisplay? <div className="edit">
           <FaTrash className='trash_delete' onClick={()=>setDeletePopup(true)} size={13}/>
-         <FaPen className='pen_edit' onClick={()=>{onEdit(education.educationID)
+         <FaPen className='pen_edit' onClick={()=>{onEdit(education.educationId)
           onclose(true)
           }} size={15}/>
           </div>:''}
@@ -20,7 +20,7 @@ const Education = ({onclose,onEdit,education,onDelete,ondisplay}) => {
           {education.stillLearning ?"Still Studing": <p>UpTo: {education.endYear}</p>}
             {
               deletePopup&&(
-                <DeleteConfirmation onDelete={()=>onDelete(education.educationID)} text='education' close = {()=>setDeletePopup(false)}/>
+                <DeleteConfirmation onDelete={()=>onDelete(education.educationId)} text='education' close = {()=>setDeletePopup(false)}/>
               )
             }                   
       </div>
