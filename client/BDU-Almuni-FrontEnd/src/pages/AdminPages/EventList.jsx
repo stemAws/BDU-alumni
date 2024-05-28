@@ -76,6 +76,7 @@ const EventList = () => {
   ];
 
   return (
+  
     <ThemeProvider theme={customTheme}>
       <div className="eventlist">
         <div className="addEventheader">
@@ -105,6 +106,7 @@ const EventList = () => {
         </div>
       </div>
     </ThemeProvider>
+
   );
 };
 
