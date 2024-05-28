@@ -47,8 +47,8 @@ useEffect(()=>{
   setindustry(showEditExperiance?experiances[0]?.industry:'')
 setEmploymentType(showEditExperiance?experiances[0]?.employmentType:'')
 setcompanyName(showEditExperiance?experiances[0]?.companyName:'')
-setstartDate(showEditExperiance?experiances[0]?.startDate:'')
-setendDate(showEditExperiance?experiances[0]?.endDate:'')
+setstartDate(showEditExperiance?experiances[0]?.startDate:null)
+setendDate(showEditExperiance?experiances[0]?.endDate:null)
 setStillWorking(showEditExperiance?experiances[0]?.stillWorking:false)
 
 },[experiances])

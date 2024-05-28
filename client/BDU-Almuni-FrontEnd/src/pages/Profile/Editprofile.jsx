@@ -270,14 +270,14 @@ const checkbox=()=>{
       },
       credentials: 'include',
       body: JSON.stringify({
-      token,
-      jobTitle,
+      alumniId: token,
+      position:jobTitle,
       industry,
       employmentType,
-      companyName,
+      company:companyName,
       startDate,
       endDate,
-      stillWorking,
+      stillWorking:stillWorking===true?1:0,
     }),
     }) ;
     if (res.status===403) {
@@ -429,7 +429,7 @@ const updateEducation = async (institution,degree,admission,fieldOfStudy,startDa
       fieldOfStudy,
       startDate,
       endDate,
-      stillLearning,
+      stillLearning:stillLearning===true?1:0,
     }),
     }) ;
     if (res.status===403) {
@@ -438,7 +438,7 @@ const updateEducation = async (institution,degree,admission,fieldOfStudy,startDa
     else if(res.ok){
     const data = await res.json()
     setEducations([...educations,data])
-    window.location.reload()
+    // window.location.reload()
     }
     } catch (error) {
       console.error('Error during adding education:', error);
