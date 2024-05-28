@@ -56,7 +56,7 @@ const Posts = (props) => {
         };
         const fetchProfilePictureUrl = async () => {
           try {
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getProfilePicture/${username}`,{
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getProfilePicture/${username}`,{
               credentials: 'include'
             });
             if (res.ok) {
@@ -79,7 +79,7 @@ const Posts = (props) => {
         const fetchBGPicture = async () => {
           try {
            
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getCoverPicture/${username}`,{
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getCoverPicture/${username}`,{
               credentials: 'include',
             });
             if (res.ok) {
@@ -226,10 +226,10 @@ const Posts = (props) => {
     <div className='Posts'>
         <div className="profile_container">
             <div className="background">
-            {BgImageUrl?<img src={BgImageUrl} alt="profile image" />:<div className="backgroundImage default"></div>}
+            <img src={BgImageUrl} alt="profile image" />
             </div>
             <div className="profilepic">
-                {imageUrl?<img src={imageUrl} alt="profile image" />:<img src={user} alt="profile image" />}
+              <img src={imageUrl} alt="profile image" />
             </div>
             {userDetails && (
             <div className='userdetail'>
