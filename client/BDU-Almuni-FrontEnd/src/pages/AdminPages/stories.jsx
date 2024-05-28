@@ -35,6 +35,7 @@ const Stories = () => {
       </p>
       </div> */}
     <div className="Admin-stories-container">
+      
         <div className="Admin-each-story">
                 <img className="Admin-story-img"src={newsimg2} alt="" />
             <div className="Admin-story-description-container">

@@ -111,6 +111,7 @@ export default function Users() {
 
   
   return (
+    <div className='userlist'>
     <ThemeProvider theme={customTheme}>
     <Box sx={{ height: '100%', width: '100%' }}>
       <DataGrid
@@ -129,6 +130,7 @@ export default function Users() {
       />
     </Box>
     </ThemeProvider>
+    </div>
   );
 }
 

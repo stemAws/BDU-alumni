@@ -1,6 +1,7 @@
 .Admin-stories-container{
     position: relative;
     display: flex;
+    flex: 4;
     height: 100vh;
     width: 100%;
     overflow-x: scroll;
