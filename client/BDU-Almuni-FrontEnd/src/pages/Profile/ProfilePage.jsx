@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams,Link } from 'react-router-dom';
-import user from '../../assets/images/photo_2024-02-25_15-58-46.jpg';
 import Experiances from "../../component/Experiances";
 import '../../styles/experiance.css'
 import Educations from "../../component/Educations";
@@ -36,7 +35,7 @@ const ProfilePage = () => {
     }
     const fetchProfilePictureUrl = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getProfilePicture/${username}`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getProfilePicture/${username}`,{
           credentials: 'include',
         });
         if (!res.ok) {
@@ -52,7 +51,7 @@ const ProfilePage = () => {
 
     const fetchBGPicture = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getCoverPicture/${username}`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getCoverPicture/${username}`,{
           credentials: 'include',
         });
         if (!res.ok) {
@@ -150,7 +149,7 @@ const ProfilePage = () => {
   return (
     <div className="User_profile_container">
       <div  className="upper_slide">
-      {imageUrl?<img className="profile_img" src={imageUrl} alt="profile image" />:<img className="profile_img" src={user} alt="profile image"  />}
+      {<img className="profile_img" src={imageUrl} alt="profile image" />}
       {personalInfo?.length > 0 && (<p className="full_name">{personalInfo?.[0].fullName}</p>)}
        </div>
        {
@@ -160,9 +159,9 @@ const ProfilePage = () => {
     <section className="personal personal_onprofile">
     <div className="personal_post">
       <section className="personal_info onprofile">
-        <div className={personalInfo?.[0]?.role==='Student'?"backgroundImageHolder":"backgroundImageHolder blue"}>{bgImageUrl?<img className="backgroundImage" src={bgImageUrl} alt="background image" />:<div className="backgroundImage default"  ></div>}
+        <div className={personalInfo?.[0]?.role==='Student'?"backgroundImageHolder":"backgroundImageHolder blue"}>{<img className="backgroundImage" src={bgImageUrl} alt="background image" />}
       </div>
-        <div className={personalInfo?.[0]?.role==='Student'?"profileImageHolder toshow":"profileImageHolder toshow blue"} >{imageUrl?<img className="profileImage" src={imageUrl} alt="profile image" />:<img className="profileImage" src={user} alt="profile image" />}
+        <div className={personalInfo?.[0]?.role==='Student'?"profileImageHolder toshow":"profileImageHolder toshow blue"} >{<img className="profileImage" src={imageUrl} alt="profile image" />}
         </div>
         <ul>
         {personalInfo?.length > 0 ? (

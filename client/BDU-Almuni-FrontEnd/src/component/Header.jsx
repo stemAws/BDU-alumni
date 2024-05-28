@@ -14,7 +14,7 @@ const Header = ({loginState,logout}) => {
         const cookies = document.cookie;
         const match = cookies.match(/id=([^;]*)/);
         const token = match ? match[1] : null;
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getProfilePicture/${token}`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getProfilePicture/${token}`,{
           credentials: 'include',
         });
     
