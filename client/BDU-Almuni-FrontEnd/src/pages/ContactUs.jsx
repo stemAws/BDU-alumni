@@ -1,5 +1,7 @@
 import '../styles/contactUs.css'
 import {FaPhone, FaEnvelope,FaMapMarker,FaFacebook,FaLinkedinIn,FaTelegram} from 'react-icons/fa'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
 const ContactUs = () => {
   const [sendData,setSendData]=useState({
@@ -31,7 +33,7 @@ const ContactUs = () => {
       }),
       }) ;
       if (res.ok) {
-        // toast.success('Message Sent successfully Thanks')
+        toast.success('Message Sent successfully Thanks')
         setSendData({
           fullName: '',
           email: '',
@@ -40,14 +42,14 @@ const ContactUs = () => {
         setloading(false)
       }
       else {
-        // toast.error('something went wrong')
+        toast.error('something went wrong')
         setloading(false)
       }
       
     } catch (error) {
       console.error("Error sending your message",error)
         setloading(false)
-        // toast.error("Sorry your message couldn't be sent, please try again")
+        toast.error("Sorry your message couldn't be sent, please try again")
     }
     
   }
@@ -85,7 +87,7 @@ const ContactUs = () => {
           
             <form className="contactUs_form" onSubmit={onSubmit}>
               
-        {/* <ToastContainer  autoClose={2000}/> */}
+        <ToastContainer  autoClose={2000}/>
             <label htmlFor="name" className="contact_label">Full Name</label>
             <input id='name' type="text" className="contact_input" value={sendData.fullName}onChange={(e) => handleInputChange('fullName', e.target.value)} required/>
             <label htmlFor="email" className="contact_label">Email</label>

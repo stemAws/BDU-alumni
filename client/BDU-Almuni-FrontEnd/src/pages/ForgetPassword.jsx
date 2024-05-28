@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Button from '../component/Button'
 import { FaCheck } from 'react-icons/fa';
-// import { toast,ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const ForgetPassword = () => {
     const [loading, setloading] = useState(false);
     const [email, setemail] = useState('');
@@ -27,20 +27,20 @@ const ForgetPassword = () => {
                 setsuccess(true)
             }
             else{
-                // toast.error('Incorrect email')
+                toast.error('Incorrect email')
                 setloading(false)
             }
         }catch (error) {
             console.error('Error sending email:', error);
             setloading(false)
-            // toast.error('Some thing went wrong, please try again')
+            toast.error('Some thing went wrong, please try again')
           }
       };
   return (
     <div className='forget_password'>
         {
             !success?<div>
-                {/* <ToastContainer  autoClose={2000}/> */}
+                <ToastContainer  autoClose={2000}/>
             <h3> Reset Password</h3>
         <p>Please enter an email address linked with your account </p>
         <form onSubmit={sendEmail}>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-// import { toast,ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'react-router-dom';
 import user from '../../assets/images/photo_2024-02-25_15-58-46.jpg';
 import Top from "../../component/Top";
@@ -733,7 +733,7 @@ const getStoryById = async(id)=>{
        {
         window.addEventListener('scroll',checkbox)
        }
-      {/* <ToastContainer  autoClose={1500}/> */}
+      <ToastContainer  autoClose={1500}/>
       <section className="update_profile_fields">
       <section className="personal personal_onprofile">
       <div className="personal_post">
