@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 const AddExperiance = ({updateExperiance,showEditExperiance,experiances,onAdd,showAddExperiance,loading}) => {
+  // console.log(experiances[0])
     const [jobTitle,setJobTitle]=useState('')
     const [industry,setindustry]=useState('')
     const [employmentType,setEmploymentType]=useState('')
@@ -28,7 +29,7 @@ const onSubmit=(e)=>{
 }
 const onupdate=(e)=>{
   e.preventDefault()
-  const id= experiances[0].experienceID;
+  const id= experiances[0].experienceId;
   if (endDate && startDate && stillWorking===false && new Date(endDate) <= new Date(startDate)) {
     setDateError(true)
     return;
@@ -43,10 +44,10 @@ const onDiscard= () =>{
   showAddExperiance(false)
 }
 useEffect(()=>{
-  setJobTitle(showEditExperiance?experiances[0]?.jobTitle:'')
+  setJobTitle(showEditExperiance?experiances[0]?.position:'')
   setindustry(showEditExperiance?experiances[0]?.industry:'')
 setEmploymentType(showEditExperiance?experiances[0]?.employmentType:'')
-setcompanyName(showEditExperiance?experiances[0]?.companyName:'')
+setcompanyName(showEditExperiance?experiances[0]?.company:'')
 setstartDate(showEditExperiance?experiances[0]?.startDate:null)
 setendDate(showEditExperiance?experiances[0]?.endDate:null)
 setStillWorking(showEditExperiance?experiances[0]?.stillWorking:false)
