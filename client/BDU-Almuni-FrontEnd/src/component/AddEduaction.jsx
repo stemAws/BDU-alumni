@@ -3,6 +3,9 @@ import { useEffect, useState } from "react"
 const AddEducation = ({updateEducation,showEditEducation,educations,onAddEdu,showAddEducation,loading}) => {
     const [institution,setInstitution]=useState('')
     const [degree,setDegree]=useState('')
+    const [major,setmajor]=useState('')
+    const [minor,setminor]=useState('')
+    const [graduatingYear,setgraduatingYear]=useState('')
     const [admission,setadmission]=useState('')
     const [fieldOfStudy,setfieldOfStudy]=useState('')
     const [startDate,setstartDate]=useState('')
@@ -23,7 +26,8 @@ const onSubmit=(e)=>{
           setfieldOfStudyError(true)
           return;
         }
-        onAddEdu({token,institution,admission,degree,fieldOfStudy,startDate,endDate,stillLearning})
+        // onAddEdu({token,institution,admission,degree,fieldOfStudy,startDate,endDate,stillLearning})
+        onAddEdu({token,institution,admission,degree,major,minor,graduatingYear})
         showAddEducation(false)
 }
 const onupdate=(e)=>{
@@ -37,19 +41,23 @@ const onupdate=(e)=>{
     setfieldOfStudyError(true)
     return;
   }
-  updateEducation(institution,degree,admission,fieldOfStudy,startDate,endDate,stillLearning,id);
+  // updateEducation(institution,degree,admission,fieldOfStudy,startDate,endDate,stillLearning,id);
+  updateEducation(institution,degree,admission,major,minor,graduatingYear,id);
 }
 const onDiscard= () =>{
   showAddEducation(false)
 }
 useEffect(()=>{
   setInstitution(showEditEducation?educations[0]?.institution:'')
+  setmajor(showEditEducation?educations[0]?.major:'')
+  setminor(showEditEducation?educations[0]?.minor:'')
+  setgraduatingYear(showEditEducation?educations[0]?.graduatingYear:'')
   setDegree(showEditEducation?educations[0]?.degree:'')
   setadmission(showEditEducation?educations[0]?.admission:'')
-  setfieldOfStudy(showEditEducation?educations[0]?.fieldOfStudy:'')
-  setstartDate(showEditEducation?educations[0]?.startYear:'')
-  setendDate(showEditEducation?educations[0]?.endYear:'')
-  setStillLearning(showEditEducation?educations[0]?.stillLearning:false)
+  // setfieldOfStudy(showEditEducation?educations[0]?.fieldOfStudy:'')
+  // setstartDate(showEditEducation?educations[0]?.startYear:'')
+  // setendDate(showEditEducation?educations[0]?.endYear:'')
+  // setStillLearning(showEditEducation?educations[0]?.stillLearning:false)
 },[educations])
 
   return (
@@ -60,6 +68,24 @@ useEffect(()=>{
         placeholder={"Where did you go"}  
         value={institution||''} 
         onChange={(e)=>setInstitution(e.target.value)}
+        required
+        />
+        </div>
+        <div className="form_control">
+        <label>Major</label>
+        <input type="text" 
+        placeholder={"What did you Major in"}  
+        value={major||''} 
+        onChange={(e)=>setmajor(e.target.value)}
+        required
+        />
+        </div>
+        <div className="form_control">
+        <label>Minor</label>
+        <input type="text" 
+        placeholder={"What did you Minor in"}  
+        value={minor||''} 
+        onChange={(e)=>setminor(e.target.value)}
         required
         />
         </div>
@@ -90,7 +116,7 @@ useEffect(()=>{
             <option value="Other">Other</option>
           </select>
         </div>
-        <div className="form_control">
+        {/* <div className="form_control">
         <label>Field Of Study</label>
         <input type="text" 
         placeholder={"Add your field"}  
@@ -102,9 +128,9 @@ useEffect(()=>{
           fieldOfStudyError&&(
             <p style={{color:"red"}}>Field Of Study must be less than 27 characters</p>
           )
-        }
+        } */}
 
-        <div className="form_control form_control_check">
+        {/* <div className="form_control form_control_check">
         <label>I am currently learning here</label>
         <input  
         type="checkbox" 
@@ -112,15 +138,22 @@ useEffect(()=>{
         onChange={(e)=>setStillLearning(e.currentTarget.checked)}
         checked={stillLearning}
         />
-        </div>
-        <div className="form_control">
+        </div> */}
+        {/* <div className="form_control">
         <label>Start Date</label>
         <input type="date" 
         value={startDate||''} 
         onChange={(e)=>setstartDate(e.target.value)} 
         />
+        </div> */}
+        <div className="form_control">
+        <label>Graduating Year</label>
+        <input type="number" 
+        value={graduatingYear||''} 
+        onChange={(e)=>setgraduatingYear(e.target.value)} 
+        />
         </div>
-        {!stillLearning&&<div className="form_control">
+        {/* {!stillLearning&&<div className="form_control">
         <label>End Date</label>
         <input type="date"  
         value={endDate||''} 
@@ -132,7 +165,7 @@ useEffect(()=>{
             <p style={{color:"red"}}>End Date must be greater than Start Date</p>
           )
         }
-        </div>}
+        </div>} */}
         <div className="save_discard">
           {showEditEducation?<input disabled={loading} className="save_button" type="submit" value={loading?'Updating...':'Update Changes'} />:<input disabled={loading}  className="save_button" type="submit" value={loading?'Adding...':'ADD Eduaction'} />}
        {showEditEducation && <input onClick={()=>onDiscard()} id="discard"  className="save_button" type="button" value="Discard Changes" />}
