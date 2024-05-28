@@ -422,7 +422,7 @@ const updateEducation = async (institution,degree,admission,fieldOfStudy,startDa
       },
       credentials: 'include',
       body: JSON.stringify({
-      token,
+      alumniId:token,
       institution,
       degree,
       admission,
@@ -737,7 +737,7 @@ const getStoryById = async(id)=>{
       <section className="update_profile_fields">
       <section className="personal personal_onprofile">
       <div className="personal_post">
-      <section className="personal_info onprofile">
+      <section className="personal_info onprofile bgc_overlay">
       <div className="backgroundImageHolder"><img className={placeholders?.[0]?.role==='Student'?"backgroundImage":"backgroundImage blue"} src={bgImageUrl} alt="background" />
       </div>
       <div className="backcamera" >
