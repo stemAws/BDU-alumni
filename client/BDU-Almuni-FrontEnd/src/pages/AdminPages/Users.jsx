@@ -2,7 +2,7 @@
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import '../../styles/Users.css';
-
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
     const columns = [
         { field: "id", headerName: "ID", width: 30 },
@@ -103,7 +103,15 @@ const rows = [
 ];
 
 export default function Users() {
+  const customTheme = createTheme({
+    typography: {
+      fontFamily: "Arial, sans-serif",
+    },
+  });
+
+  
   return (
+    <ThemeProvider theme={customTheme}>
     <Box sx={{ height: '100%', width: '100%' }}>
       <DataGrid
         rows={rows}
@@ -120,6 +128,7 @@ export default function Users() {
         disableRowSelectionOnClick
       />
     </Box>
+    </ThemeProvider>
   );
 }
 
