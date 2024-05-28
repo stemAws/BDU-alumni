@@ -5,20 +5,20 @@ const Experiance = ({onclose,experiance,onDelete,onEdit,ondisplay}) => {
   const [deletePopup,setDeletePopup] =useState(false)
     return (
       <div className={`task ${experiance.stillWorking ? 'stillWorking':''}`}>
-          <h3 >{experiance.jobTitle} 
+          <h3 >{experiance.position} 
           {ondisplay?<div className="edit">
           <FaTrash className='trash_delete' onClick={()=>setDeletePopup(true)} size={13} />
-          <FaPen className='pen_edit' onClick={()=>{onEdit(experiance.experienceID)
+          <FaPen className='pen_edit' onClick={()=>{onEdit(experiance.experienceId)
           onclose(true)}} size={15} />
           </div>:''}
           
           </h3>
-          <h4> {experiance.employmentType} employ at {experiance.companyName}</h4>
-          <p>Started: {experiance.startDate}</p>
-          {experiance.stillWorking ?"Still working here": <p>UpTo: {experiance.endDate}</p>}
+          <h4> {experiance.employmentType} employ at {experiance.company}</h4>
+          <p>Started: {experiance.startDate ? new Date(experiance.startDate).toISOString().split('T')[0] : 'Unknown'}</p>
+          {experiance.stillWorking ?"Still working here": <p>UpTo: {new Date(experiance.endDate).toISOString().split('T')[0]}</p>}
           {
               deletePopup&&(
-                <DeleteConfirmation onDelete={()=>onDelete(experiance.experienceID)} text='experience' close = {()=>setDeletePopup(false)}/>
+                <DeleteConfirmation onDelete={()=>onDelete(experiance.experienceId)} text='experience' close = {()=>setDeletePopup(false)}/>
               )
             }                                   
       </div>
