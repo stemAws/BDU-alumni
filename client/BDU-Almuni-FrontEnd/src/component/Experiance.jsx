@@ -14,13 +14,8 @@ const Experiance = ({onclose,experiance,onDelete,onEdit,ondisplay}) => {
           
           </h3>
           <h4> {experiance.employmentType} employ at {experiance.company}</h4>
-<<<<<<< HEAD
           <p>Started: {experiance.startDate ? new Date(experiance.startDate).toISOString().split('T')[0] : 'Unknown'}</p>
           {experiance.stillWorking ?"Still working here": <p>UpTo: {new Date(experiance.endDate).toISOString().split('T')[0]}</p>}
-=======
-          <p>Started: {experiance.startDate}</p>
-          {experiance.stillWorking ?"Still working here": <p>UpTo: {experiance.endDate}</p>}
->>>>>>> 42e0aa5622263728046ce383bec36ae27696ae0a
           {
               deletePopup&&(
                 <DeleteConfirmation onDelete={()=>onDelete(experiance.experienceId)} text='experience' close = {()=>setDeletePopup(false)}/>
