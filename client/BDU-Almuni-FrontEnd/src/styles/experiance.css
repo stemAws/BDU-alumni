@@ -17,7 +17,7 @@
   margin: 5px;
   width: 98%;
   cursor: pointer;
-  height: 120px;
+  height: 80px;
   padding: 10px;
   font: 100 16px 'saira';
 }
@@ -27,6 +27,9 @@
   justify-content:space-between ;
   margin: 0;
   height: 20px;
+}
+.see_all_posts a{
+  color: #161616;
 }
 .task.stillWorking {
   box-sizing: border-box;

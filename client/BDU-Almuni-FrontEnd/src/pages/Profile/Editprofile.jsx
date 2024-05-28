@@ -141,7 +141,7 @@ const checkbox=()=>{
         const cookies = document.cookie;
         const match = cookies.match(/id=([^;]*)/);
         const token = match ? match[1] : null;
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getProfilePicture/${token}`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getProfilePicture/${token}`,{
           credentials: 'include',
         });
     
@@ -167,7 +167,7 @@ const checkbox=()=>{
         const cookies = document.cookie;
         const match = cookies.match(/id=([^;]*)/);
         const token = match ? match[1] : null;
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getCoverPicture/${token}`,{
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getCoverPicture/${token}`,{
           credentials: 'include',
         });
     
@@ -674,7 +674,7 @@ const getStoryById = async(id)=>{
       setloading(false)
     }
   
-    // window.location.reload();
+    window.location.reload();
   };
   const handleUploadCover = async () => {
     const formData = new FormData();

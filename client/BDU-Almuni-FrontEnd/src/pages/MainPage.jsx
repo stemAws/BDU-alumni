@@ -17,6 +17,7 @@ import ProfilePage from './Profile/ProfilePage';
 import ChangePassword from './ChangePassword';
 import PageNotFound from './PageNotFound';
 import ForgetPassword from './ForgetPassword';
+import Posts from './Posts';
 export const SigninContext = createContext();
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
@@ -54,6 +55,7 @@ const MainPage = () => {
           <Route path="/ProfilePage/:username"  Component = {ProfilePage} />
           <Route path="/contactus"  Component = {ContactUS} />
           <Route path="/changePassword/:username"  Component = {ChangePassword} />
+          <Route path="/post/:username"  Component = {Posts} />
           <Route path="/forgetPassword"  Component = {ForgetPassword} />
           <Route path="*"  Component = {PageNotFound} />
           </Routes>
