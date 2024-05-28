@@ -316,28 +316,28 @@ const checkbox=()=>{
     
   }
   const getExperienceById = async(id)=>{
-      const desiredExperience = experiances.find(exp => exp.experienceID === id);
+      const desiredExperience = experiances.find(exp => exp.experienceId === id);
       setExperiance([desiredExperience])
-      
       
   }
   const updateExperiance = async (jobTitle,industry,employmentType,companyName,startDate,endDate,stillWorking,id) => {
     try {
       setloading(true)
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences`, {
             method: 'PUT',
             headers: {
                 'Content-type': 'application/json',
             },
             credentials: 'include',
             body: JSON.stringify({
-                jobTitle: jobTitle,
+                position: jobTitle,
                 industry:industry,
                 employmentType:employmentType,
-                companyName:companyName,
+                company:companyName,
                 startDate: startDate,
                 endDate: endDate,
                 stillWorking: stillWorking,
+                experienceId:id,
             }),
         });
 
@@ -362,7 +362,7 @@ const checkbox=()=>{
     }
 };
 const getEducationById = async(id)=>{
-  const desiredEducation = educations.find(edu => edu.educationID === id);
+  const desiredEducation = educations.find(edu => edu.educationId === id);
   setEducation([desiredEducation])
 }
 const updateEducation = async (institution,degree,admission,major,minor,graduatingYear,id)=>{
