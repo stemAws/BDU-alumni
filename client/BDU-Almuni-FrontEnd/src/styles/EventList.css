@@ -1,0 +1,70 @@
+.listCOntainer{
+    margin-top: 70px;
+    height: 100vh;
+    z-index: 0;
+}
+.addEventheader{
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 80%;
+    z-index: 1;
+    background: white;
+}
+.addEventheader h3{
+    margin-left: -100px;
+}
+.addEventheader button{
+    position: sticky;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background-color: #0c8ce9;
+    height: 35px;
+    width: 100px;
+    margin: 0 20px 0 0;
+    cursor: pointer;
+    transition: 0.5s ease;
+    display: flex; 
+    align-items: center;
+ }
+ .addEventheader button:hover{
+    background-color: #0880d5;
+}
+.addEventheader .search{
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #0c8ce9;
+    border-radius: 10px;
+    padding: 10px;
+}
+.eventlist{
+    flex: 4;
+    align-items: center;
+    height: 100vh;
+    overflow-y: auto;
+}
+.eventListEdit{
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    color: #0c8ce9;
+    cursor: pointer;
+    margin: 5px;
+}
+.decline{
+    background-color: rgb(255, 20, 20);
+}
+.eventListDelete{
+    color: rgb(255, 20, 20);
+    cursor: pointer;
+}
+/* .css-1sa5rwt-MuiDataGrid-root {
+    height: 100vh;
+} */
+

@@ -14,10 +14,12 @@
 
 .sidebarMenu{
     margin: 10px;
+    overflow-y: auto;
 }
 .sidebarList{
     list-style-type: none;
     padding: 5px;
+    
 }
 .sidebarListItem{
     margin-top: 10px;

@@ -1,4 +1,4 @@
-.stories-container{
+.Admin-stories-container{
     position: relative;
     display: flex;
     height: 100vh;
@@ -7,19 +7,19 @@
     justify-content: space-around;
     margin-top: 40px;
 }
-.each-story{
+.Admin-each-story{
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
     width: 25%;
     height: 400px; 
 }
-.story-img{
+.Admin-story-img{
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-.story-description-container{
+.Admin-story-description-container{
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -32,15 +32,15 @@ box-shadow: 0px 8px 16px rgba(17, 74, 131, 0.4);
 border-radius: 22px;
 justify-content: center;
 }
-.story-text{
+.Admin-story-text{
 font-weight: 400;
 font-size: 16px;
 line-height: 27px;
 color: #FFFFFF;
-width: 320px;
+width: 280px;
 margin-top: 20px;
 }
-.story-readmore{
+.Admin-story-readmore{
     display: flex;
     align-items: center;
     gap: 5px;
@@ -48,42 +48,4 @@ margin-top: 20px;
     font-weight: 500;
     font-size: 18px;
     margin-top: 40px;
-}
-.events{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-}
-.events>.circle-bg{
-    background-color: #000000;
-    transition: all 1s ease;
-    z-index: -1;
-}
-  
-.events>.circle-bg.wide {
-    width: 100%; 
-    border-radius: 0;
-    height: 1200px;
-    margin-top:70% ;
-    margin-left: 65px;
-  }
-  .events>.circle-bg.return{
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-
-}
-.event-title{
-position: relative;
-color: #fefefe;
-z-index: 1;
-color: #FFFFFF;
-mix-blend-mode: exclusion;
-font-size: 40px;
-margin-left: -50px;
-}
-.events>.line-cover{
-    width: 170px;
-    margin-left: -52px;
-    z-index: -2;
 }

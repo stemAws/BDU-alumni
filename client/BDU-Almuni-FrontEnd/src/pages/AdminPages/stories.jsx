@@ -26,38 +26,38 @@ const Stories = () => {
         });
   return (
     <>
-    {/* <div className="top-stories">
+    {/* <div className="top-Admin-">
       <div  ref={ref} className={`circle-bg ${inView ? 'wide' : exitingView ? 'return' : ''}`} ></div>
       <div className="the-line"></div>
       <div className="line-cover"></div>
-      <p className="top-stories-title">
+      <p className="top-Admin--title">
         <span className="blue-text">TOP</span>STORIES
       </p>
       </div> */}
-    <div className="stories-container">
-        <div className="each-story">
-                <img className="story-img"src={newsimg2} alt="" />
-            <div className="story-description-container">
-                <p className="story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
-                <p className="story-readmore">
+    <div className="Admin-stories-container">
+        <div className="Admin-each-story">
+                <img className="Admin-story-img"src={newsimg2} alt="" />
+            <div className="Admin-story-description-container">
+                <p className="Admin-story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
+                <p className="Admin-story-readmore">
                     Read more <FaArrowRight/>
                 </p>
             </div>
         </div>
-        <div className="each-story">
-                <img className="story-img"src={newsimg} alt="" />
-            <div className="story-description-container">
-                <p className="story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
-                <p className="story-readmore">
+        <div className="Admin-each-story">
+                <img className="Admin-story-img"src={newsimg} alt="" />
+            <div className="Admin-story-description-container">
+                <p className="Admin-story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
+                <p className="Admin-story-readmore">
                     Read more <FaArrowRight />
                 </p>
             </div>
         </div>
-        <div className="each-story">
-                <img className="story-img"src={newsimg1} alt="" />
-            <div className="story-description-container">
-                <p className="story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
-                <p className="story-readmore">
+        <div className="Admin-each-story">
+                <img className="Admin-story-img"src={newsimg1} alt="" />
+            <div className="Admin-story-description-container">
+                <p className="Admin-story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
+                <p className="Admin-story-readmore">
                     Read more <FaArrowRight/>
                 </p>
             </div>

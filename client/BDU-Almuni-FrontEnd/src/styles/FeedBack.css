@@ -1,0 +1,21 @@
+.feedback-cont{
+    flex: 4;
+    height: calc(100vh - 100px );
+}
+.feedback-btn{
+    border: none;
+    color: white;
+    background-color: #0c8ce9;
+    border-radius: 5px;
+    height: 25px;
+}
+
+.feedbackListDelete{
+    color: rgb(255, 20, 20);
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+.feedbackListDelete:hover{
+    background-color: rgba(255, 20, 20, 0.4);
+    border-radius: 5px;
+}
