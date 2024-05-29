@@ -69,7 +69,7 @@ exports.getEventById = async (eventID) => {
 };
 
 exports.updateEvent = async (eventId, updatedEvent) => {
-  const { title, description, startDate, endDate, organizer, eventLink,  } =
+  const { title, content, startDate, endDate, organizer, eventLink,  } =
     updatedEvent;
 
   const [result] = await db.query(
@@ -77,7 +77,7 @@ exports.updateEvent = async (eventId, updatedEvent) => {
         UPDATE event
         SET
             title = ?,
-            description = ?,
+            content = ?,
             startDate = ?,
             endDate = ?,
             organizer = ?,
@@ -87,7 +87,7 @@ exports.updateEvent = async (eventId, updatedEvent) => {
         WHERE
             eventId = ?
     `,
-    [title, description, startDate, endDate, organizer, eventLink, category, eventLink, eventId]
+    [title, content, startDate, endDate, organizer, eventLink, category, eventLink, eventId]
   );
 
   return result.affectedRows;
