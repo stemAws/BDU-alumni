@@ -5,10 +5,12 @@ const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.post(
-  "/add-job/:adminId",
+  "/add-job",
   upload.single("image"),
   jobController.createJob
 );
 router.get("/job-list", jobController.getAdminJobs);
+router.get("/job/:jobId", jobController.getJobById);
+
 
 module.exports = router;
