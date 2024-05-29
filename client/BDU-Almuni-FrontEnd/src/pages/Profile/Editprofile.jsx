@@ -644,11 +644,7 @@ const getStoryById = async(id)=>{
   const handleUpload = async (e) => {
     const formData = new FormData();
     formData.append('profilePicture', file);
-    const cookies = document.cookie;
-    const match = cookies.match(/id=([^;]*)/);
-    const token = match ? match[1] : null;
-  
-    console.log(token)
+    
     try {
        setloading(true)
       const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadProfilePicture`, {
@@ -674,10 +670,6 @@ const getStoryById = async(id)=>{
   const handleUploadCover = async () => {
     const formData = new FormData();
     formData.append('coverPicture', fileCover);
-  
-    const cookies = document.cookie;
-    const match = cookies.match(/id=([^;]*)/);
-    const token = match ? match[1] : null;
   
     try {
       setloading(true)
