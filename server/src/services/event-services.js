@@ -30,7 +30,7 @@ exports.addEvent = async (
       ];
     } else {
       query =
-        "INSERT INTO event (title, description, startDate, endDate, organizer, eventLink,category, eventLocation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO event (title, content, startDate, endDate, organizer, eventLink,category, eventLocation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
       params = [title, description, start_date, end_date, organizer, eventLink, category, eventLink];
     }
 
