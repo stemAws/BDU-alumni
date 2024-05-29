@@ -73,3 +73,14 @@ exports.getAdminJobs = async (req, res) => {
       .json({ error: "Internal Server Error", details: error.message });
   }
 };
+
+exports.getJobById = async (req, res) => {
+  try {
+    const job = await jobService.getJob(req.params.jobId);
+    if (!job) res.status(404).json("No record by the given id");
+    else res.send(job);
+  } catch (error) {
+    console.error("Error fetching job by ID:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
