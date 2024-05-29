@@ -2,8 +2,7 @@ const educationService = require('../services/education-services');
 
 exports.addEducation = async (req, res) => {
     try {
-        const affectedRows = await educationService.addEducation(req.body);
-        console.log('Education added successfully')
+        const affectedRows = await educationService.addEducation(req.body, req.cookie.id2);
         res.status(201).json({ message: "Education added successfully", affectedRows });
     } catch (error) {
         console.error("Error adding education:", error);

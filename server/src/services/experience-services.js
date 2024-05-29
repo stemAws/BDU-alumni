@@ -1,19 +1,11 @@
 const db = require("../config/db");
 
-exports.addExperience = async (experience) => {
-  const [[alumni]] = await db.query(
-    `SELECT alumniId
-    FROM Alumni
-    WHERE personId = ?`,
-    [experience.alumniId] // is actually personid
-  );
-
-  if (alumni && alumni.alumniId) {
+exports.addExperience = async (experience, alumniId) => {
     const affectedRows = await db.query(
       `INSERT INTO Experience (alumniId, position, company, industry, startDate, endDate, description, employmentType, projects, stillWorking)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        alumni.alumniId,
+        alumniId,
         experience.position,
         experience.company,
         experience.industry,
@@ -26,9 +18,6 @@ exports.addExperience = async (experience) => {
       ]
     );
     return affectedRows[0].affectedRows;
-  } else {
-    return 0;
-  }
 };
 
 exports.updateExperience = async (experience) => {
@@ -53,17 +42,16 @@ exports.updateExperience = async (experience) => {
 
 exports.getExperience = async (id) => {
   const [experience] = await db.query(
-    `SELECT e.*
-    FROM Experience e
-    JOIN Alumni a ON e.alumniId = a.alumniId
-    WHERE a.personId = ?`,
+    `SELECT *
+    FROM Experience
+    WHERE alumniId = ?`,
     [id]
   );
   return experience;
 };
 
 exports.deleteExperience = async (id) => {
-  let affectedRows = await db.query(
+  const affectedRows = await db.query(
     "DELETE FROM Experience WHERE experienceID = ?",
     [id]
   );

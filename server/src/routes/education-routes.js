@@ -6,6 +6,6 @@ const { verifyToken } = require("../middleware/auth-middleware");
 router.post('/education', verifyToken, educationController.addEducation);
 router.put('/education', verifyToken, educationController.updateEducation);
 router.delete('/education/:id', verifyToken, educationController.deleteEducationById);
-router.get('/education/:alumniID', educationController.getEducation);
+router.get('/education/', educationController.getEducation);
 
 module.exports = router;
