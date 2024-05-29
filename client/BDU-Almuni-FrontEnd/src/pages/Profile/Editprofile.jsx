@@ -213,10 +213,7 @@ const checkbox=()=>{
   }
   const fetchExperiances = async () => {
     try {
-      const cookies = document.cookie;
-      const match = cookies.match(/id=([^;]*)/);
-      const token = match ? match[1] : null;
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${token}`,{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences`,{
         credentials: 'include',
       });
       if (res.status===403) {
@@ -237,11 +234,8 @@ const checkbox=()=>{
   
   const fetchEducations = async () => {
     try {
-      const cookies = document.cookie;
-      const match = cookies.match(/id=([^;]*)/);
-      const token = match ? match[1] : null;
   
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${token}`,{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education`,{
         credentials: 'include',
       });
       

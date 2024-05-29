@@ -39,7 +39,7 @@ exports.updateEducation = async (education) => {
 exports.getEducation = async (id) => {
     const [education] = await db.query(`
     SELECT * FROM Education Where alumniId = ?`, [id]);
-    
+    console.log(id)
     return education;
 };
 
