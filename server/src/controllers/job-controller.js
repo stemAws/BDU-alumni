@@ -103,3 +103,28 @@ exports.updateJobById = async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+exports.deleteJobById = async (req, res) => {
+  try {
+    const {jobId} = req.params;
+    let job = await jobService.getJob(jobId);
+    if (job?.image) {
+      const jobRef = ref(storage, eventImage);
+      try {
+        await deleteObject(jobRef);
+        console.log("deleted successfully");
+      } catch (deleteError) {
+        console.error("Error deleting", deleteError);
+      }
+    }
+
+    const affectedRows = await jobService.deleteJob(jobId);
+    if (affectedRows === 0) res.status(404).json("No record by the given id");
+    else res.send("Job deleted.");
+  } catch (error) {
+    console.error("Error deleting job:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
