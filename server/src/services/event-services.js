@@ -117,7 +117,7 @@ exports.searchEventsBy = async (title, category) => {
 
     return queryResult[0];
   } catch (error) {
-    console.error("Error fetching alumni:", error);
+    console.error("Error fetching event:", error);
     throw error;
   }
 };
