@@ -114,3 +114,14 @@ exports.updateJob = async (jobId, updatedJob) => {
 
   return result.affectedRows;
 };
+exports.deleteJob = async (jobId) => {
+  const [result] = await db.query("DELETE FROM jobposting WHERE jobPostingId = ?", [
+    jobId,
+  ]);
+
+  if (result.affectedRows === 0) {
+    return { success: false, message: "No record by the given id" };
+  }
+
+  return { success: true, message: "Job deleted successfully" };
+};
