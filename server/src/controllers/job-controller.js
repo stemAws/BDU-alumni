@@ -128,3 +128,14 @@ exports.deleteJobById = async (req, res) => {
   }
 };
 
+exports.getAllJobData = async (req, res) => {
+  try {
+    const jobs = await jobService.getAllJobs();
+    res.send(jobs);
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
