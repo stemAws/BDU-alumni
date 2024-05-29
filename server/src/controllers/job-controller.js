@@ -138,4 +138,16 @@ exports.getAllJobData = async (req, res) => {
   }
 };
 
+exports.searchJobs = async (req, res) => {
+  try {
+    const { jobTitle, industry } = req.body;
+    const jobs = await jobService.searchJobsBy(jobTitle, industry);
+    res.send(jobs);
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
+  }
+};
 
