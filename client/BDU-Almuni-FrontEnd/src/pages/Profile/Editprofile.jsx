@@ -201,7 +201,7 @@ const checkbox=()=>{
     var workingPlace =""
     for (let i = 0; i < experiances?.length; i++) {
       if (experiances[i].stillWorking) {
-        workingPlace= `${experiances[i].jobTitle} at ${experiances[i].companyName}`
+        workingPlace= `${experiances[i].position} at ${experiances[i].company}`
       return workingPlace
       }
       else{
@@ -802,7 +802,7 @@ const getStoryById = async(id)=>{
         </div>
         {educations?.length > 0 &&
           <div className="learning_place">
-            <p>{`${educations[educations?.length - 1]?.degree} in ${educations[educations?.length - 1]?.fieldOfStudy} at ${educations[educations?.length - 1]?.institution}`}</p>
+            <p>{`${educations[educations?.length - 1]?.degree} in ${educations[educations?.length - 1]?.major} at ${educations[educations?.length - 1]?.institution}`}</p>
           </div>
         }
           </div>
