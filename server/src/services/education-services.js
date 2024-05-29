@@ -1,18 +1,10 @@
 const db = require('../config/db');
 
 exports.addEducation = async (education) => {
-    const [[alumni]] = await db.query(
-        `SELECT alumniId
-        FROM Alumni
-        WHERE personId = ?`,
-        [education.alumniId] // personid actually
-    );
-
-    if (alumni && alumni.alumniId) {
         const { affectedRows } = await db.query(
             "INSERT INTO Education (alumniId, institution, degree, major, minor, admission, graduatingYear, awards, researchPublications) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
-                alumni.alumniId,
+                req.cookies.id2,
                 education.institution,
                 education.degree,
                 education.major,
@@ -25,9 +17,6 @@ exports.addEducation = async (education) => {
         );
 
         return affectedRows;
-    } else {
-        return 0;
-    }
 };
 
 
@@ -59,7 +48,7 @@ exports.deleteEducation = async (id) => {
 
 exports.getEducation = async (id) => {
     const [education] = await db.query(`
-    SELECT e.* FROM Education e JOIN Alumni a on e.alumniId = a.alumniId WHERE a.personId = ?`, [id]);
+    SELECT * FROM Education alumni = ?`, [id]);
     
     return education;
 };

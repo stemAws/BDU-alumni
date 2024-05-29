@@ -41,14 +41,17 @@ exports.signIn = async function (req, res) {
 
     if (authenticationResult.success) {
       let token = await alumniService.getAlumniProfile(username);
-      token = token[0].personId;
-      const realToken = jwt.sign({ token }, process.env.secretKey, {
+      console.log(token)
+      const personId = token[0].personId;
+      const alumniId = token[0].alumniId;
+      const realToken = jwt.sign({ personId }, process.env.secretKey, {
         expiresIn: "30d",
       });
 
       res
         .cookie("token", realToken, { httpOnly: true })
-        .cookie("id", token, { httpOnly: false });
+        .cookie("id", personId, { httpOnly: false })
+        .cookie("id2", alumniId, { httpOnly: true});
 
       res.status(200).json({
         success: true,
