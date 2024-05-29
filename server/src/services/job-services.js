@@ -10,7 +10,7 @@ exports.addJob = async (
   email,
   phoneNumber,
   linkedIn,
-  image_path,
+  image_path
 ) => {
   try {
     let query, params;
@@ -28,7 +28,7 @@ exports.addJob = async (
         email,
         phoneNumber,
         linkedIn,
-        image_path
+        image_path,
       ];
     } else {
       query =
@@ -43,7 +43,6 @@ exports.addJob = async (
         email,
         phoneNumber,
         linkedIn,
-      
       ];
     }
 
@@ -64,6 +63,54 @@ exports.getJobs = async () => {
 
 exports.getJob = async (jobId) => {
   const [job] = await db.query(
-    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM jobposting WHERE jobPostingId = ?`,[jobId]);
+    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM jobposting WHERE jobPostingId = ?`,
+    [jobId]
+  );
   return job.length > 0 ? job[0] : null;
+};
+
+exports.updateJob = async (jobId, updatedJob) => {
+  const {
+    jobTitle,
+    description,
+    industry,
+    companyAddress,
+    employmentType,
+    deadline,
+    email,
+    phoneNumber,
+    linkedIn,
+  } = updatedJob;
+
+  const [result] = await db.query(
+    `
+        UPDATE jobposting
+        SET
+        jobTitle=?,
+        description=?,
+        industry=?,
+        companyAddress=?,
+        employmentType=?,
+        deadline=?,
+        email=?,
+        phoneNumber=?,
+        linkedIn=?
+        WHERE
+            jobpostingId = ?
+    `,
+    [
+      jobTitle,
+      description,
+      industry,
+      companyAddress,
+      employmentType,
+      deadline,
+      email,
+      phoneNumber,
+      linkedIn,
+      jobId
+    ]
+  );
+
+  return result.affectedRows;
 };
