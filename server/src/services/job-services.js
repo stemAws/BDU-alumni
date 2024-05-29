@@ -131,3 +131,18 @@ exports.getAllJobs = async () => {
     await db.query(`SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline  FROM jobposting`);
   return jobs;
 };
+
+exports.searchJobsBy = async (jobTitle, industry) => {
+  try {
+    let q = `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM jobposting WHERE jobTitle LIKE '%${jobTitle}%'`;
+    if (industry != null) {
+      q += ` AND industry = '${industry}'`;
+    } 
+    const queryResult = await db.query(q);
+
+    return queryResult[0];
+  } catch (error) {
+    console.error("Error fetching job:", error);
+    throw error;
+  }
+};
