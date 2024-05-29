@@ -1,7 +1,7 @@
 .listCOntainer{
-    margin-top: 70px;
-    height: 100vh;
-    z-index: 0;
+    margin-top: 90px;
+    /* height: 100vh;
+    z-index: 0; */
 }
 .addEventheader{
     display: flex;

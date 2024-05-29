@@ -122,7 +122,7 @@ export default function Users() {
             <button className="addUser">+ Add User</button>
           </Link>
         </div>
-
+ <div className='listCOntainer'>
     <ThemeProvider theme={customTheme}>
     <Box sx={{ height: '100%', width: '100%' }}>
       <DataGrid
@@ -141,6 +141,7 @@ export default function Users() {
       />
     </Box>
     </ThemeProvider>
+    </div>
     </div>
   );
 }
