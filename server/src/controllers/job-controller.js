@@ -84,3 +84,22 @@ exports.getJobById = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+exports.updateJobById = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    const updatedJobData = req.body;
+
+    const affectedRows = await jobService.updateJob(jobId, updatedJobData);
+
+    if (affectedRows === 0) {
+      return res.status(404).json({ error: `No record with the given id: ${id}` });
+    }
+
+    return res.json({ message: "Job updated successfully" });
+  } catch (error) {
+    console.error("Error updating job:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
