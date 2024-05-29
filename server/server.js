@@ -44,6 +44,7 @@ app.use('/', require('./src/routes/media-routes'));
 app.use('/', require('./src/routes/post-routes'));
 app.use('/', require('./src/routes/user-routes'));
 app.use('/', require('./src/routes/news-routes'));
+app.use('/', require('./src/routes/job-routes'));
 
 app.use(notFound);
 app.use(errorHandler);
