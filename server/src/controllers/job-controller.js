@@ -26,6 +26,7 @@ exports.createJob = async (req, res) => {
       phoneNumber,
       linkedIn,
     } = req.body;
+
     const imagePath = req.file
       ? `job/${Date.now()}${path.extname(req.file.originalname)}`
       : null;
@@ -50,7 +51,7 @@ exports.createJob = async (req, res) => {
       deadline,
       email,
       phoneNumber,
-      linkedIn
+      linkedIn,
     );
     res.status(201).json({ message: "Job added successfully", job });
   } catch (error) {
@@ -58,5 +59,17 @@ exports.createJob = async (req, res) => {
     res
       .status(500)
       .json({ error: "Internal Server Error", message: error.message });
+  }
+};
+
+exports.getAdminJobs = async (req, res) => {
+  try {
+    const jobs = await jobService.getJobs();
+    res.send(jobs);
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
   }
 };
