@@ -362,13 +362,14 @@ const getEducationById = async(id)=>{
 const updateEducation = async (institution,degree,admission,major,minor,graduatingYear,id)=>{
   try {
     setloading(true)
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education`, {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json',
         },
         credentials: 'include',
         body: JSON.stringify({
+          experienceId:id,
           institution:institution,
           degree:degree,
           admission:admission,
