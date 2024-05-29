@@ -4,6 +4,7 @@ exports.addEducation = async (req, res) => {
     try {
         console.log(req.body)
         const affectedRows = await educationService.addEducation(req.body);
+        console.log('Education added successfully')
         res.status(201).json({ message: "Education added successfully", affectedRows });
     } catch (error) {
         console.error("Error adding education:", error);

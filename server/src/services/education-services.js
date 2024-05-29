@@ -59,7 +59,7 @@ exports.deleteEducation = async (id) => {
 
 exports.getEducation = async (id) => {
     const [education] = await db.query(`
-    SELECT * FROM Education WHERE alumniId = ?`, [id]);
+    SELECT e.* FROM Education e JOIN Alumni a on e.alumniId = a.alumniId WHERE a.personId = ?`, [id]);
     
     return education;
 };
