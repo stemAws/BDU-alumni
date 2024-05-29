@@ -125,3 +125,9 @@ exports.deleteJob = async (jobId) => {
 
   return { success: true, message: "Job deleted successfully" };
 };
+
+exports.getAllJobs = async () => {
+  const [jobs] =
+    await db.query(`SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline  FROM jobposting`);
+  return jobs;
+};
