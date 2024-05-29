@@ -1,8 +1,14 @@
-const eventsService = require('../services/event-services');
+const eventsService = require("../services/event-services");
 const path = require("path");
-const sharp = require('sharp');
+const sharp = require("sharp");
 
-const { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } = require("firebase/storage");
+const {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} = require("firebase/storage");
 const firebaseConfig = require("../config/firebaseConfig");
 const firebsae = require("firebase/app");
 firebsae.initializeApp(firebaseConfig);
@@ -10,23 +16,48 @@ const storage = getStorage();
 
 exports.createAdminEvent = async (req, res) => {
   try {
-    const { title, content, startDate, endDate, organizer, eventLink, category, eventLocation } = req.body;
-    const imagePath = req.file ? `events/${Date.now()}${path.extname(req.file.originalname)}` : null;
+    const {
+      title,
+      content,
+      startDate,
+      endDate,
+      organizer,
+      eventLink,
+      category,
+      eventLocation,
+    } = req.body;
+    const imagePath = req.file
+      ? `events/${Date.now()}${path.extname(req.file.originalname)}`
+      : null;
     let downloadURL = null;
 
     if (req.file) {
       const fileRef = ref(storage, imagePath);
-      resizedFile = await sharp(req.file.buffer).jpeg({ quality: 50 }).toBuffer()
+      resizedFile = await sharp(req.file.buffer)
+        .jpeg({ quality: 50 })
+        .toBuffer();
 
       await uploadBytes(fileRef, resizedFile);
       downloadURL = await getDownloadURL(fileRef);
     }
 
-    const event = await eventsService.addEvent(title, content, startDate, endDate, organizer, downloadURL, eventLink, category, eventLocation);
+    const event = await eventsService.addEvent(
+      title,
+      content,
+      startDate,
+      endDate,
+      organizer,
+      downloadURL,
+      eventLink,
+      category,
+      eventLocation
+    );
     res.status(201).json({ message: "Event added successfully", event });
   } catch (error) {
     console.error("Error adding event:", error);
-    res.status(500).json({ error: "Internal Server Error", message: error.message });
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", message: error.message });
   }
 };
 
@@ -36,7 +67,9 @@ exports.getAdminEvents = async (req, res) => {
     res.send(events);
   } catch (error) {
     console.error("Error fetching events:", error);
-    res.status(500).json({ error: "Internal Server Error", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
   }
 };
 
@@ -59,7 +92,9 @@ exports.updateAdminEventById = async (req, res) => {
     const affectedRows = await eventsService.updateEvent(id, updatedEventData);
 
     if (affectedRows === 0) {
-      return res.status(404).json({ error: `No record with the given id: ${id}` });
+      return res
+        .status(404)
+        .json({ error: `No record with the given id: ${id}` });
     }
 
     return res.json({ message: "Event updated successfully" });
@@ -71,18 +106,19 @@ exports.updateAdminEventById = async (req, res) => {
 
 exports.deleteAdminEventById = async (req, res) => {
   try {
-    let eventImage = await eventsService.getEventById(req.params.id);
-    eventImage = eventImage.imagePath;
+    const {eventId} = req.params;
+    let event = await eventsService.getEventById(eventId);
+    if (event?.eventImage) {
+      const eventRef = ref(storage, eventImage);
+      try {
+        await deleteObject(eventRef);
+        console.log("deleted successfully");
+      } catch (deleteError) {
+        console.error("Error deleting", deleteError);
+      }
+    }
 
-    const eventRef = ref(storage, eventImage);
-        try {
-          await deleteObject(eventRef);
-          console.log("deleted successfully");
-        } catch (deleteError) {
-          console.error("Error deleting", deleteError);
-        }
-
-    const affectedRows = await eventsService.deleteEvent(req.params.id);
+    const affectedRows = await eventsService.deleteEvent(eventId);
     if (affectedRows === 0) res.status(404).json("No record by the given id");
     else res.send("Event deleted.");
   } catch (error) {
@@ -103,11 +139,13 @@ exports.getAllEvents = async (req, res) => {
 
 exports.searchEvents = async (req, res) => {
   try {
-    const {title, category} = req.body;
+    const { title, category } = req.body;
     const events = await eventsService.searchEventsBy(title, category);
     res.send(events);
   } catch (error) {
     console.error("Error fetching events:", error);
-    res.status(500).json({ error: "Internal Server Error", details: error.message });
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
   }
 };
