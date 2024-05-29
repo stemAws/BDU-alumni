@@ -10,6 +10,8 @@ router.get("/job/:jobId", jobController.getJobById);
 router.put("/update-job/:jobId", jobController.updateJobById);
 router.delete("/delete-job/:jobId", jobController.deleteJobById);
 router.get("/all-jobs", jobController.getAllJobData);
+router.get("/search-jobs", jobController.searchJobs);
+
 
 
 
