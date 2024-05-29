@@ -21,7 +21,7 @@ const SearchBar = ({setOutput}) => {
     //             console.error('Error:', error);
     //         });
     // };
-const [searchBy, setsearchBy] = useState()
+const [searchBy, setsearchBy] = useState("Name")
 
     const handleSearch=()=>{
         const searchContainers = document.querySelectorAll('.input_warper');
@@ -41,21 +41,26 @@ const [searchBy, setsearchBy] = useState()
     const fetchData = async (value) => {
         try {
           
-          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/`,{
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni-directory`,{
             credentials:'include',
-          //   body: JSON.stringify({
-          //     searchBy:searchBy,
-          //     searchByValue:input
-          // }),
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+          },
+            body: JSON.stringify({
+              searchBy:searchBy,
+              searchByValue:value
+          }),
           });
 
             if (response.ok) {
             const json = await response.json();
             const results = json.filter((user) => {
-            return value && user && user.name && user.name.toLowerCase().includes(value);
+              
+            return value && user && user.fullName && user.fullName.toLowerCase().includes(value);
             });
             setOutput(results);
-            }
+            }  
         } catch (error) {
             console.error('Error during fetching alumni data:', error);
         }

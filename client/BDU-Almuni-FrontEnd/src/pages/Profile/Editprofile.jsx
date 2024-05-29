@@ -436,7 +436,10 @@ const updateEducation = async (institution,degree,admission,major,minor,graduati
     else if(res.ok){
     const data = await res.json()
     setEducations([...educations,data])
-    // window.location.reload()
+    window.location.reload()
+    }
+    else if(!res.ok){
+      return res.status(500).json({ error: "Couldn't update the data" });
     }
     } catch (error) {
       console.error('Error during adding education:', error);
