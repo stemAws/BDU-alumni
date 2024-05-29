@@ -41,12 +41,12 @@ const [searchBy, setsearchBy] = useState()
     const fetchData = async (value) => {
         try {
           
-          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/`,{
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni-directory/`,{
             credentials:'include',
-          //   body: JSON.stringify({
-          //     searchBy:searchBy,
-          //     searchByValue:input
-          // }),
+            body: JSON.stringify({
+              searchBy:searchBy,
+              searchByValue:input
+          }),
           });
 
             if (response.ok) {

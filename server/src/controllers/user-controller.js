@@ -421,7 +421,10 @@ exports.updateCustomSetting = async function (req, res) {
 
 exports.searchAlumni = async function (req, res) {
   try {
-    const { searchBy, searchByValue } = req.body;
+    let { searchBy, searchByValue } = req.body;
+    if (searchBy === "name" || searchBy === "department" || searchBy === "degree" || searchBy === "industry" || searchBy === "location") {
+      searchByValue = `%${searchByValue}%`;
+    }
     const alumni = await alumniService.getAlumniDirectory(
       searchBy,
       searchByValue
