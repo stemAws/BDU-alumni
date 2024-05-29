@@ -32,7 +32,7 @@ const onSubmit=(e)=>{
 }
 const onupdate=(e)=>{
   e.preventDefault()
-  const id = educations[0].educationID;
+  const id = educations[0].educationId;
   if (endDate && startDate && stillLearning === false && new Date(endDate) <= new Date(startDate)) {
     setDateError(true)
     return;

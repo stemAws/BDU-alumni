@@ -290,7 +290,7 @@ const Posts = (props) => {
                    </>)}
                    
                     </section>
-                    {activity.image&&<img className="posted_pic" src={`${activity.image}`} alt="image" />}
+                    {activity.mediaPath&&<img className="posted_pic" src={`${activity.mediaPath}`} alt="image" />}
                     <section className='time' >
                     {handleDate(activity,'time')}
                     </section>
