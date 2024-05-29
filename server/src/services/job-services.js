@@ -61,3 +61,9 @@ exports.getJobs = async () => {
   const [result] = await db.query(query);
   return result;
 };
+
+exports.getJob = async (jobId) => {
+  const [job] = await db.query(
+    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM jobposting WHERE jobPostingId = ?`,[jobId]);
+  return job.length > 0 ? job[0] : null;
+};
