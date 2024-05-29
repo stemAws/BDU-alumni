@@ -9,5 +9,6 @@ router.post(
   upload.single("image"),
   jobController.createJob
 );
+router.get("/job-list", jobController.getAdminJobs);
 
 module.exports = router;
