@@ -114,7 +114,7 @@ exports.uploadProfilePicture = async function (req, res) {
 
   const resizedFile = await sharp(file.buffer).jpeg({ quality: 20 }).toBuffer();
 
-  const alumniID = req.params.id;
+  const alumniID = req.cookies.id2;
   const filePath = `profilePictures/${alumniID}-${Date.now()}${path.extname(
     file.originalname
   )}`;
@@ -165,7 +165,7 @@ exports.uploadCoverPicture = async function (req, res) {
 
   const resizedFile = await sharp(file.buffer).jpeg({ quality: 20 }).toBuffer();
 
-  const alumniID = req.params.id;
+  const alumniID = req.cookies.id2;
   const filePath = `coverPictures/${alumniID}-${Date.now()}${path.extname(
     file.originalname
   )}`;

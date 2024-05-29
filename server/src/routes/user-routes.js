@@ -15,13 +15,13 @@ router.get("/alumni", verifyToken, UserController.getAllAlumni);
 router.delete("/alumni/:id", UserController.deleteAlumni); // needs a MW that will check if the requster is admin or not.
 
 router.post(
-  "/uploadProfilePicture/:id",
+  "/uploadProfilePicture",
   verifyToken,
   upload.single("profilePicture"),
   UserController.uploadProfilePicture
 );
 router.post(
-  "/uploadCoverPicture/:id",
+  "/uploadCoverPicture",
   verifyToken,
   upload.single("coverPicture"),
   UserController.uploadCoverPicture

@@ -130,7 +130,7 @@ exports.getAlumniProfilePhotoById = async function (alumniID) {
 exports.updateAlumniProfilePhoto = async (alumniID, profilePhoto) => {
   try {
     const [{ affectedRows }] = await db.query(
-      "UPDATE Alumni SET profilePicture = ? WHERE personID = ?",
+      "UPDATE Alumni SET profilePicture = ? WHERE alumniId = ?",
       [profilePhoto, alumniID]
     );
     return affectedRows;
@@ -156,7 +156,7 @@ exports.getAlumniCoverPhotoById = async function (alumniID) {
 exports.updateAlumniCoverPhoto = async (alumniID, coverPhoto) => {
   try {
     const [{ affectedRows }] = await db.query(
-      "UPDATE Alumni SET coverPicture = ? WHERE personID = ?",
+      "UPDATE Alumni SET coverPicture = ? WHERE alumniId = ?",
       [coverPhoto, alumniID]
     );
     return affectedRows;

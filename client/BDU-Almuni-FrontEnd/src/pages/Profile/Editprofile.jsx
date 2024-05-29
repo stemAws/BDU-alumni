@@ -473,7 +473,7 @@ try {
       setshowEditEducation(true)
       
   }
-  const addStory=async({token,imageFile,description,isToggled})=>{
+  const addStory=async({imageFile,description,isToggled})=>{
     var suggest=0; 
     if (isToggled===true) {
       suggest=1;
@@ -489,7 +489,7 @@ try {
 
     try {
       setloading(true)
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${token}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
@@ -651,7 +651,7 @@ const getStoryById = async(id)=>{
     console.log(token)
     try {
        setloading(true)
-      const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadProfilePicture/${token}`, {
+      const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadProfilePicture`, {
         method: 'POST',
         credentials: 'include',
       
@@ -681,7 +681,7 @@ const getStoryById = async(id)=>{
   
     try {
       setloading(true)
-      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadCoverPicture/${token}`, {
+      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadCoverPicture`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
