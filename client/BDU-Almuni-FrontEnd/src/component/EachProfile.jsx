@@ -1,6 +1,9 @@
+import ProfilePage from "../pages/Profile/ProfilePage"
+import { Link } from "react-router-dom"
 const EachProfile = ({profile}) => {
   return (
-   <div className="each-profile">
+   <Link to={`/ProfilePage/${profile.username}`}>
+    <div className="each-profile">
     <img className="searched-profile"src={profile.img} alt="" />
     <div>
     <p className="full-name">
@@ -12,6 +15,7 @@ const EachProfile = ({profile}) => {
     <p className="current-location">{profile.currentLocation}</p>
     </div>
    </div>
+    </Link>
   )
 }
 

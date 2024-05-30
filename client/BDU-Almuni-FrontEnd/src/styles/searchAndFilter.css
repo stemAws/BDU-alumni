@@ -2,7 +2,7 @@
     display: flex;
     height: 100vh;
     background-color: #FBFBFB;
-    gap: 50px;
+    gap: 240px;
     margin-top: 50px;
 }
 .seachAndFilter-container .left-side{
@@ -34,15 +34,25 @@
 }
 .filter-option{
     display: flex;
-    justify-content: space-between;
-    background-color: #f3f3f3;
-    height: 40px;
-    align-items: center;
+     background-color: #f3f3f3;
+     flex-direction: column; 
+     gap: 10px;
+     padding: 10px;
 }
-.filter-option>div{
+.iconsAndOptions{
+    display: flex;
+    justify-content: space-between;
+}
+.iconsAndOptions>div{
     display: flex;
     gap: 10px;
 
+}
+.dropDown-input{
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid #c3c3c3;
+    border-radius: 13px;
 }
 .seachAndFilter-container .right-side{
     display: flex;
@@ -55,16 +65,17 @@
 .each-profile{
     display: flex;
     height: 80px;
-    width: 100%;
+    width: 70%;
     overflow: hidden;
     background-color: #E5E5E5;
     padding: 15px;
     gap: 20px;
     border-radius: 40px;
-    color: #7a7a7a;
+    color: #484848;
     align-items: center;
     text-transform: capitalize;
     cursor: pointer;
+    transition: all 0.5s ease-in-out;
 }
 .searched-profile{
     width: 50px;
@@ -73,11 +84,11 @@
 
 }
 .each-profile .full-name{
-    font:700 18px "Inter"
+    font:400 18px "Inter"
 }
 .each-profile .position{
-    font:500 16px "Inter"
+    font:300 16px "Inter"
 }
 .each-profile .current-location{
-    font:300 14px "Inter"
+    font:200 14px "Inter"
 }

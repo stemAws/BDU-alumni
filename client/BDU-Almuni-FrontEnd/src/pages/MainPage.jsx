@@ -58,7 +58,7 @@ const MainPage = () => {
           <Route path="/changePassword/:username"  Component = {ChangePassword} />
           <Route path="/post/:username"  Component = {Posts} />
           <Route path="/forgetPassword"  Component = {ForgetPassword} />
-          <Route path="/search"  Component = {SearchAndFilter} />
+          <Route path="/search/:name"  Component = {SearchAndFilter} />
           <Route path="*"  Component = {PageNotFound} />
           </Routes>
           <Footer/>
