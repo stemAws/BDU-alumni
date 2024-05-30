@@ -1,8 +1,10 @@
 import { FaArrowDown, FaCaretDown, FaFilter, FaSearch, FaSlidersH} from 'react-icons/fa'
 import "../styles/searchBar.css"
+import {useNavigate}from 'react-router-dom'
 import { useState } from 'react'
 const SearchBar = ({setOutput}) => {
     const [input,setInput]=useState("");
+    const navigate = useNavigate();
     const handleSearch=()=>{
         const searchContainers = document.querySelectorAll('.input_warper');
         searchContainers.forEach(searchContainer => {
@@ -44,8 +46,12 @@ const SearchBar = ({setOutput}) => {
         setInput(value);
         fetchData(value);
     }
-    const handelEnter=async()=>{
-      
+    const handelEnter=async(event)=>{
+      if (event.key === 'Enter') {
+        navigate(`/search/${input}`); 
+        document.querySelector(".results_lists").style.display="none" 
+      }
+     
     }
   return (
     
