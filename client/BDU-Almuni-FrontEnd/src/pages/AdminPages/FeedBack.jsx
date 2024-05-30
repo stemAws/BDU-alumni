@@ -5,7 +5,7 @@ import React from "react";
 import { DeleteOutline } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Message from "./Message";
-// import DeleteConfirmation from "../../components/DeleteConfirmation";
+import DeleteConfirmation from "../../component/DeleteConfirmation";
 
 const FeedBack = () => {
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -86,7 +86,7 @@ const FeedBack = () => {
     {
       field: "message",
       headerName: "Message",
-      width: 400,
+      width: 300,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}

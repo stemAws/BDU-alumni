@@ -4,13 +4,21 @@ import { DeleteOutline, Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import DeleteConfirmation from '../../components/DeleteConfirmation'
+
+import DeleteConfirmation from '../../component/DeleteConfirmation';
 
 const EventList = () => {
+
   const [data, setData] = useState([
     { eventId: 1, title: 'Event 1', organizer: 'Organizer 1', startDate: '2024-01-01', endDate: '2024-01-02' },
     { eventId: 2, title: 'Event 2', organizer: 'Organizer 2', startDate: '2024-02-01', endDate: '2024-02-02' },
-    { eventId: 3, title: 'Event 3', organizer: 'Organizer 3', startDate: '2024-03-01', endDate: '2024-03-02' }
+    { eventId: 3, title: 'Event 3', organizer: 'Organizer 3', startDate: '2024-03-01', endDate: '2024-03-02' },
+    { eventId: 4, title: 'Event 1', organizer: 'Organizer 1', startDate: '2024-01-01', endDate: '2024-01-02' },
+    { eventId: 5, title: 'Event 2', organizer: 'Organizer 2', startDate: '2024-02-01', endDate: '2024-02-02' },
+    { eventId: 6, title: 'Event 3', organizer: 'Organizer 3', startDate: '2024-03-01', endDate: '2024-03-02' },
+    { eventId: 7, title: 'Event 1', organizer: 'Organizer 1', startDate: '2024-01-01', endDate: '2024-01-02' },
+    { eventId: 8, title: 'Event 2', organizer: 'Organizer 2', startDate: '2024-02-01', endDate: '2024-02-02' },
+    { eventId: 9, title: 'Event 3', organizer: 'Organizer 3', startDate: '2024-03-01', endDate: '2024-03-02' },
   ]);
   const [filteredData, setFilteredData] = useState(data);
   const [searchQuery, setSearchQuery] = useState("");
@@ -38,6 +46,31 @@ const EventList = () => {
       item.title.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredData(filtered);
+  };
+
+    const handleConfirmDelete = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/adminEvents/${deleteConfirmationEventId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete event. Status: ${response.status}`);
+      }
+
+      setData(data.filter((item) => item.eventId !== deleteConfirmationEventId));
+    } catch (error) {
+      console.error("Error deleting data:", error.message);
+    } finally {
+      setDeleteConfirmationOpen(false);
+      setDeleteConfirmationEventId(null);
+    }
   };
 
   const customTheme = createTheme({
@@ -79,7 +112,7 @@ const EventList = () => {
   
     <ThemeProvider theme={customTheme}>
       <div className="eventlist">
-        <div className="addEventheader">
+      <div className="addEventheader">
           <input
             className="search"
             type="text"
@@ -92,7 +125,7 @@ const EventList = () => {
             <button className="addEvent">+ Add Event</button>
           </Link>
         </div>
-        <div className="listContainer">
+        <div className="EventlistContainer">
           <>
             <DataGrid rows={filteredData} columns={columns} getRowId={getRowId} />
             {isDeleteConfirmationOpen && (
