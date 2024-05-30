@@ -48,8 +48,10 @@ const SearchBar = ({setOutput}) => {
     }
     const handelEnter=async(event)=>{
       if (event.key === 'Enter') {
-        navigate(`/search/${input}`);
+        navigate(`/search/${input}`); 
+        document.querySelector(".results_lists").style.display="none" 
       }
+     
     }
   return (
     
