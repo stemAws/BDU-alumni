@@ -18,6 +18,7 @@ import ChangePassword from './ChangePassword';
 import PageNotFound from './PageNotFound';
 import ForgetPassword from './ForgetPassword';
 import Posts from './Posts';
+import SearchAndFilter from './SearchAndFilter';
 export const SigninContext = createContext();
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
@@ -57,6 +58,7 @@ const MainPage = () => {
           <Route path="/changePassword/:username"  Component = {ChangePassword} />
           <Route path="/post/:username"  Component = {Posts} />
           <Route path="/forgetPassword"  Component = {ForgetPassword} />
+          <Route path="/search"  Component = {SearchAndFilter} />
           <Route path="*"  Component = {PageNotFound} />
           </Routes>
           <Footer/>
