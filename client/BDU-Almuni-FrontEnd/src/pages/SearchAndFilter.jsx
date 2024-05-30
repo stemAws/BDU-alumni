@@ -1,9 +1,21 @@
-import { useState } from "react"
-import { FaAtom, FaCalendarAlt, FaCaretDown, FaCaretLeft, FaIndustry, FaMapPin, FaSlidersH } from "react-icons/fa"
+import { useEffect, useState } from "react"
+import { FaAngleDoubleDown, FaAngleDoubleUp, FaAtom, FaCalendarAlt, FaCaretDown, FaCaretLeft, FaIndustry, FaMapMarker, FaMapMarkerAlt, FaMapPin, FaSlidersH } from "react-icons/fa"
+import { useParams } from 'react-router-dom';
 import MultipleProfiles from "../component/MultipleProfiles"
 import profile from "../assets/images/photo_2024-02-27_14-20-52.jpg";
 import "../styles/searchAndFilter.css"
 const SearchAndFilter = () => {
+    const {name} =useParams();
+    const [searchBy, setsearchBy] = useState("name")
+    const [adjustingInputs,setadjustingInputs]=useState({
+        graduatingYear:false,
+        location:false,
+        industry:false,
+        department:false
+    }
+    )
+    const [multiResults, setmultiResults] = useState()
+    const [input, setinput] = useState("")
 const [profiles, setprofiles] = useState([{
     fullName:"Full Name",
     position:"president",
@@ -26,6 +38,41 @@ const [profiles, setprofiles] = useState([{
     img:`..${profile}`
 }
 ])
+const handleEachoption=(value)=>{
+        setsearchBy(value)
+        setadjustingInputs((prevState) => ({
+            [value]: !prevState[value]
+          }));
+}
+
+useEffect(() => {
+  const fetchData =async()=>{
+    try {
+          
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni-directory`,{
+          credentials:'include',
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+        },
+          body: JSON.stringify({
+            searchByValue:input?input:name,
+            searchBy:searchBy
+        }),
+        });
+
+          if (response.ok) {
+          const json = await response.json();
+          setprofiles(json);
+          }  
+      } catch (error) {
+          console.error('Error during fetching alumni data:', error);
+      }
+  }
+
+ fetchData();
+}, [input])
+
   return (
     <div className=" seachAndFilter-container">
         <div className="left-side">
@@ -37,33 +84,57 @@ const [profiles, setprofiles] = useState([{
                 <FaCaretLeft/>
             </div>
             <div className="filter-bottom">
-                <div className="filter-option">
+                <div  className="filter-option">
+                <div onClick={()=>handleEachoption("graduatingYear")} className="iconsAndOptions">
                     <div>
                     <FaCalendarAlt/>
                     <p>Graduation Year</p>
                     </div>
-                    <FaCaretDown/>
+                    {adjustingInputs.graduatingYear?<FaAngleDoubleUp size={10}/>:<FaAngleDoubleDown size={10} />}
+                    </div>
+                    {
+                        adjustingInputs.graduatingYear&&
+                        <input onChange={(e)=>setinput(e.target.value)} className="dropDown-input" type="number" />
+                    }
+                    
                 </div>
-                <div className="filter-option">
+                <div  className="filter-option">
+                <div onClick={()=>handleEachoption("location")} className="iconsAndOptions">
                     <div>
-                    <FaMapPin/>
+                    <FaMapMarkerAlt/>
                     <p>Location</p>
                     </div>
-                    <FaCaretDown/>
+                    {adjustingInputs.location?<FaAngleDoubleUp size={10}/>:<FaAngleDoubleDown size={10} />}
+                    </div>
+                    {
+                        adjustingInputs.location&&<input onChange={(e)=>setinput(e.target.value)} className="dropDown-input" type="text" />
+                    }
                 </div>
-                <div className="filter-option">
+                <div  className="filter-option">
+                <div onClick={()=>handleEachoption("industry")} className="iconsAndOptions">
                     <div>
                     <FaIndustry/>
                     <p>Industry</p>
                     </div>
-                    <FaCaretDown/>
+                    {adjustingInputs.industry?<FaAngleDoubleUp size={10}/>:<FaAngleDoubleDown size={10} />}
+                    </div>
+                    {
+                        adjustingInputs.industry&&<input onChange={(e)=>setinput(e.target.value)} className="dropDown-input" type="text" />
+                    }
                 </div>
                 <div className="filter-option">
+                    <div onClick={()=>handleEachoption("department")} className="iconsAndOptions">
                     <div>
                     <FaAtom/>
                     <p>Department</p>
                     </div>
-                    <FaCaretDown/>
+                    {adjustingInputs.department?<FaAngleDoubleUp size={10}/>:<FaAngleDoubleDown size={10} />}
+                    </div>
+                    
+                    
+                    {
+                        adjustingInputs.department&&<input onChange={(e)=>setinput(e.target.value)} className="dropDown-input" type="text" />
+                    }
                 </div>
             </div>
         </div>
