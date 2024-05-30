@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Button from '../../component/Button';
 import '../../styles/AddedStory.css';
 import { ChevronLeft } from "@mui/icons-material";
-// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Link } from "@mui/material";
 
 const Stories = () => {
@@ -10,7 +10,7 @@ const Stories = () => {
   const [stories, setStories] = useState([]);
   const [toggledStates, setToggledStates] = useState([]);
 
-  // const history = useHistory();
+  const navigate = useNavigate();
 
   // const updatePostContent = async (postID) => {
   //   try {
@@ -52,9 +52,9 @@ const Stories = () => {
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
-  // const handleClick = () => {
-  //   history.push("/admin/story");
-  // };
+  const handleClick = () => {
+    navigate("/admin/story");
+  };
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -83,7 +83,7 @@ const Stories = () => {
       <div className='Admin-stories'>
         
         <Link to='/admin/story' className="userGoBack">
-          < ChevronLeft className='userGoBackIcon' />
+          < ChevronLeft className='userGoBackIcon' onClick={handleClick}/>
         </Link>
           <h1 className='Admin-stories_heading'>Stories</h1>
         <div className='Admin-ind-story'>

@@ -6,12 +6,13 @@ import { useInView } from 'react-intersection-observer';
 import "../../styles/AStories.css"
 import { useState } from "react";
 import { Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 const Stories = () => {
         
-    
+    const navigate = useNavigate();
   const [exitingView, setExitingView] = useState(false);
   const handleClick = () => {
-    // history.push("/admin/addedStories");
+    navigate("/admin/addedStories");
   };
   const handleIntersection = (entries) => {
     entries.forEach(entry => {
@@ -43,7 +44,7 @@ const Stories = () => {
     <div className="admin-story-header">
       <h1 className="headerstory"> Bahir Dar STEM Center Alumni Stories</h1>
       <Link to='/admin/addedStories'>
-        <button className="accepted-stories" >Added Stories</button>
+        <button className="accepted-stories" onClick={handleClick}>Added Stories</button>
       </Link>
       </div>
       <div className="Each-storyCont">
