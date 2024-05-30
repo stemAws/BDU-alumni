@@ -2,8 +2,7 @@ const educationService = require('../services/education-services');
 
 exports.addEducation = async (req, res) => {
     try {
-        console.log(req.body)
-        const affectedRows = await educationService.addEducation(req.body);
+        const affectedRows = await educationService.addEducation(req.body, req.cookies.id2);
         res.status(201).json({ message: "Education added successfully", affectedRows });
     } catch (error) {
         console.error("Error adding education:", error);
@@ -39,7 +38,8 @@ exports.deleteEducationById = async (req, res) => {
 
 exports.getEducation = async (req, res) => {
     try {
-        const education = await educationService.getEducation(req.params.alumniID);
+        const education = await educationService.getEducation(req.cookies.id2);
+        console.log(req.cookies.id2)
         
         if (!education) {
             res.status(404).json({ error: 'No record found for the given ID or username' });

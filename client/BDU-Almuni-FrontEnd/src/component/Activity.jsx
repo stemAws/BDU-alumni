@@ -16,7 +16,7 @@ const Activity = ({personalInfo,activity,onEdit}) => {
           <p className="full_name">{personalInfo?.[0]?.fullName} </p>):''}
           <p className="Uploaded_date">Posted this  in {formattedDate} at {formattedTime}</p> </div>
           
-          <div className="image_content">{activity.image && <div className="postimg"><img  src={`${activity.image}`} alt="" /></div>}
+          <div className="image_content">{activity.mediaPath && <div className="postimg"><img  src={`${activity.mediaPath}`} alt="" /></div>}
            <h3 className="content_image">
             {activity.content} 
           </h3> </div>

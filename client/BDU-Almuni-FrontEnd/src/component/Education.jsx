@@ -16,8 +16,7 @@ const Education = ({onclose,onEdit,education,onDelete,ondisplay}) => {
           
           </h3>
           <h4>{education.institution}</h4>
-          <p>Started: {education.startYear}</p>
-          {education.stillLearning ?"Still Studing": <p>UpTo: {education.endYear}</p>}
+          <p>Graduated in {education.graduatingYear}</p>
             {
               deletePopup&&(
                 <DeleteConfirmation onDelete={()=>onDelete(education.educationId)} text='education' close = {()=>setDeletePopup(false)}/>

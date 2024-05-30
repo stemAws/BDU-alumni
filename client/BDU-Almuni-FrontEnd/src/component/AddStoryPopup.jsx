@@ -21,10 +21,7 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
       setDescriptionError('Please provide meaningful description!');
       return;
     }
-    const cookies = document.cookie;
-    const match = cookies.match(/id=([^;]*)/);
-    const token = match ? match[1] : null;
-    onAddStory({ token, imageFile, description,isToggled });
+    onAddStory({imageFile, description,isToggled });
     handleClose();
   };
 
