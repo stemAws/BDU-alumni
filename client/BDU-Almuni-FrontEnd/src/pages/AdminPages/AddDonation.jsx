@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../../styles/AddDonation.css";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import {useNavigate} from 'react-router-dom'
 import { Link } from "@mui/material";
 import { ChevronLeft } from "@mui/icons-material";
 
@@ -13,7 +13,7 @@ const DonationPost = () => {
   const [link, setLink] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
-  // const history = useHistory();
+  const navigate = useNavigate();
 
   const [titleError, setTitleError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
@@ -90,7 +90,7 @@ const DonationPost = () => {
   
         if (response.ok) {
           // toast.success("Donation data uploaded successfully");
-          // history.push("/admin/donation");
+          //navigate("/admin/donation");
           setSuccess(true);
         } else {
           console.error("Error uploading donation data", response.statusText);
@@ -102,14 +102,14 @@ const DonationPost = () => {
     }
   };
   
-  // const handleClick = () => {
-  //   history.push("/admin/donation");
-  // };
+  const handleClick = () => {
+   navigate("/admin/donation");
+  };
 
   return (
     <div className="eventUpload">
       <Link to="/donation" className="userGoBack">
-        <ChevronLeft className="userGoBackIcon" />
+        <ChevronLeft className="userGoBackIcon" onClick={handleClick}/>
       </Link>
       <h2> Add Donation </h2>
       <div className="formContainer">
