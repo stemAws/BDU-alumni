@@ -1,0 +1,83 @@
+.seachAndFilter-container{
+    display: flex;
+    height: 100vh;
+    background-color: #FBFBFB;
+    gap: 50px;
+    margin-top: 50px;
+}
+.seachAndFilter-container .left-side{
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    background-color: #FBFBFB;
+    border-right: 1px solid #CBCBCB;
+}
+.filter-top{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #f1f1f1;
+    background-color: #fafafa;
+    color: #5C5C5C;
+}
+.filter-top>div{
+    display: flex;
+    gap: 10px;
+    
+}
+.filter-bottom{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+    color: #545454;
+}
+.filter-option{
+    display: flex;
+    justify-content: space-between;
+    background-color: #f3f3f3;
+    height: 40px;
+    align-items: center;
+}
+.filter-option>div{
+    display: flex;
+    gap: 10px;
+
+}
+.seachAndFilter-container .right-side{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    gap: 20px;
+    width: 60%;
+    overflow: hidden;
+}
+.each-profile{
+    display: flex;
+    height: 80px;
+    width: 100%;
+    overflow: hidden;
+    background-color: #E5E5E5;
+    padding: 15px;
+    gap: 20px;
+    border-radius: 40px;
+    color: #7a7a7a;
+    align-items: center;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+.searched-profile{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+
+}
+.each-profile .full-name{
+    font:700 18px "Inter"
+}
+.each-profile .position{
+    font:500 16px "Inter"
+}
+.each-profile .current-location{
+    font:300 14px "Inter"
+}

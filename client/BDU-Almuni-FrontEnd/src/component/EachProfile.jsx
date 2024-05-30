@@ -2,7 +2,7 @@ const EachProfile = ({profile}) => {
   return (
    <div className="each-profile">
     <img className="searched-profile"src={profile.img} alt="" />
-    <>
+    <div>
     <p className="full-name">
         {profile.fullName}
     </p>
@@ -10,7 +10,7 @@ const EachProfile = ({profile}) => {
         {profile.position} of {profile.company}
     </p>
     <p className="current-location">{profile.currentLocation}</p>
-    </>
+    </div>
    </div>
   )
 }
