@@ -3,26 +3,6 @@ import "../styles/searchBar.css"
 import { useState } from 'react'
 const SearchBar = ({setOutput}) => {
     const [input,setInput]=useState("");
-    
-    // const fetchData = (value) => {
-    //     fetch('${process.env.REACT_APP_BACKEND_URL}/alumni/')
-    //         .then((response) => response.json())
-    //         .then((json) => {
-    //             const alumniArray = json[0];
-    //             console.log(alumniArray)
-    
-    //             const results = alumniArray.filter((user) => {
-    //                 return value && user && user.fullName && user.fullName.toLowerCase().includes(value);
-    //             });
-    
-    //             setOutput(results);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //         });
-    // };
-const [searchBy, setsearchBy] = useState()
-
     const handleSearch=()=>{
         const searchContainers = document.querySelectorAll('.input_warper');
         searchContainers.forEach(searchContainer => {
@@ -41,21 +21,18 @@ const [searchBy, setsearchBy] = useState()
     const fetchData = async (value) => {
         try {
           
-          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/`,{
-            credentials:'include',
-          //   body: JSON.stringify({
-          //     searchBy:searchBy,
-          //     searchByValue:input
-          // }),
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni`,{
+            credentials:'include'
           });
 
             if (response.ok) {
             const json = await response.json();
             const results = json.filter((user) => {
+              
             return value && user && user.name && user.name.toLowerCase().includes(value);
             });
             setOutput(results);
-            }
+            }  
         } catch (error) {
             console.error('Error during fetching alumni data:', error);
         }
@@ -67,8 +44,11 @@ const [searchBy, setsearchBy] = useState()
         setInput(value);
         fetchData(value);
     }
+    const handelEnter=async()=>{
+      
+    }
   return (
-    <div className='search-with-filter'>
+    
     <div className="input_warper">
             <FaSearch onClick={handleSearch} className='search_icon' />
     <input 
@@ -77,25 +57,9 @@ const [searchBy, setsearchBy] = useState()
     type="text" 
     value={input}
     onChange={(e)=>handleChange(e.target.value)}
+    onKeyDown={handelEnter}
     /> 
-        </div><div className='filter'>
-        <div className='filter-control'>
-          <FaSlidersH />
-          <select 
-          id="filter-types" 
-          value={searchBy||''} 
-          onChange={(e)=>setsearchBy(e.target.value)}>
-            <option value="" disabled hidden>Filter</option>
-            <option value="byName">Name</option>
-            <option value="byGraduatingYear">Graduating Year</option>
-            <option value="industry">Industry</option>
-            <option value="department">Department</option>
-            <option value="location">Location</option>
-          </select>
         </div>
-
-    </div>
-    </div>
         
 
     

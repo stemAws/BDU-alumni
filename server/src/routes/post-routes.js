@@ -6,7 +6,7 @@ const router = express.Router();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/posts/:alumniId", upload.single("image"), postController.createPost);
+router.post("/posts", upload.single("image"), postController.createPost);
 router.get("/posts", postController.getAllPosts);
 router.get("/addedPosts", postController.getAddedStories);
 router.put("/addedPosts/:postId", postController.updateSuggestedByAdmin);

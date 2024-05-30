@@ -41,13 +41,16 @@ exports.signIn = async function (req, res) {
 
     if (authenticationResult.success) {
       let token = await alumniService.getAlumniProfile(username);
+      const id2 = token[0].alumniId;
       token = token[0].personId;
       const realToken = jwt.sign({ token }, process.env.secretKey, {
         expiresIn: "30d",
       });
+      
 
       res
         .cookie("token", realToken, { httpOnly: true })
+        .cookie("id2", id2)
         .cookie("id", token, { httpOnly: false });
 
       res.status(200).json({
@@ -111,7 +114,7 @@ exports.uploadProfilePicture = async function (req, res) {
 
   const resizedFile = await sharp(file.buffer).jpeg({ quality: 20 }).toBuffer();
 
-  const alumniID = req.params.id;
+  const alumniID = req.cookies.id2;
   const filePath = `profilePictures/${alumniID}-${Date.now()}${path.extname(
     file.originalname
   )}`;
@@ -162,7 +165,7 @@ exports.uploadCoverPicture = async function (req, res) {
 
   const resizedFile = await sharp(file.buffer).jpeg({ quality: 20 }).toBuffer();
 
-  const alumniID = req.params.id;
+  const alumniID = req.cookies.id2;
   const filePath = `coverPictures/${alumniID}-${Date.now()}${path.extname(
     file.originalname
   )}`;
@@ -421,7 +424,10 @@ exports.updateCustomSetting = async function (req, res) {
 
 exports.searchAlumni = async function (req, res) {
   try {
-    const { searchBy, searchByValue } = req.body;
+    let { searchBy, searchByValue } = req.body;
+    if (searchBy === "name" || searchBy === "department" || searchBy === "degree" || searchBy === "industry" || searchBy === "location") {
+      searchByValue = `%${searchByValue}%`;
+    }
     const alumni = await alumniService.getAlumniDirectory(
       searchBy,
       searchByValue

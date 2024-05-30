@@ -8,7 +8,11 @@ import Users from './AdminPages/Users';
 import stories from '../pages/AdminPages/stories';
 import EventList from './AdminPages/EventList';
 import FeedBack from './AdminPages/FeedBack';
-import AddEvent from './AdminPages/AddEvent'
+import AddEvent from './AdminPages/AddEvent';
+import AddedStory from './AdminPages/AddedStory';
+import DonationList from './AdminPages/DonationList';
+import AddDonation from './AdminPages/AddDonation';
+import AddUser from './AdminPages/AddUser';
 const Admin = () => {
   return (
     <div>
@@ -20,10 +24,14 @@ const Admin = () => {
             <Routes>
               <Route path='/home' Component={Home}/>
               <Route path='/users' Component={Users}/>
+              <Route path='/AddUser' Component={AddUser}/>
               <Route path='/story' Component={stories}/>
+              <Route path='/addedStories' Component={AddedStory}/>
               <Route path='/Events' Component={EventList}/>
               <Route path='/AddEvent' Component={AddEvent}/>
               <Route path='/feedback' Component={FeedBack}/>
+              <Route path='/Donation' Component={DonationList}/>
+              <Route path='/AddDonation' Component={AddDonation}/>
             
               
             </Routes>

@@ -1,18 +1,10 @@
 const db = require('../config/db');
 
-exports.addEducation = async (education) => {
-    const [[alumni]] = await db.query(
-        `SELECT alumniId
-        FROM Alumni
-        WHERE personId = ?`,
-        [education.alumniId] // personid actually
-    );
-
-    if (alumni && alumni.alumniId) {
+exports.addEducation = async (education, alumniId) => {
         const { affectedRows } = await db.query(
             "INSERT INTO Education (alumniId, institution, degree, major, minor, admission, graduatingYear, awards, researchPublications) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             [
-                alumni.alumniId,
+                alumniId,
                 education.institution,
                 education.degree,
                 education.major,
@@ -25,9 +17,6 @@ exports.addEducation = async (education) => {
         );
 
         return affectedRows;
-    } else {
-        return 0;
-    }
 };
 
 
@@ -47,6 +36,13 @@ exports.updateEducation = async (education) => {
     return affectedRows[0].affectedRows;
 };
 
+exports.getEducation = async (id) => {
+    const [education] = await db.query(`
+    SELECT * FROM Education Where alumniId = ?`, [id]);
+    console.log(id)
+    return education;
+};
+
 exports.deleteEducation = async (id) => {
     const { affectedRows } = await db.query("DELETE FROM Education WHERE educationID = ?", [id]);
 
@@ -55,11 +51,4 @@ exports.deleteEducation = async (id) => {
     }
 
     return affectedRows;
-};
-
-exports.getEducation = async (id) => {
-    const [education] = await db.query(`
-    SELECT * FROM Education WHERE alumniId = ?`, [id]);
-    
-    return education;
 };

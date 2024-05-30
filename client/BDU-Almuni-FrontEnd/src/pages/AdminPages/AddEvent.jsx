@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../../styles/AddEvent.css";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useNavigate } from "react-router-dom";
 import { Link } from "@mui/material";
 import { ChevronLeft } from "@mui/icons-material";
 
@@ -13,7 +13,7 @@ const EventPost = () => {
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-//   const history = useHistory();
+  const navigate = useNavigate();
   const [organizer, setOrganizer] = useState("");
   const [eventLink, setEventLink] = useState("");
   const [success, setSuccess] = useState(false);
@@ -163,7 +163,7 @@ const EventPost = () => {
 
         if (response.ok) {
           toast.success("Event data uploaded successfully");
-          history.push("/admin/Events");
+          navigate("/admin/Events");
           setSuccess(true);
         } else {
           console.error("Error uploading event data", response.statusText);
@@ -175,7 +175,7 @@ const EventPost = () => {
     }
   };
   const handleClick = () => {
-    history.push("/admin/Events");
+    navigate("/admin/Events");
   };
 
   return (

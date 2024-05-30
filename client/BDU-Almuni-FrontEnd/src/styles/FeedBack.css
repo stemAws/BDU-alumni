@@ -1,6 +1,7 @@
 .feedback-cont{
     flex: 4;
     height: calc(100vh - 100px );
+    overflow-y: auto;
 }
 .feedback-btn{
     border: none;

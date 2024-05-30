@@ -130,7 +130,7 @@ exports.getAlumniProfilePhotoById = async function (alumniID) {
 exports.updateAlumniProfilePhoto = async (alumniID, profilePhoto) => {
   try {
     const [{ affectedRows }] = await db.query(
-      "UPDATE Alumni SET profilePicture = ? WHERE personID = ?",
+      "UPDATE Alumni SET profilePicture = ? WHERE alumniId = ?",
       [profilePhoto, alumniID]
     );
     return affectedRows;
@@ -156,7 +156,7 @@ exports.getAlumniCoverPhotoById = async function (alumniID) {
 exports.updateAlumniCoverPhoto = async (alumniID, coverPhoto) => {
   try {
     const [{ affectedRows }] = await db.query(
-      "UPDATE Alumni SET coverPicture = ? WHERE personID = ?",
+      "UPDATE Alumni SET coverPicture = ? WHERE alumniId = ?",
       [coverPhoto, alumniID]
     );
     return affectedRows;
@@ -406,21 +406,30 @@ exports.updateCustom = async (alumniId, privacyData) => {
 
 exports.getAlumniDirectory = async (searchBy, searchByValue) => {
   try {
-    let q = `SELECT fullName, username, profilePicture FROM education ed JOIN experience ex JOIN alumni a JOIN person p WHERE ed.alumniId = a.alumniId AND a.personId = p.personId AND ex.alumniId = ed.alumniId AND ed.institution = 'Bahir Dar University'`;
-    if (searchBy === "department") {
-      q += ` AND ed.major = "${searchByValue}"`;
+    let q = `SELECT fullName, username FROM `;
+
+    if (searchBy === "department" || searchBy === "degree" || searchBy === "graduatingYear") {
+      q += `Education ed JOIN Alumni a JOIN Person p ON ed.alumniId = a.alumniId AND a.personId = p.personId `;
+      q += `WHERE `;
+      if (searchBy === "department") {
+        q += ` LOWER(ed.major) LIKE LOWER(?)`;
+      } else if (searchBy === "degree") {
+        q += ` LOWER(ed.degree) LIKE LOWER(?)`;
+      } else if (searchBy === "graduatingYear") {
+        q += ` ed.graduatingYear = ?`;
+      }
     } else if (searchBy === "name") {
-      q += ` AND p.fullName = "${searchByValue}"`;
-    }else if (searchBy === "degree") {
-      q += ` AND ed.degree = "${searchByValue}"`;
-    } else if (searchBy === "graduatingYear") {
-      q += ` AND ed.graduatingYear = "${searchByValue}"`;
+      q += `Person p JOIN Alumni a ON p.personId = a.personId `;
+      q += `WHERE LOWER(p.fullName) LIKE LOWER(?) `;
     } else if (searchBy === "industry") {
-      q += ` AND ex.industry = "${searchByValue}"`;
+      q += `Experience ex JOIN Alumni a JOIN Person p ON ex.alumniId = a.alumniId AND a.personId = p.personId `;
+      q += `WHERE LOWER(ex.industry) LIKE LOWER(?) `;
     } else if (searchBy === "location") {
-      q = ` SELECT fullName, username, profilePicture FROM education ed JOIN alumni a JOIN person p WHERE ed.alumniId = a.alumniId AND a.personId = p.personId AND ed.institution = 'Bahir Dar University' AND a.currentLocation = 'USA' AND a.currentLocation = "${searchByValue}"`;
+      q += `Alumni a JOIN Person p ON a.personId = p.personId `;
+      q += `WHERE LOWER(a.currentLocation) LIKE LOWER(?)`;
     }
-    const queryResult = await db.query(q);
+    
+    const queryResult = await db.query(q, [searchByValue]);
 
     return queryResult[0];
   } catch (error) {

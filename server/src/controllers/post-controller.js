@@ -18,7 +18,7 @@ const storage = getStorage();
 
 exports.createPost = async (req, res) => {
   const { content, suggestToAdmin } = req.body;
-  const alumniId = req.params.alumniId;
+  const alumniId = req.cookies.id2;
 
   try {
     let downloadURL = null;
@@ -99,7 +99,7 @@ exports.getPostsByUsernameOrId = async (req, res) => {
     if (isNaN(alumniIdOrUsername)) {
       post = await postService.getPostsByUsername(alumniIdOrUsername);
     } else {
-      post = await postService.getPostByAlumniId(alumniIdOrUsername);
+      post = await postService.getPostByAlumniId(req.cookies.id2);
     }
 
     if (!post) {

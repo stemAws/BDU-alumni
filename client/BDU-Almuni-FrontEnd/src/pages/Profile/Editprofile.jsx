@@ -201,7 +201,7 @@ const checkbox=()=>{
     var workingPlace =""
     for (let i = 0; i < experiances?.length; i++) {
       if (experiances[i].stillWorking) {
-        workingPlace= `${experiances[i].jobTitle} at ${experiances[i].companyName}`
+        workingPlace= `${experiances[i].position} at ${experiances[i].company}`
       return workingPlace
       }
       else{
@@ -213,10 +213,7 @@ const checkbox=()=>{
   }
   const fetchExperiances = async () => {
     try {
-      const cookies = document.cookie;
-      const match = cookies.match(/id=([^;]*)/);
-      const token = match ? match[1] : null;
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${token}`,{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences`,{
         credentials: 'include',
       });
       if (res.status===403) {
@@ -237,11 +234,8 @@ const checkbox=()=>{
   
   const fetchEducations = async () => {
     try {
-      const cookies = document.cookie;
-      const match = cookies.match(/id=([^;]*)/);
-      const token = match ? match[1] : null;
   
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${token}`,{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education`,{
         credentials: 'include',
       });
       
@@ -368,13 +362,14 @@ const getEducationById = async(id)=>{
 const updateEducation = async (institution,degree,admission,major,minor,graduatingYear,id)=>{
   try {
     setloading(true)
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education`, {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json',
         },
         credentials: 'include',
         body: JSON.stringify({
+          experienceId:id,
           institution:institution,
           degree:degree,
           admission:admission,
@@ -436,7 +431,10 @@ const updateEducation = async (institution,degree,admission,major,minor,graduati
     else if(res.ok){
     const data = await res.json()
     setEducations([...educations,data])
-    // window.location.reload()
+    window.location.reload()
+    }
+    else if(!res.ok){
+      return res.status(500).json({ error: "Couldn't update the data" });
     }
     } catch (error) {
       console.error('Error during adding education:', error);
@@ -476,7 +474,7 @@ try {
       setshowEditEducation(true)
       
   }
-  const addStory=async({token,imageFile,description,isToggled})=>{
+  const addStory=async({imageFile,description,isToggled})=>{
     var suggest=0; 
     if (isToggled===true) {
       suggest=1;
@@ -492,7 +490,7 @@ try {
 
     try {
       setloading(true)
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${token}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
@@ -647,14 +645,10 @@ const getStoryById = async(id)=>{
   const handleUpload = async (e) => {
     const formData = new FormData();
     formData.append('profilePicture', file);
-    const cookies = document.cookie;
-    const match = cookies.match(/id=([^;]*)/);
-    const token = match ? match[1] : null;
-  
-    console.log(token)
+    
     try {
        setloading(true)
-      const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadProfilePicture/${token}`, {
+      const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadProfilePicture`, {
         method: 'POST',
         credentials: 'include',
       
@@ -678,13 +672,9 @@ const getStoryById = async(id)=>{
     const formData = new FormData();
     formData.append('coverPicture', fileCover);
   
-    const cookies = document.cookie;
-    const match = cookies.match(/id=([^;]*)/);
-    const token = match ? match[1] : null;
-  
     try {
       setloading(true)
-      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadCoverPicture/${token}`, {
+      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/uploadCoverPicture`, {
         method: 'POST',
         credentials: 'include',
         body: formData,
@@ -813,7 +803,7 @@ const getStoryById = async(id)=>{
         </div>
         {educations?.length > 0 &&
           <div className="learning_place">
-            <p>{`${educations[educations?.length - 1]?.degree} in ${educations[educations?.length - 1]?.fieldOfStudy} at ${educations[educations?.length - 1]?.institution}`}</p>
+            <p>{`${educations[educations?.length - 1]?.degree} in ${educations[educations?.length - 1]?.major} at ${educations[educations?.length - 1]?.institution}`}</p>
           </div>
         }
           </div>

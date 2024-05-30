@@ -5,14 +5,18 @@ import React from "react";
 import { DeleteOutline } from "@mui/icons-material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Message from "./Message";
-// import DeleteConfirmation from "../../components/DeleteConfirmation";
+import DeleteConfirmation from "../../component/DeleteConfirmation";
 
 const FeedBack = () => {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [feedbackData, setFeedbackData] = useState([
     { feedBackID: 1, fullName: 'John Doe', email: 'john.doe@example.com', sendAT: '2024-05-20', message: 'Great job!' },
     { feedBackID: 2, fullName: 'Jane Smith', email: 'jane.smith@example.com', sendAT: '2024-05-21', message: 'Keep it up!' },
-    { feedBackID: 3, fullName: 'Alice Johnson', email: 'alice.johnson@example.com', sendAT: '2024-05-22', message: 'Very informative.' }
+    { feedBackID: 3, fullName: 'John Doe', email: 'john.doe@example.com', sendAT: '2024-05-20', message: 'Great job!' },
+    { feedBackID: 4, fullName: 'Jane Smith', email: 'jane.smith@example.com', sendAT: '2024-05-21', message: 'Keep it up!' },
+    { feedBackID: 5, fullName: 'Alice Johnson', email: 'alice.johnson@example.com', sendAT: '2024-05-22', message: 'Very informative.' },
+    { feedBackID: 6, fullName: 'Alice Johnson', email: 'alice.johnson@example.com', sendAT: '2024-05-22', message: 'Very informative.' },
+    { feedBackID: 8, fullName: 'John Doe', email: 'john.doe@example.com', sendAT: '2024-05-20', message: 'Great job!' },
   ]);
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
@@ -82,7 +86,7 @@ const FeedBack = () => {
     {
       field: "message",
       headerName: "Message",
-      width: 400,
+      width: 300,
       renderCell: (params) => (
         <div
           style={{ cursor: "pointer" }}
@@ -107,8 +111,9 @@ const FeedBack = () => {
   ];
 
   return (
+    <div className="feedback-cont">
     <ThemeProvider theme={customTheme}>
-      <div className="feedback-cont">
+      
         <DataGrid rows={rows} columns={columns} autoHeight />
         <Message
           open={Boolean(selectedMessage)}
@@ -122,8 +127,9 @@ const FeedBack = () => {
             onDelete={handleConfirmDelete}
           />
         )}
-      </div>
+     
     </ThemeProvider>
+    </div>
   );
 };
 
