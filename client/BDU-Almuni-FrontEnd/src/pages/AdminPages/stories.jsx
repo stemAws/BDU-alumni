@@ -5,11 +5,15 @@ import newsimg2 from '../../assets/images/photo_2024-02-25_15-47-18.jpg';
 import { useInView } from 'react-intersection-observer';
 import "../../styles/AStories.css"
 import { useState } from "react";
+import { Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 const Stories = () => {
         
-    
+    const navigate = useNavigate();
   const [exitingView, setExitingView] = useState(false);
-
+  const handleClick = () => {
+    navigate("/admin/addedStories");
+  };
   const handleIntersection = (entries) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) {
@@ -34,8 +38,16 @@ const Stories = () => {
         <span className="blue-text">TOP</span>STORIES
       </p>
       </div> */}
-    <div className="Admin-stories-container">
+     
       
+    <div className="Admin-stories-container">
+    <div className="admin-story-header">
+      <h1 className="headerstory"> Bahir Dar STEM Center Alumni Stories</h1>
+      <Link to='/admin/addedStories'>
+        <button className="accepted-stories" onClick={handleClick}>Added Stories</button>
+      </Link>
+      </div>
+      <div className="Each-storyCont">
         <div className="Admin-each-story">
                 <img className="Admin-story-img"src={newsimg2} alt="" />
             <div className="Admin-story-description-container">
@@ -62,6 +74,7 @@ const Stories = () => {
                     Read more <FaArrowRight/>
                 </p>
             </div>
+        </div>
         </div>
     </div>
     </>

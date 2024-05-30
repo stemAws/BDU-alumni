@@ -1,25 +1,25 @@
-import "../../styles/EventList.css";
+import "../../styles/DonationList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline, Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DeleteConfirmation from '../../component/DeleteConfirmation'
-const EventList = () => {
+const DonationList = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate();
+  // const history = useHistory();
 
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [deleteConfirmationEventId, setDeleteConfirmationEventId] = useState(null);
+  const [deleteConfirmationId, setDeleteConfirmationId] = useState(null);
 
   const handleDelete = (id) => {
     setDeleteConfirmationOpen(true);
-    setDeleteConfirmationEventId(id);
+    setDeleteConfirmationId(id);
   };
 
   useEffect(() => {
@@ -29,18 +29,18 @@ const EventList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/adminEvents`
+        `${process.env.REACT_APP_BACKEND_URL}/donation`
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch events. Status: ${response.status}`);
       }
 
-      const eventData = await response.json();
+      const donationData = await response.json();
 
       // Sort the data by the createdAt timestamp in descending order
-      eventData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      donationData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-      setData(eventData);
+      setData(donationData);
     } catch (error) {
       console.error("Error fetching data:", error.message);
     } finally {
@@ -70,7 +70,7 @@ const EventList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/adminEvents/${deleteConfirmationEventId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/donation/${deleteConfirmationId}`,
         {
           method: "DELETE",
           headers: {
@@ -83,24 +83,24 @@ const EventList = () => {
         throw new Error(`Failed to delete event. Status: ${response.status}`);
       }
 
-      setData(data.filter((item) => item.eventId !== deleteConfirmationEventId));
+      setData(data.filter((item) => item.id !== deleteConfirmationId));
     } catch (error) {
       console.error("Error deleting data:", error.message);
     } finally {
       setDeleteConfirmationOpen(false);
-      setDeleteConfirmationEventId(null);
+      setDeleteConfirmationId(null);
     }
   };
 
   const handleCancelDelete = () => {
     setDeleteConfirmationOpen(false);
-    setDeleteConfirmationEventId(null);
+    setDeleteConfirmationId(null);
   };
 
-  const handleEdit = (eventId) => {
-    // Render the EditEvent component with the onUpdate callback
-   navigate(`/admin/adminEvents/${eventId}`);
-  };
+  // const handleEdit = (id) => {
+  //   // Render the EditEvent component with the onUpdate callback
+  //   history.push(`/admin/donation/${id}`);
+  // };
 
   const customTheme = createTheme({
     typography: {
@@ -108,27 +108,26 @@ const EventList = () => {
     },
   });
 
-  const getRowId = (row) => row.eventId; // Specify the custom ID field
+  const getRowId = (row) => row.id; // Specify the custom ID field
 
   const columns = [
-    { field: "eventId", headerName: "ID", width: 90 },
-    { field: "title", headerName: "Event Title", width: 100 },
-    { field: "organizer", headerName: "Organizer", width: 100 },
-    { field: "startDate", headerName: "Start Date", width: 150 },
-    { field: "endDate", headerName: "End Date", width: 100 },
+    { field: "id", headerName: "ID", width: 90 },
+    { field: "title", headerName: "Donation Title", width: 100 },
+    { field: "link", headerName: "Link", width: 100 },
+    { field: "description", headerName: "Description", width: 150 },
     { field: "actions", headerName: "Actions", width: 100 },
     {
       renderCell: (params) => (
         <>
           <DeleteOutline
-            key={`delete-${params.row.eventId}`}
+            key={`delete-${params.row.id}`}
             className="eventListDelete"
-            onClick={() => handleDelete(params.row.eventId)}
+            onClick={() => handleDelete(params.row.id)}
           />
           <Edit
-            key={`edit-${params.row.eventId}`}
+            key={`edit-${params.row.id}`}
             className="eventListEdit"
-            onClick={() => handleEdit(params.row.eventId)}
+            // onClick={() => handleEdit(params.row.id)}
           />
         </>
       ),
@@ -142,13 +141,13 @@ const EventList = () => {
         <input
           className="search"
           type="text"
-          placeholder="Search by event title"
+          placeholder="Search by donation title"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <h3> Bahir Dar STEM Center Alumni Events </h3>
-        <Link to="/admin/AddEvent">
-          <button className="addEvent">+ Add Event</button>
+        <h3> Bahir Dar STEM Center Alumni Donation </h3>
+        <Link to="/admin/AddDonation">
+          <button className="addEvent">+ Add Donation</button>
         </Link>
       </div>
       <div className="listCOntainer">
@@ -172,4 +171,4 @@ const EventList = () => {
   );
 };
 
-export default EventList;
+export default DonationList;
