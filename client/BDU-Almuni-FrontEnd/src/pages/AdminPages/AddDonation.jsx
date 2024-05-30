@@ -89,8 +89,8 @@ const DonationPost = () => {
         );
   
         if (response.ok) {
-          // toast.success("Donation data uploaded successfully");
-          //navigate("/admin/donation");
+          toast.success("Donation data uploaded successfully");
+          navigate("/admin/donation");
           setSuccess(true);
         } else {
           console.error("Error uploading donation data", response.statusText);

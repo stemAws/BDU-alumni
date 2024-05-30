@@ -2,26 +2,18 @@ import "../../styles/EventList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline, Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import DeleteConfirmation from '../../component/DeleteConfirmation';
-
+import DeleteConfirmation from '../../component/DeleteConfirmation'
 const EventList = () => {
-
-  const [data, setData] = useState([
-    { eventId: 1, title: 'Event 1', organizer: 'Organizer 1', startDate: '2024-01-01', endDate: '2024-01-02' },
-    { eventId: 2, title: 'Event 2', organizer: 'Organizer 2', startDate: '2024-02-01', endDate: '2024-02-02' },
-    { eventId: 3, title: 'Event 3', organizer: 'Organizer 3', startDate: '2024-03-01', endDate: '2024-03-02' },
-    { eventId: 4, title: 'Event 1', organizer: 'Organizer 1', startDate: '2024-01-01', endDate: '2024-01-02' },
-    { eventId: 5, title: 'Event 2', organizer: 'Organizer 2', startDate: '2024-02-01', endDate: '2024-02-02' },
-    { eventId: 6, title: 'Event 3', organizer: 'Organizer 3', startDate: '2024-03-01', endDate: '2024-03-02' },
-    { eventId: 7, title: 'Event 1', organizer: 'Organizer 1', startDate: '2024-01-01', endDate: '2024-01-02' },
-    { eventId: 8, title: 'Event 2', organizer: 'Organizer 2', startDate: '2024-02-01', endDate: '2024-02-02' },
-    { eventId: 9, title: 'Event 3', organizer: 'Organizer 3', startDate: '2024-03-01', endDate: '2024-03-02' },
-  ]);
-  const [filteredData, setFilteredData] = useState(data);
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+
+
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deleteConfirmationEventId, setDeleteConfirmationEventId] = useState(null);
 
@@ -30,25 +22,52 @@ const EventList = () => {
     setDeleteConfirmationEventId(id);
   };
 
-  const handleCancelDelete = () => {
-    setDeleteConfirmationOpen(false);
-    setDeleteConfirmationEventId(null);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/adminEvents`
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to fetch events. Status: ${response.status}`);
+      }
+
+      const eventData = await response.json();
+
+      // Sort the data by the createdAt timestamp in descending order
+      eventData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+      setData(eventData);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleEdit = (eventId) => {
-    // Implement the logic to edit the event
-    console.log(`Editing event with ID: ${eventId}`);
-  };
+  const filterData = useCallback(() => {
+    try {
+      const filtered = data.filter(
+        (item) =>
+          item.title &&
+          item.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredData(filtered);
+    } catch (error) {
+      console.error("Error filtering data:", error);
+      setFilteredData([]);
+    }
+  }, [searchQuery, data]);
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-    const filtered = data.filter(item =>
-      item.title.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setFilteredData(filtered);
-  };
+  useEffect(() => {
+    // Update filtered data when the searchQuery changes
+    filterData();
+  }, [searchQuery, data, filterData]);
 
-    const handleConfirmDelete = async () => {
+  const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/adminEvents/${deleteConfirmationEventId}`,
@@ -73,6 +92,16 @@ const EventList = () => {
     }
   };
 
+  const handleCancelDelete = () => {
+    setDeleteConfirmationOpen(false);
+    setDeleteConfirmationEventId(null);
+  };
+
+  const handleEdit = (eventId) => {
+    // Render the EditEvent component with the onUpdate callback
+   navigate(`/admin/adminEvents/${eventId}`);
+  };
+
   const customTheme = createTheme({
     typography: {
       fontFamily: "Arial, sans-serif", // Replace 'YourDesiredFont' with the actual font-family
@@ -83,14 +112,12 @@ const EventList = () => {
 
   const columns = [
     { field: "eventId", headerName: "ID", width: 90 },
-    { field: "title", headerName: "Event Title", width: 150 },
-    { field: "organizer", headerName: "Organizer", width: 150 },
+    { field: "title", headerName: "Event Title", width: 100 },
+    { field: "organizer", headerName: "Organizer", width: 100 },
     { field: "startDate", headerName: "Start Date", width: 150 },
-    { field: "endDate", headerName: "End Date", width: 150 },
+    { field: "endDate", headerName: "End Date", width: 100 },
+    { field: "actions", headerName: "Actions", width: 100 },
     {
-      field: "actions",
-      headerName: "Actions",
-      width: 150,
       renderCell: (params) => (
         <>
           <DeleteOutline
@@ -109,37 +136,39 @@ const EventList = () => {
   ];
 
   return (
-  
     <ThemeProvider theme={customTheme}>
-      <div className="eventlist">
+    <div className="eventlist">
       <div className="addEventheader">
-          <input
-            className="search"
-            type="text"
-            placeholder="Search by event title"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-          <h3>Bahir Dar STEM Center Alumni Events</h3>
-          <Link to="/admin/AddEvent">
-            <button className="addEvent">+ Add Event</button>
-          </Link>
-        </div>
-        <div className="EventlistContainer">
-          <>
-            <DataGrid rows={filteredData} columns={columns} getRowId={getRowId} />
-            {isDeleteConfirmationOpen && (
-              <DeleteConfirmation
-                close={handleCancelDelete}
-                text="event"  // You can customize this text based on your needs
-                onDelete={handleConfirmDelete}
-              />
-            )}
-          </>
-        </div>
+        <input
+          className="search"
+          type="text"
+          placeholder="Search by event title"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <h3> Bahir Dar STEM Center Alumni Events </h3>
+        <Link to="/admin/AddEvent">
+          <button className="addEvent">+ Add Event</button>
+        </Link>
       </div>
+      <div className="listCOntainer">
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+              <DataGrid rows={filteredData} columns={columns} getRowId={getRowId} />
+              {isDeleteConfirmationOpen && (
+                <DeleteConfirmation
+                  close={handleCancelDelete}
+                  text="event"  // You can customize this text based on your needs
+                  onDelete={handleConfirmDelete}
+                />
+              )}
+            </>
+      )}
+      </div>
+    </div>
     </ThemeProvider>
-
   );
 };
 
