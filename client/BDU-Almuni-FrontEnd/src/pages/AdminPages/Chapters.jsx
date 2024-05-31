@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../../styles/Chapters.css";
+import "../../styles/AChapters.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -111,7 +111,7 @@ const EventPost = () => {
   };
 
   return (
-    <div className="NewsUpload">
+    <div className="ChaptersUpload">
       <h2>Add Club</h2>
       <div className="formContainer">
         <ToastContainer autoClose={1500} />
