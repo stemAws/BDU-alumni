@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { FaAngleDoubleDown, FaAngleDoubleUp, FaAtom, FaCalendarAlt, FaCaretDown, FaCaretLeft, FaIndustry, FaMapMarker, FaMapMarkerAlt, FaMapPin, FaSlidersH } from "react-icons/fa"
+import { FaAngleDoubleDown, FaAngleDoubleUp, FaAtom, FaCalendarAlt, FaCaretDown, FaCaretLeft, FaIndustry, FaMapMarker, FaMapMarkerAlt, FaMapPin, FaQuestionCircle, FaSlidersH } from "react-icons/fa"
 import { useParams } from 'react-router-dom';
 import MultipleProfiles from "../component/MultipleProfiles"
 import profile from "../assets/images/photo_2024-02-27_14-20-52.jpg";
@@ -139,11 +139,13 @@ useEffect(() => {
             </div>
         </div>
         <div className="right-side">
-            <>
+        {profiles.length !=0?<>
             <MultipleProfiles
             profiles={profiles}
             />
-            </>
+            </>:
+            <p style={{margin:"200px 250px"}}> <FaQuestionCircle/> No User Found With Name {name}</p>}
+            
         </div>
     </div>
   )
