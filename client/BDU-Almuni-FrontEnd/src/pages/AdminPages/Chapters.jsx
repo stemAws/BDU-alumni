@@ -1,24 +1,22 @@
 import { useState } from "react";
-import "../../styles/News.css";
+import "../../styles/AChapters.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const EventPost = () => {
-  const [images, setImages] = useState([]);
+ 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [postDate, setPostDate] = useState("");
-  const [location, setLocation] = useState("");
+  const [link, setLink] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
 
   const [titleError, setTitleError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
-  const [postDateError, setPostDateError] = useState("");
-  const [locationError, setLocationError] = useState("");
+  const [LinkError, setLinkError] = useState("");
 
   const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
 
     if (name === "image") {
       const filesArray = Array.from(files);
@@ -33,18 +31,21 @@ const EventPost = () => {
           setDescription(value);
           setDescriptionError("");
           break;
-        case "postDate":
-          setPostDate(value);
-          setPostDateError("");
-          break;
-        case "location":
-          setLocation(value);
-          setLocationError("");
-          break;
+        case "link":
+            setLink(value);
+            setLinkError("");
+            break;
         default:
           break;
       }
     }
+  };
+
+  const isValidUrl = (url) => {
+    const urlRegex =
+      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
+
+    return urlRegex.test(url);
   };
 
   const handleSubmit = async (e) => {
@@ -72,40 +73,20 @@ const EventPost = () => {
       );
       valid = false;
     }
-    if (!postDate) {
-        setPostDateError("Date field cannot be empty!");
+      if (!isValidUrl(link) && link.trim() !== "") {
+        setLinkError("Please enter a valid URL");
         valid = false;
       } else {
-        const postDateValue = new Date(postDate);
-        const currentDate = new Date();
-  
-        // Clear the time part of both dates for comparison
-        postDateValue.setHours(0, 0, 0, 0);
-        currentDate.setHours(0, 0, 0, 0);
-  
-        if (postDateValue.getTime() !== currentDate.getTime()) {
-          setPostDateError("Date should be today!");
-          valid = false;
-        }
+        setLinkError("");
       }
-    if (!location) {
-      setLocationError(location ? "" : "Location field cannot be empty!");
-      valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(location)) {
-      setLocationError("Location must contain only letters and spaces!");
-      valid = false;
-    }
+  
 
     if (valid) {
       try {
         const formDataToSend = new FormData();
-        images.forEach((image, index) => {
-          formDataToSend.append(`image${index}`, image);
-        });
         formDataToSend.append("title", title);
         formDataToSend.append("description", description);
-        formDataToSend.append("postDate", postDate);
-        formDataToSend.append("location", location);
+        formDataToSend.append("link", link);
 
         const response = await fetch(
           `${process.env.REACT_APP_BACKEND_URL}/News`,
@@ -130,8 +111,8 @@ const EventPost = () => {
   };
 
   return (
-    <div className="NewsUpload">
-      <h2>Add News</h2>
+    <div className="ChaptersUpload">
+      <h2>Add Club</h2>
       <div className="formContainer">
         <ToastContainer autoClose={1500} />
         <form
@@ -139,18 +120,9 @@ const EventPost = () => {
           onSubmit={handleSubmit}
           encType="multipart/form-data"
         >
+         
           <div className="form">
-            <label className="label">Images:</label>
-            <input
-              className="imageInput"
-              type="file"
-              name="image"
-              multiple
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form">
-            <label className="label">News Title:</label>
+            <label className="label">Club Name:</label>
             <input
               type="text"
               placeholder="Title"
@@ -161,7 +133,7 @@ const EventPost = () => {
             {titleError && <p className="errorMessage">{titleError}</p>}
           </div>
           <div className="form">
-            <label className="label">Description:</label>
+            <label className="label">About the club:</label>
             <textarea
               type="text"
               placeholder="Description"
@@ -174,26 +146,15 @@ const EventPost = () => {
             )}
           </div>
           <div className="form">
-            <label className="label">Location:</label>
+            <label className="label">Link:</label>
             <input
               type="text"
-              name="location"
-              value={location}
+              name="link"
+              value={link}
               onChange={handleInputChange}
             />
-            {locationError && <p className="errorMessage">{locationError}</p>}
+            {LinkError && <p className="errorMessage">{LinkError}</p>}
           </div>
-          <div className="form">
-            <label className="label">Date:</label>
-            <input
-              type="date"
-              name="postDate"
-              value={postDate}
-              onChange={handleInputChange}
-            />
-            {postDateError && <p className="errorMessage">{postDateError}</p>}
-          </div>
-
           <button type="submit">Upload</button>
         </form>
       </div>
