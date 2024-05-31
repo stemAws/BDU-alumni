@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "@mui/material";
 import { ChevronLeft } from "@mui/icons-material";
 
-// import { toast, ToastContainer } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EventPost = () => {
   const [image, setImage] = useState(null);
@@ -185,7 +185,7 @@ const EventPost = () => {
       </Link>
       <h2> Add Event </h2>
       <div className="formContainer">
-        {/* <ToastContainer autoClose={1500} /> */}
+        <ToastContainer autoClose={1500} />
         <form
           className="formform"
           onSubmit={handleSubmit}
