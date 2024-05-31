@@ -45,8 +45,14 @@ const SideBar = () => {
                </li>
 
                <li className="sidebarListItem">
-                <Link to='/admin/community'>
-                community
+                <Link to='/admin/jobOffer'>
+                  Job Offer
+                </Link>
+                </li>
+
+                <li className="sidebarListItem">
+                <Link to='/admin/VoluntaryWork'>
+                  Voluntary Work
                 </Link>
                 </li>
                 

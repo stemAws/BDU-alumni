@@ -14,6 +14,7 @@ import DonationList from './AdminPages/DonationList';
 import AddDonation from './AdminPages/AddDonation';
 import AddUser from './AdminPages/AddUser';
 import News from './AdminPages/News';
+import Chapters from './AdminPages/Chapters';
 const Admin = () => {
   return (
     <div>
@@ -31,6 +32,7 @@ const Admin = () => {
               <Route path='/addedStories' Component={AddedStory}/>
               <Route path='/Events' Component={EventList}/>
               <Route path='/AddEvent' Component={AddEvent}/>
+              <Route path='/chapters' Component={Chapters}/>
               <Route path='/feedback' Component={FeedBack}/>
               <Route path='/Donation' Component={DonationList}/>
               <Route path='/AddDonation' Component={AddDonation}/>
