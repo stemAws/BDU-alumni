@@ -88,7 +88,7 @@ const ContactInfo = ({display,personalInfo,close,forsocials,edit,handlePlacehold
             {socialValues?.[1]&&(
                   <a href={`http://${socialValues[1]}`} target="_blank" rel="noopener noreferrer">
                 <div className="social_icon">
-                  {(socialValues[1].includes('facebook'))?<><FaFacebookF className='actual_icons'/></> : (socialValues[1].includes('telegram')) ? <><FaTelegramPlane className='actual_icons'/> </> :  (socialValues[1].includes('linkedin')) ? <> <FaLinkedinIn className='actual_icons link'/> </> : <FaLink className='actual_icons link'/>}
+                  {(socialValues[1].includes('facebook'))?<><FaFacebookF className='actual_icons'/></> : (socialValues[1].includes('t.me')) ? <><FaTelegramPlane className='actual_icons'/> </> :  (socialValues[1].includes('linkedin')) ? <> <FaLinkedinIn className='actual_icons link'/> </> : <FaLink className='actual_icons link'/>}
                 </div>
                 </a>
                 )
@@ -99,7 +99,7 @@ const ContactInfo = ({display,personalInfo,close,forsocials,edit,handlePlacehold
                 {socialValues?.[2]&&(
                   <a href={`http://${socialValues[2]}`} target="_blank" rel="noopener noreferrer">
                 <div className="social_icon">
-                  {(socialValues[2].includes('facebook'))?<><FaFacebookF className='actual_icons'/></> : (socialValues[2].includes('telegram')) ? <><FaTelegramPlane className='actual_icons'/> </> :  (socialValues[2].includes('linkedin')) ? <> <FaLinkedinIn className='actual_icons link'/> </> : <FaLink className='actual_icons link'/>}
+                  {(socialValues[2].includes('facebook'))?<><FaFacebookF className='actual_icons'/></> : (socialValues[2].includes('t.me')) ? <><FaTelegramPlane className='actual_icons'/> </> :  (socialValues[2].includes('linkedin')) ? <> <FaLinkedinIn className='actual_icons link'/> </> : <FaLink className='actual_icons link'/>}
                 </div>
                 </a>
                 )

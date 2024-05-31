@@ -190,7 +190,7 @@ const Posts = (props) => {
       }
       const getStoryById = async(id)=>{
         setEditPopup(true)
-          const desiredPost = activities.find(activity => activity.postID === id);
+          const desiredPost = activities.find(activity => activity.postId === id);
           setActivity([desiredPost])
       }
       const updatePost = async (isToggled, description, id) => {
@@ -260,22 +260,23 @@ const Posts = (props) => {
             <h4>All Posts</h4>
             {activities?.length > 0 ? (
   activities.slice().reverse().map((activity, index) => (
-            <div id={`p${activity.postID}`} className='post_container' key={index}>
+            <div id={`p${activity.postId}`} className='post_container' key={index}>
                 <section className='post_header'>
                 <div className="profileDetail">
                     <div className="date_proflepic">{imageUrl?<img className ="profile_img"src={imageUrl} alt="profile image" />:<img className ="profile_img" src={user} alt="profile image" />}
                     {userDetails && (<p className=" profile_name">{userDetails.fullName} </p>)}
-                </div><p className="date" >posted in <span>{handleDate(activity,'date')}</span></p>
+                    <p className="date" >posted in <span>{handleDate(activity,'date')}</span></p>
+                </div>
                {source==='edit'&& 
                 <div className="icons">
                 {!activity?.suggestedByAdmin?(<FaPen onClick={()=>
-                                      { getStoryById(activity?.postID)
+                                      { getStoryById(activity?.postId)
                                         setEditPopup(true)}
                                         } className='pen_edit'
                       />):(<p className='featured'>Featured</p>)
                     }
                 <FaTrash onClick={() => {
-                  setClickedPostID(activity?.postID);
+                  setClickedPostID(activity?.postId);
                   setDeletePopup(true);
                 }} className='trash_delete'/>
               

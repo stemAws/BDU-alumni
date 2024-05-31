@@ -66,19 +66,18 @@ justify-content: flex-start;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ;
+  border: 1px solid #000000 ;
   
 }
 .social_icon>.actual_icons{
     height: 60%;
     width: 60%;
-    color: #ffffff;
+    color: #000000;
 }
 .social_icon>.actual_icons.link{
     height: 60%;
     width: 60%;
-    color: #ffffff;
-    background-color: #000000;
+    color: #0c0c0c;
     border-radius: 0;
 }
 .social_icon:hover{

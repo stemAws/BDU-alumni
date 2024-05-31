@@ -82,7 +82,7 @@ border: 1px solid;
   margin-top: 10px;
 }
 .overlay_pop{
-  position: absolute;
+  position: fixed;
     top: 0;
     left: 0;
     display: flex;
@@ -94,7 +94,7 @@ border: 1px solid;
     z-index: 3;
 }
   .upploaded_overlay{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: flex;
@@ -113,7 +113,7 @@ border: 1px solid #b7b7b7;
     height: 400px;
   }
   .uploaded_overlay_cover{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 3;
@@ -414,7 +414,7 @@ box-sizing: border-box;
 position: fixed;
 width: 100%;
 padding: 10px 10px 10px 22%;
-height: 50px;
+height: 45px;
 background-color: #e7e7e7;
 z-index: 2;
 transition: transform 0.5s ease ;

@@ -8,7 +8,7 @@ const EditPopup = ({activity,close,updatePost,loading}) => {
     setToggled(!isToggled);
   };
     const onsubmit=async(e)=>{
-        const id=activity[0]?.postID;
+        const id=activity[0]?.postId;
         e.preventDefault()
         try {
             await updatePost(isToggled, description,id);

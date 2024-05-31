@@ -113,6 +113,7 @@
 }
 .background img{
     object-fit: cover;
+    width: 100%;
 }
 .profilepic{
     box-sizing: border-box;
@@ -175,7 +176,6 @@ color: #000;
 }
 .profileDetail .date_proflepic .date{
     font: 100 14px 'saira';
-    margin-left: -15px;
 }
 .date_time{
     display: none;
