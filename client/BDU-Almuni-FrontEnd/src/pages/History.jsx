@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/History.css'
 import i4 from '../assets/i4.png'
-// import i5 from '../assets/i5.png'
+import i5 from '../assets/i5.png'
 const History = () => {
   return (
     <div className='historyContainer'>
@@ -13,7 +13,7 @@ const History = () => {
         <h3 className='header'>OUR <span>STORY</span></h3>
       </div>
       <div className='historyImg'>
-        {/* <img src={i5} alt="" /> */}
+        <img src={i5} alt="" />
       </div>
       
     

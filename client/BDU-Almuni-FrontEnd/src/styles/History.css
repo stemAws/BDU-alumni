@@ -33,13 +33,19 @@ justify-content: space-between;
     font-size: 40px;
     color: rgb(170, 169, 169);
     position:relative;
+    margin-left: 980px;
+    z-index: 1;
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
 span{
     color: rgb(44, 150, 236);
 }
 
-/* .historyImg{
-    width: 50%;
-    position: relative;
-    left: 500px;
-} */
+.historyImg img{
+    width: 300px;
+    margin-left: 950px;
+    margin-top: 50px;
+    /* position: relative;
+    left: 450px; */
+}
