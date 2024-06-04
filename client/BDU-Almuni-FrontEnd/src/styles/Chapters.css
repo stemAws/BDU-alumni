@@ -31,7 +31,7 @@
     margin-right: 65px;
     z-index: -1;
 }
-.circle-bg2{
+/* .circle-bg2{
     position: absolute;
     top:900px;
     background-color: #c8c9ca;
@@ -39,7 +39,7 @@
     height: 190px;
     border-radius: 50%;
     z-index: 1;
-}
+} */
 .circle-bg3{
     position: relative;
     background-color: #c8c9ca;
