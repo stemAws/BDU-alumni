@@ -7,7 +7,7 @@ const NavDropDown = ({onMouseEnter,onMouseLeave,className,forLi}) => {
            <li><Link to={forLi==="about"?"/":"/joboffer"} className="each-list">{forLi==="about"?<FaUniversity/>:<FaBriefcase/>}{forLi==="about"?"About BDU":"Job Offer"} </Link></li> 
             <li><Link to ={forLi==="about"?"/":"/"}  className="each-list">{forLi==="about"?<FaLaptopCode/>:<FaHandsHelping/>}{forLi==="about"?"About Developers":"Voluntary Work"}</Link></li>
             {forLi==="about"&&(
-                <li><Link to ="/"  className="each-list"><FaHistory/>History</Link></li>
+                <li><Link to ="/history"  className="each-list"><FaHistory/>History</Link></li>
             )}
         </ul>
     </div>
