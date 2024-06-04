@@ -10,7 +10,7 @@ const Activity = ({personalInfo,activity,onEdit}) => {
     hour12: true,
   });
   return (
-    <Link to={`/post/${personalInfo?.[0]?.username}${onEdit ? '?source=edit' : ''}#p${activity.postID}`}><div className='task activity'>
+    <Link to={`/post/${personalInfo?.[0]?.username}${onEdit ? '?source=edit' : ''}#p${activity.postId}`}><div className='task activity'>
       <div className="name_date">
         {personalInfo? (
           <p className="full_name">{personalInfo?.[0]?.fullName} </p>):''}
