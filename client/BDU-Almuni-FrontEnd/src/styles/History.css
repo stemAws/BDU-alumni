@@ -1,51 +1,45 @@
-.historyContainer {
+.historyContainer{
     color: black;
     font-weight: bold;
     height: 100vh;
     margin-top: 45px;
     overflow-y: auto;
-  }
-  
-  .historyHeader {
+}
+
+.historyHeader{
     background-color: rgb(228, 227, 226);
     height: 450px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px; /* Add some padding to give space around the header */
-  }
-  
-  .BackgroundImage {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .BackgroundImage img {
-    width: 80%;
-    height: 450px;
-  }
-  
-  .BackgroundImage .year {
+}
+
+.BackgroundImage{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
+
+.BackgroundImage img{
+  width: 80%;
+  height: 450px;
+}
+
+.BackgroundImage .year{
     font-size: 90px;
     color: rgb(170, 169, 169);
-    margin-left: 20px; 
-  }
-  
-  .historyHeader .header {
+    align-self: center;
+    margin-right: 30px;
+}
+
+.historyHeader .header{
     font-size: 40px;
     color: rgb(170, 169, 169);
-    margin: 0; /* Remove margin that may affect alignment */
-    align-self: flex-end; /* Adjust alignment to the top or center as needed */
-  }
-  
-  span {
+    position:relative;
+}
+span{
     color: rgb(44, 150, 236);
-  }
-  
-  /* .historyImg{
-      width: 50%;
-      position: relative;
-      left: 500px;
-  } */
-  
+}
+
+/* .historyImg{
+    width: 50%;
+    position: relative;
+    left: 500px;
+} */
