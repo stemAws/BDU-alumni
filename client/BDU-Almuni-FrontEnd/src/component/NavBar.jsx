@@ -66,7 +66,7 @@ const NavBar = ({loginState,logout,userDetails,error,loading,imgUrl}) => {
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/newsAndUpdates">News and updates</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/Stories">stories</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/Events">events</Link></li>
-                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/">Gallery</Link></li>
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/gallery">Gallery</Link></li>
                 <li className="each-nav-list"> <Link onClick={()=>showdropDown()}>community 
                 {
                   dropDown?<FaCaretUp/>:
