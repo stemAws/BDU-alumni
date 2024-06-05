@@ -138,6 +138,24 @@ const JobOffer = () => {
       valid = false;
     }
 
+    if (!employmentType) {
+      setEmploymentTypeError(
+        employmentType ? '' : 'Employment Type field cannot be empty!'
+      );
+      valid = false;
+    } else if (employmentType.length > 20) {
+      setEmploymentTypeError('Employment Type should be less than 20 characters!');
+      valid = false;
+    }
+
+    if (!address) {
+      setAddressError(address ? '' : 'Address field cannot be empty!');
+      valid = false;
+    } else if (address.length > 20) {
+      setAddressError('Address should be less than 20 characters!');
+      valid = false;
+    }
+
 
     if (valid) {
       try {
