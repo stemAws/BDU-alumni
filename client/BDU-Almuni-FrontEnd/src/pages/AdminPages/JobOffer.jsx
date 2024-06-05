@@ -120,6 +120,24 @@ const JobOffer = () => {
       valid = false;
     }
 
+    if (!email) {
+      setEmailError(email ? '' : 'Email field cannot be empty!');
+      valid = false;
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      setEmailError('Please enter a valid email address!');
+      valid = false;
+    }
+
+    if (!phoneNumber) {
+      setPhoneNumberError(
+        phoneNumber ? '' : 'Phone Number field cannot be empty!'
+      );
+      valid = false;
+    } else if (!/^\d{10}$/.test(phoneNumber)) {
+      setPhoneNumberError('Please enter a valid 10-digit phone number!');
+      valid = false;
+    }
+
 
     if (valid) {
       try {
