@@ -1,51 +1,77 @@
 .historyContainer{
-    color: black;
-    font-weight: bold;
-    height: 100vh;
-    margin-top: 45px;
-    overflow-y: auto;
+    height: 100%;
+    margin: 0;
+    font-size: 16px ;
+    font-family: 'lato', 'sans-serif';
+    font-weight: 400;
+    line-height: 1.8em;
+    color: #666;
+
 }
 
-.historyHeader{
-    background-color: rgb(228, 227, 226);
-    height: 450px;
+.historyContainer .pimg1, .pimg2, .pimg3{
+    position: relative;
+    opacity: 0.70;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    background-attachment: fixed;
 }
 
-.BackgroundImage{
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+.historyContainer .pimg1{
+    background-image: url(../assets/img1.jpg);
+    min-height: 100%;
 }
 
-.BackgroundImage img{
-  width: 80%;
-  height: 450px;
+.pimg2{
+    background-image: url(../assets/img1.jpg);
+    min-height: 400px;
 }
 
-.BackgroundImage .year{
-    font-size: 90px;
-    color: rgb(170, 169, 169);
-    align-self: center;
-    margin-right: 30px;
+.pimg3{
+    background-image: url(../assets/i2.png);
+    min-height: 600px;
 }
 
-.historyHeader .header{
-    font-size: 40px;
-    color: rgb(170, 169, 169);
-    position:relative;
-    margin-left: 980px;
-    z-index: 1;
-    margin-bottom: 10px;
-    margin-top: 20px;
-}
-span{
-    color: rgb(44, 150, 236);
+.section{
+text-align: center;
+padding: 50px 80px;
 }
 
-.historyImg img{
+.section-light{
+    background-color: #f4f4f4;
+    color: #666;
+}
+
+.section-dark{
+    background-color: #282e34;
+    color: #ddd;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.section-dark img{
     width: 300px;
-    margin-left: 950px;
-    margin-top: 50px;
-    /* position: relative;
-    left: 450px; */
+    margin-left: 20px;
+}
+.ptext{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    color: black;
+    font-size: 27px;
+    letter-spacing: 8px;
+    text-transform: capitalize;
+}
+
+.ptext .border{
+    background-color: #2a657d;
+    color: white;
+    padding: 20px;
+}
+
+.ptext .border.trans{
+    background-color: transparent;
 }

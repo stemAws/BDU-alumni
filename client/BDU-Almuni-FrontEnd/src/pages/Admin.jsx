@@ -1,5 +1,5 @@
 import React from 'react';
-import AdminHeader from '../component/AdminHeader';
+// import AdminHeader from '../component/AdminHeader';
 import SideBar from '../component/SideBar';
 import Home from './AdminPages/Home';
 import '../styles/Admin.css'
@@ -21,7 +21,7 @@ const Admin = () => {
     <div>
   
       
-        <AdminHeader/>
+        {/* <AdminHeader/> */}
         <div className="admincontainer">
             <SideBar/>
             <Routes>
