@@ -187,7 +187,7 @@ const EventPost = () => {
       <div className="formContainer">
         <ToastContainer autoClose={1500} />
         <form
-          className="formform"
+          className="eventformform"
           onSubmit={handleSubmit}
           encType="multipart/form-data"
         >

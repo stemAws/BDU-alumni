@@ -2,8 +2,8 @@
     display: flex;
     background: white;
     color: rgb(0, 0, 0);
-    height: calc(100vh - 70px);
+    height: 100vh;
     font-family: 'Saira', sans-serif;
     font-size: 18px;
-    margin-top: 70px;
+    /* margin-top: 70px; */
 }

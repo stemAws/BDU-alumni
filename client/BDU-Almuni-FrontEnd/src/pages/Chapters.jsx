@@ -6,7 +6,6 @@ const Chapters = () => {
           <div className="circle-bg"></div>
           <p><span className='blue-text'>Chapters</span></p>
         </div>
-        <div className='circle-bg2'/>
         <div className='circle-bg3'/>
         <div className='circle-bg4'/>
         <div className='circle-bg5'/>

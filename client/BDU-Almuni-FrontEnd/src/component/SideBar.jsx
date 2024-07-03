@@ -1,13 +1,17 @@
 import React from 'react'
 import '../styles/sidebar.css'
 import { Link } from 'react-router-dom';
+// import Button from '../components/Button'
+// import icon  from "../assets/icon.jpg";
 
 const SideBar = () => {
   return (
     <div className='sidebar-container'>
-       <div className="sidebarWrapper">
+       
         <div className="sidebarMenu">
-            <ul className="sidebarList">
+         
+        <ul className="sidebarList">
+        <li className='logo-name'>BDU Alumni</li>
                 <li className="sidebarListItem">
                 <Link to='/admin/home'>
                    User Analytics
@@ -75,9 +79,9 @@ const SideBar = () => {
                 </li>
            </ul>
                
+          
             
         </div>
-      </div>
     </div>
   )
 }

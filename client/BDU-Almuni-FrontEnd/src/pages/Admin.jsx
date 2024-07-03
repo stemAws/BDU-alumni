@@ -1,5 +1,5 @@
 import React from 'react';
-import AdminHeader from '../component/AdminHeader';
+// import AdminHeader from '../component/AdminHeader';
 import SideBar from '../component/SideBar';
 import Home from './AdminPages/Home';
 import '../styles/Admin.css'
@@ -15,12 +15,16 @@ import AddDonation from './AdminPages/AddDonation';
 import AddUser from './AdminPages/AddUser';
 import News from './AdminPages/News';
 import Chapters from './AdminPages/Chapters';
+import JobOffer from './AdminPages/JobOffer';
+import suggestedJob from './AdminPages/suggestedJob'
+import AGallery from './AdminPages/AGallery';
+import AddGallery from './AdminPages/AddGallery';
 const Admin = () => {
   return (
     <div>
   
       
-        <AdminHeader/>
+        {/* <AdminHeader/> */}
         <div className="admincontainer">
             <SideBar/>
             <Routes>
@@ -31,7 +35,11 @@ const Admin = () => {
               <Route path='/story' Component={stories}/>
               <Route path='/addedStories' Component={AddedStory}/>
               <Route path='/Events' Component={EventList}/>
+              <Route path='/gallery' Component={AGallery}/>
+              <Route path='/Addgallery' Component={AddGallery}/>
               <Route path='/AddEvent' Component={AddEvent}/>
+              <Route path='/jobOffer' Component={JobOffer}/>
+              <Route path='/suggestedJob' Component={suggestedJob}/>
               <Route path='/chapters' Component={Chapters}/>
               <Route path='/feedback' Component={FeedBack}/>
               <Route path='/Donation' Component={DonationList}/>

@@ -1,57 +1,117 @@
 .sidebar-container{
-    flex:1;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.9);
-    position: sticky;
-    color: white;
-    overflow-y: auto;
-}
-.sidebarWrapper{
-  padding: 0 20px 20px 20px;
-  color: #ffffff;
-  top: 30px;
+  flex:1;
+  height: 100vh;
+  background: radial-gradient(75.49% 117.11% at 50% 80.92%, #0c8ce9 0%, #0A0A0A 100%);
   position: sticky;
+  /* color: rgb(0, 0, 0); */
   overflow-y: auto;
+  transition: 0.5s;
 }
-
+.logo-name{
+  display: flex;
+  flex-direction: row;
+  align-items: center ;
+  gap: 10px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  color: white;
+}
 .sidebarMenu{
-
+display: flex;
+align-items: flex-start;
 }
 .sidebarList{
-    list-style-type: none;
-    /* padding: 5px; */ 
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
 }
 .sidebarListItem{
-    margin-top: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
-    position: relative;
-    width: fit-content;
-    padding: 5px;
+position: relative;
+width: 100%;
+list-style: none;
+border-top-left-radius: 30px;
+border-bottom-left-radius: 30px;
+margin-top: 10px;
+align-items: flex-start ;
 }
-.sidebarListItem a {
-  color: inherit; /* Inherit the color from the parent */
-  text-decoration: none; /* Remove underline */
-  display: block; /* Make the link take up the full width of the list item */
+.sidebarListItem:hover{
+  background-color: white;
+  border-left: 10px;
+  color: black;
+  /* margin-left: 10px; */
 }
-.sidebarListItem::before{
-  content: "";
-  background-color: #0C8CE9;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0.5px; 
-  transition: width 0.5s ease;
-  
-  }
-  .sidebarListItem:hover::before{
-    width: 100%;
-  }
+.sidebarListItem:nth-child(1){
+margin-bottom: 30px;
+pointer-events: none;
+color: white;
+font-family: 'poppin';
+font-weight: bold;
+margin-left: 10px;
+}
+.sidebarListItem a{
+position: relative;
+width: 100%;
+display: flex;
+text-decoration: none;
+color: white;
+text-align: start;
+justify-content: center;
+padding: 6px;
+/* margin-left: 10px; */
+}
+.sidebarListItem a:hover{
+color: rgb(0, 0, 0);
+}
+/* outside curve */
+.sidebarListItem:hover a::before{
+content: '';
+position: absolute;
+right: 0;
+top: -50px;
+width: 50px;
+height: 50px;
+background-color: transparent;
+border-radius: 50%;
+box-shadow: 35px 35px 0 10px white;
+pointer-events: none;
+}
+.sidebarListItem:hover a::after{
+content: '';
+position: absolute;
+right: 0;
+bottom: -50px;
+width: 50px;
+height: 50px;
+background-color: transparent;
+border-radius: 50%;
+box-shadow: 35px -35px 0 10px rgb(255, 255, 255);
+pointer-events: none;
+}
 
-.sidebarIcon{
-  margin-right: 8px;
-  font-size: 18px;  
+.admin-logout{
+  align-self: center;
+}
+
+.btn.login-btn {
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  height: 30px;
+  padding: 0;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.btn {
+  background-color: #B41515;
+  border: 0;
+  padding: 10px;
+  border-radius: 10px;
+  width: 80px;
+  text-transform: capitalize;
+  color: #fff;
+  font: 400 14px "Poppins";
+  transition: transform 80ms ease-in;
 }

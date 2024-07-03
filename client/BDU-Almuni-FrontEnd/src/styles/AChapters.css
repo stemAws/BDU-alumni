@@ -1,7 +1,7 @@
 .ChaptersUpload{
     flex: 4;
     align-items: center;
-    height: calc(100vh - 100px);
+    /* height: calc(100vh - 100px); */
     overflow-y: auto;
     margin: 20px;
     padding: 20px;
@@ -11,8 +11,9 @@
 .formform{
     display: flex;
     flex-wrap: wrap;
+    flex-direction:column;
 }
-/* .eventUpload h2{
+.ChaptersUpload h2{
     color: black;
     display: flex;
     align-items: center;
@@ -20,7 +21,7 @@
     flex-direction: column;
     font-weight: bold;
     font-size: 50px;
-} */
+}
  .form{
     margin: 10px 20px 10px 60px;
     font-size: 30px;
