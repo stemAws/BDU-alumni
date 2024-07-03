@@ -1,11 +1,12 @@
 import React from 'react'
 import '../styles/History.css'
 import i2 from '../assets/i2.png'
-import i5 from '../assets/i5.png'
+import bdu from '../assets/bdu.jpg'
 
 const History = () => {
   return (
     <div className='historyContainer'>
+        
       <div class="pimg2">
         <div class="ptext">
             <span class="border trans"> 
@@ -15,7 +16,7 @@ const History = () => {
     </div>
     <section class="section section-light " >
         <div className='sectionflex'>
-        <img src={i5}/>
+        <img src={bdu}/>
         <div>
         <h1 class="section-one"> OUR HISTORY </h1>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum magni fugit ipsam voluptatem repudiandae, dignissimos rerum, veritatis praesentium facere velit, ea architecto veniam porro asperiores omnis natus quae? Minima obcaecati voluptatum fuga ipsam mollitia nobis hic totam eligendi nesciunt doloremque maxime adipisci ipsum, corrupti, optio dolore ullam temporibus sunt, quasi saepe fugiat id ea! Ipsa animi earum alias iusto ab? Odio vitae quidem voluptates inventore. Ipsam illum iste, eligendi voluptatum ipsa quis sequi harum magni. Dicta vel fugit omnis, velit, beatae odit fugiat aperiam, sit aspernatur nemo molestiae nam labore quam ipsam? Voluptatem nisi beatae dolores illo ipsa facere magnam?</p>

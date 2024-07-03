@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import './galleryupload.css';
+import '../../styles/AddGallery.css';
 import { Link } from 'react-router-dom';
 import { ChevronLeft } from "@mui/icons-material";
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const GalleryForm = ({ updateCategories }) => {
+const AddGallery = ({ updateCategories }) => {
   const [event, setEvent] = useState('');
   const [year, setYear] = useState('');
   const [images, setImages] = useState('');
@@ -18,7 +18,7 @@ const GalleryForm = ({ updateCategories }) => {
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleEventChange = (e) => {
     setEvent(e.target.value);
@@ -84,7 +84,7 @@ const GalleryForm = ({ updateCategories }) => {
         if (response.ok) {
           toast.success('Gallery uploaded successfully');
           setSuccess(true);
-          history.push('/admin/gallery');
+          navigate('/admin/gallery');
         } else {
           console.error('Failed to upload:', response.statusText);
           setErrorPopup(true);
@@ -99,7 +99,7 @@ const GalleryForm = ({ updateCategories }) => {
   };
 
   const handleClick = () => {
-    history.push('/admin/gallery');
+    navigate('/admin/gallery');
   };
 
   return (
@@ -138,4 +138,5 @@ const GalleryForm = ({ updateCategories }) => {
     </div>
   );
 };
-export default GalleryForm;
+export default AddGallery;
+
