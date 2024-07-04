@@ -5,8 +5,8 @@ const MainBody = () => {
   return (
     <div>
         <NewsAndUpdates />
-        <Stories/>
         <Events/>
+        <Stories/>
     </div>
   )
 }

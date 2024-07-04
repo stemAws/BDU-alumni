@@ -3,6 +3,7 @@ import '../styles/header.css'
 import { useLocation } from "react-router-dom";
 import background from '../assets/images/photo_2024-02-25_15-58-46.jpg'
 import { useEffect, useState } from "react";
+import Button from "./Button";
 const Header = ({loginState,logout}) => {
   const location = useLocation();
   const [userDetails, setUserDetails] = useState(null);
@@ -61,7 +62,7 @@ const Header = ({loginState,logout}) => {
   },[])
   return (
     <div>
-      <div className="overlay">
+      {/* <div className="overlay"> */}
         <NavBar 
         logout={logout}
         loginState={loginState} 
@@ -73,15 +74,19 @@ const Header = ({loginState,logout}) => {
 
         {location.pathname === '/' && (
       <div className='header-container'>
-        <img className='background-img'src={background} alt="" />
+        <div className="overlay"/><img className='background-img'src={background} alt="" />
         <div className="wellcome-text">
             <p className="top-title">Welcome to Bahir Dar University</p>
-            <p className="bottom-title">This is the official site of Bahir Dar university alumni</p>
+            <p className="bottom-title">Connecting the past, shaping the future. Join our alumni network to stay informed, get involved, and give back. Together, we can create opportunities and build a stronger community.</p>
+            <div className="main-page-buttons">
+              <Button id={"signin-btn"} onClick={()=>setsignin(true)} text='SIGN IN'/> 
+              <Button className={"transparent-btn"} onClick={()=>setsignin(true)} text='JOIN US'/></div>
+            
         </div>
     </div>
         )
         }
-    </div>
+    {/* </div> */}
     </div>
     
   )

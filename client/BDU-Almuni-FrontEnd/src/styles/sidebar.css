@@ -104,7 +104,7 @@ pointer-events: none;
   text-transform: uppercase;
 }
 
-.btn {
+.sidebar-container .btn {
   background-color: #B41515;
   border: 0;
   padding: 10px;

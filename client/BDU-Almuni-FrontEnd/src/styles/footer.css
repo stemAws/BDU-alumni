@@ -6,6 +6,7 @@
   color: rgb(255, 255, 255);
   margin-top: 0;
   overflow: clip ;
+  position: relative;
 
 }
 
@@ -19,13 +20,13 @@
   margin-top: 50px;
   margin-left: 30px;
 }
-.logo{
+/* .logo{
   width: 20px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 #logo{
   width: 50;
   height: 70px;

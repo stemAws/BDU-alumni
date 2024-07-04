@@ -1,5 +1,5 @@
 .events-container{
-
+    position: relative;
     display: flex;
     flex-direction: column;
     height: 900px;
@@ -8,6 +8,7 @@
     color: #ffffff;
     padding: 10px;
     margin-bottom: 20px;
+    background-color: #000;
 }
 .each-event{
     display: flex;
