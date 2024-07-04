@@ -3,8 +3,35 @@ import '../styles/sidebar.css'
 import { Link } from 'react-router-dom';
 // import Button from '../components/Button'
 // import icon  from "../assets/icon.jpg";
+import { useState } from 'react';
 
 const SideBar = () => {
+
+   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+
+   const handleClick = () => {
+     window.open('/', '_blank');
+   };
+ 
+   const handleLogoutClick = () => {
+     setShowLogoutPopup(true);
+   };
+ 
+   const handleLogoutConfirm = () => {
+       AuthService.logout('admin');
+       window.location.reload();
+     setShowLogoutPopup(false);
+   };
+ 
+   const handleLogoutCancel = () => {
+     setShowLogoutPopup(false);
+   };
+ 
+   const stopPropagation = (e) => {
+     e.stopPropagation();
+   };
+
+
   return (
     <div className='sidebar-container'>
        
@@ -77,8 +104,32 @@ const SideBar = () => {
                      Donation
                   </Link>
                 </li>
+
+                <div className="topavatar"  onClick={handleLogoutClick}>
+            <button className='admin-logout-btn'>log out</button>
+            {showLogoutPopup && (
+              <div className="logout-popup-container-overlay">
+              <div className="logout-popup-container">
+                <div className="logout-popup-content" onClick={stopPropagation}>
+                  <p>Are you sure you want to logout?</p>
+                  <div className="logout-popup-buttons">
+                    <button className="logout-popup-buttons-logout" onClick={handleLogoutConfirm}>
+                      Log out
+                    </button>
+                    <button className="logout-popup-buttons-cancel" onClick={handleLogoutCancel}>
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+              </div>
+            )}
+
+          </div>
+          
            </ul>
                
+         
           
             
         </div>

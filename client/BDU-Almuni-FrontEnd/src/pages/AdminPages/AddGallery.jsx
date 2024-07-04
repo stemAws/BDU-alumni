@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const AddGallery = ({ updateCategories }) => {
   const [event, setEvent] = useState('');
+  const [description, setDescription] = useState("");
+  const [department, setDepartment] = useState("");
   const [year, setYear] = useState('');
   const [images, setImages] = useState('');
   const [eventError, setEventError] = useState('');
@@ -17,12 +19,23 @@ const AddGallery = ({ updateCategories }) => {
 
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
-
+  const [descriptionError, setDescriptionError] = useState("");
+  const [departmentError, setDepartmentError] = useState("");
   const navigate = useNavigate();
 
   const handleEventChange = (e) => {
     setEvent(e.target.value);
     setEventError('');
+  };
+
+  const handleDepartmentChange = (e) => {
+    setDepartment(e.target.value);
+    setDepartmentError('');
+  };
+
+  const handleDiscriptionChange = (e) => {
+    setDescription(e.target.value);
+    setDescriptionError('');
   };
 
   const handleYearChange = (e) => {
@@ -48,6 +61,17 @@ const AddGallery = ({ updateCategories }) => {
     } else {
       setEventError('');
     }
+
+    if (!department) {
+      setDepartmentError('department field cannot be empty!');
+      valid = false;
+    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(department)) {
+      setDepartmentError("department must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      valid = false;
+    } else {
+      setDepartmentError('');
+    }
+
     if (!year) {
       setYearError('Year field cannot be empty!');
       valid = false;
@@ -65,6 +89,15 @@ const AddGallery = ({ updateCategories }) => {
     }
     if (!images) {
       setImagesError('Please select images');
+      valid = false;
+    }
+    if (!description) {
+      setDescriptionError(
+        description ? "" : "Description field cannot be empty!"
+      );
+      valid = false;
+    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
+      setDescriptionError("description must contain only letters and spaces, with numbers allowed anywhere after letters!");
       valid = false;
     }
     if (valid) {
@@ -109,13 +142,35 @@ const AddGallery = ({ updateCategories }) => {
       </Link>
       <h2> Add Gallery </h2>
       <div className='formContainer'>
-        <form onSubmit={handleSubmit}>
+        <form className="eventformform" onSubmit={handleSubmit}>
           <ToastContainer autoClose={1500} />
           <div className='form'>
             <label className='label' htmlFor="event" >Event:</label>
             <input type="text" id="event" placeholder='Catagory title' value={event} onChange={handleEventChange} />
             {eventError && <p className="errorMessage">{eventError}</p>}
           </div>
+
+
+          <div className='form'>
+            <label className='label' htmlFor="department" >Department:</label>
+            <input type="text" id="dep" placeholder='department' value={department} onChange={handleDepartmentChange} />
+            {departmentError && <p className="errorMessage">{departmentError}</p>}
+          </div>
+         
+          <div className="form">
+            <label className="label">Description:</label>
+            <textarea
+              type="text"
+              placeholder="Description"
+              name="description"
+              value={description}
+              onChange={handleDiscriptionChange}
+            />
+            {descriptionError && (
+              <p className="errorMessage">{descriptionError}</p>
+            )}
+          </div>
+
           <div className='form'>
             <label className='label' htmlFor="year" >Year:</label>
             <input type="text" id="year" placeholder='Batch' value={year} onChange={handleYearChange} />
