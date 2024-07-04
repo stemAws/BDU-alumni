@@ -1,4 +1,4 @@
-const sharp = require('sharp');
+const sharp = require("sharp");
 const galleryService = require("../services/media-services");
 const firebaseConfig = require("../config/firebaseConfig");
 const {
@@ -16,13 +16,15 @@ const storage = getStorage();
 
 exports.uploadGallery = async (req, res) => {
   try {
-    const { event, year } = req.body;
+    const { event, year, description, department } = req.body;
     const images = req.files.map((file) => file);
 
     const imageUrls = [];
 
     for (const image of images) {
-      const resizedImageBuffer = await sharp(image.buffer).jpeg({ quality: 50 }).toBuffer();
+      const resizedImageBuffer = await sharp(image.buffer)
+        .jpeg({ quality: 50 })
+        .toBuffer();
 
       const filePath = `gallery/${Date.now()}-${image.originalname}`;
       const fileRef = ref(storage, filePath);
@@ -36,6 +38,8 @@ exports.uploadGallery = async (req, res) => {
       images: imageUrls,
       event,
       year,
+      description,
+      department
     });
 
     res.json({ galleryID, message: "Gallery created successfully" });
@@ -74,14 +78,14 @@ exports.getGalleryById = async (req, res) => {
 
 exports.deleteGalleryById = async (req, res) => {
   const id = req.params.id;
-  
+
   try {
     const gallery = await galleryService.getGalleryById(id);
-    
+
     for (const imageUrl of gallery.images) {
-      try {        
+      try {
         const fileRef = ref(storage, imageUrl);
-        
+
         await deleteObject(fileRef);
         console.log("deleted successfully");
       } catch (error) {
@@ -91,7 +95,7 @@ exports.deleteGalleryById = async (req, res) => {
     }
 
     await galleryService.deleteGallery(id);
-    
+
     res.json({ message: "Gallery and associated images deleted successfully" });
   } catch (error) {
     console.error("Error deleting gallery:", error);

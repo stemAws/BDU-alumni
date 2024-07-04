@@ -176,7 +176,6 @@ exports.updateAlumni = async (id, alumniData) => {
       username,
       bio,
       currentLocation,
-      isNotable,
       recieveNewsletter,
       socialMedia,
       privacySetting,
@@ -184,21 +183,22 @@ exports.updateAlumni = async (id, alumniData) => {
 
     await db.query(
       `UPDATE Person
-       SET fullName = ?, gender = ?, email = ?, phoneNumber = ?, username = ?, bio = ?
+       SET fullName = ?, gender = ?, email = ?, username = ?
        WHERE personId = ?`,
-      [fullName, gender, email, phoneNumber, username, bio, id]
+      [fullName, gender, email, username, id]
     );
 
     await db.query(
       `UPDATE Alumni
-       SET currentLocation = ?, isNotable = ?, recieveNewsletter = ?, socialMedia = ?, privacySetting = ?
+       SET currentLocation = ?, recieveNewsletter = ?, socialMedia = ?, privacySetting = ?, phoneNumber = ?, bio = ?
        WHERE personId = ?`,
       [
         currentLocation,
-        isNotable,
         recieveNewsletter,
         socialMedia,
         privacySetting,
+        phoneNumber,
+        bio,
         id,
       ]
     );
