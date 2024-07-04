@@ -45,7 +45,7 @@
     background-color: #086cb4;
 }
 .wellcome-text{ 
-    position: fixed;
+    position: relative;
     display: flex;
     flex-direction: column;
     color: #ffffff;
@@ -53,7 +53,7 @@
     padding-left: 40px;
     font: 100 58px 'poppins';
     top: 260px;
-    left: 20%;
+    /* left: 20%; */
 }
 .wellcome-text .bottom-title{
     font:100 16px 'poppins';
