@@ -1,10 +1,10 @@
-const db = require('../config/db');
+const db = require("../config/db");
 
 exports.createGallery = async ({ images, event, year }) => {
   try {
     const [result] = await db.query(
-      "INSERT INTO gallery (images, event, year) VALUES (?, ?, ?)",
-      [JSON.stringify(images), event, year]
+      "INSERT INTO gallery (media, title, year, department, description) VALUES (?, ?, ?)",
+      [JSON.stringify(images), event, year, department, description]
     );
 
     return result.insertId;
@@ -45,13 +45,12 @@ exports.deleteGallery = async (galleryID) => {
 };
 
 exports.updateGallery = async (galleryID, updatedGallery) => {
-  const {
-    event,
-    year,
-    } = updatedGallery;
+  const { event, year, department, description } = updatedGallery;
 
   try {
-    const [result] = await db.query("UPDATE gallery SET event = ?, year = ? WHERE galleryID = ?", [event, year, galleryID]
+    const [result] = await db.query(
+      "UPDATE gallery SET title = ?, year = ? , department = ?,  description = ? WHERE galleryID = ?",
+      [event, year, department, description, galleryID]
     );
     return result.affectedRows;
   } catch (error) {

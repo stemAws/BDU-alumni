@@ -35,15 +35,16 @@ const Events = () => {
   //     }
   //   });
   // };
-  const { ref, inView } = useInView({
-          triggerOnce: true,
-          threshold: 0.01,
-          // onChange:handleIntersection 
-        });
+  // const { ref, inView } = useInView({
+  //         triggerOnce: true,
+  //         threshold: 0.01,
+  //         // onChange:handleIntersection 
+  //       });
   return (
     <div className="events-container body">
          <div className="events">
-      <div ref={ref} className={`circle-bg ${inView ? 'wide' : ''} ${exitingView ? 'return' : ''}`}  ></div>
+      {/* < ref={ref} className={`circle-bg ${inView ? 'wide' : ''} ${exitingView ? 'return' : ''}`}  /> */}
+      <div className="circle-bg return" />
       <div className="the-line"></div>
       <div className="line-cover"></div>
       <p className="event-title">
