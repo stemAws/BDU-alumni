@@ -62,7 +62,7 @@ const NavBar = ({loginState,logout,userDetails,error,loading,imgUrl}) => {
   return (
     <div className="navBar-container">
         <div className="logo">
-          <img src={logo} alt="" /> BDU ALMUNI
+          <img src={logo} alt="" /> BDU ALUMNI
         </div>
         <nav className="nav-lists">
             <ul className="nav-list-conatiner">

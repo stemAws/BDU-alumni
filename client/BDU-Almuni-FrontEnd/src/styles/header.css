@@ -89,7 +89,7 @@ object-fit: contain;
     color: #fff;
     top: 0;
     padding-right: 20px;
-    /* mix-blend-mode: difference; */
+    mix-blend-mode: difference;
 }
 .nav-lists{
     position: relative;
