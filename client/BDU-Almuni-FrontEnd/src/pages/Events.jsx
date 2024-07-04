@@ -48,7 +48,7 @@ const Events = () => {
       <div className="the-line"></div>
       <div className="line-cover"></div>
       <p className="event-title">
-        EVENTS
+       <span className="blue-text">UPCOMING</span> EVENTS
       </p>
       </div>
        {
