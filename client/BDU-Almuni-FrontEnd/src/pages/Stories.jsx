@@ -41,8 +41,8 @@ const Stories = () => {
           onChange:handleIntersection 
         });
   return (
-    <div className="stories">
-    <div className="top-stories body">
+    <div className="stories body">
+    <div className="top-stories ">
       {/* <div  ref={ref} className={`circle-bg ${inView ? 'wide' : exitingView ? 'return' : ''}`} /> */}
       <div className="the-line"></div>
       <div className="line-cover"></div>

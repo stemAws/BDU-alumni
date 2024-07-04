@@ -9,6 +9,7 @@
     padding: 10px;
     margin-bottom: 20px;
     background-color: #000;
+    overflow: hidden;
 }
 .each-event{
     display: flex;
