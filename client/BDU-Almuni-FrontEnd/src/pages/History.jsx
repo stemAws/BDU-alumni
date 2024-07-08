@@ -25,13 +25,13 @@ const History = () => {
     </section>
       
     
-    <div class="pimg2">
+    {/* <div class="pimg2">
         <div class="ptext">
             <span class="border trans"> 
                 image two text     
             </span>
         </div>
-    </div>
+    </div> */}
 
     <section class="section section-dark ">
         <div className='section-discription'>

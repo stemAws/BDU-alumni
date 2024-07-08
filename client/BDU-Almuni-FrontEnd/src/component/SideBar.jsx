@@ -38,6 +38,7 @@ const SideBar = () => {
         <div className="sidebarMenu">
          
         <ul className="sidebarList">
+          
         <li className='logo-name'>BDU Alumni</li>
                 <li className="sidebarListItem">
                 <Link to='/admin/home'>
