@@ -4,6 +4,7 @@
 .addUserheader{
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     height: 70px;
     /* top: 70px; */

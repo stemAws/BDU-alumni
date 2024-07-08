@@ -298,7 +298,7 @@ const UserList = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <h3> Bahir Dar STEM Center Alumni </h3>
+          <h3> Bahir Dar University Alumni </h3>
           <Link to="/admin/AddUser">
             <button className="addUser">+ Add User</button>
           </Link>

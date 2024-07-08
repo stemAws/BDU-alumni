@@ -145,7 +145,7 @@ const DonationList = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <h3> Bahir Dar STEM Center Alumni Donation </h3>
+        <h3> Bahir Dar University Alumni Donation </h3>
         <Link to="/admin/AddDonation">
           <button className="addEvent">+ Add Donation</button>
         </Link>

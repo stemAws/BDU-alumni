@@ -20,7 +20,7 @@
 .sidebarMenu{
 display: flex;
 align-items: flex-start;
-width: fit-content;
+/* width: fit-content; */
 }
 .sidebarList{
 position: absolute;
@@ -35,7 +35,7 @@ list-style: none;
 border-top-left-radius: 30px;
 border-bottom-left-radius: 30px;
 margin-top: 10px;
-align-items: flex-start ;
+/* align-items: flex-start ; */
 }
 .sidebarListItem:hover{
   background-color: white;
@@ -189,13 +189,12 @@ pointer-events: none;
   cursor: pointer;
   border: 1px solid white;
   border-radius: 8px;
-  padding: 5px;
+  padding: 10px;
   margin-right: 20px;
   font-size: 15px;
   transition: 0.5s;
   text-transform: uppercase;
-  font-size: 15px;
-  font-family: 'Saira', sans-serif;
+  font-family: 'poppins';
   margin: 20px 0 20px 60px;
   
 }

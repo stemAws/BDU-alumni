@@ -42,7 +42,7 @@ const Stories = () => {
       
     <div className="Admin-stories-container">
     <div className="admin-story-header">
-      <h1 className="headerstory"> Bahir Dar STEM Center Alumni Stories</h1>
+      <h1 className="headerstory"> Bahir Dar University Alumni Stories</h1>
       <Link to='/admin/addedStories'>
         <button className="accepted-stories" onClick={handleClick}>Added Stories</button>
       </Link>
