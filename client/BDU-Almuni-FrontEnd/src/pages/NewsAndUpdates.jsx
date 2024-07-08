@@ -16,46 +16,48 @@ const NewsAndUpdates = () => {
     "Sports: fugiat eos consectetur consequuntur inventore",
     "Technology: fugiat eos consectetur consequuntur inventore aspernatur, libero aliquam fuga odit in consequatur"
   ]);
-  const [multipleNews, setmultipleNews] = useState([{
-    title:"",
-    img:`..${newsimg}`,
-    category:"Technology",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
-    location:"Bahir dar University, Washera Hall",
-    date:"FEB 25 2023"
-  },
-  {
-    title:"",
-    img:`..${newsSmallImg2}`,
-    category:"Technology",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
-    location:"Bahir dar University, Washera Hall",
-    date:"FEB 25 2023"
-  },
-  {
-    title:"",
-    img:`..${newsSmallImg3}`,
-    category:"Technology",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
-    location:"Bahir dar University, Washera Hall",
-    date:"FEB 25 2023"
-  },
-  {
-    title:"",
-    img:`..${newsSmallImg}`,
-    category:"Technology",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
-    location:"Bahir dar University, Washera Hall",
-    date:"FEB 25 2023"
-  },
-  {
-    title:"",
-    img:`..${newsimg}`,
-    category:"Technology",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
-    location:"Bahir dar University, Washera Hall",
-    date:"FEB 25 2023"
-  }])
+  const [multipleNews, setmultipleNews] = useState([
+  //   {
+  //   title:"",
+  //   img:`..${newsimg}`,
+  //   category:"Technology",
+  //   description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+  //   location:"Bahir dar University, Washera Hall",
+  //   date:"FEB 25 2023"
+  // },
+  // {
+  //   title:"",
+  //   img:`..${newsSmallImg2}`,
+  //   category:"Technology",
+  //   description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+  //   location:"Bahir dar University, Washera Hall",
+  //   date:"FEB 25 2023"
+  // },
+  // {
+  //   title:"",
+  //   img:`..${newsSmallImg3}`,
+  //   category:"Technology",
+  //   description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+  //   location:"Bahir dar University, Washera Hall",
+  //   date:"FEB 25 2023"
+  // },
+  // {
+  //   title:"",
+  //   img:`..${newsSmallImg}`,
+  //   category:"Technology",
+  //   description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+  //   location:"Bahir dar University, Washera Hall",
+  //   date:"FEB 25 2023"
+  // },
+  // {
+  //   title:"",
+  //   img:`..${newsimg}`,
+  //   category:"Technology",
+  //   description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+  //   location:"Bahir dar University, Washera Hall",
+  //   date:"FEB 25 2023"
+  // }
+])
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHeadlineIndex(prevIndex => (prevIndex + 1) % headlines.length);

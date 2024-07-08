@@ -2,7 +2,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 900px;
+    height: 1100px;
     width: 100%;
     gap: 30px;
     color: #ffffff;
@@ -10,6 +10,9 @@
     margin-bottom: 20px;
     background-color: #000;
     overflow: hidden;
+}
+.events-container-all{
+height: fit-content;
 }
 .each-event{
     display: flex;
