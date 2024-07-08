@@ -1,5 +1,6 @@
 .news-and-updates-container{
     position: relative;
+    background-color: #fdfdfd;
 }
 .nUTitle{
     position: relative;
@@ -8,25 +9,29 @@
     justify-content: center;
     align-items: center;
     text-transform: uppercase;
+    color: #7d7d7d;
 }
 .circle-bg{
     position: absolute;
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    margin-right: 65px;
+    margin-right: 49px;
     z-index: 1;
 }
 .nUTitle>.circle-bg{
-background-color: #CAEFFF;
+background-color: #F17318;
 }
 .nUTitle>p{
-    font: 400 40px 'Inter';
+    font: 600 35px 'poppins';
     position: relative;
     z-index: 2;
 }
 .blue-text{
-    color: #00B2FF;
+    color: #F17318;
+}
+.white-text{
+    color: #fff;
 }
 .news-bottom{
     display: flex;
@@ -74,7 +79,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
 .news-small-detail{
     color: #ffffff;
     padding: 5px;
-    font: 300 22px "Inter";
+    font: 300 22px "poppins";
     position: relative;
     height: 120px;
     overflow: hidden;
@@ -82,7 +87,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
 .news-date{
     text-transform: capitalize;
     color: #ffffff;
-    font: 300 15px "Inter";
+    font: 300 15px "poppins";
     padding-left: 5px;
     /* margin-top: 55px; */
 }
@@ -111,7 +116,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     border-bottom: 1px solid #6c6c6c6f;
     width: 400px;
     text-transform: capitalize;
-    font: 400 12px 'Inter';
+    font: 400 12px 'poppins';
     list-style: none;
     display: flex;
      gap: 80px;
@@ -124,7 +129,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     min-width: fit-content;
     cursor: pointer;
     padding: 0;
-    font: 300 18px "Inter";
+    font: 300 18px "poppins";
     color: #7F7F7F;
 }
 .categorized-news-container{
@@ -216,7 +221,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
 
 }
 .top-stories>.top-stories-title{
-    font:400 40px "Inter";
+    font:400 40px "poppins";
     margin-left: -60px;
     position: relative;
     z-index: 1;

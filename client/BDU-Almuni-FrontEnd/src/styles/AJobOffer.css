@@ -39,6 +39,7 @@
     transition: 0.5s ease;
     display: flex; 
     align-items: center;
+    justify-content: center;
  }
  .SuggestedJobheader button:hover{
     background-color: #0880d5;

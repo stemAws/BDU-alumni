@@ -19,6 +19,7 @@ import JobOffer from './AdminPages/JobOffer';
 import suggestedJob from './AdminPages/suggestedJob'
 import AGallery from './AdminPages/AGallery';
 import AddGallery from './AdminPages/AddGallery';
+import Signin from '../component/Signin'
 const Admin = () => {
   return (
     <div>
@@ -28,7 +29,8 @@ const Admin = () => {
         <div className="admincontainer">
             <SideBar/>
             <Routes>
-              <Route path='/home' Component={Home}/>
+            <Route path='/' Component={Signin}/>
+            <Route path='/home' Component={Home}/>
               <Route path='/users' Component={Users}/>
               <Route path='/News' Component={News}/>
               <Route path='/AddUser' Component={AddUser}/>

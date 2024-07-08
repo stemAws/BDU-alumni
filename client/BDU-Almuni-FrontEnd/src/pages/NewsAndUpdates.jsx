@@ -72,10 +72,10 @@ const NewsAndUpdates = () => {
           onChange:handleIntersection 
         });
   return (
-    <div className="news-and-updates-container body">
+    <div className="news-and-updates-container">
         <div className="nUTitle">
           <div className="circle-bg"></div>
-          <p><span className='blue-text'>News</span> And Updates</p>
+          <p><span className='blue-text'>News</span> <span className='white-text'>And</span> Updates</p>
         </div>
         <div className="news-bottom">
         <div className="left-side">

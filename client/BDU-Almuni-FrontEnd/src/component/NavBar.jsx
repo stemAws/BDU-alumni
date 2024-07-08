@@ -8,6 +8,7 @@ import SearchBar from "./SearchBar"
 import { Link, useLocation } from 'react-router-dom';
 import NavDropDown from "./NavDropDown"
 import { FaCaretDown, FaCaretUp } from "react-icons/fa"
+import logo from "../assets/images/logo.png"
 const NavBar = ({loginState,logout,userDetails,error,loading,imgUrl}) => {
   const { signin, setsignin } = useContext(SigninContext);
   const[detilPop,setdetailPop]=useState(false);
@@ -60,12 +61,15 @@ const NavBar = ({loginState,logout,userDetails,error,loading,imgUrl}) => {
 
   return (
     <div className="navBar-container">
-        <div className="logo"></div>
+        <div className="logo">
+          <img src={logo} alt="" /> BDU ALUMNI
+        </div>
         <nav className="nav-lists">
             <ul className="nav-list-conatiner">
-                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/newsAndUpdates">News and updates</Link></li>
+                {/* <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/newsAndUpdates">News and updates</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/Stories">stories</Link></li>
-                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/Events">events</Link></li>
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/Events">events</Link></li> */}
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/">Home</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/gallery">Gallery</Link></li>
                 <li className="each-nav-list"> <Link onClick={()=>showdropDown()}>community 
                 {

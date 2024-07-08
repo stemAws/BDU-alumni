@@ -41,9 +41,9 @@ const Stories = () => {
           onChange:handleIntersection 
         });
   return (
-    <>
-    <div className="top-stories body">
-      <div  ref={ref} className={`circle-bg ${inView ? 'wide' : exitingView ? 'return' : ''}`} ></div>
+    <div className="stories body">
+    <div className="top-stories ">
+      {/* <div  ref={ref} className={`circle-bg ${inView ? 'wide' : exitingView ? 'return' : ''}`} /> */}
       <div className="the-line"></div>
       <div className="line-cover"></div>
       <p className="top-stories-title">
@@ -55,7 +55,7 @@ const Stories = () => {
           <MultiStories stories={stories} />
         }
     </div>
-    </>
+    </div>
   )
 }
 

@@ -18,12 +18,12 @@ h1,h2,h3,h4,h5,h6,p{
 }
 .btn{
   background-color: #fff;
-  font: 100  14px 'Saira', sans-serif ;
+  font: 100  14px 'Saira' ;
   width: 90px;
   height: 30px;
   cursor: pointer;
   transition: transform 80ms ease-in;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 
 .btn:active{
@@ -33,7 +33,7 @@ h1,h2,h3,h4,h5,h6,p{
   outline: none;
 }
 p{
-  font-family: "Inter";
+  font-family: "poppins";
 }
 .body{
   margin-top: 75px;

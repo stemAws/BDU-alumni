@@ -23,6 +23,14 @@
     margin: 10px 20px 10px 60px;
     font-size: 30px;
 }
+.eventformform{
+    display: flex;
+    flex-wrap: wrap;
+}
+.formContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .form input[type="text"], 
 .form input[type="file"] {
