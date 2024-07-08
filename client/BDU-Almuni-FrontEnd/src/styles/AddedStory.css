@@ -6,7 +6,9 @@
 html {
     scroll-behavior: smooth;
   }
-  
+  .userGoBack{
+    cursor: pointer;
+  }
   .Admin-stories {
     font-size: 15px;
     background: white;
