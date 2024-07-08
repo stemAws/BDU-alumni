@@ -17,7 +17,7 @@ const storage = getStorage();
 exports.createNews = async (req, res) => {
   try {
     const adminId = req.params.adminId;
-    const { title, content, category } = req.body;
+    const { title, content, category, location } = req.body;
     const imagePath = req.file
       ? `events/${Date.now()}${path.extname(req.file.originalname)}`
       : null;
@@ -38,7 +38,8 @@ exports.createNews = async (req, res) => {
       content,
       category,
       downloadURL,
-      adminId
+      adminId,
+      location
     );
     res.status(201).json({ message: "news added successfully", news });
   } catch (error) {

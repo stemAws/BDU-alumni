@@ -17,7 +17,7 @@ firebase.initializeApp(firebaseConfig);
 const storage = getStorage();
 
 exports.createPost = async (req, res) => {
-  const { content, suggestToAdmin } = req.body;
+  const { content, suggestToAdmin, location } = req.body;
   const alumniId = req.cookies.id2;
 
   try {
@@ -41,7 +41,8 @@ exports.createPost = async (req, res) => {
       alumniId,
       content,
       downloadURL,
-      suggestToAdmin
+      suggestToAdmin,
+      location
     );
 
     res.json({ postId });

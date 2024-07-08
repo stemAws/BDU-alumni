@@ -3,74 +3,109 @@ import newsimg from '../assets/images/photo_2024-02-25_23-41-53.jpg'
 import newsSmallImg from '../assets/images/photo_2024-02-25_23-38-22.jpg'
 import newsSmallImg2 from '../assets/images/photo_2024-02-27_14-20-33.jpg'
 import newsSmallImg3 from '../assets/images/photo_2024-02-25_16-12-11.jpg'
-import { useInView } from 'react-intersection-observer';
+// import { useInView } from 'react-intersection-observer';
 import { useEffect, useState } from 'react'
 import MultipleTodayNews from '../component/MultipleTodayNews'
 import MultipleCategorizedNews from '../component/MultipleCategorizedNews'
 const NewsAndUpdates = () => {
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
-  const [exitingView, setExitingView] = useState(false);
-  const headlines = [
+  // const [exitingView, setExitingView] = useState(false);
+  const [headlines,setheadlines] = useState([
     "Breaking News: Lorem ipsum dolor sit amet consectetur adipisicing elit." ,
     "Weather Alert: Magni veritatis quidem quibusdam quam doloribus minus eveniet mollitia tempora",
     "Sports: fugiat eos consectetur consequuntur inventore",
     "Technology: fugiat eos consectetur consequuntur inventore aspernatur, libero aliquam fuga odit in consequatur"
-  ];
-  const [multipleNews, setmultipleNews] = useState([{
-    img:`..${newsimg}`,
-    category:"Technology",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
-    location:"Bahir dar University, Washera Hall",
-    date:"FEB 25 2023"
-  },
-  {
-    img:`..${newsSmallImg2}`,
-    category:"Technology",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
-    location:"Bahir dar University, Washera Hall",
-    date:"FEB 25 2023"
-  },
-  {
-    img:`..${newsSmallImg3}`,
-    category:"Technology",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
-    location:"Bahir dar University, Washera Hall",
-    date:"FEB 25 2023"
-  },
-  {
-    img:`..${newsSmallImg}`,
-    category:"Technology",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
-    location:"Bahir dar University, Washera Hall",
-    date:"FEB 25 2023"
-  },
-  {
-    img:`..${newsimg}`,
-    category:"Technology",
-    description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
-    location:"Bahir dar University, Washera Hall",
-    date:"FEB 25 2023"
-  }])
+  ]);
+  const [multipleNews, setmultipleNews] = useState([
+  //   {
+  //   title:"",
+  //   img:`..${newsimg}`,
+  //   category:"Technology",
+  //   description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+  //   location:"Bahir dar University, Washera Hall",
+  //   date:"FEB 25 2023"
+  // },
+  // {
+  //   title:"",
+  //   img:`..${newsSmallImg2}`,
+  //   category:"Technology",
+  //   description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+  //   location:"Bahir dar University, Washera Hall",
+  //   date:"FEB 25 2023"
+  // },
+  // {
+  //   title:"",
+  //   img:`..${newsSmallImg3}`,
+  //   category:"Technology",
+  //   description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+  //   location:"Bahir dar University, Washera Hall",
+  //   date:"FEB 25 2023"
+  // },
+  // {
+  //   title:"",
+  //   img:`..${newsSmallImg}`,
+  //   category:"Technology",
+  //   description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+  //   location:"Bahir dar University, Washera Hall",
+  //   date:"FEB 25 2023"
+  // },
+  // {
+  //   title:"",
+  //   img:`..${newsimg}`,
+  //   category:"Technology",
+  //   description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta voluptatum modi ipsum laudantium ratione ullam placeat exercitationem officia delectus quaerat distinctio veniam beatae, numquam corporis veritatis assumenda libero dicta vitae",
+  //   location:"Bahir dar University, Washera Hall",
+  //   date:"FEB 25 2023"
+  // }
+])
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHeadlineIndex(prevIndex => (prevIndex + 1) % headlines.length);
-    },3000); 
+    },2955); 
     return () => clearInterval(interval);
-  }, []);
-  const handleIntersection = (entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) {
-        setExitingView(true);
-      } else {
-        setExitingView(false);
-      }
-    });
-  };
-  const { ref, inView } = useInView({
-          triggerOnce: true,
-          threshold: 0.05,
-          onChange:handleIntersection 
-        });
+  }, [headlines.length]);
+  // const handleIntersection = (entries) => {
+  //   entries.forEach(entry => {
+  //     if (!entry.isIntersecting) {
+  //       setExitingView(true);
+  //     } else {
+  //       setExitingView(false);
+  //     }
+  //   });
+  // };
+  // const { ref, inView } = useInView({
+  //         triggerOnce: true,
+  //         threshold: 0.05,
+  //         onChange:handleIntersection 
+  //       });
+
+useEffect(()=>{
+  const fetchNews=async()=>{
+    try {
+      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/all-news`,{
+          credentials: 'include',
+        })
+        const newsFromServer= await res.json()
+       
+
+        if (!res.ok) {
+          console.error("couldn't fetch the news")
+        }
+        else{
+          setmultipleNews(newsFromServer)
+          setheadlines(newsFromServer.map(item => `${item.category}: ${item.title}`))
+    }} catch (error) {
+      console.error("couldn't fetch the news",error)
+      
+    }
+  }
+  fetchNews();
+},[])
+// useEffect(() => {
+// console.log(headlines)
+// }, [headlines])
+
+
   return (
     <div className="news-and-updates-container">
         <div className="nUTitle">

@@ -1,8 +1,11 @@
+:root{
+    --event-height:670px;
+}
 .events-container{
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 900px;
+    height: var(--event-height);
     width: 100%;
     gap: 30px;
     color: #ffffff;
@@ -10,6 +13,23 @@
     margin-bottom: 20px;
     background-color: #000;
     overflow: hidden;
+}
+.tall{
+height: calc( var(--event-height) + 300px );
+}
+.down-arrow{
+    position: relative;
+    left: 30px;
+    top: 4px;
+}
+.btn.seeMore{
+position: absolute;
+margin-top: calc( var(--event-height) - 50px);
+color: #fff;
+background-color: transparent;
+border: 0;
+
+
 }
 .each-event{
     display: flex;

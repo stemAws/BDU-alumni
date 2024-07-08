@@ -1,7 +1,7 @@
 import Button from "./Button"
 
 const EachEvent = ({singleEvent}) => {
-    const type = (singleEvent.id % 2)+1 ;
+    const type = (singleEvent.eventId % 2)+1 ;
   return (
     <div className={`each-event type${type}`}>
         {
@@ -12,14 +12,14 @@ const EachEvent = ({singleEvent}) => {
     <div className="event-description">
         <p className="description-title">{singleEvent?.title}</p>
             <div className="description-text">
-                <p className="event-text">{singleEvent?.description}</p>
+                <p className="event-text">{singleEvent?.content}</p>
                 <div className="event-date">
                     {singleEvent?.startDate} - {singleEvent?.endDate}
                 </div>
                 
             </div>
             {
-                singleEvent?.link !=="" &&(<Button id={"event-btn"} text={"Join"}/>)
+                singleEvent?.registerURL &&(<Button id={"event-btn"} text={"Join"}/>)
             }
             
     </div>
@@ -36,7 +36,7 @@ const EachEvent = ({singleEvent}) => {
                     
                 </div>
                 {
-                singleEvent?.link !=="" &&(<Button id={"event-btn"} text={"Join"}/>)
+                singleEvent?.registerURL &&(<Button id={"event-btn"} text={"Join"}/>)
             }
         </div>
         <div className="separetor"></div>
