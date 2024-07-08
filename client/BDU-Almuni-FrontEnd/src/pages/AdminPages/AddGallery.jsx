@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../../styles/AddGallery.css';
 import { Link } from 'react-router-dom';
 import { ChevronLeft } from "@mui/icons-material";
@@ -76,7 +76,7 @@ const AddGallery = ({ updateCategories }) => {
         formData.append('year', year);
         Array.from(images).forEach((image) => formData.append('images', image));
 
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/upload`, {
+        const response = await fetch(`http://localhost:3005/upload`, {
           method: 'POST',
           body: formData,
         });
