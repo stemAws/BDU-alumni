@@ -76,12 +76,13 @@ setjobOffer(jobOffers.find((jOff=>jOff.id===jobID)))
     }
   return (
     <div className="Admin-JO-flex-container Admin-body">
-        <div className='adminJobOfferHeader'>
-            <div>
+          <div className='job-usergoback'>
         <Link to="/admin/jobOffer" className="jobuserGoBack">
         <ChevronLeft className="userGoBackIcon" onClick={handleClick} />
       </Link>
       </div>
+        <div className='adminJobOfferHeader'>
+          
     <p className="Admin-job-offer"><span className='Admin-blue-text'>JOB</span> OFFER</p>
      </div>
     <div className="Admin-job-offer-container ">

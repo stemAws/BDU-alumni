@@ -8,6 +8,13 @@
     flex: 4;
     /* overflow-y: auto; */
 }
+.job-usergoback{
+    
+        cursor: pointer;
+        align-self: flex-start;
+        margin: 20px;
+    
+}
 /* .adminJobOfferHeader{
 display: flex;
 flex-direction: row;
@@ -53,7 +60,7 @@ align-items: center;
     border-bottom: 1px solid #dedede;
     height: 40px;
     align-items: center;
-    transition: all 0.4s ease-in-out;
+    /* transition: all 0.4s ease-in-out; */
 }
 /* .each-job-offer:hover .JO-top{
     display: block;
@@ -66,7 +73,7 @@ align-items: center;
     gap: 10px;
     width: 200px;
     align-items: center;
-    transition: all 0.4s ease-in-out;
+    /* transition: all 0.4s ease-in-out; */
 }
 /* .each-job-offer:hover .company-detail{
     display: block;
@@ -78,7 +85,7 @@ align-items: center;
     height: 30px;
     object-fit: cover;
     border-radius: 50%;
-transition: all 0s ease-in;
+/* transition: all 0s ease-in; */
 }
 /* .each-job-offer:hover .company-logo{
     width: 100%;
@@ -130,7 +137,7 @@ transition: all 0s ease-in;
     text-transform: capitalize;
     color: #777777;
     font-size: 14px;
-    transition: all 0.4s ease-in-out;
+    /* transition: all 0.4s ease-in-out; */
 }
 /* .each-job-offer:hover .job-need{
     display: none;
