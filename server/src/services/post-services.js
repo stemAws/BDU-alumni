@@ -1,10 +1,10 @@
 const db = require('../config/db');
 
-exports.createPost = async function (alumniID, content, image, suggestToAdmin) {
+exports.createPost = async function (alumniID, content, image, suggestToAdmin, location) {
   try {
     const [result] = await db.query(
-      'INSERT INTO Post (alumniID, content, mediaPath, suggestToAdmin) VALUES (?, ?, ?, ?)',
-      [alumniID, content, image, suggestToAdmin]
+      'INSERT INTO Post (alumniID, content, mediaPath, suggestToAdmin, location) VALUES (?, ?, ?, ?, ?)',
+      [alumniID, content, image, suggestToAdmin, location]
     );
 
     return result.insertId;
