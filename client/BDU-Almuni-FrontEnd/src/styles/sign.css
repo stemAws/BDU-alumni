@@ -13,7 +13,7 @@ transition: all 0.6s ease-in-out;
     z-index: 23;
     opacity: 0;
 }
-.sign_with_google{  
+.sign_with_google, .Admin-sign_with_google{  
     box-sizing:content-box;
      display: flex;
    justify-content: flex-start;
@@ -535,9 +535,47 @@ margin: 0 0 30px 0;
     }
 }
 
+/* admin signin css*/
 
+.Admin-pop_container {
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 4px 100px 23px #000000;
+    position: relative;
+    overflow: hidden;
+    width: 400px;
+    max-width: 800px;
+    z-index: 21;
+    height: 550px;
+}
 
+.Admin-sign_in {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    /* width: 50%; */
+    height: 400px;
+    z-index: 25;
+    color: #000000;
+    padding-right: 10px;
+    margin: 60px 0 0 0;
+    /* left: 50%; */
+}
 
+.Admin-sign_Container .Admin-icon {
+    margin: 2px 2px 0px 94%;
+    border-radius: 50%;
+    width: 21px;
+    height: 21px;
+    text-align: center;
+    padding-top: 1px;
+}
+
+.Admin-sign_with_google{
+    margin: 0;
+}
 
 
 
