@@ -81,7 +81,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     padding: 5px;
     font: 300 22px "poppins";
     position: relative;
-    height: 120px;
+    height: 100px;
     overflow: hidden;
 }
 .news-date{
@@ -160,7 +160,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     color: #727272;
     width: 45%;
     height: 70px;
-   
+   font-size:14px ;
 }
 .news-description{
     height: 58px;
