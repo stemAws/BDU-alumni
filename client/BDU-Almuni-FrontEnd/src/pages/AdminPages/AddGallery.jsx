@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/AddGallery.css';
 import { Link } from 'react-router-dom';
 import { ChevronLeft } from "@mui/icons-material";
@@ -15,13 +15,27 @@ const AddGallery = ({ updateCategories }) => {
   const [eventError, setEventError] = useState('');
   const [yearError, setYearError] = useState('');
   const [imagesError, setImagesError] = useState('');
-  const [loading, setLoading] = useState(false); // Add loading state
-
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [descriptionError, setDescriptionError] = useState("");
   const [departmentError, setDepartmentError] = useState("");
   const navigate = useNavigate();
+
+  // Fetch categories or other initial data if needed
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/categories`);
+        const data = await response.json();
+        updateCategories(data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, [updateCategories]);
 
   const handleEventChange = (e) => {
     setEvent(e.target.value);
@@ -63,10 +77,10 @@ const AddGallery = ({ updateCategories }) => {
     }
 
     if (!department) {
-      setDepartmentError('department field cannot be empty!');
+      setDepartmentError('Department field cannot be empty!');
       valid = false;
     } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(department)) {
-      setDepartmentError("department must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      setDepartmentError("Department must contain only letters and spaces, with numbers allowed anywhere after letters!");
       valid = false;
     } else {
       setDepartmentError('');
@@ -82,34 +96,37 @@ const AddGallery = ({ updateCategories }) => {
       setYearError('Year must be a 4-digit number!');
       valid = false;
     } else if (year < 2019) {
-      setYearError('Year must not be before 2019!!');
+      setYearError('Year must not be before 2019!');
       valid = false;
     } else {
-      setEventError('');
+      setYearError('');
     }
+
     if (!images) {
       setImagesError('Please select images');
       valid = false;
     }
+
     if (!description) {
-      setDescriptionError(
-        description ? "" : "Description field cannot be empty!"
-      );
+      setDescriptionError('Description field cannot be empty!');
       valid = false;
     } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-      setDescriptionError("description must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
       valid = false;
     }
+
     if (valid) {
       try {
-        setLoading(true); // Set loading to true when starting upload
+        setLoading(true);
 
         const formData = new FormData();
         formData.append('event', event);
+        formData.append('description', description);
+        formData.append('department', department);
         formData.append('year', year);
         Array.from(images).forEach((image) => formData.append('images', image));
 
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/upload`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/upload`, {
           method: 'POST',
           body: formData,
         });
@@ -126,7 +143,7 @@ const AddGallery = ({ updateCategories }) => {
         console.error('Error uploading images', error);
         toast.error(`Error uploading images: ${error.message}`);
       } finally {
-        setLoading(false); // Set loading to false after upload completes (whether success or error)
+        setLoading(false);
       }
     }
   };
@@ -140,20 +157,19 @@ const AddGallery = ({ updateCategories }) => {
       <Link to="/admin/gallery" className="userGoBack">
         <ChevronLeft className="userGoBackIcon" onClick={handleClick} />
       </Link>
-      <h2> Add Gallery </h2>
+      <h2>Add Gallery</h2>
       <div className='formContainer'>
         <form className="eventformform" onSubmit={handleSubmit}>
           <ToastContainer autoClose={1500} />
           <div className='form'>
-            <label className='label' htmlFor="event" >Event:</label>
-            <input type="text" id="event" placeholder='Catagory title' value={event} onChange={handleEventChange} />
+            <label className='label' htmlFor="event">Event:</label>
+            <input type="text" id="event" placeholder='Category title' value={event} onChange={handleEventChange} />
             {eventError && <p className="errorMessage">{eventError}</p>}
           </div>
 
-
           <div className='form'>
-            <label className='label' htmlFor="department" >Department:</label>
-            <input type="text" id="dep" placeholder='department' value={department} onChange={handleDepartmentChange} />
+            <label className='label' htmlFor="department">Department:</label>
+            <input type="text" id="department" placeholder='Department' value={department} onChange={handleDepartmentChange} />
             {departmentError && <p className="errorMessage">{departmentError}</p>}
           </div>
          
@@ -166,23 +182,21 @@ const AddGallery = ({ updateCategories }) => {
               value={description}
               onChange={handleDiscriptionChange}
             />
-            {descriptionError && (
-              <p className="errorMessage">{descriptionError}</p>
-            )}
+            {descriptionError && <p className="errorMessage">{descriptionError}</p>}
           </div>
 
           <div className='form'>
-            <label className='label' htmlFor="year" >Year:</label>
+            <label className='label' htmlFor="year">Year:</label>
             <input type="text" id="year" placeholder='Batch' value={year} onChange={handleYearChange} />
             {yearError && <p className="errorMessage">{yearError}</p>}
           </div>
+
           <div className='form'>
-            <label className='label' htmlFor="images">
-              Images:
-            </label>
+            <label className='label' htmlFor="images">Images:</label>
             <input className='imageInput' type="file" id="images" multiple onChange={handleImageChange} />
             {imagesError && <p className="errorMessage">{imagesError}</p>}
           </div>
+
           <div className='buttonss'>
             <button type="submit" disabled={loading}>
               {loading ? 'Uploading...' : 'Upload'}
@@ -193,5 +207,5 @@ const AddGallery = ({ updateCategories }) => {
     </div>
   );
 };
-export default AddGallery;
 
+export default AddGallery;
