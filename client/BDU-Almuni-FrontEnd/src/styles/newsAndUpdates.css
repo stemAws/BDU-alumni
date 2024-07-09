@@ -146,6 +146,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     gap: 20px;
     align-items: center;
     justify-content: center;
+    padding: 20px;
     cursor: pointer;
 }
 .each-news:hover{
@@ -165,7 +166,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     object-fit: cover;
 }
 .news-detail{
-    padding-top: 15px;
+    /* padding-top: 15px; */
     color: #727272;
     width: 45%;
     height: 70px;
