@@ -142,8 +142,17 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
 .each-news{
     display: flex;
     width: 400px;
-    height: 100px;
+    height: 130px;
     gap: 20px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.each-news:hover{
+    background-color: #f5f5f5;
+}
+.clicked{
+    background-color: #f5f5f5;
 }
 .small-news-img{
     width: 176px;
@@ -168,7 +177,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
 }
 .news-date-side{
     text-transform: capitalize;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     font-size: 14px;
 }
 .headline-texts{
