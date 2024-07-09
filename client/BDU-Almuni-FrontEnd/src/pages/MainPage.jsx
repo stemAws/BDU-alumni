@@ -21,6 +21,7 @@ import PageNotFound from './PageNotFound';
 import ForgetPassword from './ForgetPassword';
 import Posts from './Posts';
 import SearchAndFilter from './SearchAndFilter';
+import AboutDevs from './AboutDevs';
 export const SigninContext = createContext();
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
@@ -61,6 +62,7 @@ const MainPage = () => {
           <Route path="/contactus"  Component = {ContactUS} />
           <Route path="/changePassword/:username"  Component = {ChangePassword} />
           <Route path="/post/:username"  Component = {Posts} />
+          <Route path="/aboutDevs"  Component = {AboutDevs} />
           <Route path="/forgetPassword"  Component = {ForgetPassword} />
           <Route path="/search/:name"  Component = {SearchAndFilter} />
           <Route path="*"  Component = {PageNotFound} />
