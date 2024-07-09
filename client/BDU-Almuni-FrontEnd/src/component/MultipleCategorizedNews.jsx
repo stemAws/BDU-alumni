@@ -1,14 +1,15 @@
 import CategorizedNews from "./CategorizedNews"
 
 const MultipleCategorizedNews = ({newsClicked,navValue,multiplecataNews}) => {
-  let today = new Date();
-  let formattedToday = today.toISOString().split('T')[0];
-let yesterday = new Date();
-yesterday.setDate(today.getDate() - 1);
-let formattedYesterday = yesterday.toISOString().split('T')[0];
-let lastWeek =new Date();
-lastWeek.setDate(today.getDate() - 7);
-let formattedlastweek = lastWeek.toISOString().split('T')[0];
+  let today,formattedToday,yesterday,formattedYesterday,lastWeek,formattedLastweek;
+   today = new Date();
+   formattedToday = today.toISOString().split('T')[0];
+   yesterday = new Date();
+   yesterday.setDate(today.getDate() - 1);
+   formattedYesterday = yesterday.toISOString().split('T')[0];
+   lastWeek =new Date();
+   lastWeek.setDate(today.getDate() - 7);
+   formattedLastweek = lastWeek.toISOString().split('T')[0];
   return (
     <>
         {navValue==="latest"?
@@ -35,7 +36,7 @@ let formattedlastweek = lastWeek.toISOString().split('T')[0];
               })
           ):(navValue==="lastWeek")?(
             [...multiplecataNews].reverse().map((news,index) => { 
-              if (news.createdAt>=formattedlastweek && news.createdAt < formattedToday ) {
+              if (news.createdAt>=formattedLastweek && news.createdAt < formattedToday ) {
                 return(
                 <CategorizedNews
                   news={news}
