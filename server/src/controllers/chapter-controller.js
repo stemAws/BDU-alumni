@@ -39,4 +39,28 @@ exports.getChaptersList = async (req, res) => {
       res.status(500).json({ error: "Internal Server Error" });
     }
   };
+
+  exports.updateChapter= async (req, res) => {
+    try {
+      const chapterId = req.params.chapterId;
+      const updatedChaptertData = req.body;
+  
+      const affectedRows = await chapterService.updateAChapter(
+        chapterId,
+        updatedChaptertData
+      );
+  
+      if (affectedRows === 0) {
+        return res
+          .status(404)
+          .json({ error: `No record with the given id: ${chapterId}` });
+      }
+  
+      return res.json({ message: "Chapter updated successfully" });
+    } catch (error) {
+      console.error("Error updating chapter:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+
   
