@@ -63,4 +63,16 @@ exports.getChaptersList = async (req, res) => {
     }
   };
 
+  exports.deleteChapter = async (req, res) => {
+    try {
+      const chapter = await chapterService.deleteAChapter(req.params.chapterId);
+  
+      if (!chapter) res.status(404).json("No record by the given id");
+      else res.send(chapter);
+    } catch (error) {
+      console.error("Error fetching chapter by ID:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+
   
