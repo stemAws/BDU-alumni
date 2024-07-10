@@ -1,9 +1,9 @@
 const db = require("../config/db");
 
-exports.createGallery = async ({ images, event, year }) => {
+exports.createGallery = async ({ images, event, year, department, description}) => {
   try {
     const [result] = await db.query(
-      "INSERT INTO gallery (media, title, year, department, description) VALUES (?, ?, ?)",
+      "INSERT INTO gallery (media, title, year, department, description) VALUES (?,?,?, ?, ?)",
       [JSON.stringify(images), event, year, department, description]
     );
 
