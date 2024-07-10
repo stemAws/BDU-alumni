@@ -17,3 +17,13 @@ exports.addChapters = async (title, description, link) => {
     throw error;
   }
 };
+
+
+exports.chaptersList = async () => {
+  const [chapter] = await db.query(
+    `SELECT * from chapters`
+  );
+
+  return chapter;
+};
+
