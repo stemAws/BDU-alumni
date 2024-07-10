@@ -1,4 +1,3 @@
-
 const db = require("../config/db");
 
 exports.addChapters = async (title, description, link) => {
@@ -18,11 +17,8 @@ exports.addChapters = async (title, description, link) => {
   }
 };
 
-
 exports.chaptersList = async () => {
-  const [chapter] = await db.query(
-    `SELECT * from chapters`
-  );
+  const [chapter] = await db.query(`SELECT * from chapters`);
 
   return chapter;
 };
@@ -35,7 +31,6 @@ exports.getAChapter = async (chapterId) => {
 
   return chapter.length > 0 ? chapter[0] : null;
 };
-
 
 exports.updateAChapter = async (chapterId, updateChapter) => {
   const { title, description, link } = updateChapter;
@@ -54,4 +49,17 @@ exports.updateAChapter = async (chapterId, updateChapter) => {
 
   return result.affectedRows;
 };
+
+exports.deleteAChapter = async (chapterId) => {
+  const [result] = await db.query("DELETE FROM chapters WHERE chapterId = ?", [
+    chapterId,
+  ]);
+
+  if (result.affectedRows === 0) {
+    return { success: false, message: "No record by the given id" };
+  }
+
+  return { success: true, message: "Chapter deleted successfully" };
+};
+
 
