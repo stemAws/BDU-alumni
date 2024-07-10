@@ -18,3 +18,12 @@ exports.createChapter = async (req, res) => {
   }
 };
 
+exports.getChaptersList = async (req, res) => {
+    try {
+      const chapter = await chapterService.chaptersList();
+      res.send(chapter);
+    } catch (error) {
+      console.error("Error fetching chapter:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
