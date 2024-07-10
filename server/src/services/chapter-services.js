@@ -36,3 +36,22 @@ exports.getAChapter = async (chapterId) => {
   return chapter.length > 0 ? chapter[0] : null;
 };
 
+
+exports.updateAChapter = async (chapterId, updateChapter) => {
+  const { title, description, link } = updateChapter;
+
+  const [result] = await db.query(
+    `   UPDATE chapters
+        SET
+          chapterName = ?,
+          description =?,
+          website = ?
+        WHERE
+          chapterId = ?
+    `,
+    [title, description, link, chapterId]
+  );
+
+  return result.affectedRows;
+};
+
