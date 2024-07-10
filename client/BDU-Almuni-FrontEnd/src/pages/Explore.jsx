@@ -1,7 +1,7 @@
 import '../styles/Explore.css'
 import { Avatar } from '@mui/material'
 // import { useEffect, useState } from 'react'
-// import Chart from '../charts/Chart'
+import Chart from '../pages/AdminPages/Charts'
 import i1 from '../assets/i1.jpg'
 const Explore = () => {
   return (
@@ -57,7 +57,7 @@ const Explore = () => {
 
         </div>
       </div>
-        {/* <Chart/> */}
+        <Chart/>
     </div>
   )
 }

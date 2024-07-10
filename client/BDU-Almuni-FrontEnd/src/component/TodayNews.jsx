@@ -9,9 +9,9 @@ const TodayNews = ({news}) => {
       <div className="news-category">
       {news.category}
       </div>
-      <p className="news-small-detail">{news.description}</p>
+      <p className="news-small-detail">{news.content}</p>
       </div>
-      <p className="news-date">{news.location} {news.date} </p>
+      <p className="news-date">{news.location} {news.createdAt} </p>
     </div>
     
   </div>

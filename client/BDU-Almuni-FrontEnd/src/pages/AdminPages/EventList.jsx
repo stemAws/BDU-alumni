@@ -146,7 +146,7 @@ const EventList = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <h3> Bahir Dar STEM Center Alumni Events </h3>
+        <h3> Bahir Dar University Alumni Events </h3>
         <Link to="/admin/AddEvent">
           <button className="addEvent">+ Add Event</button>
         </Link>

@@ -2,8 +2,9 @@ import"../styles/events.css"
 import newsimg2 from '../assets/images/photo_2024-02-25_23-36-59.jpg';
 import newsimg from '../assets/images/photo_2024-02-27_14-20-52.jpg';
 import Button from "../component/Button";
-import { useInView } from 'react-intersection-observer';
-import { useState } from "react";
+// import { useInView } from 'react-intersection-observer';
+import {FaArrowCircleDown, FaArrowDown, FaChevronDown} from "react-icons/fa"
+import { useEffect, useState } from "react";
 import MultipleEvents from "../component/MultipleEvents";
 const Events = () => {
     
@@ -26,6 +27,27 @@ const Events = () => {
     endDate: "12/06/24",
     link:""
   }])
+
+  useEffect(() => {
+    const fetchEvents=async()=>{
+      try {
+        const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/events`,{
+            credentials: 'include',
+          })
+          const eventsFromServer= await res.json()
+          if (!res.ok) {
+            console.error("couldn't fetch the events")
+          }
+          else{
+            setevents(eventsFromServer)
+      }} catch (error) {
+        console.error("couldn't fetch the events",error)
+        
+      }
+    }
+    fetchEvents();
+  }, [])
+  
   // const handleIntersection = (entries) => {
   //   entries.forEach(entry => {
   //     if (!entry.isIntersecting) {
@@ -40,6 +62,14 @@ const Events = () => {
   //         threshold: 0.01,
   //         // onChange:handleIntersection 
   //       });
+  let height =650
+  const handleSeemore=()=>{
+
+// document.querySelector(".events-container").classList.toggle("tall")
+height=height+650;
+document.documentElement.style.setProperty('--event-height', `${height}px`);
+
+  }
   return (
     <div className="events-container body">
          <div className="events">
@@ -48,7 +78,7 @@ const Events = () => {
       <div className="the-line"></div>
       <div className="line-cover"></div>
       <p className="event-title">
-        EVENTS
+       <span className="blue-text">UPCOMING</span> EVENTS
       </p>
       </div>
        {
@@ -56,6 +86,7 @@ const Events = () => {
           <MultipleEvents events={events} />
         )
        }
+       <Button className={`seeMore`} onClick={()=>handleSeemore()} text={"See More"} />
     </div>
   )
 }

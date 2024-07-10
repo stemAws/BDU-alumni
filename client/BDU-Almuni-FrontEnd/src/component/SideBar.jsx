@@ -38,6 +38,7 @@ const SideBar = () => {
         <div className="sidebarMenu">
          
         <ul className="sidebarList">
+          
         <li className='logo-name'>BDU Alumni</li>
                 <li className="sidebarListItem">
                 <Link to='/admin/home'>
@@ -81,11 +82,11 @@ const SideBar = () => {
                 </Link>
                 </li>
 
-                <li className="sidebarListItem">
+                {/* <li className="sidebarListItem">
                 <Link to='/admin/VoluntaryWork'>
                   Voluntary Work
                 </Link>
-                </li>
+                </li> */}
                 
                <li className="sidebarListItem">
                 <Link to='/admin/chapters'>

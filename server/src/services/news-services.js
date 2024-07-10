@@ -1,16 +1,16 @@
 const db = require("../config/db");
 
-exports.addNews = async (title, content, category, image_path, adminId) => {
+exports.addNews = async (title, content, category, image_path, adminId, location) => {
   try {
     let query, params;
 
     if (image_path) {
       query =
-        "INSERT INTO news (title, content,  category, imagePath, adminId) VALUES (?, ?, ?, ?, ?)";
-      params = [title, content, anouncementDate, category, image_path, adminId];
+        "INSERT INTO news (title, content,  category, imagePath, adminId, location) VALUES (?, ?, ?, ?, ?, ?)";
+      params = [title, content, anouncementDate, category, image_path, adminId, location];
     } else {
       query =
-        "INSERT INTO news (title, content, category, adminId) VALUES (?, ?, ?, ?)";
+        "INSERT INTO news (title, content, category, adminId, location) VALUES (?, ?, ?, ?, ?)";
       params = [title, content, category, adminId];
     }
 

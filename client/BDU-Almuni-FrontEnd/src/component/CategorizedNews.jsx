@@ -5,8 +5,8 @@ const CategorizedNews = ({news}) => {
             <img src={news.img} alt="" />
           </div>
           <div className="news-detail">
-          <p className="news-description">{news.description}</p>
-          <p className="news-date-side">{news.date}</p>
+          <p className="news-description">{news.content}</p>
+          <p className="news-date-side">{news.createdAt}</p>
           </div>
         </div>
   )
