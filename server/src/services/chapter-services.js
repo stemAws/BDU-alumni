@@ -27,3 +27,12 @@ exports.chaptersList = async () => {
   return chapter;
 };
 
+exports.getAChapter = async (chapterId) => {
+  const [chapter] = await db.query(
+    `SELECT chapterName, description, website, DATE_FORMAT(createdAt, '%Y-%m-%d'),DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM chapters WHERE chapterId = ?`,
+    [chapterId]
+  );
+
+  return chapter.length > 0 ? chapter[0] : null;
+};
+
