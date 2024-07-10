@@ -1,0 +1,55 @@
+.srories-detail-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:100vh ;
+    gap: 4%;
+}
+.stories-detal-left , .stories-detal-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+}
+.stories-detal-left{
+    width: 30%
+}
+.stories-detal-left>*{
+    text-transform: capitalize;
+}
+.srories-detail-container .profile{
+  display: flex;
+  gap: 10px;
+}
+.srories-detail-container .profile-pic{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+}
+.full-name{
+    max-width:411px ;
+}
+.story-img{
+    width: 100%;
+    object-fit: cover;
+    height: 400px;
+
+}
+.story-date{
+    align-self:flex-end ;
+}
+.stories-detal-right{
+width: 50%;
+}
+.story-title{
+    font: 600 36px "Poppins";
+    color: #909090;
+}
+.stories-detal-description{
+    font:300 16px "Poppins";
+    max-height:350px ;
+    color: #5e5e5e;
+    overflow: scroll;
+}
