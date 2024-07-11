@@ -14,17 +14,12 @@ const NavBar = ({loginState,logout,userDetails,error,loading,imgUrl}) => {
   const[detilPop,setdetailPop]=useState(false);
   const[outPut, setOutput] = useState("");
   const [dropDown, setdropDown] = useState(false);
-  const [dropDown2, setdropDown2] = useState(false);
   const showdetail=()=>{
     setdetailPop(!detilPop);
    }
+
    const showdropDown=()=>{
     setdropDown(!dropDown)
-    setdropDown2(false);
-   }
-   const showdropDown2=()=>{
-    setdropDown2(!dropDown2)
-    setdropDown(false);
    }
   const handleMouseEnter = () => {
     setdetailPop(true);
@@ -35,27 +30,18 @@ const NavBar = ({loginState,logout,userDetails,error,loading,imgUrl}) => {
       setdetailPop(false);
     }, 300);
   };
-  const handleDropMouseEnter = () => {
-    setdropDown(true);
-  };
-
-  const handleDropMouseLeave = () => {
-    setTimeout(() => {
-      setdropDown(false);
-    }, 300);
-  };
   const handleDropMouseEnter2 = () => {
-    setdropDown2(true);
+    setdropDown(true);
   };
 
   const handleDropMouseLeave2 = () => {
     setTimeout(() => {
-      setdropDown2(false);
+      setdropDown(false);
     }, 300);
   };
   const closeDrops=()=>{
+    
     setdropDown(false);
-    setdropDown2(false);
   }
 
 
@@ -71,34 +57,19 @@ const NavBar = ({loginState,logout,userDetails,error,loading,imgUrl}) => {
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/Events">events</Link></li> */}
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/">Home</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/gallery">Gallery</Link></li>
-                <li className="each-nav-list"> <Link onClick={()=>showdropDown()}>community 
-                {
-                  dropDown?<FaCaretUp/>:
-                  <FaCaretDown/>
-                }
-                 </Link>
-                 {
-              dropDown&&(
-              <NavDropDown 
-              onMouseEnter={handleDropMouseEnter} 
-              onMouseLeave={handleDropMouseLeave}
-              className={"dropDown-container drop1"}
-              forLi={"community"}
-              />
-            )
-              }
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/joboffer">Job Offer </Link> 
                  </li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/chapters">chapters</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/contactus">Contact us</Link></li>
-                <li className="each-nav-list"> <Link onClick={()=>showdropDown2()}>about
+                <li className="each-nav-list"> <Link onClick={()=>showdropDown()}>about
                 {
-                  dropDown2?<FaCaretUp/>:
+                  dropDown?<FaCaretUp/>:
                   <FaCaretDown/>
                 }
 
                 </Link>
                 {
-              dropDown2&&(
+              dropDown&&(
               <NavDropDown 
               onMouseEnter={handleDropMouseEnter2} 
               onMouseLeave={handleDropMouseLeave2}
