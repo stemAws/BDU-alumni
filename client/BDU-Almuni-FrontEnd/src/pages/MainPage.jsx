@@ -51,8 +51,8 @@ const MainPage = () => {
         }
           <Routes>
           <Route path="/" exact Component = {MainBody} />
-          <Route path="/stories"  Component = {Stories} />
-          <Route path="/events"  Component = {Events} />
+          {/* <Route path="/stories"  Component = {Stories} />
+          <Route path="/events"  Component = {Events} /> */}
           <Route path="/gallery"  Component = {Gallery} />
           <Route path="/newsAndUpdates"  Component = {NewsAndUpdates} />
           <Route path="/Chapters"  Component = {Chapters} />
@@ -66,7 +66,7 @@ const MainPage = () => {
           <Route path="/aboutDevs"  Component = {AboutDevs} />
           <Route path="/forgetPassword"  Component = {ForgetPassword} />
           <Route path="/search/:name"  Component = {SearchAndFilter} />
-          <Route path="/stories/id"  Component = {StoriesDetail} />
+          <Route path="/stories/:id"  Component = {StoriesDetail} />
           <Route path="*"  Component = {PageNotFound} />
           </Routes>
           <Footer/>

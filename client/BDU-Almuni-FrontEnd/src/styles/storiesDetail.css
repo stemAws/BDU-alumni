@@ -5,6 +5,12 @@
     justify-content: center;
     height:100vh ;
     gap: 4%;
+    background-color: #d0d0d0;
+}
+.no-img{
+    align-items: unset;
+    padding-top: 80px;
+
 }
 .stories-detal-left , .stories-detal-right{
     display: flex;
@@ -29,7 +35,8 @@
 
 }
 .full-name{
-    max-width:411px ;
+    max-width:411px;
+    text-transform: capitalize;
 }
 .story-img{
     width: 100%;
@@ -39,6 +46,9 @@
 }
 .story-date{
     align-self:flex-end ;
+}
+.no-img-date{
+    align-self: flex-start;
 }
 .stories-detal-right{
 width: 50%;

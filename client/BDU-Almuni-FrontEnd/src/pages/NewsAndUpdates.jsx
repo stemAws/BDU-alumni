@@ -70,7 +70,7 @@ const NewsAndUpdates = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHeadlineIndex(prevIndex => (prevIndex + 1) % headlines.length);
-    },2955); 
+    },3000); 
     return () => clearInterval(interval);
   }, [headlines.length]);
   // const handleIntersection = (entries) => {
