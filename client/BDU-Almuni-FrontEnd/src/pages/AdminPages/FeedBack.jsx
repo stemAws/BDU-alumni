@@ -1,8 +1,8 @@
 import "../../styles/FeedBack.css";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
 import React from "react";
 import { DeleteOutline } from "@mui/icons-material";
+import { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Message from "./Message";
 import DeleteConfirmation from "../../component/DeleteConfirmation";
@@ -39,18 +39,58 @@ const FeedBack = () => {
     setSelectedMessage(null);
   };
 
+  useEffect(() => {
+    // Fetch feedback data when the component mounts
+    fetchFeedbackData();
+  }, []);
+  const fetchFeedbackData = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/feedback`
+      );
+      if (response.ok) {
+        const data = await response.json();
+
+        // Sort the data by the createdAt timestamp in descending order
+        data.sort((a, b) => new Date(b.sendAT) - new Date(a.sendAT));
+
+        setFeedbackData(data);
+      } else {
+        console.error("Failed to fetch feedback data");
+      }
+    } catch (error) {
+      console.error("Error fetching feedback data:", error);
+    }
+  };
+
   const customTheme = createTheme({
     typography: {
       fontFamily: "Arial, sans-serif", // Replace 'YourDesiredFont' with the actual font-family
     },
   });
 
-  const handleConfirmDelete = async () => {
-    setFeedbackData((prevData) =>
-      prevData.filter((feedback) => feedback.feedBackID !== deleteConfirmationId)
-    );
-    setDeleteConfirmationOpen(false);
-    setDeleteConfirmationId(null);
+  const handleConfirmDelete = async (id) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/feedback/${deleteConfirmationId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        setFeedbackData((prevData) =>
+          prevData.filter((feedback) => feedback.feedBackID !== deleteConfirmationId)
+        );
+      } else {
+        console.error(`Failed to delete row with ID: ${deleteConfirmationId}`);
+      }
+    } catch (error) {
+      console.error("Error deleting row:", error);
+    } finally {
+      setDeleteConfirmationOpen(false);
+      setDeleteConfirmationId(null);
+    }
   };
 
   const handleCancelDelete = () => {

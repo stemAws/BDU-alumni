@@ -26,7 +26,7 @@ const AddGallery = ({ updateCategories }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/categories`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/categories`);
         const data = await response.json();
         updateCategories(data);
       } catch (error) {

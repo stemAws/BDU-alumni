@@ -1,7 +1,7 @@
 .sidebar-container{
   flex:1;
   height: 100vh;
-  background: radial-gradient(75.49% 117.11% at 50% 80.92%, #0c8ce9 0%, #0A0A0A 100%);
+  background:radial-gradient(90% 82.11% at 50% 50.92%, #0c8ce9 0%, #0A0A0A 100%);
   position: sticky;
   /* color: rgb(0, 0, 0); */
   overflow-y: auto;
