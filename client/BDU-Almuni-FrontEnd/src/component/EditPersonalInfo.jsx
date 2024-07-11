@@ -99,8 +99,8 @@ setSelectedCountry(personalInfo[0].currentLocation)
       value={personalData[0].gender} 
       onChange={(e) => handlePlaceholders(e.target.value,'gender')}>
         <option value="" disabled hidden>Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
       </select>
 
     </div>
