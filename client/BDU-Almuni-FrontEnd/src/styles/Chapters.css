@@ -1,7 +1,7 @@
 .chapters-container{
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
     background-color: rgb(234, 234, 233);
-    height: 800px;
+    height: 890px;
 
 }
 .chapters-title{
@@ -24,7 +24,7 @@
     align-items: center;
     margin-top: 350px;
     position: absolute;
-    background-color: #c8c9ca;
+    background-color: #00b2ff38;
     width: 390px;
     height: 390px;
     border-radius: 50%;
@@ -42,25 +42,27 @@
 } */
 .circle-bg3{
     position: relative;
-    background-color: #c8c9ca;
+    background-color: #00b2ff38;
     width: 90px;
     height: 90px;
     border-radius: 50%;
     z-index: 1;
     margin-left: -50px;
     margin-top: 10px;
-}.circle-bg4{
+}
+.circle-bg4{
     position: relative;
-    background-color: #c8c9ca;
+    background-color: #00b2ff38;
     width: 390px;
     height: 390px;
     border-radius: 50%;
     z-index: 1;
     margin-left: 850px;
     margin-top: 200px;
-}.circle-bg5{
+}
+.circle-bg5{
     position: relative;
-    background-color: #c8c9ca;
+    background-color: #00b2ff38;
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -70,7 +72,7 @@
 }
 
 .chapters-container .blue-text{
-    color: #00B2FF;
+    color: rgb(255, 166, 0);
 }
 .ind-chapters-cont{
     display: flex;
@@ -81,8 +83,8 @@
 .ind-chapters{
     position: relative;
     z-index: 2;
-    height: 500px;
-    background-color: white;
+    height: 560px;
+    /* background-color: #00b2ff38; */
     border-radius: 10px;
     border: none;
     padding: 20px;
@@ -91,12 +93,15 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    color: #909090;
+    color: #1b1919;
 }
 .ind-chapters h4{
     color: #909090;
     font-size: 25px;
-    padding: 30px;
+    margin-bottom: 20px;
+    /* padding: 30px; */
+    border-bottom: 2px solid  #00b3ff;
+    /* background-color: #00b3ff53; */
 }
 .ind-chapters button{
     font-size: 13px;

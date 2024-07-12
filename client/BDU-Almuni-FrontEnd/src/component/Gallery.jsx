@@ -18,7 +18,7 @@ const Gallery = ({ batch, updateCategories }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/gallery`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/gallery`);
         const data = await response.json();
 
         // Filter categories based on the batch year

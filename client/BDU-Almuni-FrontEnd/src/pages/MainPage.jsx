@@ -23,6 +23,7 @@ import Posts from './Posts';
 import SearchAndFilter from './SearchAndFilter';
 import AboutDevs from './AboutDevs';
 import StoriesDetail from './StoriesDetail';
+import Explore from './Explore';
 export const SigninContext = createContext();
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
@@ -58,6 +59,7 @@ const MainPage = () => {
           <Route path="/Chapters"  Component = {Chapters} />
           <Route path="/jobOffer"  Component = {JobOffer} />
           <Route path="/history"  Component = {History} />
+          <Route path="/explore"  Component = {Explore} />
           <Route path="/editProfile/:username"  Component = {Editprofile} />
           <Route path="/ProfilePage/:username"  Component = {ProfilePage} />
           <Route path="/contactus"  Component = {ContactUS} />
