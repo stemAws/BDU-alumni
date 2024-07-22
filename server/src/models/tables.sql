@@ -7,17 +7,17 @@ CREATE TABLE Person (
     lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     username VARCHAR(50) UNIQUE,
     password VARCHAR(255),
-    verified BOOLEAN,
+    verified BOOLEAN
 );
 
 CREATE TABLE Alumni (
     alumniId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    personId INT UNIQUE,
+    personId INT UNIQUE NOT NULL,
     currentLocation VARCHAR(255),
     phoneNumber VARCHAR(20),
     profilePicture VARCHAR(255),
     coverPicture VARCHAR(255),
-    bio TEXT 
+    bio TEXT,
     isNotable BOOLEAN,
     socialMedia TEXT,
     FOREIGN KEY (personId) REFERENCES Person(personId)
@@ -30,20 +30,14 @@ CREATE TABLE WebsiteAdmin (
     personId INT UNIQUE,
     role TEXT, 
     FOREIGN KEY (personId) REFERENCES Person(personId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE Custom (
     customId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     alumniId INT UNIQUE,
     showPhoneNumber BOOLEAN DEFAULT 0,
-    recieveNewsLetter BOOLEAN DEFAULT 1, 
-    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+    recieveNewsLetter BOOLEAN DEFAULT 1
 );
-
 
 CREATE TABLE Education (
     educationId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
@@ -53,13 +47,10 @@ CREATE TABLE Education (
     major VARCHAR(50),
     minor VARCHAR(50),
     admission VARCHAR(50),
-    graduatingYear DATE,
+    graduatingYear INT,
     awards VARCHAR(50),
-    stillLearning BOOLEAN, 
     researchPublications TEXT,
     FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE Experience (
@@ -75,8 +66,6 @@ CREATE TABLE Experience (
     projects TEXT,
     stillWorking BOOLEAN,
     FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE Post (
@@ -84,27 +73,12 @@ CREATE TABLE Post (
     alumniId INT,
     content TEXT,
     mediaPath VARCHAR(255),
+    suggestedByAdmin BOOLEAN,
+    suggestToAdmin BOOLEAN, 
+    location VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    likes INT,
-    commentCounts INT,
-    suggestToAdmin BOOLEAN,
-    featured BOOLEAN,
-    category VARCHAR(50),
     FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE Comment (
-    commentId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    postId INT UNIQUE,
-    content TEXT,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (postId) REFERENCES Post(postId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE News (
@@ -112,14 +86,12 @@ CREATE TABLE News (
     adminId INT,
     title VARCHAR(100),
     content TEXT,
-    anouncementDate Date,
     category VARCHAR(50),
-    mediaPath VARCHAR(255),
+    imagePath VARCHAR(255),
+    location VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE Event (
@@ -127,210 +99,42 @@ CREATE TABLE Event (
     adminId INT,
     title VARCHAR(100),
     content TEXT,
-    category VARCHAR(50),
     startDate DATE,
     endDate DATE,
-    eventLocation TEXT,
-    country VARCHAR(50),
     organizer VARCHAR(100),
-    constactInfo Text,
-    eventCapacity INT,
-    featuredSpeakers VARCHAR(255),
-    eventURL VARCHAR(255),
-    registerURL VARCHAR(255),
+    eventLink VARCHAR(255),
+    imagePath VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    mediaPath VARCHAR(255),
     FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE EventAttendance (
-    eventAttendanceId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    alumniId INT,
-    eventId INT,
-    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (eventId) REFERENCES Event(eventId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE RSVPStatus (
-    RSVPId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    eventAttendanceId INT,
-    alumniId INT,
-    eventId INT,
-    confirmed BOOLEAN,
-    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (eventId) REFERENCES Event(eventId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (eventAttendanceId) REFERENCES EventAttendance(eventAttendanceId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE JobPosting (
     jobPostingId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    alumniId INT,
+    adminId INT,
     jobTitle VARCHAR(100),
+    uploadDate Date,
     description Text,
-    industry VARCHAR(50),
+    companyName VARCHAR(100),
     companyAddress VARCHAR(255),
-    employmentType VARCHAR(50),
+    peopleNeeded INT,
     deadline Date,
     email VARCHAR(100),
     phoneNumber VARCHAR(20),
-    linkedIn VARCHAR(255),
-    offerStatus VARCHAR(20),
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE ProgramListing(
-    programID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    adminId INT,
-    programName VARCHAR(100),
-    faculty VARCHAR(100),
-    department VARCHAR(100),
-    description Text,
-    degree VARCHAR(20),
-    admission VARCHAR(20),
-    duration VARCHAR(100),
-    tuition DOUBLE,
-    constactInfo Text,
+    salary INT,
+    imagePath VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE   
-);
-
-CREATE TABLE MentorshipProgram (
-    mentorshipProgramID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    adminId INT,
-    programName VARCHAR(255) NOT NULL,
-    description TEXT,
-    industry VARCHAR(100),
-    deadline DATE,
-    startDate DATE,
-    endDate DATE,
-    programStatus VARCHAR(20),
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    registerURL VARCHAR(255),
-    contact VARCHAR(100), 
-    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE Chapters (
     chapterId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    alumniId INT NOT NULL,
     chapterName VARCHAR(255) NOT NULL,
     description TEXT,
-    region VARCHAR(100),
-    interestGroup VARCHAR(100),
-    foundingDate DATE,
-    presidentID INT,
-    email VARCHAR(255),
-    socialMedia VARCHAR(255),
     website VARCHAR(255),
-    registerURL VARCHAR(255),
-    count INT,
-    status VARCHAR(50),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE 
-    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE chapterMembers (
-    chapterId INT,
-    alumniId INT,
-    status VARCHAR(255),
-    PRIMARY KEY (chapterId, alumniId),
-    FOREIGN KEY (chapterId) REFERENCES chapters(alumniId), 
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (alumniId) REFERENCES alumni(alumniId)  
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE Donations (
-    campaignId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    adminId INT,
-    campaignName VARCHAR(255) NOT NULL,
-    description TEXT,
-    link VARCHAR(255),
-    amount DECIMAL(10,2) NOT NULL,
-    createdAt DATETIME NOT NULL,
-    updatedAt DATETIME NOT NULL,
-    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE volunteerOpportunity (
-    opportunityId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    adminId INT,
-    description TEXT,
-    location VARCHAR(255),
-    startDate DATE,
-    endDate DATE,
-    contact VARCHAR(255),
-    categories VARCHAR(20),
-    status VARCHAR(20),
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    noOfVolunteersNeeded INT,
-    noOfVolunteersRegistered INT,
-    registeringURL VARCHAR(255),
-    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE volunteers (
-    volunteerId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    opportunityId INT NOT NULL,
-    alumniId INT NOT NULL,
-    PRIMARY KEY (opportunityId, alumniId),
-    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId), 
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (opportunityId) REFERENCES volunteerOpportunity(opportunityId)  
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE alumniOfficeInfo (
-    officeId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    adminId INT,
-    officeName VARCHAR(100) NOT NULL,
-    address VARCHAR(255),
-    phone VARCHAR(20),
-    email VARCHAR(100),
-    fax VARCHAR(20),
-    officeHours VARCHAR(255),
-    contactFormURL VARCHAR(255),
-    description TEXT,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)  
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Feedback (
@@ -342,8 +146,6 @@ CREATE TABLE Feedback (
     submittedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     status VARCHAR(20),
     FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)  
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 CREATE TABLE Gallery (
@@ -356,61 +158,16 @@ CREATE TABLE Gallery (
     createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)  
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
-CREATE TABLE socialMedia (
-    socialMediaId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+CREATE TABLE Donations (
     adminId INT,
-    platform VARCHAR(255) NOT NULL,
-    username VARCHAR(255) NOT NULL,
-    url VARCHAR(255) NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)  
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
-
-CREATE TABLE discussionBoard (
-    boardId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    alumniId INT,
     title VARCHAR(255) NOT NULL,
     description TEXT,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    createdBy VARCHAR(255),
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    links TEXT,
-    FOREIGN KEY (adminId) REFERENCES Alumni(alumniId)  
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+    link VARCHAR(255),
+    createdAt DATETIME NOT NULL,
+    updatedAt DATETIME NOT NULL,
+    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
 );
-
-CREATE TABLE ratings (
-    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    page VARCHAR(255),
-    usabilityRating INT,
-    contentQualityRating INT,
-    overallExperienceRating INT,
-    surveyDate DATE
-);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
