@@ -48,10 +48,17 @@ exports.signIn = async function (req, res) {
       });
       
 
-      res
-        .cookie("token", realToken, { httpOnly: true })
-        .cookie("id2", id2)
-        .cookie("id", token, { httpOnly: false });
+      if (process.env.NODE_ENV === 'dev') {
+        res
+          .cookie("token", realToken, { httpOnly: true })
+          .cookie("id2", id2)
+          .cookie("id", token, { httpOnly: false });
+      } else if (NODE_ENV === 'prod') {
+        res
+          .cookie("token", realToken, { httpOnly: true, secure: true })
+          .cookie("id2", id2, { secure: true })
+          .cookie("id", token, { httpOnly: false, secure: true });
+      }
 
       res.status(200).json({
         success: true,
