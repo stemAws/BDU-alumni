@@ -537,12 +537,13 @@ const getStoryById = async(id)=>{
     
 }
   const submitFile= async () => {
-    const cookies = document.cookie;
-    const match = cookies.match(/id=([^;]*)/);
-    const token = match ? match[1] : null;
+
+    // const cookies = document.cookie;
+    // const match = cookies.match(/id=([^;]*)/);
+    // const token = match ? match[1] : null;
   try {
     setloading(true)
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-email/${token}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-email`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -552,7 +553,7 @@ const getStoryById = async(id)=>{
         email: placeholders[0].email,
       }),
     });
-    const response2 = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-username/${token}`, {
+    const response2 = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-username`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -574,7 +575,7 @@ const getStoryById = async(id)=>{
     }
     else {
             try {
-              const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/${token}`, {
+              const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni`, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
@@ -602,6 +603,7 @@ const getStoryById = async(id)=>{
               const data = await res.json();
               setPlaceholders([...placeholders, data]);
               // history.push(`${placeholders[0].username}`);
+              window.location.reload();
               }
               else if (!res.ok) {
                 setloading(false)
@@ -611,7 +613,7 @@ const getStoryById = async(id)=>{
               setloading(false)
               console.error('Error updating alumni profile:', error);
             }
-    // window.location.reload();
+    
   };
 } catch (error) {
   setloading(false)
