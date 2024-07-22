@@ -180,7 +180,7 @@ exports.updateAlumni = async (id, alumniData) => {
     } = alumniData;
 
     const {alumniId, personId} = id
-
+    
     await db.query(
       `UPDATE Person
        SET fullName = ?, gender = ?, email = ?, username = ?
