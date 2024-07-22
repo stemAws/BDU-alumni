@@ -31,7 +31,7 @@ exports.updateExperience = async (req, res) => {
 
 exports.getExperience = async (req, res) => {
     try {
-        const experience = await experienceService.getExperience(req.cookies.id2);
+        const experience = await experienceService.getExperience(req.params.idorusername);
 
         if (experience) {
             res.status(200).json(experience);

@@ -38,7 +38,7 @@ exports.deleteEducationById = async (req, res) => {
 
 exports.getEducation = async (req, res) => {
     try {
-        const education = await educationService.getEducation(req.cookies.id2);
+        const education = await educationService.getEducation(req.params.idorusername);
         console.log(req.cookies.id2)
         
         if (!education) {
