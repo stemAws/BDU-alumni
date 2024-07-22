@@ -183,7 +183,7 @@ const ProfilePage = () => {
         </div>
         {educations?.length > 0 &&
           <div className="learning_place">
-            <p>{`${educations[educations.length - 1].degree} in ${educations[educations.length - 1].fieldOfStudy} at ${educations[educations.length - 1].institution}`}</p>
+            <p>{`${educations[educations.length - 1].degree} in ${educations[educations.length - 1].major} at ${educations[educations.length - 1].institution}`}</p>
           </div>
         }
           </div>
