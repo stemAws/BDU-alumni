@@ -6,11 +6,11 @@ exports.addNews = async (title, content, category, image_path, adminId, location
 
     if (image_path) {
       query =
-        "INSERT INTO news (title, content,  category, imagePath, adminId, location) VALUES (?, ?, ?, ?, ?, ?)";
+        "INSERT INTO News (title, content,  category, imagePath, adminId, location) VALUES (?, ?, ?, ?, ?, ?)";
       params = [title, content, anouncementDate, category, image_path, adminId, location];
     } else {
       query =
-        "INSERT INTO news (title, content, category, adminId, location) VALUES (?, ?, ?, ?, ?)";
+        "INSERT INTO News (title, content, category, adminId, location) VALUES (?, ?, ?, ?, ?)";
       params = [title, content, category, adminId];
     }
 
@@ -25,7 +25,7 @@ exports.addNews = async (title, content, category, image_path, adminId, location
 
 exports.getNews = async () => {
   const [news] = await db.query(
-    `SELECT *, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM news`
+    `SELECT *, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM News`
   );
 
   return news;
@@ -33,7 +33,7 @@ exports.getNews = async () => {
 
 exports.NewsList = async () => {
   const [news] = await db.query(
-    `SELECT title, category, fullName FROM news n JOIN websiteadmin w JOIN person p WHERE n.adminId = w.adminId AND p.personId = w.personId`
+    `SELECT title, category, fullName FROM News n JOIN websiteadmin w JOIN person p WHERE n.adminId = w.adminId AND p.personId = w.personId`
   );
 
   return news;
@@ -41,7 +41,7 @@ exports.NewsList = async () => {
 
 exports.getANews = async (newsId) => {
   const [news] = await db.query(
-    `SELECT title, content, category, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt FROM news WHERE newsId = ?`,
+    `SELECT title, content, category, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt FROM News WHERE newsId = ?`,
     [newsId]
   );
 
@@ -53,7 +53,7 @@ exports.updateANews = async (newsId, updatedNews) => {
   const par = []
 
   const [result] = await db.query(
-    `   UPDATE news
+    `   UPDATE News
         SET
           title = ?,
           content =?,
@@ -68,7 +68,7 @@ exports.updateANews = async (newsId, updatedNews) => {
 };
 
 exports.deleteANews = async (newsId) => {
-  const [result] = await db.query("DELETE FROM news WHERE newsId = ?", [
+  const [result] = await db.query("DELETE FROM News WHERE newsId = ?", [
     newsId,
   ]);
 
@@ -82,7 +82,7 @@ exports.deleteANews = async (newsId) => {
 exports.searchNewsBy = async (title, category) => {
   try {
     let q = `SELECT *, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt,
-    DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM news WHERE title LIKE '%${title}%'`;
+    DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM News WHERE title LIKE '%${title}%'`;
     if (category != null) {
       q += ` AND category = "${category}"`;
     } 
