@@ -180,24 +180,26 @@ exports.updateAlumni = async (id, alumniData) => {
       socialMedia,
     } = alumniData;
 
+    const {alumniId, personId} = id
+
     await db.query(
       `UPDATE Person
        SET fullName = ?, gender = ?, email = ?, username = ?
        WHERE personId = ?`,
-      [fullName, gender, email, username, id]
+      [fullName, gender, email, username, personId]
     );
 
     await db.query(
       `UPDATE Alumni
        SET currentLocation = ?, recieveNewsletter = ?, socialMedia = ?, phoneNumber = ?, bio = ?
-       WHERE personId = ?`,
+       WHERE alumniId = ?`,
       [
         currentLocation,
         recieveNewsletter,
         socialMedia,
         phoneNumber,
         bio,
-        id,
+        alumniId,
       ]
     );
 

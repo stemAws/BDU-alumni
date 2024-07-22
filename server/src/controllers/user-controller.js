@@ -40,9 +40,7 @@ exports.signIn = async function (req, res) {
     );
 
     if (authenticationResult.success) {
-      let token = await alumniService.getAlumniProfile(username);
-      const id2 = token[0].alumniId;
-      token = token[0].personId;
+      const [token] = await alumniService.getAlumniProfile(username);
       const realToken = jwt.sign({ token }, process.env.secretKey, {
         expiresIn: "30d",
       });
@@ -51,13 +49,9 @@ exports.signIn = async function (req, res) {
       if (process.env.NODE_ENV === 'dev') {
         res
           .cookie("token", realToken, { httpOnly: true })
-          .cookie("id2", id2)
-          .cookie("id", token, { httpOnly: false });
       } else if (NODE_ENV === 'prod') {
         res
           .cookie("token", realToken, { httpOnly: true, secure: true })
-          .cookie("id2", id2, { secure: true })
-          .cookie("id", token, { httpOnly: false, secure: true });
       }
 
       res.status(200).json({
@@ -261,7 +255,7 @@ exports.getCoverPicture = async function (req, res) {
 exports.updateAlumni = async function (req, res) {
   try {
     const affectedRows = await alumniService.updateAlumni(
-      req.params.id,
+      req.alumni,
       req.body
     );
 
