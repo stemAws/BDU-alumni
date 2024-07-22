@@ -45,7 +45,7 @@ const MainPage = () => {
         
         
           <SigninContext.Provider value={{ signin, setsignin}}>
-        <Header logout={handleLogout} loginState={loginState}/>
+        <Header logout={handleLogout} setsignin={setsignin} loginState={loginState}/>
         </SigninContext.Provider>
         {
           signin&&<Signin setloginState={setloginState} setsignin={setsignin}/>
