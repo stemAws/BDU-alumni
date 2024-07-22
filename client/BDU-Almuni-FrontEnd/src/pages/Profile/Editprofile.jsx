@@ -196,9 +196,8 @@ const checkbox=()=>{
     
   },[username])
 
- 
+ let workingPlace =""
   const stillWorking=()=>{
-    var workingPlace =""
     for (let i = 0; i < experiances?.length; i++) {
       if (experiances[i].stillWorking) {
         workingPlace= `${experiances[i].position} at ${experiances[i].company}`

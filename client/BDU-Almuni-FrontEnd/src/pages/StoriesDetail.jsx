@@ -42,7 +42,11 @@ const StoriesDetail = () => {
                 <p className="full-name">kebede abebe</p>
             </div>
             <img src={singleStory?.mediaPath} alt="" className="story-img" />
-            <p className="story-date"> {singleStory?.createdAt}</p>
+            <p className="story-date"> {new Date(singleStory?.createdAt).toLocaleString('default',{
+              day:'numeric',
+              month:'long',
+              year:'numeric'
+            })}</p>
              </>
             }
         </div>
@@ -57,7 +61,12 @@ const StoriesDetail = () => {
                 }
                 </p>
                 {!singleStory?.mediaPath&&
-                 <p className="story-date no-img-date"> {singleStory?.createdAt}</p>}
+                 <p className="story-date no-img-date"> {new Date(singleStory?.createdAt)?.toLocaleString('default',{
+                  day:'numeric',
+                  month:'long',
+                  year:'numeric'
+                  
+                  })}</p>}
             </div>
         </div>
   )
