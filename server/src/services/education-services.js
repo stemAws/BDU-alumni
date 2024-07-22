@@ -36,13 +36,35 @@ exports.updateEducation = async (education) => {
     return affectedRows[0].affectedRows;
 };
 
-exports.getEducation = async (id) => {
-    const [education] = await db.query(`
-    SELECT * FROM Education Where alumniId = ?`, [id]);
-    console.log(id)
-    return education;
-};
-
+exports.getEducation = async (idorusername) => {
+    let query;
+    let params;
+  
+    if (isNaN(idorusername)) {
+      query = `
+        SELECT e.*
+        FROM Education e
+        JOIN Alumni a ON e.alumniId = a.alumniId
+        JOIN Person p ON a.personId = p.personId
+        WHERE p.username = ?`;
+      params = [idorusername];
+    } else {
+      query = `
+        SELECT *
+        FROM Education
+        WHERE alumniId = ?`;
+      params = [parseInt(idorusername, 10)];
+    }
+  
+    try {
+      const [education] = await db.query(query, params);
+      return education;
+    } catch (error) {
+      console.error('Error fetching education:', error);
+      throw error;
+    }
+  };
+  
 exports.deleteEducation = async (id) => {
     const { affectedRows } = await db.query("DELETE FROM Education WHERE educationID = ?", [id]);
 
