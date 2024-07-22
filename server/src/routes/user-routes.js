@@ -38,11 +38,8 @@ router.get(
   UserController.getCoverPicture
 );
 router.put("/alumni", verifyToken, UserController.updateAlumni);
-router.post(
-  "/check-username/:alumniID?",
-  UserController.checkUsernameAvailability
-);
-router.post("/check-email/:alumniID?", UserController.checkEmailAvailability);
+router.post("/check-username", verifyToken, UserController.checkUsernameAvailability);
+router.post("/check-email", verifyToken, UserController.checkEmailAvailability);
 router.put(
   "/change-password/:alumniID",
   verifyToken,

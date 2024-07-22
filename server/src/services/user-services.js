@@ -212,7 +212,7 @@ exports.updateAlumni = async (id, alumniData) => {
 
 exports.isUsernameTaken = async (username, alumniID = null) => {
   try {
-    let query = "SELECT COUNT(*) as count FROM alumni WHERE username = ?";
+    let query = "SELECT COUNT(*) as count FROM Alumni WHERE username = ?";
 
     const params = [username];
 
@@ -232,7 +232,7 @@ exports.isUsernameTaken = async (username, alumniID = null) => {
 
 exports.isEmailTaken = async (email, alumniID = null) => {
   try {
-    let query = "SELECT COUNT(*) as count FROM alumni WHERE email = ?";
+    let query = "SELECT COUNT(*) as count FROM Alumni WHERE email = ?";
 
     const params = [email];
 
@@ -252,7 +252,7 @@ exports.isEmailTaken = async (email, alumniID = null) => {
 
 exports.deleteAlumni = async (id) => {
   try {
-    const result = await db.query("DELETE FROM person WHERE personID = ?", [
+    const result = await db.query("DELETE FROM Person WHERE personID = ?", [
       id,
     ]);
     return result[0].affectedRows;
@@ -265,7 +265,7 @@ exports.changePassword = async (personID, oldPassword, newPassword) => {
   // not working i am so confused
   try {
     const [result] = await db.query(
-      "SELECT password FROM person WHERE personID = ?",
+      "SELECT password FROM Person WHERE personID = ?",
       personID
     );
     if (!result || !result.length) {
@@ -284,7 +284,7 @@ exports.changePassword = async (personID, oldPassword, newPassword) => {
     const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
     const [{ affectedRows }] = await db.query(
-      "UPDATE person SET password = ? WHERE personID = ?",
+      "UPDATE Person SET password = ? WHERE personID = ?",
       [newHashedPassword, personID]
     );
 
@@ -297,7 +297,7 @@ exports.changePassword = async (personID, oldPassword, newPassword) => {
 
 exports.getNotable = async () => {
   try {
-    let query = "SELECT fullName, username, profilePicture, alumniId, isNotable FROM person p JOIN alumni a WHERE a.alumniId = p.personId AND isNotable = 1";
+    let query = "SELECT fullName, username, profilePicture, alumniId, isNotable FROM Person p JOIN Alumni a WHERE a.alumniId = p.personId AND isNotable = 1";
 
     const [notableAlumni] = await db.query(query);
 
@@ -310,7 +310,7 @@ exports.getNotable = async () => {
 exports.updateNotable = async (alumniID, isNotable) => {
   try {
     const [{ affectedRows }] = await db.query(
-      "UPDATE alumni SET isNotable = ? WHERE alumniID = ?",
+      "UPDATE Alumni SET isNotable = ? WHERE alumniID = ?",
       [isNotable, alumniID]
     );
     return affectedRows;
@@ -378,7 +378,7 @@ exports.confirmPasswordChange = async function (
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await db.query("UPDATE person SET password = ? WHERE email = ?", [
+    await db.query("UPDATE Person SET password = ? WHERE email = ?", [
       hashedPassword,
       email,
     ]);

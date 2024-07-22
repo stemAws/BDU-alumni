@@ -44,7 +44,7 @@ exports.signIn = async function (req, res) {
       const realToken = jwt.sign({ token }, process.env.secretKey, {
         expiresIn: "30d",
       });
-      
+
 
       if (process.env.NODE_ENV === 'dev') {
         res
@@ -279,7 +279,7 @@ exports.checkUsernameAvailability = async function (req, res) {
 
     const isUsernameTaken = await alumniService.isUsernameTaken(
       username,
-      alumniID
+      req.alumni.alumniID
     );
 
     res.json({ isUsernameTaken });
@@ -292,7 +292,7 @@ exports.checkUsernameAvailability = async function (req, res) {
 exports.checkEmailAvailability = async function (req, res) {
   try {
     const { email } = req.body;
-    const alumniID = req.params.alumniID || null;
+    const alumniID = req.alumni.alumniID || null;
 
     const isEmailTaken = await alumniService.isEmailTaken(email, alumniID);
 
