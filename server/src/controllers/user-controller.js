@@ -41,6 +41,8 @@ exports.signIn = async function (req, res) {
 
     if (authenticationResult.success) {
       const [token] = await alumniService.getAlumniProfile(username);
+      const id2 = token.alumniId;
+      const id = token.personId;
       const realToken = jwt.sign({ token }, process.env.secretKey, {
         expiresIn: "30d",
       });
@@ -48,7 +50,9 @@ exports.signIn = async function (req, res) {
 
       if (process.env.NODE_ENV === 'dev') {
         res
-          .cookie("token", realToken, { httpOnly: true })
+        .cookie("token", realToken, { httpOnly: true })
+        .cookie("id2", id2)
+        .cookie("id", id, { httpOnly: false })
       } else if (NODE_ENV === 'prod') {
         res
           .cookie("token", realToken, { httpOnly: true, secure: true })
