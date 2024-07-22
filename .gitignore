@@ -2,3 +2,4 @@ client/BDU-Almuni-FrontEnd/yarn.lock
 server/yarn.lock
 server/package-lock.json
 package-lock.json
+client/node_modules/
