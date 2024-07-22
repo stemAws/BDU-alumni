@@ -176,7 +176,6 @@ exports.updateAlumni = async (id, alumniData) => {
       username,
       bio,
       currentLocation,
-      recieveNewsletter,
       socialMedia,
     } = alumniData;
 
@@ -191,11 +190,10 @@ exports.updateAlumni = async (id, alumniData) => {
 
     await db.query(
       `UPDATE Alumni
-       SET currentLocation = ?, recieveNewsletter = ?, socialMedia = ?, phoneNumber = ?, bio = ?
+       SET currentLocation = ?, socialMedia = ?, phoneNumber = ?, bio = ?
        WHERE alumniId = ?`,
       [
         currentLocation,
-        recieveNewsletter,
         socialMedia,
         phoneNumber,
         bio,
@@ -217,7 +215,7 @@ exports.isUsernameTaken = async (username, alumniID = null) => {
     const params = [username];
 
     if (alumniID !== null) {
-      query += " AND alumniID <> ?";
+      query += " AND personId <> ?";
       params.push(alumniID);
     }
 
@@ -237,7 +235,7 @@ exports.isEmailTaken = async (email, alumniID = null) => {
     const params = [email];
 
     if (alumniID !== null) {
-      query += " AND alumniID <> ?";
+      query += " AND personId <> ?";
       params.push(alumniID);
     }
 

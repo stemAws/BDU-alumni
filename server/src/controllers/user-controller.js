@@ -277,14 +277,12 @@ exports.updateAlumni = async function (req, res) {
 };
 
 exports.checkUsernameAvailability = async function (req, res) {
-  console.log(req.alumni.alumniId)
   try {
     const { username } = req.body;
-    const alumniId = req.params.alumniId || null;
 
     const isUsernameTaken = await alumniService.isUsernameTaken(
       username,
-      req.alumni.alumniId
+      req.alumni.personId
     );
 
     res.json({ isUsernameTaken });
@@ -297,9 +295,8 @@ exports.checkUsernameAvailability = async function (req, res) {
 exports.checkEmailAvailability = async function (req, res) {
   try {
     const { email } = req.body;
-    const alumniId = req.alumni.alumniId || null;
 
-    const isEmailTaken = await alumniService.isEmailTaken(email, alumniId);
+    const isEmailTaken = await alumniService.isEmailTaken(email, req.alumni.personId);
 
     res.json({ isEmailTaken });
   } catch (error) {
