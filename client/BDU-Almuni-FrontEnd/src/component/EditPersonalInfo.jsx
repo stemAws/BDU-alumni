@@ -75,6 +75,17 @@ setSelectedCountry(personalInfo[0].currentLocation)
       return
     handlePlaceholders(fullName,"fullName")
     }
+    // const handleupdate=()=>{
+    //   if (personalData[0].username === personalInfo[0].username) {
+    //     submitFile('username')
+    //   }
+    //   else if(personalData[0].email === personalInfo[0].email){
+    //     submitFile('email')
+    //   }
+    //   else{
+    //     submitFile(false)
+    //   }
+    // }
   return (
     <div>
     <div className={socialLinks?'personal_info_container personal_info_container_ghost':'personal_info_container'}>
