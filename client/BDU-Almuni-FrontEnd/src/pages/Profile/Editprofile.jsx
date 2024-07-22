@@ -17,6 +17,7 @@ import {FaPen} from 'react-icons/fa'
 import Activities from "../../component/Activities";
 import { Link } from "react-router-dom";
 import EditPersonalInfo from "../../component/EditPersonalInfo";
+import Cookies from 'js-cookie';
 // import SigninWrapper from "../../component/SigninWrapper";
 // import { SigninContext } from '../../Pages/UsersPage'
 const Editprofile = () => {
@@ -212,7 +213,8 @@ const checkbox=()=>{
   }
   const fetchExperiances = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences`,{
+      const token = Cookies.get('id2')
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${token}`,{
         credentials: 'include',
       });
       if (res.status===403) {
@@ -220,6 +222,7 @@ const checkbox=()=>{
       }
       else if(res.ok){
       const data = await res.json();
+      setExperiances([...experiances,data])
       return data;
       }
       else if (!res.ok) {
@@ -229,12 +232,13 @@ const checkbox=()=>{
       console.error("Error during fetching experiences:", error);
       return null;
     }
+  window.location.reload()
   };
   
   const fetchEducations = async () => {
     try {
-  
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education`,{
+      const token = Cookies.get('id2')
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${token}`,{
         credentials: 'include',
       });
       
@@ -255,6 +259,9 @@ const checkbox=()=>{
   }
   const addExperiance = async ({ token, jobTitle,industry, employmentType, companyName, startDate, endDate, stillWorking }) => {
     try {
+      const cookies = document.cookie;
+    const match = cookies.match(/id=([^;]*)/);
+    const token = match ? match[1] : null;
       setloading(true)
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences`,{
       method:'POST',
@@ -897,7 +904,7 @@ const getStoryById = async(id)=>{
     </div>
     </section>
     </section>
-    {notauth&&<SigninWrapper setSigninOpen={setSigninOpen} isSigninOpen={isSigninOpen} closeSignin={closeSignin} />}
+    {/* {notauth&&<SigninWrapper setSigninOpen={setSigninOpen} isSigninOpen={isSigninOpen} closeSignin={closeSignin} />} */}
     </div>
   )
 }
