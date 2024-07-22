@@ -212,7 +212,7 @@ exports.updateAlumni = async (id, alumniData) => {
 
 exports.isUsernameTaken = async (username, alumniID = null) => {
   try {
-    let query = "SELECT COUNT(*) as count FROM Alumni WHERE username = ?";
+    let query = "SELECT COUNT(*) as count FROM Person WHERE username = ?";
 
     const params = [username];
 
@@ -232,7 +232,7 @@ exports.isUsernameTaken = async (username, alumniID = null) => {
 
 exports.isEmailTaken = async (email, alumniID = null) => {
   try {
-    let query = "SELECT COUNT(*) as count FROM Alumni WHERE email = ?";
+    let query = "SELECT COUNT(*) as count FROM Person WHERE email = ?";
 
     const params = [email];
 
