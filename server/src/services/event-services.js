@@ -7,16 +7,14 @@ exports.addEvent = async (
   end_date,
   organizer,
   image_path,
-  eventLink,
-  category,
-  eventLocation
+  eventLink
 ) => {
   try {
     let query, params;
 
     if (image_path) {
       query =
-        "INSERT INTO event (title, content, startDate, endDate, organizer, imagePath, eventLink, category, eventLocation) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
+        "INSERT INTO event (title, content, startDate, endDate, organizer, imagePath, eventLink) VALUES (?, ?, ?, ?, ?, ?, ?)";
       params = [
         title,
         content,
@@ -25,13 +23,11 @@ exports.addEvent = async (
         organizer,
         image_path,
         eventLink,
-        category,
-        eventLocation,
       ];
     } else {
       query =
-        "INSERT INTO event (title, content, startDate, endDate, organizer, eventLink,category, eventLocation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-      params = [title, description, start_date, end_date, organizer, eventLink, category, eventLink];
+        "INSERT INTO event (title, content, startDate, endDate, organizer, eventLink) VALUES (?, ?, ?, ?, ?, ?)";
+      params = [title, description, start_date, end_date, organizer, eventLink];
     }
 
     const [result] = await db.query(query, params);
@@ -69,7 +65,7 @@ exports.getEventById = async (eventID) => {
 };
 
 exports.updateEvent = async (eventId, updatedEvent) => {
-  const { title, content, startDate, endDate, organizer, eventLink,  } =
+  const { title, content, startDate, endDate, organizer, eventLink } =
     updatedEvent;
 
   const [result] = await db.query(
@@ -81,13 +77,11 @@ exports.updateEvent = async (eventId, updatedEvent) => {
             startDate = ?,
             endDate = ?,
             organizer = ?,
-            eventLink = ?,
-            category = ?, 
             eventLink = ?
         WHERE
             eventId = ?
     `,
-    [title, content, startDate, endDate, organizer, eventLink, category, eventLink, eventId]
+    [title, content, startDate, endDate, organizer, eventLink, eventId]
   );
 
   return result.affectedRows;
@@ -105,14 +99,13 @@ exports.deleteEvent = async (eventId) => {
   return { success: true, message: "Event deleted successfully" };
 };
 
-
 exports.searchEventsBy = async (title, category) => {
   try {
     let q = `SELECT *, DATE_FORMAT(startDate, '%Y-%m-%d') AS startDate,
     DATE_FORMAT(endDate, '%Y-%m-%d') AS endDate FROM event WHERE title LIKE '%${title}%'`;
     if (category != null) {
       q += ` AND category = "${category}"`;
-    } 
+    }
     const queryResult = await db.query(q);
 
     return queryResult[0];
