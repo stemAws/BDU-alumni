@@ -263,7 +263,7 @@ exports.updateAlumni = async function (req, res) {
       req.body
     );
 
-    if (affectedRows > 0) {
+    if (affectedRows) {
       res
         .status(200)
         .json({ message: "Alumni updated successfully", affectedRows });
