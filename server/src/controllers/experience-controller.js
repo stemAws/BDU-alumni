@@ -2,7 +2,7 @@ const experienceService = require('../services/experience-services');
 
 exports.addExperience = async (req, res) => {
     try {
-        const affectedRows = await experienceService.addExperience(req.body, req.cookies.id2);
+        const affectedRows = await experienceService.addExperience(req.body, req.alumni.alumniId);
         if (affectedRows > 0) {
             res.status(201).json({ success: true, message: "Experience added successfully", affectedRows });
         } else {
