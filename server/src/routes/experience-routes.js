@@ -6,6 +6,6 @@ const { verifyToken } = require("../middleware/auth-middleware");
 router.post('/experiences', verifyToken, experienceController.addExperience);
 router.put('/experiences', verifyToken, experienceController.updateExperience);
 router.delete('/experiences/:experienceId', verifyToken, experienceController.deleteExperienceById);
-router.get('/experiences/', experienceController.getExperience); // from effeciency perspective sometimes we have to skip the get verifications.
+router.get('/experiences/:idorusername', experienceController.getExperience);
 
 module.exports = router;
