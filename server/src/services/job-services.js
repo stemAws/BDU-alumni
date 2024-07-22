@@ -2,47 +2,50 @@ const db = require("../config/db");
 
 exports.addJob = async (
   jobTitle,
-  description,
-  industry,
-  companyAddress,
-  employmentType,
+  jobDescription,
+  uplodDate,
+  companyName,
+  address,
+  peopleNeeded,
+  salary,
   deadline,
   email,
   phoneNumber,
-  linkedIn,
-  image_path
+  imagePath
 ) => {
   try {
     let query, params;
 
-    if (image_path) {
+    if (imagePath) {
       query =
-        "INSERT INTO jobposting (jobTitle, description, industry, companyAddress, employmentType, deadline, email, phoneNumber, linkedIn, adminId, image) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?)";
+        "INSERT INTO jobposting (  jobTitle, description,uplodDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,imagePath) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?, ?)";
       params = [
         jobTitle,
-        description,
-        industry,
-        companyAddress,
-        employmentType,
+        jobDescription,
+        uplodDate,
+        companyName,
+        address,
+        peopleNeeded,
+        salary,
         deadline,
         email,
         phoneNumber,
-        linkedIn,
-        image_path,
+        downloadURL
       ];
     } else {
       query =
-        "INSERT INTO jobposting (jobTitle, description, industry, companyAddress, employmentType, deadline, email, phoneNumber, linkedIn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        "INSERT INTO jobposting (jobTitle, description,uplodDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
       params = [
         jobTitle,
-        description,
-        industry,
-        companyAddress,
-        employmentType,
+        jobDescription,
+        uplodDate,
+        companyName,
+        address,
+        peopleNeeded,
+        salary,
         deadline,
         email,
-        phoneNumber,
-        linkedIn,
+        phoneNumber
       ];
     }
 
@@ -56,14 +59,14 @@ exports.addJob = async (
 };
 
 exports.getJobs = async () => {
-  const query = `SELECT jobPostingId, jobTitle, industry FROM jobposting`;
+  const query = `SELECT jobPostingId, jobTitle FROM jobposting`;
   const [result] = await db.query(query);
   return result;
 };
 
 exports.getJob = async (jobId) => {
   const [job] = await db.query(
-    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM jobposting WHERE jobPostingId = ?`,
+    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline,DATE_FORMAT(uplodDate, '%Y-%m-%d') AS uplodDate FROM jobposting WHERE jobPostingId = ?`,
     [jobId]
   );
   return job.length > 0 ? job[0] : null;
@@ -72,14 +75,15 @@ exports.getJob = async (jobId) => {
 exports.updateJob = async (jobId, updatedJob) => {
   const {
     jobTitle,
-    description,
-    industry,
-    companyAddress,
-    employmentType,
+    jobDescription,
+    uplodDate,
+    companyName,
+    address,
+    peopleNeeded,
+    salary,
     deadline,
     email,
-    phoneNumber,
-    linkedIn,
+    phoneNumber
   } = updatedJob;
 
   const [result] = await db.query(
@@ -88,36 +92,39 @@ exports.updateJob = async (jobId, updatedJob) => {
         SET
         jobTitle=?,
         description=?,
-        industry=?,
+        uploadDate=?,
+        companyName=?,
         companyAddress=?,
-        employmentType=?,
+        peopleNeeded=?,
+        salary=?,
         deadline=?,
         email=?,
-        phoneNumber=?,
-        linkedIn=?
-        WHERE
+        phoneNumber=?
+    WHERE
             jobpostingId = ?
     `,
     [
       jobTitle,
-      description,
-      industry,
-      companyAddress,
-      employmentType,
+      jobDescription,
+      uplodDate,
+      companyName,
+      address,
+      peopleNeeded,
+      salary,
       deadline,
       email,
       phoneNumber,
-      linkedIn,
-      jobId
+      jobId,
     ]
   );
 
   return result.affectedRows;
 };
 exports.deleteJob = async (jobId) => {
-  const [result] = await db.query("DELETE FROM jobposting WHERE jobPostingId = ?", [
-    jobId,
-  ]);
+  const [result] = await db.query(
+    "DELETE FROM jobposting WHERE jobPostingId = ?",
+    [jobId]
+  );
 
   if (result.affectedRows === 0) {
     return { success: false, message: "No record by the given id" };
@@ -127,8 +134,9 @@ exports.deleteJob = async (jobId) => {
 };
 
 exports.getAllJobs = async () => {
-  const [jobs] =
-    await db.query(`SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline  FROM jobposting`);
+  const [jobs] = await db.query(
+    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline  FROM jobposting`
+  );
   return jobs;
 };
 
@@ -137,7 +145,7 @@ exports.searchJobsBy = async (jobTitle, industry) => {
     let q = `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM jobposting WHERE jobTitle LIKE '%${jobTitle}%'`;
     if (industry != null) {
       q += ` AND industry = '${industry}'`;
-    } 
+    }
     const queryResult = await db.query(q);
 
     return queryResult[0];
