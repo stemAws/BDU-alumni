@@ -1,5 +1,5 @@
 .chapters-container{
-    /* margin-top: 2rem; */
+    margin-top: 2rem;
     background-color: rgb(234, 234, 233);
     height: 890px;
 
@@ -94,6 +94,11 @@
     justify-content: flex-start;
     align-items: flex-start;
     color: #1b1919;
+    border-left: 3px solid orange;
+    border-right: 3px solid #00b3ff;
+}
+.ind-chapters>p{
+    overflow-y: auto;
 }
 .ind-chapters h4{
     color: #909090;
@@ -106,17 +111,17 @@
 .ind-chapters button{
     font-size: 13px;
     margin: 20px;
-    border: 1px solid #909090;
+    border: 1px solid #00b3ff;
     border-radius: 10px;
-    color: #909090;
+    color: #00b3ff;
     height: 40px;
     width: 80px;
     background-color: white;
     align-self: center;
-    transition: 0.30s ease-in-out;
+    transition: 0.50s ease-in-out;
     cursor: pointer;    
 }
 .ind-chapters button:hover{
- color: #00B2FF;
- border:1px solid #00B2FF;
+ color: orange;
+ border:1px solid orange;
 }

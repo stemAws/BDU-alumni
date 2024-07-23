@@ -36,6 +36,9 @@
     margin-top: 20px;
     gap: 20px;
 }
+.main-page-buttons a {
+display: flex;
+}
 .btn.transparent-btn{
     background-color: transparent;
     color: #fff;
