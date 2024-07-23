@@ -8,14 +8,14 @@ const EventPost = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [postDate, setPostDate] = useState("");
-  const [location, setLocation] = useState("");
+  // const [location, setLocation] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
 
   const [titleError, setTitleError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
   const [postDateError, setPostDateError] = useState("");
-  const [locationError, setLocationError] = useState("");
+  // const [locationError, setLocationError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
@@ -37,10 +37,10 @@ const EventPost = () => {
           setPostDate(value);
           setPostDateError("");
           break;
-        case "location":
-          setLocation(value);
-          setLocationError("");
-          break;
+        // case "location":
+        //   setLocation(value);
+        //   setLocationError("");
+        //   break;
         default:
           break;
       }
@@ -88,13 +88,13 @@ const EventPost = () => {
           valid = false;
         }
       }
-    if (!location) {
-      setLocationError(location ? "" : "Location field cannot be empty!");
-      valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(location)) {
-      setLocationError("Location must contain only letters and spaces!");
-      valid = false;
-    }
+    // if (!location) {
+    //   setLocationError(location ? "" : "Location field cannot be empty!");
+    //   valid = false;
+    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(location)) {
+    //   setLocationError("Location must contain only letters and spaces!");
+    //   valid = false;
+    // }
 
     if (valid) {
       try {
@@ -173,7 +173,7 @@ const EventPost = () => {
               <p className="errorMessage">{descriptionError}</p>
             )}
           </div>
-          <div className="form">
+          {/* <div className="form">
             <label className="label">Location:</label>
             <input
               type="text"
@@ -182,7 +182,7 @@ const EventPost = () => {
               onChange={handleInputChange}
             />
             {locationError && <p className="errorMessage">{locationError}</p>}
-          </div>
+          </div> */}
           <div className="form">
             <label className="label">Date:</label>
             <input
