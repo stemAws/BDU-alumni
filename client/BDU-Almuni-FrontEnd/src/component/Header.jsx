@@ -82,7 +82,7 @@ const Header = ({setsignin,loginState,logout}) => {
             <p className="bottom-title">Connecting the past, shaping the future. Join our alumni network to stay informed, get involved, and give back. Together, we can create opportunities and build a stronger community.</p>
             <div className="main-page-buttons">
              { !loginState&&<Button id={"signin-btn"} onClick={()=>setsignin(true)} text='SIGN IN'/>} 
-            <Link to='/explore'> <Button className={"transparent-btn"} onClick={()=>setsignin(true)} text='EXPLORE'/></Link>
+            <Link to='/explore'> <Button className={"transparent-btn"}  text='EXPLORE'/></Link>
             </div>
             
         </div>
