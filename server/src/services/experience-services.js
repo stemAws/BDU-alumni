@@ -40,15 +40,35 @@ exports.updateExperience = async (experience) => {
   return affectedRows[0].affectedRows;
 };
 
-exports.getExperience = async (id) => {
-  const [experience] = await db.query(
-    `SELECT *
-    FROM Experience
-    WHERE alumniId = ?`,
-    [id]
-  );
-  return experience;
+exports.getExperience = async (idorusername) => {
+  let query;
+  let params;
+
+  if (isNaN(idorusername)) {
+    query = `
+      SELECT e.*
+      FROM Experience e
+      JOIN Alumni a ON e.alumniId = a.alumniId
+      JOIN Person p ON a.personId = p.personId
+      WHERE p.username = ?`;
+    params = [idorusername];
+  } else {
+    query = `
+      SELECT *
+      FROM Experience
+      WHERE alumniId = ?`;
+    params = [parseInt(idorusername, 10)];
+  }
+
+  try {
+    const [experience] = await db.query(query, params);
+    return experience;
+  } catch (error) {
+    console.error('Error fetching experience:', error);
+    throw error;
+  }
 };
+
 
 exports.deleteExperience = async (id) => {
   const affectedRows = await db.query(

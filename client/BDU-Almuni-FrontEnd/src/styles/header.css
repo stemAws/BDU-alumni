@@ -80,7 +80,7 @@ display: flex;
 .logo img{
     height: 30px;
     width: 30px;
-object-fit: contain;
+    object-fit: contain;
 }
 .navBar-container{
     position: fixed;
@@ -97,12 +97,12 @@ object-fit: contain;
 }
 .nav-lists{
     position: relative;
-padding: 0;
-margin: 0;
-display: flex;
-gap: 10px;
-height: 50px;
-align-items: center;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+    height: 50px;
+    align-items: center;
 }
 .nav-lists>ul{
     text-transform: uppercase;
@@ -124,21 +124,21 @@ cursor: pointer;
     min-width: fit-content;
     align-items: center;
     }
-    .nav-lists ul li a{
-        text-decoration: none;
-        color: #ffffff;
-        mix-blend-mode: difference; 
-  /* background-color: currentColor; */
-    }
+.nav-lists ul li a{
+    text-decoration: none;
+    color: #ffffff;
+    mix-blend-mode: difference; 
+/* background-color: currentColor; */
+}
 .nav-lists .nav-list-conatiner .each-nav-list::before {
-content: "";
-background-color: #0C8CE9;
-position: absolute;
-bottom: 0;
-left: 0;
-width: 0;
-height: 0.5px; 
-transition: width 0.5s ease;
+    content: "";
+    background-color: #0C8CE9;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0.5px; 
+    transition: width 0.5s ease;
 }
 
 .nav-lists .nav-list-conatiner .each-nav-list:hover::before {
@@ -158,7 +158,7 @@ transition: width 0.5s ease;
     background-color: #2a2a2a;
     width: 140px;
     max-height: 120px;
-    top: 162%;
+    top: 165%;
     padding-bottom: 10px;
     
 }

@@ -40,18 +40,23 @@ exports.signIn = async function (req, res) {
     );
 
     if (authenticationResult.success) {
-      let token = await alumniService.getAlumniProfile(username);
-      const id2 = token[0].alumniId;
-      token = token[0].personId;
+      const [token] = await alumniService.getAlumniProfile(username);
+      const id2 = token.alumniId;
+      const id = token.personId;
       const realToken = jwt.sign({ token }, process.env.secretKey, {
         expiresIn: "30d",
       });
-      
 
-      res
+
+      if (process.env.NODE_ENV === 'dev') {
+        res
         .cookie("token", realToken, { httpOnly: true })
         .cookie("id2", id2)
-        .cookie("id", token, { httpOnly: false });
+        .cookie("id", id, { httpOnly: false })
+      } else if (NODE_ENV === 'prod') {
+        res
+          .cookie("token", realToken, { httpOnly: true, secure: true })
+      }
 
       res.status(200).json({
         success: true,
@@ -114,8 +119,8 @@ exports.uploadProfilePicture = async function (req, res) {
 
   const resizedFile = await sharp(file.buffer).jpeg({ quality: 20 }).toBuffer();
 
-  const alumniID = req.cookies.id2;
-  const filePath = `profilePictures/${alumniID}-${Date.now()}${path.extname(
+  const alumniId = req.cookies.id2;
+  const filePath = `profilePictures/${alumniId}-${Date.now()}${path.extname(
     file.originalname
   )}`;
   const fileRef = ref(storage, filePath);
@@ -126,7 +131,7 @@ exports.uploadProfilePicture = async function (req, res) {
     const downloadURL = await getDownloadURL(fileRef);
 
     const currentProfilePhotoPath =
-      await alumniService.getAlumniProfilePhotoById(alumniID);
+      await alumniService.getAlumniProfilePhotoById(alumniId);
 
     if (currentProfilePhotoPath) {
       const currentProfilePhotoRef = ref(storage, currentProfilePhotoPath);
@@ -139,7 +144,7 @@ exports.uploadProfilePicture = async function (req, res) {
     }
 
     const updateResult = await alumniService.updateAlumniProfilePhoto(
-      alumniID,
+      alumniId,
       downloadURL
     );
 
@@ -165,8 +170,8 @@ exports.uploadCoverPicture = async function (req, res) {
 
   const resizedFile = await sharp(file.buffer).jpeg({ quality: 20 }).toBuffer();
 
-  const alumniID = req.cookies.id2;
-  const filePath = `coverPictures/${alumniID}-${Date.now()}${path.extname(
+  const alumniId = req.cookies.id2;
+  const filePath = `coverPictures/${alumniId}-${Date.now()}${path.extname(
     file.originalname
   )}`;
   const fileRef = ref(storage, filePath);
@@ -177,7 +182,7 @@ exports.uploadCoverPicture = async function (req, res) {
     const downloadURL = await getDownloadURL(fileRef);
 
     const currentCoverPhotoPath = await alumniService.getAlumniCoverPhotoById(
-      alumniID
+      alumniId
     );
 
     console.log(currentCoverPhotoPath)
@@ -193,7 +198,7 @@ exports.uploadCoverPicture = async function (req, res) {
     }
 
     const updateResult = await alumniService.updateAlumniCoverPhoto(
-      alumniID,
+      alumniId,
       downloadURL
     );
 
@@ -254,11 +259,11 @@ exports.getCoverPicture = async function (req, res) {
 exports.updateAlumni = async function (req, res) {
   try {
     const affectedRows = await alumniService.updateAlumni(
-      req.params.id,
+      req.alumni,
       req.body
     );
 
-    if (affectedRows > 0) {
+    if (affectedRows) {
       res
         .status(200)
         .json({ message: "Alumni updated successfully", affectedRows });
@@ -274,11 +279,10 @@ exports.updateAlumni = async function (req, res) {
 exports.checkUsernameAvailability = async function (req, res) {
   try {
     const { username } = req.body;
-    const alumniID = req.params.alumniID || null;
 
     const isUsernameTaken = await alumniService.isUsernameTaken(
       username,
-      alumniID
+      req.alumni.personId
     );
 
     res.json({ isUsernameTaken });
@@ -291,9 +295,8 @@ exports.checkUsernameAvailability = async function (req, res) {
 exports.checkEmailAvailability = async function (req, res) {
   try {
     const { email } = req.body;
-    const alumniID = req.params.alumniID || null;
 
-    const isEmailTaken = await alumniService.isEmailTaken(email, alumniID);
+    const isEmailTaken = await alumniService.isEmailTaken(email, req.alumni.personId);
 
     res.json({ isEmailTaken });
   } catch (error) {
@@ -306,10 +309,10 @@ exports.changePassword = async function (req, res) {
   // : fix it
   try {
     const { newPassword, oldPassword } = req.body;
-    const alumniID = req.params.alumniID;
+    const alumniId = req.params.alumniId;
 
     const affectedRows = await alumniService.changePassword(
-      alumniID,
+      alumniId,
       newPassword,
       oldPassword
     );
@@ -338,9 +341,9 @@ exports.getNotableAlumni = async function (req, res) {
 exports.updateNotable = async function (req, res) {
   try {
     const { isNotable } = req.body;
-    const alumniID = req.params.alumniID;
+    const alumniId = req.params.alumniId;
 
-    const affectedRows = await alumniService.updateNotable(alumniID, isNotable);
+    const affectedRows = await alumniService.updateNotable(alumniId, isNotable);
 
     if (affectedRows === 0) {
       return res.status(404).json({ error: "Alumni not found" });

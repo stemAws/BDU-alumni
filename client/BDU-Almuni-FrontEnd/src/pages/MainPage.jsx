@@ -21,6 +21,8 @@ import PageNotFound from './PageNotFound';
 import ForgetPassword from './ForgetPassword';
 import Posts from './Posts';
 import SearchAndFilter from './SearchAndFilter';
+import AboutDevs from './AboutDevs';
+import StoriesDetail from './StoriesDetail';
 import Explore from './Explore';
 export const SigninContext = createContext();
 const MainPage = () => {
@@ -43,15 +45,15 @@ const MainPage = () => {
         
         
           <SigninContext.Provider value={{ signin, setsignin}}>
-        <Header logout={handleLogout} loginState={loginState}/>
+        <Header logout={handleLogout} setsignin={setsignin} loginState={loginState}/>
         </SigninContext.Provider>
         {
           signin&&<Signin setloginState={setloginState} setsignin={setsignin}/>
         }
           <Routes>
           <Route path="/" exact Component = {MainBody} />
-          <Route path="/stories"  Component = {Stories} />
-          <Route path="/events"  Component = {Events} />
+          {/* <Route path="/stories"  Component = {Stories} />
+          <Route path="/events"  Component = {Events} /> */}
           <Route path="/gallery"  Component = {Gallery} />
           <Route path="/newsAndUpdates"  Component = {NewsAndUpdates} />
           <Route path="/Chapters"  Component = {Chapters} />
@@ -63,8 +65,10 @@ const MainPage = () => {
           <Route path="/contactus"  Component = {ContactUS} />
           <Route path="/changePassword/:username"  Component = {ChangePassword} />
           <Route path="/post/:username"  Component = {Posts} />
+          <Route path="/aboutDevs"  Component = {AboutDevs} />
           <Route path="/forgetPassword"  Component = {ForgetPassword} />
           <Route path="/search/:name"  Component = {SearchAndFilter} />
+          <Route path="/stories/:id"  Component = {StoriesDetail} />
           <Route path="*"  Component = {PageNotFound} />
           </Routes>
           <Footer/>

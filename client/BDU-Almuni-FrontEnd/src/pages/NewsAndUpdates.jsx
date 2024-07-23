@@ -5,8 +5,8 @@ import newsSmallImg2 from '../assets/images/photo_2024-02-27_14-20-33.jpg'
 import newsSmallImg3 from '../assets/images/photo_2024-02-25_16-12-11.jpg'
 // import { useInView } from 'react-intersection-observer';
 import { useEffect, useState } from 'react'
-import MultipleTodayNews from '../component/MultipleTodayNews'
 import MultipleCategorizedNews from '../component/MultipleCategorizedNews'
+import TodayNews from '../component/TodayNews'
 const NewsAndUpdates = () => {
   const [currentHeadlineIndex, setCurrentHeadlineIndex] = useState(0);
   // const [exitingView, setExitingView] = useState(false);
@@ -16,6 +16,7 @@ const NewsAndUpdates = () => {
     "Sports: fugiat eos consectetur consequuntur inventore",
     "Technology: fugiat eos consectetur consequuntur inventore aspernatur, libero aliquam fuga odit in consequatur"
   ]);
+  const [navValue, setnavValue] = useState("latest")
   const [multipleNews, setmultipleNews] = useState([
   //   {
   //   title:"",
@@ -58,10 +59,18 @@ const NewsAndUpdates = () => {
   //   date:"FEB 25 2023"
   // }
 ])
+  const [clickedNews, setclickedNews] = useState({
+     newsId:"",
+    createdAt:"" ,
+    img:"",
+    content:"" ,
+    createdAt:""
+  }
+  )
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHeadlineIndex(prevIndex => (prevIndex + 1) % headlines.length);
-    },2955); 
+    },3000); 
     return () => clearInterval(interval);
   }, [headlines.length]);
   // const handleIntersection = (entries) => {
@@ -101,9 +110,20 @@ useEffect(()=>{
   }
   fetchNews();
 },[])
-// useEffect(() => {
-// console.log(headlines)
-// }, [headlines])
+useEffect(()=>{
+const defaultNews=()=>{
+  newsClicked(multipleNews[multipleNews.length-1]?.newsId)
+ document.querySelector(`.each-news`)?.classList.add("clicked")
+  
+}
+defaultNews()
+},[multipleNews])
+const newsClicked=(id)=>{
+  setclickedNews(multipleNews.find(news => news.newsId === id))
+}
+const handleNav=(nav)=>{
+setnavValue(nav)
+}
 
 
   return (
@@ -116,7 +136,7 @@ useEffect(()=>{
         <div className="left-side">
           {
             multipleNews.length > 0 && (
-              <MultipleTodayNews multipleNews={multipleNews} />
+              <TodayNews news={clickedNews} />
             )
           }
           <div className="headline-container">
@@ -129,15 +149,15 @@ useEffect(()=>{
         <div className="right-side">
         <div className="news-timing-nav">
           <ul>
-            <li>Latest</li>
-            <li>Yesterday</li>
-            <li>Last week</li>
+            <li onClick={()=>handleNav("latest")}>Latest</li>
+            <li onClick={()=>handleNav("yesterday")}>Yesterday</li>
+            <li onClick={()=>handleNav("lastWeek")}>Last week</li>
           </ul>
         </div>
         <div className="categorized-news-container">
         {
           multipleNews.length >0 &&(
-            <MultipleCategorizedNews multiplecataNews={multipleNews} />
+            <MultipleCategorizedNews newsClicked={newsClicked} navValue={navValue} multiplecataNews={multipleNews} />
           )
         }
         </div>

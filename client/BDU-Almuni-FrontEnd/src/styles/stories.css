@@ -30,18 +30,21 @@ width: 372px;
 height: 231px;
 margin-top: -150px;
 margin-left: 10%;
-background: rgba(206, 205, 205, 0.807);
-box-shadow: 0px 8px 16px rgba(17, 74, 131, 0.4);
+background: #e4e4e4cf;
+box-shadow: 0px 8px 16px #00000028;
 border-radius: 22px;
 justify-content: center;
+cursor: pointer;
 }
 .without{
-    justify-content: unset;
+    justify-content: space-between;
     width: 450px;
-    min-height: 200px;
-    height: fit-content;
+    height: 100%;
     padding-bottom: 20px;
     margin: 0;  
+}
+.without .story-text{
+    height: 290px;
 }
 .story-text{
     font-weight: 500;

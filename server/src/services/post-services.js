@@ -32,7 +32,7 @@ exports.getPostByAlumniId =  async function (alumniID) {
 
     return rows;
   } catch (error) {
-    console.error('Error getting post by id:', error);
+    console.error('Error getting Post by id:', error);
     throw error;
   }
 }
@@ -65,7 +65,7 @@ exports.getPostsByUsername = async function (username) {
 
     return post;
   } catch (error) {
-    console.error('Error fetching post by username:', error);
+    console.error('Error fetching Post by username:', error);
     throw error;
   }
 };

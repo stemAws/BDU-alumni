@@ -17,14 +17,15 @@ exports.createJob = async (req, res) => {
   try {
     const {
       jobTitle,
-      description,
-      industry,
-      companyAddress,
-      employmentType,
+      jobDescription,
+      uplodDate,
+      companyName,
+      address,
+      peopleNeeded,
+      salary,
       deadline,
       email,
-      phoneNumber,
-      linkedIn,
+      phoneNumber
     } = req.body;
 
     const imagePath = req.file
@@ -44,14 +45,16 @@ exports.createJob = async (req, res) => {
 
     const job = await jobService.addJob(
       jobTitle,
-      description,
-      industry,
-      companyAddress,
-      employmentType,
+      jobDescription,
+      uplodDate,
+      companyName,
+      address,
+      peopleNeeded,
+      salary,
       deadline,
       email,
       phoneNumber,
-      linkedIn,
+      downloadURL
     );
     res.status(201).json({ message: "Job added successfully", job });
   } catch (error) {
@@ -85,7 +88,6 @@ exports.getJobById = async (req, res) => {
   }
 };
 
-
 exports.updateJobById = async (req, res) => {
   try {
     const { jobId } = req.params;
@@ -94,7 +96,9 @@ exports.updateJobById = async (req, res) => {
     const affectedRows = await jobService.updateJob(jobId, updatedJobData);
 
     if (affectedRows === 0) {
-      return res.status(404).json({ error: `No record with the given id: ${id}` });
+      return res
+        .status(404)
+        .json({ error: `No record with the given id: ${id}` });
     }
 
     return res.json({ message: "Job updated successfully" });
@@ -104,10 +108,9 @@ exports.updateJobById = async (req, res) => {
   }
 };
 
-
 exports.deleteJobById = async (req, res) => {
   try {
-    const {jobId} = req.params;
+    const { jobId } = req.params;
     let job = await jobService.getJob(jobId);
     if (job?.image) {
       const jobRef = ref(storage, eventImage);
@@ -150,4 +153,3 @@ exports.searchJobs = async (req, res) => {
       .json({ error: "Internal Server Error", details: error.message });
   }
 };
-

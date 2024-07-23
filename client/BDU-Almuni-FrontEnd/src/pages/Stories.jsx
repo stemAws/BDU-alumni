@@ -6,28 +6,15 @@ import { useInView } from 'react-intersection-observer';
 import "../styles/stories.css"
 import { useEffect, useState } from "react";
 import MultiStories from "../component/MultiStories";
+import StoriesDetail from "./StoriesDetail";
+import { Route, Routes } from "react-router-dom";
 const Stories = () => {
         
     
   // const [exitingView, setExitingView] = useState(false);
-  const [stories, setstories] = useState([{
-    img:`..${newsimg}`,
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ipsam perspiciatis enim ullam, repudiandae sint deserunt molestias assumenda tenetur, in amet nihil laboriosam molestiae placeat distinctio nam nemo eaque soluta"
-  },
-  {
-    img:`..${newsimg1}`,
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ipsam perspiciatis enim ullam, repudiandae sint deserunt molestias assumenda tenetur, in amet nihil laboriosam molestiae placeat distinctio nam nemo eaque soluta"
-  },
-  {
-    img:`..${newsimg2}`,
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ipsam perspiciatis enim ullam, repudiandae sint deserunt molestias assumenda tenetur, in amet nihil laboriosam molestiae placeat distinctio nam nemo eaque soluta"
-  },
-  {
-    img:`..${newsimg}`,
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit ipsam perspiciatis enim ullam, repudiandae sint deserunt molestias assumenda tenetur, in amet nihil laboriosam molestiae placeat distinctio nam nemo eaque soluta"
-  }])
+  const [stories, setstories] = useState([])
   useEffect(() => {
-    const fetchEvents=async()=>{
+    const fetchStories=async()=>{
       try {
         const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/addedPosts`,{
             credentials: 'include',
@@ -43,7 +30,7 @@ const Stories = () => {
         
       }
     }
-    fetchEvents();
+    fetchStories();
   }, [])
   const handleIntersection = (entries) => {
     entries.forEach(entry => {
@@ -71,6 +58,7 @@ const Stories = () => {
       </div>
     <div className="stories-container">
         {
+        stories.length!==0&&
           <MultiStories stories={stories} />
         }
     </div>

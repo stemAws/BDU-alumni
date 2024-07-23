@@ -2,16 +2,16 @@ const TodayNews = ({news}) => {
   return (
     <div className="big-news-img-container">
     <div className="big-new-img">
-    <img src={news.img} alt="" />
+    <img src={news?.mediaPath} alt="" />
     </div>
     <div className="catagory-detail">
       <div>
       <div className="news-category">
-      {news.category}
+      {news?.category}
       </div>
-      <p className="news-small-detail">{news.content}</p>
+      <p className="news-small-detail">{news?.content}</p>
       </div>
-      <p className="news-date">{news.location} {news.createdAt} </p>
+      <p className="news-date">{news?.location} {news?.createdAt} </p>
     </div>
     
   </div>

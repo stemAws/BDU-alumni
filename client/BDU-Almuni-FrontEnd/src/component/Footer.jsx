@@ -16,7 +16,7 @@ const Footer = () => {
   let lastSelectedIcon = -1;
   const handleDonateClick = (donationLink) => {
    
-console.log(donationLink+"link")
+// console.log(donationLink+"link")
     // Calculate the center position
     const width = 600;
     const height = 600;
@@ -26,19 +26,19 @@ console.log(donationLink+"link")
     // Open the new window in the center
     window.open(donationLink, '_blank', `width=${width}, height=${height}, left=${left}, top=${top}`);
   };
-  useEffect(()=>{
-    const fetchDonationData=async()=>{
-      try {
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getDonations`) ;
-      const data= await res.json();
-      setDonationSection(data)
-      } catch (error) {
-        console.error("error fetching donation" ,error)
-      }
+  // useEffect(()=>{
+  //   const fetchDonationData=async()=>{
+  //     try {
+  //     const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getDonations`) ;
+  //     const data= await res.json();
+  //     setDonationSection(data)
+  //     } catch (error) {
+  //       console.error("error fetching donation" ,error)
+  //     }
       
-    }
-    fetchDonationData()
-  },[])
+  //   }
+  //   fetchDonationData()
+  // },[])
 
   return (
     <footer className='container' >

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 
-const Header = ({loginState,logout}) => {
+const Header = ({setsignin,loginState,logout}) => {
   const location = useLocation();
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -75,6 +75,17 @@ setSelectedCountry(personalInfo[0].currentLocation)
       return
     handlePlaceholders(fullName,"fullName")
     }
+    // const handleupdate=()=>{
+    //   if (personalData[0].username === personalInfo[0].username) {
+    //     submitFile('username')
+    //   }
+    //   else if(personalData[0].email === personalInfo[0].email){
+    //     submitFile('email')
+    //   }
+    //   else{
+    //     submitFile(false)
+    //   }
+    // }
   return (
     <div>
     <div className={socialLinks?'personal_info_container personal_info_container_ghost':'personal_info_container'}>
@@ -99,8 +110,8 @@ setSelectedCountry(personalInfo[0].currentLocation)
       value={personalData[0].gender} 
       onChange={(e) => handlePlaceholders(e.target.value,'gender')}>
         <option value="" disabled hidden>Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
       </select>
 
     </div>

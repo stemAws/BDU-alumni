@@ -17,6 +17,7 @@ import {FaPen} from 'react-icons/fa'
 import Activities from "../../component/Activities";
 import { Link } from "react-router-dom";
 import EditPersonalInfo from "../../component/EditPersonalInfo";
+import Cookies from 'js-cookie';
 // import SigninWrapper from "../../component/SigninWrapper";
 // import { SigninContext } from '../../Pages/UsersPage'
 const Editprofile = () => {
@@ -196,9 +197,8 @@ const checkbox=()=>{
     
   },[username])
 
- 
+ let workingPlace =""
   const stillWorking=()=>{
-    var workingPlace =""
     for (let i = 0; i < experiances?.length; i++) {
       if (experiances[i].stillWorking) {
         workingPlace= `${experiances[i].position} at ${experiances[i].company}`
@@ -213,7 +213,8 @@ const checkbox=()=>{
   }
   const fetchExperiances = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences`,{
+      const token = Cookies.get('id2')
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences/${token}`,{
         credentials: 'include',
       });
       if (res.status===403) {
@@ -221,6 +222,7 @@ const checkbox=()=>{
       }
       else if(res.ok){
       const data = await res.json();
+      setExperiances([...experiances,data])
       return data;
       }
       else if (!res.ok) {
@@ -230,12 +232,13 @@ const checkbox=()=>{
       console.error("Error during fetching experiences:", error);
       return null;
     }
+  window.location.reload()
   };
   
   const fetchEducations = async () => {
     try {
-  
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education`,{
+      const token = Cookies.get('id2')
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/education/${token}`,{
         credentials: 'include',
       });
       
@@ -256,6 +259,9 @@ const checkbox=()=>{
   }
   const addExperiance = async ({ token, jobTitle,industry, employmentType, companyName, startDate, endDate, stillWorking }) => {
     try {
+      const cookies = document.cookie;
+    const match = cookies.match(/id=([^;]*)/);
+    const token = match ? match[1] : null;
       setloading(true)
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/experiences`,{
       method:'POST',
@@ -538,12 +544,13 @@ const getStoryById = async(id)=>{
     
 }
   const submitFile= async () => {
-    const cookies = document.cookie;
-    const match = cookies.match(/id=([^;]*)/);
-    const token = match ? match[1] : null;
+
+    // const cookies = document.cookie;
+    // const match = cookies.match(/id=([^;]*)/);
+    // const token = match ? match[1] : null;
   try {
     setloading(true)
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-email/${token}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-email`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -553,7 +560,7 @@ const getStoryById = async(id)=>{
         email: placeholders[0].email,
       }),
     });
-    const response2 = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-username/${token}`, {
+    const response2 = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-username`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -575,7 +582,7 @@ const getStoryById = async(id)=>{
     }
     else {
             try {
-              const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/${token}`, {
+              const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni`, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
@@ -603,6 +610,7 @@ const getStoryById = async(id)=>{
               const data = await res.json();
               setPlaceholders([...placeholders, data]);
               // history.push(`${placeholders[0].username}`);
+              window.location.reload();
               }
               else if (!res.ok) {
                 setloading(false)
@@ -612,7 +620,7 @@ const getStoryById = async(id)=>{
               setloading(false)
               console.error('Error updating alumni profile:', error);
             }
-    // window.location.reload();
+    
   };
 } catch (error) {
   setloading(false)
@@ -896,7 +904,7 @@ const getStoryById = async(id)=>{
     </div>
     </section>
     </section>
-    {notauth&&<SigninWrapper setSigninOpen={setSigninOpen} isSigninOpen={isSigninOpen} closeSignin={closeSignin} />}
+    {/* {notauth&&<SigninWrapper setSigninOpen={setSigninOpen} isSigninOpen={isSigninOpen} closeSignin={closeSignin} />} */}
     </div>
   )
 }
