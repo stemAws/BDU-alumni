@@ -15,7 +15,7 @@ exports.addFeedback = async (fullName, email, message) => {
 };
 
 exports.getAllfeedback = async () => {
-    const [feedback] = await db.query(`SELECT *, DATE_FORMAT(sendAT, '%Y-%m-%d') AS sendAT
+    const [feedback] = await db.query(`SELECT *, DATE_FORMAT(sendAt, '%Y-%m-%d') AS sendAt
     FROM feedback`);    
     return feedback;
 };
