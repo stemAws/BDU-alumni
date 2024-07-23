@@ -39,7 +39,6 @@ exports.deleteEducationById = async (req, res) => {
 exports.getEducation = async (req, res) => {
     try {
         const education = await educationService.getEducation(req.params.idorusername);
-        console.log(req.cookies.id2)
         
         if (!education) {
             res.status(404).json({ error: 'No record found for the given ID or username' });

@@ -50,7 +50,20 @@ exports.getAllPosts = async function  () {
 
 exports.getAddedStories = async function  () {
   try {
-    const [posts] = await db.query("SELECT * FROM Post WHERE suggestedByAdmin = 1");
+    const [posts] = await db.query(`
+      SELECT 
+        Post.*, 
+        Person.fullName, 
+        Alumni.profilePicture 
+      FROM 
+        Post
+      JOIN 
+        Alumni ON Post.alumniId = Alumni.alumniId
+      JOIN 
+        Person ON Alumni.personId = Person.personId
+      WHERE 
+        Post.suggestedByAdmin = 1
+    `);
 
     return posts;
   } catch (error) {
