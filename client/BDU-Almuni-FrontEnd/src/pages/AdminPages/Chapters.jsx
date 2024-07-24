@@ -89,7 +89,7 @@ const EventPost = () => {
         formDataToSend.append("link", link);
 
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/News`,
+          `${process.env.REACT_APP_BACKEND_URL}/add-chapter`,
           {
             method: "POST",
             body: formDataToSend,
@@ -97,11 +97,11 @@ const EventPost = () => {
         );
 
         if (response.ok) {
-          toast.success("News uploaded successfully");
-          navigate("/admin/News");
+          toast.success("Chapters uploaded successfully");
+          navigate("/admin/chapters");
           setSuccess(true);
         } else {
-          console.error("Error uploading News", response.statusText);
+          console.error("Error uploading chapters", response.statusText);
           setErrorPopup(true);
         }
       } catch (error) {
@@ -155,7 +155,7 @@ const EventPost = () => {
             />
             {LinkError && <p className="errorMessage">{LinkError}</p>}
           </div>
-          <button type="submit">Upload</button>
+          <button type="submit" onClick={handleSubmit}>Upload</button>
         </form>
       </div>
     </div>
