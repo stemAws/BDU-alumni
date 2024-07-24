@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 const AuthService = {
   isAuthenticated: (position) => {
     if (position==='admin') {
-      return !!Cookies.get('adminId');
+      return !!Cookies.get('adminToken');
     }
     else if (position==='user'){
       return !!Cookies.get('id');
@@ -20,7 +20,7 @@ const AuthService = {
       //   method: 'GET',
       //   credentials: 'include' 
       // });
-      Cookies.remove("adminId")
+      Cookies.remove("adminToken")
     } catch (error) {
       console.error("Error during Admin logout:", error);
     }
