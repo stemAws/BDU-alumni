@@ -13,13 +13,14 @@ const AuthService = {
 
 
 
-  logout: async(position) => {
+  logout: (position) => {
     if (position==='admin') { 
       try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/removeadmincookies`, {
-        method: 'GET',
-        credentials: 'include' 
-      });
+      // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/removeadmincookies`, {
+      //   method: 'GET',
+      //   credentials: 'include' 
+      // });
+      Cookies.remove("adminId")
     } catch (error) {
       console.error("Error during Admin logout:", error);
     }

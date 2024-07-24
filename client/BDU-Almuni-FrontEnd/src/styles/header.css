@@ -52,11 +52,12 @@ display: flex;
     position: absolute;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    width: 100%;
     color: #ffffff;
     align-items: center;
     font: 100 58px 'poppins';
     top: 130px;
-    left: 300px;
     z-index: 1;
 }
 .wellcome-text .bottom-title{
