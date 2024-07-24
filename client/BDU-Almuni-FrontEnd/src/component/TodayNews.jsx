@@ -2,7 +2,7 @@ const TodayNews = ({news}) => {
   return (
     <div className="big-news-img-container">
     <div className="big-new-img">
-    <img src={news?.mediaPath} alt="" />
+    <img src={news?.imagePath} alt="" />
     </div>
     <div className="catagory-detail">
       <div>
