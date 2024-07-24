@@ -102,6 +102,9 @@ display: flex;
 .scroll{
     background-color: #000000;
 }
+.black-bg{
+    background-color:#000;
+}
 .nav-lists{
     position: relative;
     padding: 0;
