@@ -9,8 +9,8 @@ import { Link, useLocation } from 'react-router-dom';
 import NavDropDown from "./NavDropDown"
 import { FaCaretDown, FaCaretUp } from "react-icons/fa"
 import logo from "../assets/images/logo.png"
-const NavBar = ({loginState,logout,userDetails,error,loading,imgUrl}) => {
-  const { signin, setsignin } = useContext(SigninContext);
+const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
+  const {loginState,setsignin } = useContext(SigninContext);
   const[detilPop,setdetailPop]=useState(false);
   const[outPut, setOutput] = useState("");
   const [dropDown, setdropDown] = useState(false);
