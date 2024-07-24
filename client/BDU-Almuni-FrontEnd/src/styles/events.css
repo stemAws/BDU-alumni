@@ -1,5 +1,5 @@
 :root{
-    --event-height:670px;
+    --event-height:fit-content;
 }
 .events-container{
     position: relative;
@@ -12,11 +12,12 @@
     padding: 10px;
     margin-bottom: 20px;
     background-color: #000;
+    transition: all 0.5s ease-in-out;
     overflow: hidden;
 }
-.tall{
+/* .tall{
 height: calc( var(--event-height) + 300px );
-}
+} */
 .down-arrow{
     position: relative;
     left: 30px;
@@ -35,7 +36,7 @@ border: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 45%;
+    height: 250px;
     width: 100%;
     gap: 20px;
     padding: 10px;
