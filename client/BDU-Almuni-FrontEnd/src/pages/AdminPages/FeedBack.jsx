@@ -9,15 +9,7 @@ import DeleteConfirmation from "../../component/DeleteConfirmation";
 
 const FeedBack = () => {
   const [selectedMessage, setSelectedMessage] = useState(null);
-  const [feedbackData, setFeedbackData] = useState([
-    { feedBackID: 1, fullName: 'John Doe', email: 'john.doe@example.com', sendAT: '2024-05-20', message: 'Great job!' },
-    { feedBackID: 2, fullName: 'Jane Smith', email: 'jane.smith@example.com', sendAT: '2024-05-21', message: 'Keep it up!' },
-    { feedBackID: 3, fullName: 'John Doe', email: 'john.doe@example.com', sendAT: '2024-05-20', message: 'Great job!' },
-    { feedBackID: 4, fullName: 'Jane Smith', email: 'jane.smith@example.com', sendAT: '2024-05-21', message: 'Keep it up!' },
-    { feedBackID: 5, fullName: 'Alice Johnson', email: 'alice.johnson@example.com', sendAT: '2024-05-22', message: 'Very informative.' },
-    { feedBackID: 6, fullName: 'Alice Johnson', email: 'alice.johnson@example.com', sendAT: '2024-05-22', message: 'Very informative.' },
-    { feedBackID: 8, fullName: 'John Doe', email: 'john.doe@example.com', sendAT: '2024-05-20', message: 'Great job!' },
-  ]);
+  const [feedbackData, setFeedbackData] = useState([]);
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deleteConfirmationId, setDeleteConfirmationId] = useState(null);
