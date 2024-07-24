@@ -1,5 +1,5 @@
 import Button from "./Button"
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { SigninContext } from "../pages/MainPage"
 import background from '../assets/images/photo_2024-02-25_15-58-46.jpg'
 import Profilepopup from "./Profilepopup"
@@ -10,15 +10,16 @@ import NavDropDown from "./NavDropDown"
 import { FaCaretDown, FaCaretUp } from "react-icons/fa"
 import logo from "../assets/images/logo.png"
 const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
-  const ref = useRef()
   const [scroll, setscroll] = useState(false)
+  const location =useLocation()
   useEffect(() => {
     if(location.pathname==='/'){
-      ref.current.style.backgroundColor='transparent'
-      addEventListener('scroll', () => {(scrollY > 150) ? setscroll(true):((scrollY === 0) && setscroll(false));});
-     }
+   const handleScroll= () => {(scrollY > 150) ? setscroll(true):((scrollY === 0) && setscroll(false));}
+   addEventListener('scroll', handleScroll);
+    return () => removeEventListener('scroll', handleScroll);
+    }
     else{
-      ref.current.style.backgroundColor='#000'
+      setscroll(false)
     }
      }, [location.pathname])
   const {loginState,setsignin } = useContext(SigninContext);
@@ -57,7 +58,7 @@ const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
 
 
   return (
-    <div ref={ref} className={`navBar-container ${scroll&& 'scroll'}`}>
+    <div className={`navBar-container ${(location.pathname==='/')? scroll&& 'scroll':'black-bg'}`}>
         <div className="logo">
           <img src={logo} alt="" /> <p>BDU ALUMNI</p>
         </div>
