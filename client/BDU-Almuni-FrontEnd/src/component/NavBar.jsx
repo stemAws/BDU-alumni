@@ -1,5 +1,5 @@
 import Button from "./Button"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { SigninContext } from "../pages/MainPage"
 import background from '../assets/images/photo_2024-02-25_15-58-46.jpg'
 import Profilepopup from "./Profilepopup"
@@ -10,6 +10,10 @@ import NavDropDown from "./NavDropDown"
 import { FaCaretDown, FaCaretUp } from "react-icons/fa"
 import logo from "../assets/images/logo.png"
 const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
+  const [scroll, setscroll] = useState(false)
+  useEffect(() => {
+    addEventListener('scroll', () => {(scrollY > 150) ? setscroll(true):((scrollY === 0) && setscroll(false));});
+     }, [])
   const {loginState,setsignin } = useContext(SigninContext);
   const[detilPop,setdetailPop]=useState(false);
   const[outPut, setOutput] = useState("");
@@ -46,7 +50,7 @@ const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
 
 
   return (
-    <div className="navBar-container">
+    <div className={`navBar-container ${scroll&& 'scroll'}`}>
         <div className="logo">
           <img src={logo} alt="" /> BDU ALUMNI
         </div>
