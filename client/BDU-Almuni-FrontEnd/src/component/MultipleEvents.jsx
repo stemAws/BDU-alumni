@@ -1,10 +1,10 @@
 import EachEvent from "./EachEvent"
 
-const MultipleEvents = ({events}) => {
+const MultipleEvents = ({events,eventsToShow}) => {
   return (
    <>
    {
-    events.slice(-3).reverse().map((singleEvent,index)=>{
+    events.slice(-eventsToShow).reverse().map((singleEvent,index)=>{
         return(
             <EachEvent 
             singleEvent={singleEvent}
