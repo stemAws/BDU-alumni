@@ -87,3 +87,6 @@
 .css-ptkaw2-MuiDataGrid-root {
     height: calc(100vh - 100px);
 }
+.css-1njcszn-MuiDataGrid-root.MuiDataGrid-autoHeight {
+    height: 100vh;
+}
