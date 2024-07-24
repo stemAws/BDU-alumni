@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash, FaTimes, FaGoogle } from "react-icons/fa";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import FormInput from "./FormInput";
 import Button from "./Button";
 import AuthService from "./AuthService";
 import { SigninContext } from "../pages/MainPage";
 const Signin = () => {
   const {setsignin}=useContext(SigninContext)
+  const navigate =useNavigate()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [visible,setVisible] = useState(false);
@@ -68,7 +69,7 @@ const Signin = () => {
           </div>
         </div>
         <div className='sign_Container signin_container'>
-        <div onClick={()=>setsignin(false)} className='icon'><FaTimes/></div>
+        <div onClick={()=>{navigate('/')||setsignin(false)}} className='icon'><FaTimes/></div>
         <form className="sign_in">
         <h1>LOGIN</h1>
          {errorPopup?<p className="authentication_Failed">Wrong username or password, please try again</p>:''}

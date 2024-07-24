@@ -75,7 +75,10 @@ display: flex;
     align-items: center;
     gap: 5px;
     font: 400 16px "poppins";
-
+    min-width: fit-content;
+}
+.logo>p{
+    min-width: fit-content;
 }
 .logo img{
     height: 30px;
@@ -130,7 +133,6 @@ cursor: pointer;
 .nav-lists ul li a{
     text-decoration: none;
     color: #ffffff;
-    mix-blend-mode: difference; 
 /* background-color: currentColor; */
 }
 .nav-lists .nav-list-conatiner .each-nav-list::before {

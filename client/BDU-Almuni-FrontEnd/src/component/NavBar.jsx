@@ -1,5 +1,5 @@
 import Button from "./Button"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { SigninContext } from "../pages/MainPage"
 import background from '../assets/images/photo_2024-02-25_15-58-46.jpg'
 import Profilepopup from "./Profilepopup"
@@ -10,10 +10,17 @@ import NavDropDown from "./NavDropDown"
 import { FaCaretDown, FaCaretUp } from "react-icons/fa"
 import logo from "../assets/images/logo.png"
 const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
+  const ref = useRef()
   const [scroll, setscroll] = useState(false)
   useEffect(() => {
-    addEventListener('scroll', () => {(scrollY > 150) ? setscroll(true):((scrollY === 0) && setscroll(false));});
-     }, [])
+    if(location.pathname==='/'){
+      ref.current.style.backgroundColor='transparent'
+      addEventListener('scroll', () => {(scrollY > 150) ? setscroll(true):((scrollY === 0) && setscroll(false));});
+     }
+    else{
+      ref.current.style.backgroundColor='#000'
+    }
+     }, [location.pathname])
   const {loginState,setsignin } = useContext(SigninContext);
   const[detilPop,setdetailPop]=useState(false);
   const[outPut, setOutput] = useState("");
@@ -50,9 +57,9 @@ const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
 
 
   return (
-    <div className={`navBar-container ${scroll&& 'scroll'}`}>
+    <div ref={ref} className={`navBar-container ${scroll&& 'scroll'}`}>
         <div className="logo">
-          <img src={logo} alt="" /> BDU ALUMNI
+          <img src={logo} alt="" /> <p>BDU ALUMNI</p>
         </div>
         <nav className="nav-lists">
             <ul className="nav-list-conatiner">
@@ -61,8 +68,7 @@ const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/Events">events</Link></li> */}
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/">Home</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/gallery">Gallery</Link></li>
-                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/joboffer">Job Offer </Link> 
-                 </li>
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/joboffer">Job Offer </Link> </li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/chapters">chapters</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/contactus">Contact us</Link></li>
                 <li className="each-nav-list"> <Link onClick={()=>showdropDown()}>about
