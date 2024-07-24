@@ -108,7 +108,7 @@ const EventPost = () => {
         formDataToSend.append("location", location);
 
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/News`,
+          `${import.meta.env.VITE_BACKEND_URL}/add-news`,
           {
             method: "POST",
             body: formDataToSend,
@@ -183,7 +183,7 @@ const EventPost = () => {
             />
             {locationError && <p className="errorMessage">{locationError}</p>}
           </div> */}
-          <div className="form">
+          {/* <div className="form">
             <label className="label">Date:</label>
             <input
               type="date"
@@ -192,9 +192,9 @@ const EventPost = () => {
               onChange={handleInputChange}
             />
             {postDateError && <p className="errorMessage">{postDateError}</p>}
-          </div>
+          </div> */}
 
-          <button type="submit">Upload</button>
+          <button type="submit" onClick={handleSubmit}>Upload</button>
         </form>
       </div>
     </div>
