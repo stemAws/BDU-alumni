@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash, FaTimes, FaGoogle } from "react-icons/fa";
 import {Link} from 'react-router-dom';
 import FormInput from "./FormInput";
 import Button from "./Button";
 import AuthService from "./AuthService";
-const Signin = ({ closeSignin,setsignin,setloginState }) => {
+import { SigninContext } from "../pages/MainPage";
+const Signin = () => {
+  const {setsignin}=useContext(SigninContext)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [visible,setVisible] = useState(false);
