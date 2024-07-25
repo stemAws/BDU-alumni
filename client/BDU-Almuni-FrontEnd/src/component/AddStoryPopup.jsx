@@ -36,7 +36,7 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
         type:"number"
       },
       {
-        id:'employment Type',
+        id:'employmentType',
         className:"story-popup-input",
         label:'Employment Type',
         placeholder:'Set employment Type',
@@ -54,7 +54,19 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
         className:"story-popup-input",
         label:'Deadline',
         type:"date"
-      } 
+      },
+      {
+        id:'email',
+        className:"story-popup-input",
+        label:'Email',
+        type:"email"
+      } ,
+      {
+        id:'phoneNumber',
+        className:"story-popup-input",
+        label:'Phone Number',
+        type:"tel"
+      }  
 ])
   const [success, setsuccess] = useState(false)
   const [imageFile, setImageFile] = useState(null);
