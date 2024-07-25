@@ -22,7 +22,6 @@ import AddGallery from './AdminPages/AddGallery';
 import AdminSignin from '../component/AdminSignin';
 import AuthService from '../component/AuthService';
 
-import AdminSignin from '../component/AdminSignin'
 import chaptersList from './AdminPages/chaptersList';
 const Admin = () => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
