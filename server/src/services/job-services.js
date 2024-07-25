@@ -18,7 +18,7 @@ exports.addJob = async (
 
     if (imagePath) {
       query =
-        "INSERT INTO jobposting (  jobTitle, description,uplodDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,imagePath) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?, ?)";
+        "INSERT INTO Jobposting (  jobTitle, description,uplodDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,imagePath) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?, ?)";
       params = [
         jobTitle,
         jobDescription,
@@ -34,7 +34,7 @@ exports.addJob = async (
       ];
     } else {
       query =
-        "INSERT INTO jobposting (jobTitle, description,uplodDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+        "INSERT INTO Jobposting (jobTitle, description,uplodDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
       params = [
         jobTitle,
         jobDescription,
@@ -59,14 +59,14 @@ exports.addJob = async (
 };
 
 exports.getJobs = async () => {
-  const query = `SELECT jobPostingId, jobTitle FROM jobposting`;
+  const query = `SELECT jobPostingId, jobTitle FROM Jobposting`;
   const [result] = await db.query(query);
   return result;
 };
 
 exports.getJob = async (jobId) => {
   const [job] = await db.query(
-    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline,DATE_FORMAT(uplodDate, '%Y-%m-%d') AS uplodDate FROM jobposting WHERE jobPostingId = ?`,
+    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline,DATE_FORMAT(uplodDate, '%Y-%m-%d') AS uplodDate FROM Jobposting WHERE jobPostingId = ?`,
     [jobId]
   );
   return job.length > 0 ? job[0] : null;
@@ -88,7 +88,7 @@ exports.updateJob = async (jobId, updatedJob) => {
 
   const [result] = await db.query(
     `
-        UPDATE jobposting
+        UPDATE Jobposting
         SET
         jobTitle=?,
         description=?,
@@ -122,7 +122,7 @@ exports.updateJob = async (jobId, updatedJob) => {
 };
 exports.deleteJob = async (jobId) => {
   const [result] = await db.query(
-    "DELETE FROM jobposting WHERE jobPostingId = ?",
+    "DELETE FROM Jobposting WHERE jobPostingId = ?",
     [jobId]
   );
 
@@ -142,7 +142,7 @@ exports.getAllJobs = async () => {
 
 exports.searchJobsBy = async (jobTitle, industry) => {
   try {
-    let q = `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM jobposting WHERE jobTitle LIKE '%${jobTitle}%'`;
+    let q = `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM Jobposting WHERE jobTitle LIKE '%${jobTitle}%'`;
     if (industry != null) {
       q += ` AND industry = '${industry}'`;
     }
