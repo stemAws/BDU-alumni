@@ -70,7 +70,7 @@ const EventList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/adminEvents/${deleteConfirmationEventId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/adminEvents/${deleteConfirmationEventId}`,
         {
           method: "DELETE",
           headers: {

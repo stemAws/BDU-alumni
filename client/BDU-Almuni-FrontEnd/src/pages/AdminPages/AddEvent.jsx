@@ -154,7 +154,7 @@ const EventPost = () => {
 
 
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/Events`,
+          `${import.meta.env.VITE_BACKEND_URL}/Events`,
           {
             method: "POST",
             body: formDataToSend,
