@@ -1,6 +1,6 @@
 import '../styles/jobOffer.css'
 import logo from "../assets/images/photo_2024-02-27_14-20-52.jpg";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import JobOfferPopup from '../component/JobOfferPopup';
 import JobOffers from '../component/JobOffers';
 const JobOffer = () => {
@@ -63,8 +63,26 @@ const JobOffer = () => {
     }]);
     const [jobOffer, setjobOffer] = useState([{}]);
     const jobToReadMore=(jobID)=>{
-setjobOffer(jobOffers.find((jOff=>jOff.id===jobID)))
+setjobOffer(jobOffers?.find((jOff=>jOff.jobPostingId===jobID)))
     }
+    useEffect(() => {
+     const fetchJobs=async()=>{
+        try {
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/job-list`,{
+            credentials:'include'
+            })
+            if (res.ok){
+                const jobs = await res.json()
+                setjobOffers(jobs)
+            }
+        } catch (error) {
+            console.error('Error while fetching jobs',error)            
+        }
+        
+     }
+     fetchJobs()
+    }, [])
+    
   return (
     <div className="JO-flex-container body">
     <p className="job-offer"><span className='blue-text'>JOB</span> OFFER</p>
