@@ -3,7 +3,7 @@ import EachJob from "./EachJob";
 const JobOffers = ({jobOffers,setopenJODetail,onReadMore}) => {
   return (
     <>
-      {jobOffers.slice(-4).reverse().map((jobOffer, index) => {
+      {jobOffers.slice(-6).reverse().map((jobOffer, index) => {
         
           return (
             <EachJob
