@@ -3,7 +3,7 @@ const db = require("../config/db");
 exports.addJob = async (
   jobTitle,
   jobDescription,
-  uplodDate,
+  uploadDate,
   companyName,
   address,
   peopleNeeded,
@@ -18,11 +18,11 @@ exports.addJob = async (
 
     if (imagePath) {
       query =
-        "INSERT INTO Jobposting (  jobTitle, description,uplodDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,imagePath) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?, ?)";
+        "INSERT INTO Jobposting (  jobTitle, description,uploadDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,imagePath) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?, ?)";
       params = [
         jobTitle,
         jobDescription,
-        uplodDate,
+        uploadDate,
         companyName,
         address,
         peopleNeeded,
@@ -34,11 +34,11 @@ exports.addJob = async (
       ];
     } else {
       query =
-        "INSERT INTO Jobposting (jobTitle, description,uplodDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+        "INSERT INTO Jobposting (jobTitle, description,uploadDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
       params = [
         jobTitle,
         jobDescription,
-        uplodDate,
+        uploadDate,
         companyName,
         address,
         peopleNeeded,
@@ -66,7 +66,7 @@ exports.getJobs = async () => {
 
 exports.getJob = async (jobId) => {
   const [job] = await db.query(
-    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline,DATE_FORMAT(uplodDate, '%Y-%m-%d') AS uplodDate FROM Jobposting WHERE jobPostingId = ?`,
+    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline,DATE_FORMAT(uploadDate, '%Y-%m-%d') AS uploadDate FROM Jobposting WHERE jobPostingId = ?`,
     [jobId]
   );
   return job.length > 0 ? job[0] : null;
@@ -76,7 +76,7 @@ exports.updateJob = async (jobId, updatedJob) => {
   const {
     jobTitle,
     jobDescription,
-    uplodDate,
+    uploadDate,
     companyName,
     address,
     peopleNeeded,
@@ -106,7 +106,7 @@ exports.updateJob = async (jobId, updatedJob) => {
     [
       jobTitle,
       jobDescription,
-      uplodDate,
+      uploadDate,
       companyName,
       address,
       peopleNeeded,
