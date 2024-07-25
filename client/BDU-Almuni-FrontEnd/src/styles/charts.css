@@ -1,11 +1,6 @@
 .chart{
     max-height: 100vh ;
     overflow-y: auto;
-    /* margin-top: 70px; */
-}
-.chartTitle{
-    margin-bottom: 10px;
-    color: black;
 }
 
 .chart1{
@@ -14,7 +9,7 @@
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     /* overflow-y: auto; */
-    height: 300px;
+    height: 400px;
 }
 
 .chart2{
@@ -23,5 +18,63 @@
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     /* overflow-y: auto; */
-    height: 450px;
+}
+.geo_chart{
+    width:100%;
+    height:490px;
+    border: none;
+}
+.chart3{
+    margin: 20px;
+    padding: 10px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    /* overflow-y: auto; */
+    height: 500px;
+}
+
+.chart4{
+    margin: 20px;
+    padding: 10px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    /* overflow-y: auto; */
+}
+
+.chart5{
+    margin: 20px;
+    padding: 10px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    /* overflow-y: auto; */
+}
+.chart6{
+    margin: 20px;
+    padding: 10px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    /* overflow-y: auto; */
+}
+.chartTitle{
+    margin-bottom: 10px;
+    color: black;
+}
+.selection-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.selection label{
+    padding: 10px;
+}
+.selections{
+    padding: 5px;
+}
+.selection{
+    overflow-y: auto;
+    max-height: '200px';
+}
+.no-data{
+   margin-top: 300px;
+   margin-left: 500px;
 }

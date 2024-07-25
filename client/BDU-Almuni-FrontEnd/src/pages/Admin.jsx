@@ -13,6 +13,7 @@ import DonationList from './AdminPages/DonationList';
 import AddDonation from './AdminPages/AddDonation';
 import AddUser from './AdminPages/AddUser';
 import News from './AdminPages/News';
+import NewsList from './AdminPages/NewsList';
 import Chapters from './AdminPages/Chapters';
 import JobOffer from './AdminPages/JobOffer';
 import suggestedJob from './AdminPages/suggestedJob';
@@ -21,6 +22,8 @@ import AddGallery from './AdminPages/AddGallery';
 import AdminSignin from '../component/AdminSignin';
 import AuthService from '../component/AuthService';
 
+import AdminSignin from '../component/AdminSignin'
+import chaptersList from './AdminPages/chaptersList';
 const Admin = () => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
@@ -56,6 +59,30 @@ const Admin = () => {
             <Route path='AddDonation' element={<AddDonation />} />
             <Route path='*' element={<Navigate to="home" />} />
           </Routes>
+            <SideBar/>
+            <Routes>
+            <Route path='/' Component={AdminSignin}/>
+            <Route path='/home' Component={Home}/>
+              <Route path='/users' Component={Users}/>
+              <Route path='/News' Component={NewsList}/>
+              <Route path='/AddNews' Component={News}/>
+              <Route path='/AddUser' Component={AddUser}/>
+              <Route path='/story' Component={stories}/>
+              <Route path='/addedStories' Component={AddedStory}/>
+              <Route path='/Events' Component={EventList}/>
+              <Route path='/gallery' Component={AGallery}/>
+              <Route path='/Addgallery' Component={AddGallery}/>
+              <Route path='/AddEvent' Component={AddEvent}/>
+              <Route path='/jobOffer' Component={JobOffer}/>
+              <Route path='/suggestedJob' Component={suggestedJob}/>
+              <Route path='/chapters' Component={chaptersList}/>
+              <Route path='/AddChapter' Component={Chapters}/>
+              <Route path='/feedback' Component={FeedBack}/>
+              <Route path='/Donation' Component={DonationList}/>
+              <Route path='/AddDonation' Component={AddDonation}/>
+            
+              
+            </Routes>
         </div>
       ) : (
         <Routes>

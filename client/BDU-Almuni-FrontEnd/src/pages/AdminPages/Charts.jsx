@@ -38,7 +38,7 @@ export default function Chart() {
     setLoading(true);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/activeUsers`
+        `${import.meta.env.VITE_BACKEND_URL}/activeUsers`
       );
       const result = await response.json();
       setData(result);
@@ -108,7 +108,7 @@ export default function Chart() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/majorsCount`
+          `${import.meta.env.VITE_BACKEND_URL}/majors-Count`
         );
         const data = await response.json();
 
@@ -149,7 +149,7 @@ export default function Chart() {
   const fetchDegreeCount = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/degreeCount`
+        `${import.meta.env.VITE_BACKEND_URL}/degree-count`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -193,7 +193,7 @@ export default function Chart() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/jobCount`
+          `${import.meta.env.VITE_BACKEND_URL}/job-count`
         );
         const data = await response.json();
 
@@ -251,18 +251,18 @@ export default function Chart() {
   ];
 
   // Function to fetch university count from backend
-  const fetchUniversityCount = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/universityCount`
-      );
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching university count:", error);
-      return [];
-    }
-  };
+  // const fetchUniversityCount = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `${import.meta.env.VITE_BACKEND_URL}/universityCount`
+  //     );
+  //     const data = await response.json();
+  //     return data;
+  //   } catch (error) {
+  //     console.error("Error fetching university count:", error);
+  //     return [];
+  //   }
+  // };
 
   // Custom label renderer for RadialBarChart
   const renderCustomizedLabel = ({
@@ -298,18 +298,18 @@ export default function Chart() {
   };
 
   // Effect to fetch and set university count
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchUniversityCount();
-      setUniversityCount(data);
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await fetchUniversityCount();
+  //     setUniversityCount(data);
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
-  if (!universityCount || universityCount.length === 0) {
-    return <p className="no-data">No data available</p>;
-  }
+  // if (!universityCount || universityCount.length === 0) {
+  //   return <p className="no-data">No data available</p>;
+  // }
 
   return (
     <div className="chart">
@@ -402,7 +402,7 @@ export default function Chart() {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="chart5">
+      {/* <div className="chart5">
         <h3 className="chartTitle">STEM students university analysis</h3>
         <ResponsiveContainer width="100%" height={500}>
           <RadialBarChart
@@ -467,7 +467,7 @@ export default function Chart() {
             />
           </RadialBarChart>
         </ResponsiveContainer>
-      </div> 
+      </div>  */}
 
        <div className="chart6">
         <h3 className="chartTitle"> STEM Students Job Title</h3>
