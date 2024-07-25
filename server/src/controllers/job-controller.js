@@ -15,19 +15,6 @@ firebsae.initializeApp(firebaseConfig);
 const storage = getStorage();
 exports.createJob = async (req, res) => {
   try {
-    const {
-      jobTitle,
-      jobDescription,
-      uplodDate,
-      companyName,
-      address,
-      peopleNeeded,
-      salary,
-      deadline,
-      email,
-      phoneNumber
-    } = req.body;
-
     const imagePath = req.file
       ? `job/${Date.now()}${path.extname(req.file.originalname)}`
       : null;
@@ -43,19 +30,7 @@ exports.createJob = async (req, res) => {
       downloadURL = await getDownloadURL(fileRef);
     }
 
-    const job = await jobService.addJob(
-      jobTitle,
-      jobDescription,
-      uplodDate,
-      companyName,
-      address,
-      peopleNeeded,
-      salary,
-      deadline,
-      email,
-      phoneNumber,
-      downloadURL
-    );
+    const job = await jobService.addJob(downloadURL, req.body);
     res.status(201).json({ message: "Job added successfully", job });
   } catch (error) {
     console.error("Error adding job:", error);

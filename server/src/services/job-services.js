@@ -1,55 +1,20 @@
 const db = require("../config/db");
 
-exports.addJob = async (
-  jobTitle,
-  jobDescription,
-  uploadDate,
-  companyName,
-  address,
-  peopleNeeded,
-  salary,
-  deadline,
-  email,
-  phoneNumber,
-  imagePath
-) => {
+exports.addJob = async (imagePath, {jobTitle, jobDescription, uploadDate, companyName, address, peopleNeeded, salary, deadline, email, phoneNumber}) => {
   try {
-    let query, params;
-
-    if (imagePath) {
-      query =
-        "INSERT INTO Jobposting (  jobTitle, description,uploadDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,imagePath) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?, ?)";
-      params = [
-        jobTitle,
-        jobDescription,
-        uploadDate,
-        companyName,
-        address,
-        peopleNeeded,
-        salary,
-        deadline,
-        email,
-        phoneNumber,
-        downloadURL
-      ];
-    } else {
-      query =
-        "INSERT INTO Jobposting (jobTitle, description,uploadDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
-      params = [
-        jobTitle,
-        jobDescription,
-        uploadDate,
-        companyName,
-        address,
-        peopleNeeded,
-        salary,
-        deadline,
-        email,
-        phoneNumber
-      ];
-    }
-
-    const [result] = await db.query(query, params);
+    const [result] = await db.query("INSERT INTO Jobposting (  jobTitle, description,uploadDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,imagePath) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?, ?)", [
+      jobTitle,
+      jobDescription,
+      uploadDate,
+      companyName,
+      address,
+      peopleNeeded,
+      salary,
+      deadline,
+      email,
+      phoneNumber,
+      imagePath
+    ]);
 
     return result.insertId;
   } catch (error) {
