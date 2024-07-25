@@ -59,7 +59,7 @@ exports.addJob = async (
 };
 
 exports.getJobs = async () => {
-  const query = `SELECT jobPostingId, jobTitle FROM Jobposting`;
+  const query = `SELECT * FROM Jobposting`;
   const [result] = await db.query(query);
   return result;
 };
