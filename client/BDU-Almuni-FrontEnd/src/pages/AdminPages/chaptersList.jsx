@@ -6,7 +6,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DeleteConfirmation from '../../component/DeleteConfirmation'
-const EventList = () => {
+
+const chaptersList = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,11 +16,11 @@ const EventList = () => {
 
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [deleteConfirmationEventId, setDeleteConfirmationEventId] = useState(null);
+  const [deleteConfirmationchapterId, setDeleteConfirmationchapterId] = useState(null);
 
   const handleDelete = (id) => {
     setDeleteConfirmationOpen(true);
-    setDeleteConfirmationEventId(id);
+    setDeleteConfirmationchapterId(id);
   };
 
   useEffect(() => {
@@ -29,18 +30,18 @@ const EventList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/adminEvents`
+        `${import.meta.env.VITE_BACKEND_URL}/list-chapters`
       );
       if (!response.ok) {
-        throw new Error(`Failed to fetch events. Status: ${response.status}`);
+        throw new Error(`Failed to fetch chapter. Status: ${response.status}`);
       }
 
-      const eventData = await response.json();
+      const chapterData = await response.json();
 
       // Sort the data by the createdAt timestamp in descending order
-      eventData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      chapterData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-      setData(eventData);
+      setData(chapterData);
     } catch (error) {
       console.error("Error fetching data:", error.message);
     } finally {
@@ -70,7 +71,7 @@ const EventList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/adminEvents/${deleteConfirmationEventId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/list-chapters/${deleteConfirmationchapterId}`,
         {
           method: "DELETE",
           headers: {
@@ -80,26 +81,26 @@ const EventList = () => {
       );
 
       if (!response.ok) {
-        throw new Error(`Failed to delete event. Status: ${response.status}`);
+        throw new Error(`Failed to delete chapter. Status: ${response.status}`);
       }
 
-      setData(data.filter((item) => item.eventId !== deleteConfirmationEventId));
+      setData(data.filter((item) => item.chapterId !== deleteConfirmationchapterId));
     } catch (error) {
       console.error("Error deleting data:", error.message);
     } finally {
       setDeleteConfirmationOpen(false);
-      setDeleteConfirmationEventId(null);
+      setDeleteConfirmationchapterId(null);
     }
   };
 
   const handleCancelDelete = () => {
     setDeleteConfirmationOpen(false);
-    setDeleteConfirmationEventId(null);
+    setDeleteConfirmationchapterId(null);
   };
 
-  const handleEdit = (eventId) => {
+  const handleEdit = (chapterId) => {
     // Render the EditEvent component with the onUpdate callback
-   navigate(`/admin/adminEvents/${eventId}`);
+   navigate(`/admin/chapters/${chapterId}`);
   };
 
   const customTheme = createTheme({
@@ -108,27 +109,27 @@ const EventList = () => {
     },
   });
 
-  const getRowId = (row) => row.eventId; // Specify the custom ID field
+  const getRowId = (row) => row.chapterId; // Specify the custom ID field
 
   const columns = [
-    { field: "eventId", headerName: "ID", width: 90 },
-    { field: "title", headerName: "Event Title", width: 100 },
-    { field: "organizer", headerName: "Organizer", width: 100 },
-    { field: "startDate", headerName: "Start Date", width: 150 },
-    { field: "endDate", headerName: "End Date", width: 100 },
+    { field: "chapterId", headerName: "ID", width: 90 },
+    { field: "title", headerName: "Chapter Title", width: 200 },
+    { field: "discription", headerName: "discription", width: 500 },
+    // { field: "startDate", headerName: "Start Date", width: 150 },
+    // { field: "endDate", headerName: "End Date", width: 100 },
     { field: "actions", headerName: "Actions", width: 100 },
     {
       renderCell: (params) => (
         <>
           <DeleteOutline
-            key={`delete-${params.row.eventId}`}
+            key={`delete-${params.row.chapterId}`}
             className="eventListDelete"
-            onClick={() => handleDelete(params.row.eventId)}
+            onClick={() => handleDelete(params.row.chapterId)}
           />
           <Edit
-            key={`edit-${params.row.eventId}`}
+            key={`edit-${params.row.chapterId}`}
             className="eventListEdit"
-            onClick={() => handleEdit(params.row.eventId)}
+            onClick={() => handleEdit(params.row.chapterId)}
           />
         </>
       ),
@@ -146,9 +147,9 @@ const EventList = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <h3> Bahir Dar University Alumni Events </h3>
-        <Link to="/admin/AddEvent">
-          <button className="addEvent">+ Add Event</button>
+        <h3> Bahir Dar University Alumni Chapters </h3>
+        <Link to="/admin/AddChapter">
+          <button className="addEvent">+ Add Chapters</button>
         </Link>
       </div>
       <div className="listCOntainer">
@@ -160,7 +161,7 @@ const EventList = () => {
               {isDeleteConfirmationOpen && (
                 <DeleteConfirmation
                   close={handleCancelDelete}
-                  text="event"  // You can customize this text based on your needs
+                  text="chapter"  // You can customize this text based on your needs
                   onDelete={handleConfirmDelete}
                 />
               )}
@@ -172,4 +173,4 @@ const EventList = () => {
   );
 };
 
-export default EventList;
+export default chaptersList;

@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 const AuthService = {
   isAuthenticated: (position) => {
     if (position==='admin') {
-      return !!Cookies.get('adminId');
+      return !!Cookies.get('adminToken');
     }
     else if (position==='user'){
       return !!Cookies.get('id');
@@ -13,13 +13,14 @@ const AuthService = {
 
 
 
-  logout: async(position) => {
+  logout: (position) => {
     if (position==='admin') { 
       try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/removeadmincookies`, {
-        method: 'GET',
-        credentials: 'include' 
-      });
+      // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/removeadmincookies`, {
+      //   method: 'GET',
+      //   credentials: 'include' 
+      // });
+      Cookies.remove("adminToken")
     } catch (error) {
       console.error("Error during Admin logout:", error);
     }

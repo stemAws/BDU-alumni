@@ -5,11 +5,11 @@ const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
 
-router.post("/adminEvents", upload.single("image"), eventController.createAdminEvent);
+router.post("/adminEvents/:adminId", upload.single("image"), eventController.createAdminEvent);
 router.get("/adminEvents", eventController.getAdminEvents);
 router.get("/adminEvents/:id", eventController.getAdminEventById);
 router.put("/adminEvents/:id", eventController.updateAdminEventById);
-router.delete("/adminEvents/:id", eventController.deleteAdminEventById);
+router.delete("/adminEvents/:eventId", eventController.deleteAdminEventById);
 router.get("/events", eventController.getAllEvents);
 router.get("/search-events", eventController.searchEvents)
 

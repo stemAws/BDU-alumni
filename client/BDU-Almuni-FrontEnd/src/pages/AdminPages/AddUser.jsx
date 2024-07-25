@@ -295,7 +295,7 @@ if (!formData.confirmPassword) {
         }
 
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/alumni`,
+          `${import.meta.env.VITE_BACKEND_URL}/addUser`,
           {
             method: "POST",
             headers: {

@@ -15,22 +15,21 @@
     transition: all 0.5s ease-in-out;
     overflow: hidden;
 }
-/* .tall{
-height: calc( var(--event-height) + 300px );
-} */
-.down-arrow{
-    position: relative;
-    left: 30px;
-    top: 4px;
+.events-container .buttons{
+    position: absolute;
+    bottom:10px;
+    width: 120px;
+    gap: 5px;
 }
-.btn.seeMore{
-position: absolute;
-margin-top: calc( var(--event-height) - 50px);
-color: #fff;
-background-color: transparent;
-border: 0;
-
-
+.events-container .buttons >*{
+    border:1px solid #b2b2b29c;
+    color: #b2b2b29c;
+    background-color: transparent;
+    border-radius: 10px;
+}
+.events-container .buttons >*:hover{
+    border-color: #0c86ea9c;
+    color: #0c86ea9c;
 }
 .each-event{
     display: flex;

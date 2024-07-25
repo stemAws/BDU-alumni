@@ -3,7 +3,7 @@ const db = require("../config/db");
 exports.createGallery = async ({ images, event, year, department, description}) => {
   try {
     const [result] = await db.query(
-      "INSERT INTO gallery (media, title, year, department, description) VALUES (?,?,?, ?, ?)",
+      "INSERT INTO Gallery (media, title, year, department, description) VALUES (?,?,?, ?, ?)",
       [JSON.stringify(images), event, year, department, description]
     );
 
@@ -15,7 +15,7 @@ exports.createGallery = async ({ images, event, year, department, description}) 
 
 exports.getGalleryById = async (gID) => {
   try {
-    const result = await db.query("SELECT * FROM gallery WHERE galleryID = ?", [
+    const result = await db.query("SELECT * FROM Gallery WHERE galleryID = ?", [
       gID,
     ]);
     return result[0][0];
@@ -26,7 +26,7 @@ exports.getGalleryById = async (gID) => {
 
 exports.getAllGallery = async () => {
   try {
-    const [result] = await db.query("SELECT * FROM gallery");
+    const [result] = await db.query("SELECT * FROM Gallery");
     return result;
   } catch (error) {
     throw error;
@@ -35,7 +35,7 @@ exports.getAllGallery = async () => {
 
 exports.deleteGallery = async (galleryID) => {
   try {
-    const [result] = await db.query("DELETE FROM gallery WHERE galleryID = ?", [
+    const [result] = await db.query("DELETE FROM Gallery WHERE galleryID = ?", [
       galleryID,
     ]);
     return result;
@@ -49,7 +49,7 @@ exports.updateGallery = async (galleryID, updatedGallery) => {
 
   try {
     const [result] = await db.query(
-      "UPDATE gallery SET title = ?, year = ? , department = ?,  description = ? WHERE galleryID = ?",
+      "UPDATE Gallery SET title = ?, year = ? , department = ?,  description = ? WHERE galleryID = ?",
       [event, year, department, description, galleryID]
     );
     return result.affectedRows;

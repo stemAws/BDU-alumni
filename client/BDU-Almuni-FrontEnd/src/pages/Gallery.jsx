@@ -225,7 +225,7 @@ const App = () => {
 
   const updateCategories = async (year) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/gallery`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/gallery`);
       const data = await response.json();
 
       // Sort the data by year in descending order
@@ -241,7 +241,7 @@ const App = () => {
   useEffect(() => {
     const fetchYears = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/gallery`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/gallery`);
         const data = await response.json();
 
         // Sort the data by year in descending order

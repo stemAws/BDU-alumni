@@ -46,7 +46,7 @@ exports.fetchSuggestedPostsByAdmin = async () => {
 exports.fetchGeoData = async () => {
   try {
     const [rows, fields] = await db.query(
-      "SELECT address, COUNT(*) AS count FROM alumni GROUP BY address"
+      "SELECT address, COUNT(*) AS count FROM Alumni GROUP BY address"
     );
     const data = rows.map((result) => ({
       country: result.address,
