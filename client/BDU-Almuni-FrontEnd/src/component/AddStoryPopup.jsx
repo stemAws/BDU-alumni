@@ -116,9 +116,9 @@ const handleInputChange = (id, newValue) => {
 const addJob = async (e) => {
       e.preventDefault()
       setwaiting(true)
-      const jobData = jobInputs.reduce((acc, input) => {
-        acc[input.id] = input.value;
-        return acc;
+      const jobData = jobInputs.reduce((eachJob, input) => {
+        eachJob[input.id] = input.value;
+        return eachJob;
       }, {});
       jobData.jobDescription = jobDescription;
       try {
