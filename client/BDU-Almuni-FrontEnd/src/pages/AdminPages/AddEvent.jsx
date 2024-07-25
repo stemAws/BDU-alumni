@@ -163,7 +163,7 @@ const EventPost = () => {
         formDataToSend.append("eventLocation", eventLocation);
 
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/adminEvents/2`,
+          `${import.meta.env.VITE_BACKEND_URL}/adminEvents`,
           {
             method: "POST",
             body: formDataToSend,
@@ -294,7 +294,7 @@ const EventPost = () => {
             />
             {endDateError && <p className="errorMessage">{endDateError}</p>}
           </div>
-          <button type="submit">Upload</button>
+          <button type="submit" onClick={handleSubmit}>Upload</button>
         </form>
       </div>
     </div>
