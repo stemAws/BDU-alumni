@@ -75,7 +75,7 @@ const Signin = () => {
          <FormInput
               type="text"
               placeholder="Username"
-              class="inputs user_name"
+              className="inputs user_name"
               onChange={(e) => setUsername(e.target.value)}
               required={true}
             />
@@ -84,7 +84,7 @@ const Signin = () => {
                 value={password}
                 type={visible ? 'text' : 'password'}
                 placeholder="Password"
-                class="inputs password"
+                className="inputs password"
                 onChange={(e) => setPassword(e.target.value)}
                 required={true}
               />

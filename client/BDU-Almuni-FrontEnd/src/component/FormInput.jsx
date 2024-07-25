@@ -12,7 +12,7 @@ const FormInput = (props) => {
         {...props}  
         id={props.id}
         type={props.type}
-        className={props.class}
+        className={props.className}
         onChange={props.onChange}
         placeholder={props.placeholder}
         name={props.name}
