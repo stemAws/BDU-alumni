@@ -23,20 +23,22 @@
 .each-job-offer{
     display: flex;
     flex-direction: column;
-    background-color: #fafafa;
+    background-color: #ffffff;
     min-width: 290px;
     max-width: 500px;
     padding: 20px;
-    transition: min-width 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    border: 1px solid #fff;
     height: 300px;
+    box-shadow: 0 0 20px 10px #f6f6f6cc;
+    border-radius: 10px;
 }
-.each-job-offer:hover {
+/* .each-job-offer:hover {
     min-width: 700px;
     flex-direction: row;
     gap: 20px;
 
 
-}
+} */
 .JO-top{
     display: flex;
     justify-content: space-between;
@@ -46,12 +48,12 @@
     align-items: center;
     transition: all 0.4s ease-in-out;
 }
-.each-job-offer:hover .JO-top{
+/* .each-job-offer:hover .JO-top{
     display: block;
     border: none;
     width: 50%;
     height: 250px;
-}
+} */
 .company-detail{
     display: flex;
     gap: 10px;
@@ -59,11 +61,11 @@
     align-items: center;
     transition: all 0.4s ease-in-out;
 }
-.each-job-offer:hover .company-detail{
+/* .each-job-offer:hover .company-detail{
     display: block;
     height: 90%;
     width: 100%;
-}
+} */
 .company-logo{
     width: 30px;
     height: 30px;
@@ -71,12 +73,12 @@
     border-radius: 50%;
 transition: all 0s ease-in;
 }
-.each-job-offer:hover .company-logo{
+/* .each-job-offer:hover .company-logo{
     width: 100%;
     height: 90%;
     object-fit: cover;
     border-radius:unset;
-}
+} */
 .company-name{
     text-transform: uppercase;
     width: 100%;
@@ -92,9 +94,9 @@ transition: all 0s ease-in;
     margin-top: 20px;
     gap: 10px;
 }
-.each-job-offer:hover .JO-bottom{
+/* .each-job-offer:hover .JO-bottom{
     width: 40%;
-}
+} */
 .job-title{
     text-transform: uppercase;
     text-align: center;
@@ -103,18 +105,22 @@ transition: all 0s ease-in;
     text-wrap: nowrap;
 }
 .job-description{
+    display: -webkit-box;
     color: #979797;
     max-height: 80px;
     height: fit-content;
     overflow: hidden;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
-.each-job-offer:hover .job-description{
+/* .each-job-offer:hover .job-description{
     border: 1px solid #e2e2e2;
     border-radius: 20px;
     padding: 10px;
     max-height: 150px;
     overflow: scroll;
-}
+} */
 .job-need{
     display: flex;
     gap: 10px;
@@ -123,9 +129,9 @@ transition: all 0s ease-in;
     font-size: 14px;
     transition: all 0.4s ease-in-out;
 }
-.each-job-offer:hover .job-need{
+/* .each-job-offer:hover .job-need{
     display: none;
-}
+} */
 .JO-btns{
     display: flex;
     justify-content: center;
