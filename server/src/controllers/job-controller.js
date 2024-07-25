@@ -20,6 +20,8 @@ exports.createJob = async (req, res) => {
       : null;
     let downloadURL = null;
 
+    // file part should be removed just for now let it stay... will be removed after decision
+
     if (req.file) {
       const fileRef = ref(storage, imagePath);
       resizedFile = await sharp(req.file.buffer)
@@ -30,7 +32,7 @@ exports.createJob = async (req, res) => {
       downloadURL = await getDownloadURL(fileRef);
     }
 
-    const job = await jobService.addJob(downloadURL, req.body);
+    const job = await jobService.addJob(downloadURL, req.body, req.alumni.personId);
     res.status(201).json({ message: "Job added successfully", job });
   } catch (error) {
     console.error("Error adding job:", error);

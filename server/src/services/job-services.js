@@ -1,8 +1,8 @@
 const db = require("../config/db");
 
-exports.addJob = async (imagePath, {jobTitle, jobDescription, uploadDate, companyName, address, peopleNeeded, salary, deadline, email, phoneNumber}) => {
+exports.addJob = async (imagePath, {jobTitle, jobDescription, uploadDate, companyName, address, peopleNeeded, salary, deadline, email, phoneNumber}, alumniwhoposteditId) => {
   try {
-    const [result] = await db.query("INSERT INTO Jobposting (  jobTitle, description,uploadDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,imagePath) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?, ?)", [
+    const [result] = await db.query("INSERT INTO Jobposting (  jobTitle, description,uploadDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,personId, imagePath) VALUES (?,?, ?, ?, ?, ?, ?, ?,?,?,?, ?)", [
       jobTitle,
       jobDescription,
       uploadDate,
@@ -13,6 +13,7 @@ exports.addJob = async (imagePath, {jobTitle, jobDescription, uploadDate, compan
       deadline,
       email,
       phoneNumber,
+      alumniwhoposteditId,
       imagePath
     ]);
 
@@ -24,8 +25,17 @@ exports.addJob = async (imagePath, {jobTitle, jobDescription, uploadDate, compan
 };
 
 exports.getJobs = async () => {
-  const query = `SELECT * FROM Jobposting`;
-  const [result] = await db.query(query);
+  const [result] = await db.query(`
+    SELECT 
+        Jobposting.*, 
+        Person.fullName, 
+        Person.username, 
+        Alumni.profilePicture
+    FROM Jobposting
+    LEFT JOIN Person ON Jobposting.personId = Person.personId
+    LEFT JOIN Alumni ON Person.personId = Alumni.personId
+`);
+
   return result;
 };
 
