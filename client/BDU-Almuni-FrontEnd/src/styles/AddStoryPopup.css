@@ -9,6 +9,33 @@
   justify-content: center;
   align-items: center;
 }
+.success-container{
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  width: 100%;
+  background-color: #d8d8d8;
+}
+.success-container *{
+  font: 500 18px 'Poppins';
+  text-transform: capitalize;
+  color: #017821;
+  width: 80%;
+}
+.success-container .btn.ok{
+  border-color: #017821;
+  font-weight: 300;
+}
+.success-container .btn.ok:hover{
+  background-color: #017821;
+  color: #fff;
+}
 .story-job-conatianer{
   position: relative;
   gap:10px;

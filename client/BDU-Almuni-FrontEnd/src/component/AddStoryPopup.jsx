@@ -10,59 +10,53 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
         id:'companyName',
         className:"story-popup-input",
         label:'Company Name',
-        placeholder:'jobTitle',
-        type:"text",
-        value:'Company Name' 
+        placeholder:'Add company name',
+        type:"text" 
       },
       {
         id:'jobTitle',
         className:"story-popup-input",
         label:'Job Title',
-        placeholder:'jobTitle',
+        placeholder:'Add job title',
         type:"text",
-        value:'Job Title' 
+      
       },
       {
         id:'peopleNeeded',
         className:"story-popup-input",
         label:'People Needed',
-        placeholder:'jobTitle',
-        type:"text",
-        value:'People Needed' 
+        placeholder:'How many people are needed ',
+        type:"number" 
       },
       {
         id:'salary',
         className:"story-popup-input",
         label:'Salary',
-        placeholder:'jobTitle',
-        type:"text",
-        value:'Salary' 
+        placeholder:'Salary per month',
+        type:"number"
       },
       {
         id:'employment Type',
         className:"story-popup-input",
         label:'Employment Type',
-        placeholder:'jobTitle',
-        type:"text",
-        value:'Employment Type' 
+        placeholder:'Set employment Type',
+        type:"text" 
       },
       {
         id:'address',
         className:"story-popup-input",
         label:'Address',
-        placeholder:'jobTitle',
-        type:"text",
-        value:'Address' 
+        placeholder:'where is it located',
+        type:"text"
       },
       {
         id:'deadline',
         className:"story-popup-input",
         label:'Deadline',
-        placeholder:'jobTitle',
-        type:"text",
-        value:'Deadline' 
+        type:"date"
       } 
 ])
+  const [success, setsuccess] = useState(false)
   const [imageFile, setImageFile] = useState(null);
   const [description, setDescription] = useState('');
   const [isToggled, setToggled] = useState(false);
@@ -74,7 +68,6 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
     const file = e.target.files[0];
     setImageFile(file);
   };
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (/^\d+$/.test(description)) {
@@ -98,6 +91,40 @@ const slideToJob=(towhere)=>{
     
 }
 }
+const handleInputChange = (id, newValue) => {
+  setjobInputs(prevJobInputs => 
+    prevJobInputs.map(input => 
+      input.id === id ? { ...input, value: newValue } : input
+    )
+  );
+};
+
+const addJob = async (e) => {
+  e.preventDefault()
+      const jobData = jobInputs.reduce((acc, input) => {
+        acc[input.id] = input.value;
+        return acc;
+      }, {});
+
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/add-job`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials:'include',
+          body: JSON.stringify(jobData)
+        });
+        if (response.ok) {
+          const result = await response.json();
+          setsuccess(true)
+        } else {
+          console.error('Error:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
 
   return (
     <div className='story-popup'>
@@ -141,10 +168,17 @@ const slideToJob=(towhere)=>{
         <div className='story-popup-close-btn' onClick={handleClose}>
           <FaTimes />
         </div>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={addJob}>
             <div className="each-job-input">
-              {jobInputs.map((jobInput)=>
-              <FormInput label={jobInput.label} placeholder={jobInput.placeholder} type={jobInput.type} value={jobInput.value}/>
+              {jobInputs.map((jobInput,index)=>
+              <FormInput 
+                  key={index} 
+                  label={jobInput.label} 
+                  placeholder={jobInput.placeholder} 
+                  type={jobInput.type} 
+                  value={jobInput.value}
+                  onChange={(e) => handleInputChange(jobInput.id, e.target.value)}
+                  />
               )
               }
             </div>
@@ -171,6 +205,10 @@ const slideToJob=(towhere)=>{
     
         </form>
       </div>
+      {success&&<div className="success-container">
+              <p>we have successfully sent your job offer to the admin, it will be posted in a bit </p>
+              <Button onClick={handleClose} className={'ok'} text={'Okay'} />
+      </div>}
       </div>
     </div>
   );
