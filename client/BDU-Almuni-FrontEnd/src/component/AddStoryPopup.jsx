@@ -62,6 +62,7 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
   const [isToggled, setToggled] = useState(false);
   const [descriptionError, setDescriptionError] = useState('');
   const [waiting, setwaiting] = useState(false)
+  const [jobDescription, setjobDescription] = useState('');
   const handleToggle = () => {
     setToggled(!isToggled);
   };
@@ -107,7 +108,7 @@ const addJob = async (e) => {
         acc[input.id] = input.value;
         return acc;
       }, {});
-
+      jobData.jobDescription = jobDescription;
       try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/add-job`, {
           method: 'POST',
@@ -188,20 +189,17 @@ const addJob = async (e) => {
               )
               }
             </div>
-          <input
-            className='story-popup-input'
-            type='file'
-            accept='image/*'
-            onChange={handleImageChange}
-            required={!description}
-            />
           <div>
+          <div className="each-job-input">
+
+            <label className='job-detail'> Job Description </label>
           <textarea
             placeholder='Description'
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required={!imageFile}
+            value={jobDescription}
+            onChange={(e) => setjobDescription(e.target.value)}
+            required={true}
           ></textarea>
+          </div>
           {descriptionError && <p className="errorMessage">{descriptionError}</p>}
           </div>
           <div className="buttons">

@@ -20,20 +20,21 @@
   gap: 10px;
   height: 100%;
   width: 100%;
-  background-color: #d8d8d8;
+  background-color: #ffffff;
+  border-radius: 10px;
 }
 .success-container *{
-  font: 500 18px 'Poppins';
+  font: 600 18px 'Poppins';
   text-transform: capitalize;
-  color: #017821;
+  color: #0C8CE9;
   width: 80%;
 }
 .success-container .btn.ok{
-  border-color: #017821;
+  border-color: #0C8CE9;
   font-weight: 300;
 }
 .success-container .btn.ok:hover{
-  background-color: #017821;
+  background-color: #0C8CE9;
   color: #fff;
 }
 .story-job-conatianer{
@@ -95,8 +96,9 @@
 .each-job-input input{
   margin: 0 0 10px 10px;
 }
-.form_input label{
+.form_input label, .job-detail{
 font-weight: 400;
+color: #000000;
 }
 .each-job-input >*{
   display: flex;
