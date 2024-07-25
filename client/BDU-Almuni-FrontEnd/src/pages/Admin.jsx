@@ -4,7 +4,7 @@ import SideBar from '../component/SideBar';
 import Home from './AdminPages/Home';
 import '../styles/Admin.css';
 import Users from './AdminPages/Users';
-import stories from '../pages/AdminPages/stories';
+import Stories from '../pages/AdminPages/stories';
 import EventList from './AdminPages/EventList';
 import FeedBack from './AdminPages/FeedBack';
 import AddEvent from './AdminPages/AddEvent';
@@ -44,7 +44,7 @@ const Admin = () => {
             <Route path='News' element={<NewsList />} />
             <Route path='AddNews' element={<News />} />
             <Route path='AddUser' element={<AddUser />} />
-            <Route path='story' element={<stories />} />
+            <Route path='story' element={<Stories />} />
             <Route path='addedStories' element={<AddedStory />} />
             <Route path='Events' element={<EventList />} />
             <Route path='gallery' element={<AGallery />} />
