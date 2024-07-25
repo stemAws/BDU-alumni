@@ -14,6 +14,7 @@ const firebsae = require("firebase/app");
 firebsae.initializeApp(firebaseConfig);
 const storage = getStorage();
 exports.createJob = async (req, res) => {
+  console.log(req.body)
   try {
     const imagePath = req.file
       ? `job/${Date.now()}${path.extname(req.file.originalname)}`

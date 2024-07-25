@@ -2,10 +2,9 @@ const db = require("../config/db");
 
 exports.addJob = async (imagePath, {jobTitle, jobDescription, uploadDate, companyName, address, peopleNeeded, salary, deadline, email, phoneNumber}, alumniwhoposteditId) => {
   try {
-    const [result] = await db.query("INSERT INTO Jobposting (  jobTitle, description,uploadDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,personId, imagePath) VALUES (?,?, ?, ?, ?, ?, ?, ?,?,?,?, ?)", [
+    const [result] = await db.query("INSERT INTO Jobposting (  jobTitle, description,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,personId, imagePath) VALUES (?,?, ?, ?, ?, ?, ?, ?,?,?, ?)", [
       jobTitle,
       jobDescription,
-      uploadDate,
       companyName,
       address,
       peopleNeeded,
