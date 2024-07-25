@@ -89,7 +89,7 @@ const EventPost = () => {
         formDataToSend.append("link", link);
 
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/add-chapter`,
+          `${import.meta.env.VITE_BACKEND_URL}/add-chapter`,
           {
             method: "POST",
             body: formDataToSend,

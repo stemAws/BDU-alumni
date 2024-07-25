@@ -30,7 +30,7 @@ const chaptersList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/get-chapter`
+        `${import.meta.env.VITE_BACKEND_URL}/get-chapter`
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch chapter. Status: ${response.status}`);
@@ -71,7 +71,7 @@ const chaptersList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/get-chapter/${deleteConfirmationchapterId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/get-chapter/${deleteConfirmationchapterId}`,
         {
           method: "DELETE",
           headers: {
