@@ -74,7 +74,7 @@ const UserList = () => {
     try {
       // Send a PUT request to deactivate the alumni
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/verifyAlumni/${alumniID}`,
+        `${import.meta.env.VITE_BACKEND_URL}/verifyAlumni/${alumniID}`,
         {
           method: "PUT",
           headers: {
@@ -127,7 +127,7 @@ const UserList = () => {
     try {
       // Send a PUT request to activate the alumni
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/verifyAlumni/${alumniID}`,
+        `${import.meta.env.VITE_BACKEND_URL}/verifyAlumni/${alumniID}`,
         {
           method: "PUT",
           headers: {
