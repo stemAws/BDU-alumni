@@ -112,11 +112,24 @@ exports.fetchDonations = async () => {
 exports.getAlumniList = async () => {
   try {
     const [alumni] = await db.query(
-      "select alumniID, fullName, gender, email, verified, createdAt, isNotable from person p JOIN alumni a where a.personId = p.personId"
+      `SELECT a.alumniId, fullName, gender, email, verified, createdAt, isNotable, major FROM person p JOIN alumni a JOIN education e WHERE a.personId = p.personId AND a.alumniId = e.alumniId AND e.institution='Bahir Dar University'`
     );
     return alumni;
   } catch (error) {
     throw new Error("Error fetching donations: " + error.message);
+  }
+};
+
+exports.updateVerified = async (alumniID, verified) => {
+  try {
+    const [{ affectedRows }] = await db.query(
+      "UPDATE Person p JOIN Alumni a ON p.personId = a.personId SET verified = ? WHERE alumniID = ?",
+      [verified, alumniID]
+    );
+    return affectedRows;
+  } catch (error) {
+    console.error("Error updating verified:", error);
+    throw error;
   }
 };
 
@@ -232,4 +245,3 @@ exports.getCompanyCount = async () => {
     throw error;
   }
 };
-
