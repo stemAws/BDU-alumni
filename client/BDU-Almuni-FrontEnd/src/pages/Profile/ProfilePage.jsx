@@ -124,7 +124,7 @@ const ProfilePage = () => {
     var workingPlace =""
     for (let i = 0; i < experiances?.length; i++) {
       if (experiances[i].stillWorking) {
-        workingPlace= `${experiances[i].jobTitle} at ${experiances[i].companyName}`
+        workingPlace= `${experiances[i].position} at ${experiances[i].company}`
       return workingPlace
       }
       else{
@@ -170,7 +170,7 @@ const ProfilePage = () => {
           <p className="full_name">{personalInfo?.[0]?.fullName}</p>
           {
             personalInfo?.[0]?.role==='Student'&&(
-               <p> {personalInfo?.[0]?.graduationYear} Batch</p>
+               <p> {personalInfo?.[0]?.batch} Batch</p>
             )
           }
         </li>
