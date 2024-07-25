@@ -15,14 +15,14 @@ import Button from '../../component/Button';
 import { BiCamera } from 'react-icons/bi';
 import {FaPen} from 'react-icons/fa'
 import Activities from "../../component/Activities";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import EditPersonalInfo from "../../component/EditPersonalInfo";
 import Cookies from 'js-cookie';
 // import SigninWrapper from "../../component/SigninWrapper";
 // import { SigninContext } from '../../Pages/UsersPage'
 const Editprofile = () => {
   const { username } = useParams();
-  // const history = useHistory();
+  const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState('');
   const [bgImageUrl, setBgImageUrl] = useState('');
   const [inputDirty,setInputDirty]=useState(false);
@@ -609,7 +609,7 @@ const getStoryById = async(id)=>{
               else if(res.ok){
               const data = await res.json();
               setPlaceholders([...placeholders, data]);
-              // history.push(`${placeholders[0].username}`);
+              navigate(`/Editprofile/${placeholders[0].username}`);
               window.location.reload();
               }
               else if (!res.ok) {
