@@ -95,6 +95,9 @@
 .each-job-input input{
   margin: 0 0 10px 10px;
 }
+.form_input label{
+font-weight: 400;
+}
 .each-job-input >*{
   display: flex;
   align-items: center;

@@ -61,6 +61,7 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
   const [description, setDescription] = useState('');
   const [isToggled, setToggled] = useState(false);
   const [descriptionError, setDescriptionError] = useState('');
+  const [waiting, setwaiting] = useState(false)
   const handleToggle = () => {
     setToggled(!isToggled);
   };
@@ -100,7 +101,8 @@ const handleInputChange = (id, newValue) => {
 };
 
 const addJob = async (e) => {
-  e.preventDefault()
+      e.preventDefault()
+      setwaiting(true)
       const jobData = jobInputs.reduce((acc, input) => {
         acc[input.id] = input.value;
         return acc;
@@ -118,11 +120,15 @@ const addJob = async (e) => {
         if (response.ok) {
           const result = await response.json();
           setsuccess(true)
+          setwaiting(false)
+
         } else {
           console.error('Error:', response.statusText);
+          setwaiting(true)
         }
       } catch (error) {
         console.error('Error:', error);
+        setwaiting(true)
       }
     };
 
@@ -199,8 +205,8 @@ const addJob = async (e) => {
           {descriptionError && <p className="errorMessage">{descriptionError}</p>}
           </div>
           <div className="buttons">
-            <Button disabled={loading} type='submit'text={loading?'Uploading...':'Upload'}/>
-      <Button type={'button'} text={'Post Stories'} onClick={()=>slideToJob('toStories')}/>
+            <Button disabled={waiting} type='submit'text={waiting?'Uploading...':'Upload'}/>
+            <Button  type={'button'} text={'Post Stories'} onClick={()=>slideToJob('toStories')}/>
     </div>
     
         </form>
