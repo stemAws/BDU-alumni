@@ -16,16 +16,6 @@ const storage = getStorage();
 
 exports.createAdminEvent = async (req, res) => {
   try {
-    const {
-      title,
-      content,
-      startDate,
-      endDate,
-      organizer,
-      eventLink,
-      category,
-      eventLocation,
-    } = req.body;
     const imagePath = req.file
       ? `events/${Date.now()}${path.extname(req.file.originalname)}`
       : null;
@@ -41,17 +31,7 @@ exports.createAdminEvent = async (req, res) => {
       downloadURL = await getDownloadURL(fileRef);
     }
 
-    const event = await eventsService.addEvent(
-      title,
-      content,
-      startDate,
-      endDate,
-      organizer,
-      downloadURL,
-      eventLink,
-      category,
-      eventLocation
-    );
+    const event = await eventsService.addEvent(req.params.adminId, downloadURL, req.body);
     res.status(201).json({ message: "Event added successfully", event });
   } catch (error) {
     console.error("Error adding event:", error);
@@ -106,7 +86,7 @@ exports.updateAdminEventById = async (req, res) => {
 
 exports.deleteAdminEventById = async (req, res) => {
   try {
-    const {eventId} = req.params;
+    const { eventId } = req.params;
     let event = await eventsService.getEventById(eventId);
     if (event?.eventImage) {
       const eventRef = ref(storage, eventImage);

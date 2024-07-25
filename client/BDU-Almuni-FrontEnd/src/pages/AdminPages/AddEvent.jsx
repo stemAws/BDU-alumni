@@ -3,7 +3,6 @@ import "../../styles/AddEvent.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "@mui/material";
 import { ChevronLeft } from "@mui/icons-material";
-
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,9 +12,10 @@ const EventPost = () => {
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const navigate = useNavigate();
   const [organizer, setOrganizer] = useState("");
   const [eventLink, setEventLink] = useState("");
+  const [category, setCategory] = useState("");
+  const [eventLocation, setEventLocation] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
 
@@ -24,7 +24,12 @@ const EventPost = () => {
   const [startDateError, setStartDateError] = useState("");
   const [endDateError, setEndDateError] = useState("");
   const [organizerError, setOrganizerError] = useState("");
-  const [LinkError, setLinkError] = useState("");
+  const [linkError, setLinkError] = useState("");
+  const [categoryError, setCategoryError] = useState("");
+  const [eventLocationError, setEventLocationError] = useState("");
+
+  const navigate = useNavigate();
+
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
 
@@ -33,9 +38,6 @@ const EventPost = () => {
       setImage(file);
     } else {
       switch (name) {
-        case "image":
-          setImage(files && files.length > 0 ? files[0] : null);
-          break;
         case "title":
           setTitle(value);
           setTitleError("");
@@ -60,6 +62,14 @@ const EventPost = () => {
           setEventLink(value);
           setLinkError("");
           break;
+        case "category":
+          setCategory(value);
+          setCategoryError("");
+          break;
+        case "eventLocation":
+          setEventLocation(value);
+          setEventLocationError("");
+          break;
         default:
           break;
       }
@@ -80,34 +90,31 @@ const EventPost = () => {
     const currentDate = new Date();
 
     if (!title) {
-      setTitleError(title ? "" : "Title field cannot be empty!");
+      setTitleError("Title field cannot be empty!");
       valid = false;
     } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
-      setTitleError("title must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      setTitleError("Title must contain only letters and spaces, with numbers allowed anywhere after letters!");
       valid = false;
     }
     if (!description) {
-      setDescriptionError(
-        description ? "" : "Description field cannot be empty!"
-      );
+      setDescriptionError("Description field cannot be empty!");
       valid = false;
     } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-      setDescriptionError("description must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
       valid = false;
     }
     if (!startDate) {
-      setStartDateError(startDate ? "" : "StartDate field cannot be empty!");
+      setStartDateError("StartDate field cannot be empty!");
       valid = false;
     } else {
       const startDateValue = new Date(startDate);
-      const currentDate = new Date();
       if (startDateValue <= currentDate) {
         setStartDateError("Start Date should be today or in the future!");
         valid = false;
       }
     }
     if (!endDate) {
-      setEndDateError(endDate ? "" : "EndDate field cannot be empty!");
+      setEndDateError("EndDate field cannot be empty!");
       valid = false;
     } else {
       const endDateValue = new Date(endDate);
@@ -119,25 +126,27 @@ const EventPost = () => {
         setEndDateError("End Date should be after the Start Date!");
         valid = false;
       }
-      if (new Date(startDate) > endDateValue) {
-        setEndDateError("End Date should be after the Start Date!");
-        valid = false;
-      }
     }
-
     if (!organizer) {
-      setOrganizerError(organizer ? "" : "Organizer field cannot be empty!");
+      setOrganizerError("Organizer field cannot be empty!");
       valid = false;
     } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(organizer)) {
-      setOrganizerError("organizer must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      setOrganizerError("Organizer must contain only letters and spaces, with numbers allowed anywhere after letters!");
       valid = false;
     }
-
     if (!isValidUrl(eventLink) && eventLink.trim() !== "") {
       setLinkError("Please enter a valid URL");
       valid = false;
     } else {
       setLinkError("");
+    }
+    if (!category) {
+      setCategoryError("Category field cannot be empty!");
+      valid = false;
+    }
+    if (!eventLocation) {
+      setEventLocationError("Event Location field cannot be empty!");
+      valid = false;
     }
 
     if (valid) {
@@ -145,16 +154,16 @@ const EventPost = () => {
         const formDataToSend = new FormData();
         formDataToSend.append("image", image);
         formDataToSend.append("title", title);
-        formDataToSend.append("description", description);
+        formDataToSend.append("content", description);
         formDataToSend.append("startDate", startDate);
         formDataToSend.append("endDate", endDate);
         formDataToSend.append("organizer", organizer);
         formDataToSend.append("eventLink", eventLink);
-
-
+        formDataToSend.append("category", category);
+        formDataToSend.append("eventLocation", eventLocation);
 
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/Events`,
+          `${import.meta.env.VITE_BACKEND_URL}/adminEvents/2`,
           {
             method: "POST",
             body: formDataToSend,
@@ -174,6 +183,7 @@ const EventPost = () => {
       }
     }
   };
+
   const handleClick = () => {
     navigate("/admin/Events");
   };
@@ -242,7 +252,27 @@ const EventPost = () => {
               value={eventLink}
               onChange={handleInputChange}
             />
-            {LinkError && <p className="errorMessage">{LinkError}</p>}
+            {linkError && <p className="errorMessage">{linkError}</p>}
+          </div>
+          <div className="form">
+            <label className="label">Category:</label>
+            <input
+              type="text"
+              name="category"
+              value={category}
+              onChange={handleInputChange}
+            />
+            {categoryError && <p className="errorMessage">{categoryError}</p>}
+          </div>
+          <div className="form">
+            <label className="label">Event Location:</label>
+            <input
+              type="text"
+              name="eventLocation"
+              value={eventLocation}
+              onChange={handleInputChange}
+            />
+            {eventLocationError && <p className="errorMessage">{eventLocationError}</p>}
           </div>
           <div className="form">
             <label className="label">Start Date:</label>
@@ -264,7 +294,6 @@ const EventPost = () => {
             />
             {endDateError && <p className="errorMessage">{endDateError}</p>}
           </div>
-
           <button type="submit">Upload</button>
         </form>
       </div>
