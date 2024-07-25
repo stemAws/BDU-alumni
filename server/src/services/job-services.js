@@ -1,19 +1,20 @@
 const db = require("../config/db");
 
-exports.addJob = async (imagePath, {jobTitle, jobDescription, uploadDate, companyName, address, peopleNeeded, salary, deadline, email, phoneNumber}, alumniwhoposteditId) => {
+exports.addJob = async (imagePath, jobDetails, alumniwhoposteditId) => {
   try {
-    const [result] = await db.query("INSERT INTO Jobposting (  jobTitle, description,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,personId, imagePath) VALUES (?,?, ?, ?, ?, ?, ?, ?,?,?, ?)", [
-      jobTitle,
-      jobDescription,
-      companyName,
-      address,
-      peopleNeeded,
-      salary,
-      deadline,
-      email,
-      phoneNumber,
+    const [result] = await db.query("INSERT INTO Jobposting (  jobTitle, description,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,personId, imagePath, employmentType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?, ?)", [
+      jobDetails.jobTitle,
+      jobDetails.jobDescription,
+      jobDetails.companyName,
+      jobDetails.address,
+      jobDetails.peopleNeeded,
+      jobDetails.salary,
+      jobDetails.deadline,
+      jobDetails.email,
+      jobDetails.phoneNumber,
       alumniwhoposteditId,
-      imagePath
+      imagePath,
+      jobDetails.employmentType
     ]);
 
     return result.insertId;
