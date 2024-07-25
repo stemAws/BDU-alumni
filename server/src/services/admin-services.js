@@ -46,7 +46,7 @@ exports.fetchSuggestedPostsByAdmin = async () => {
 exports.fetchGeoData = async () => {
   try {
     const [rows, fields] = await db.query(
-      "SELECT address, COUNT(*) AS count FROM alumni GROUP BY address"
+      "SELECT address, COUNT(*) AS count FROM Alumni GROUP BY address"
     );
     const data = rows.map((result) => ({
       country: result.address,
@@ -112,7 +112,7 @@ exports.fetchDonations = async () => {
 exports.getAlumniList = async () => {
   try {
     const [alumni] = await db.query(
-      "select alumniID, fullName, gender, email, verified, createdAt, isNotable from person p JOIN alumni a where a.personId = p.personId"
+      "select alumniID, fullName, gender, email, verified, createdAt, isNotable from Person p JOIN Alumni a where a.personId = p.personId"
     );
     return alumni;
   } catch (error) {
