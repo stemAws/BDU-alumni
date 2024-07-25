@@ -100,6 +100,23 @@ exports.getAlumni = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+exports.veifyAlumni = async function (req, res) {
+  try {
+    const { verified } = req.body;
+    const alumniId = req.params.alumniId;
+
+    const affectedRows = await adminService.updateVerified(alumniId, verified);
+
+    if (affectedRows === 0) {
+      return res.status(404).json({ error: "Alumni not found" });
+    }
+
+    res.json({ success: "Verified change successful" });
+  } catch (error) {
+    console.error("Error changing verified:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 exports.getDegree = async (req, res) => {
   try {

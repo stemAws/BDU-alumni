@@ -1,8 +1,7 @@
 import "../../styles/Users.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
-import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const UserList = () => {
@@ -10,7 +9,6 @@ const UserList = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate(); 
 
   useEffect(() => {
     fetchData();
@@ -74,7 +72,7 @@ const UserList = () => {
     try {
       // Send a PUT request to deactivate the alumni
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/verifyAlumni/${alumniID}`,
+        `${import.meta.env.VITE_BACKEND_URL}/verify-alumni/${alumniID}`,
         {
           method: "PUT",
           headers: {
@@ -100,7 +98,7 @@ const UserList = () => {
     try {
       // Send a PUT request to deactivate the alumni
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/notable/${alumniID}`,
+        `${import.meta.env.VITE_BACKEND_URL}/notable/${alumniID}`,
         {
           method: "PUT",
           headers: {
@@ -127,7 +125,7 @@ const UserList = () => {
     try {
       // Send a PUT request to activate the alumni
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/verifyAlumni/${alumniID}`,
+        `${import.meta.env.VITE_BACKEND_URL}/verify-alumni/${alumniID}`,
         {
           method: "PUT",
           headers: {
@@ -152,7 +150,7 @@ const UserList = () => {
     try {
       // Send a PUT request to activate the alumni
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/notable/${alumniID}`,
+        `${import.meta.env.VITE_BACKEND_URL}/notable/${alumniID}`,
         {
           method: "PUT",
           headers: {
@@ -199,10 +197,9 @@ const UserList = () => {
 
   const columns = [
     { field: "alumniID", headerName: "ID", width: 30 },
-    { field: "firstname", headerName: "First Name", width: 100 },
-    { field: "lastname", headerName: "Last Name", width: 100 },
+    { field: "fullName", headerName: "Full Name", width: 200 },
     { field: "gender", headerName: "Gender", width: 100 },
-    { field: "role", headerName: "Role", width: 100 },
+    { field: "major", headerName: "Department", width: 250 },
     { field: "isNotable", headerName: "Is Notable", width: 100 },
     {
       field: "notable",
@@ -229,7 +226,7 @@ const UserList = () => {
         </>
       ),
     },
-    
+
     { field: "status", headerName: "Status", width: 120 },
     {
       field: "actions",
@@ -275,14 +272,13 @@ const UserList = () => {
   ];
 
   const rows = filteredData.map((item) => ({
-    id: item.alumniID,
-    alumniID: item.alumniID,
-    firstname: item.firstname, // Change here to match your data's key
-    lastname: item.lastname, // Ensure this matches your data's key as well
+    id: item.alumniId,
+    alumniID: item.alumniId,
+    fullName: item.fullName, // Change here to match your data's key
     gender: item.gender,
-    role: item.role,
-    isNotable: getNotable(item.notable),
-    notable: item.notable,
+    major: item.major,
+    isNotable: getNotable(item.isNotable),
+    notable: item.isNotable,
     status: getStatus(item.verified),
     verified: item.verified, // Ensure this line is present
   }));

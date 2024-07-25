@@ -313,7 +313,7 @@ exports.updateNotable = async (alumniID, isNotable) => {
     );
     return affectedRows;
   } catch (error) {
-    console.error("Error updating password:", error);
+    console.error("Error updating notable:", error);
     throw error;
   }
 };
