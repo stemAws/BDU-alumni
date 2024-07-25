@@ -9,7 +9,8 @@
     height: 450px;
     width: 100%;
     overflow-x: scroll;
-    justify-content: space-around;
+    gap: 40px;
+    padding: 0 15px;
 }
 .each-story{
     display: flex;
