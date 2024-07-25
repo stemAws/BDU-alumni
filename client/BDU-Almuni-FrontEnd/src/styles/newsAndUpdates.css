@@ -114,15 +114,15 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
 }
 .news-timing-nav>ul{
     border-bottom: 1px solid #6c6c6c6f;
-    width: 400px;
+    width: 100%;
     text-transform: capitalize;
     font: 400 12px 'poppins';
     list-style: none;
     display: flex;
-     gap: 80px;
      height: 30px;
     align-items: center;
     padding-left:0 ;
+    justify-content: space-around;
 }
 
 .news-timing-nav ul li{

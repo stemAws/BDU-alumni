@@ -7,7 +7,7 @@ const EachEvent = ({singleEvent}) => {
         {
             type === 1 ?(
                 <>
-                <img src={singleEvent?.img} alt="" className="events-img" />
+                <img src={singleEvent?.imagePath} alt="" className="events-img" />
     <div className="separetor"></div>
     <div className="event-description">
         <p className="description-title">{singleEvent?.title}</p>
@@ -32,7 +32,7 @@ const EachEvent = ({singleEvent}) => {
                     <div className="event-description">
             <p className="description-title">{singleEvent?.title}</p>
                 <div className="description-text">
-                    <p className="event-text">{singleEvent?.description}</p>
+                    <p className="event-text">{singleEvent?.content}</p>
                     
                 </div>
                 {
@@ -40,7 +40,7 @@ const EachEvent = ({singleEvent}) => {
             }
         </div>
         <div className="separetor"></div>
-        <img src={singleEvent?.img} alt="" className="events-img" />
+        <img src={singleEvent?.imagePath} alt="" className="events-img" />
         
         
         </> 

@@ -29,7 +29,7 @@ const EventList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/adminEvents`
+        `${import.meta.env.VITE_BACKEND_URL}/adminEvents`
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch events. Status: ${response.status}`);
