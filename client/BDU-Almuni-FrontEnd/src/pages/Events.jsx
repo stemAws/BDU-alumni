@@ -2,13 +2,11 @@ import"../styles/events.css"
 import newsimg2 from '../assets/images/photo_2024-02-25_23-36-59.jpg';
 import newsimg from '../assets/images/photo_2024-02-27_14-20-52.jpg';
 import Button from "../component/Button";
-// import { useInView } from 'react-intersection-observer';
 import {FaArrowCircleDown, FaArrowDown, FaChevronDown} from "react-icons/fa"
 import { useEffect, useState } from "react";
 import MultipleEvents from "../component/MultipleEvents";
 const Events = () => {
-    
-  const [exitingView, setExitingView] = useState(false);
+  const [eventsToShow, seteventsToShow] = useState(3);
   const [events, setevents] = useState([{
     id:1,
     img:`..${newsimg}`,
@@ -47,33 +45,15 @@ const Events = () => {
     }
     fetchEvents();
   }, [])
-  
-  // const handleIntersection = (entries) => {
-  //   entries.forEach(entry => {
-  //     if (!entry.isIntersecting) {
-  //       setExitingView(true);
-  //     } else {
-  //       setExitingView(false);
-  //     }
-  //   });
-  // };
-  // const { ref, inView } = useInView({
-  //         triggerOnce: true,
-  //         threshold: 0.01,
-  //         // onChange:handleIntersection 
-  //       });
-  let height =650
   const handleSeemore=()=>{
-
-// document.querySelector(".events-container").classList.toggle("tall")
-height=height+650;
-document.documentElement.style.setProperty('--event-height', `${height}px`);
-
+      seteventsToShow(eventsToShow + 3)
+  }
+  const handleSeeless=()=>{
+      seteventsToShow(eventsToShow - 3)
   }
   return (
     <div className="events-container body">
          <div className="events">
-      {/* < ref={ref} className={`circle-bg ${inView ? 'wide' : ''} ${exitingView ? 'return' : ''}`}  /> */}
       <div className="circle-bg return" />
       <div className="the-line"></div>
       <div className="line-cover"></div>
@@ -83,10 +63,13 @@ document.documentElement.style.setProperty('--event-height', `${height}px`);
       </div>
        {
         events.length > 0 &&(
-          <MultipleEvents events={events} />
+          <MultipleEvents events={events} eventsToShow={eventsToShow} />
         )
        }
-       <Button className={`seeMore`} onClick={()=>handleSeemore()} text={"See More"} />
+       <div className="buttons">
+       {eventsToShow < events.length && <Button className={`see-more`} onClick={()=>handleSeemore()} text={"More"} />}
+       {(eventsToShow > 3 ) && <Button className={`see-less`} onClick={()=>handleSeeless()} text={"Less"} />}
+       </div>
     </div>
   )
 }

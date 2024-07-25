@@ -44,11 +44,11 @@ const MainPage = () => {
       
         
         
-          <SigninContext.Provider value={{ signin, setsignin}}>
-        <Header logout={handleLogout} setsignin={setsignin} loginState={loginState}/>
-        </SigninContext.Provider>
+          <SigninContext.Provider value={{ loginState,setloginState, setsignin}}>
+        <Header logout={handleLogout}/>
+        
         {
-          signin&&<Signin setloginState={setloginState} setsignin={setsignin}/>
+          signin&&<Signin/>
         }
           <Routes>
           <Route path="/" exact Component = {MainBody} />
@@ -56,21 +56,22 @@ const MainPage = () => {
           <Route path="/events"  Component = {Events} /> */}
           <Route path="/gallery"  Component = {Gallery} />
           <Route path="/newsAndUpdates"  Component = {NewsAndUpdates} />
-          <Route path="/Chapters"  Component = {Chapters} />
-          <Route path="/jobOffer"  Component = {JobOffer} />
+          <Route path="/Chapters"  Component = {loginState?Chapters:Signin} />
+          <Route path="/jobOffer"  Component = {loginState?JobOffer:Signin} />
           <Route path="/history"  Component = {History} />
           <Route path="/explore"  Component = {Explore} />
-          <Route path="/editProfile/:username"  Component = {Editprofile} />
+          <Route path="/editProfile/:username"  Component = {loginState?Editprofile:Signin} />
           <Route path="/ProfilePage/:username"  Component = {ProfilePage} />
           <Route path="/contactus"  Component = {ContactUS} />
-          <Route path="/changePassword/:username"  Component = {ChangePassword} />
-          <Route path="/post/:username"  Component = {Posts} />
+          <Route path="/changePassword/:username"  Component = {loginState?ChangePassword:Signin} />
+          <Route path="/post/:username"  Component = {loginState?Posts:Signin} />
           <Route path="/aboutDevs"  Component = {AboutDevs} />
           <Route path="/forgetPassword"  Component = {ForgetPassword} />
           <Route path="/search/:name"  Component = {SearchAndFilter} />
           <Route path="/stories/:id"  Component = {StoriesDetail} />
           <Route path="*"  Component = {PageNotFound} />
           </Routes>
+          </SigninContext.Provider>
           <Footer/>
     </div>
   )

@@ -2,11 +2,13 @@ import NavBar from "./NavBar"
 import '../styles/header.css'
 import { useLocation } from "react-router-dom";
 import background from '../assets/images/photo_2024-02-25_15-58-46.jpg'
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import Button from "./Button";
 import { Link } from "react-router-dom";
+import { SigninContext } from "../pages/MainPage";
 
-const Header = ({setsignin,loginState,logout}) => {
+const Header = ({logout}) => {
+  const {loginState,setsignin}=useContext(SigninContext)
   const location = useLocation();
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -82,7 +84,7 @@ const Header = ({setsignin,loginState,logout}) => {
             <p className="bottom-title">Connecting the past, shaping the future. Join our alumni network to stay informed, get involved, and give back. Together, we can create opportunities and build a stronger community.</p>
             <div className="main-page-buttons">
              { !loginState&&<Button id={"signin-btn"} onClick={()=>setsignin(true)} text='SIGN IN'/>} 
-            <Link to='/explore'> <Button className={"transparent-btn"} onClick={()=>setsignin(true)} text='EXPLORE'/></Link>
+            <Link to='/explore'> <Button className={"transparent-btn"}  text='EXPLORE'/></Link>
             </div>
             
         </div>

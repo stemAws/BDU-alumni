@@ -32,30 +32,44 @@ exports.addUser = async function (req, res) {
 
 exports.signIn = async function (req, res) {
   try {
-    const { username, password } = req.body;
+    const { username, password, isAdmin } = req.body;
     const authenticationResult = await alumniService.authenticateUser(
       username,
       password,
-      false
+      isAdmin
     );
 
     if (authenticationResult.success) {
       const [token] = await alumniService.getAlumniProfile(username);
       const id2 = token.alumniId;
       const id = token.personId;
+
       const realToken = jwt.sign({ token }, process.env.secretKey, {
-        expiresIn: "30d",
+        expiresIn: "7d",
       });
 
+      if (isAdmin) {
+        const adminToken = jwt.sign({ token, isAdmin: true }, process.env.secretKey, {
+          expiresIn: "7d",
+        });
 
-      if (process.env.NODE_ENV === 'dev') {
-        res
-        .cookie("token", realToken, { httpOnly: true })
-        .cookie("id2", id2)
-        .cookie("id", id, { httpOnly: false })
-      } else if (NODE_ENV === 'prod') {
-        res
-          .cookie("token", realToken, { httpOnly: true, secure: true })
+        if (process.env.NODE_ENV === 'dev') {
+          res
+            .cookie("adminToken", adminToken)
+        } else if (process.env.NODE_ENV === 'prod') {
+          res
+            .cookie("adminToken", adminToken, { secure: true });
+        }
+      } else {
+        if (process.env.NODE_ENV === 'dev') {
+          res
+            .cookie("token", realToken, { httpOnly: true })
+            .cookie("id2", id2)
+            .cookie("id", id, { httpOnly: false });
+        } else if (process.env.NODE_ENV === 'prod') {
+          res
+            .cookie("token", realToken, { httpOnly: true, secure: true });
+        }
       }
 
       res.status(200).json({
@@ -72,6 +86,7 @@ exports.signIn = async function (req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 exports.getAlumniProfile = async function (req, res) {
   try {

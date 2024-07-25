@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 // import Button from '../components/Button'
 // import icon  from "../assets/icon.jpg";
 import { useState } from 'react';
+import AuthService from './AuthService';
 
 const SideBar = () => {
 

@@ -9,7 +9,7 @@ const CategorizedNews = ({news,newsClicked}) => {
   return (
     <div onClick={()=>handleId(news.newsId)} className={`each-news n${news.newsId}`}>
           <div className="small-news-img">
-            <img src={news.img} alt="" />
+            <img src={news.imagePath} alt="" />
           </div>
           <div className="news-detail">
           <p className="news-description">{news.content}</p>

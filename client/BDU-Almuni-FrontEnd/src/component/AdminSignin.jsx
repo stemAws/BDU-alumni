@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import FormInput from "./FormInput";
 import Button from "./Button";
 import AuthService from "./AuthService";
-const Signin = ({ closeSignin,setsignin,setloginState }) => {
+const Signin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [visible,setVisible] = useState(false);
@@ -21,14 +21,13 @@ const Signin = ({ closeSignin,setsignin,setloginState }) => {
       body: JSON.stringify({
         username: username,
         password: password,
+        isAdmin: 1
       }),
       credentials: 'include',
     })
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          // AuthService.login(data.token,data.realToken); 
-          setsignin(false)
           window.location.reload()
         } else {
           setErrorPopup(true);
@@ -96,7 +95,7 @@ const Signin = ({ closeSignin,setsignin,setloginState }) => {
                 }
               </div>
             </div>
-            <Link to ='/forgetPassword' onClick={()=>setsignin(false)}>Forget password?</Link>
+            {/* <Link to ='/forgetPassword' onClick={()=>setsignin(false)}>Forget password?</Link> */}
             <Button disabled={loading} text={loading?"Loging...":"LOGIN"} onClick={handleSignIn} />
         </form>
         </div>
