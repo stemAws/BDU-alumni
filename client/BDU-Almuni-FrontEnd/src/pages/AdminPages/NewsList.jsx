@@ -30,7 +30,7 @@ const NewsList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/get-news`
+        `${import.meta.env.VITE_BACKEND_URL}/all-news`
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch news. Status: ${response.status}`);
@@ -71,7 +71,7 @@ const NewsList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/get-news/${deleteConfirmationnewsId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/delete-news/:newsId/${deleteConfirmationnewsId}`,
         {
           method: "DELETE",
           headers: {
