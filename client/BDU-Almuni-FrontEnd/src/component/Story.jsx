@@ -5,8 +5,8 @@ const Story = ({story}) => {
   return (
     <Link to={`stories/${story.postId}`}>
     <div className="each-story">
-              {story.img&&(<img className="story-img"src={story.img} alt="" />) } 
-            <div className={`${story.img?"story-description-container":"story-description-container without"}`}>
+              {story.mediaPath&&(<img className="story-img"src={story.mediaPath} alt="" />) } 
+            <div className={`${story.mediaPath?"story-description-container":"story-description-container without"}`}>
                 <p className="story-text">{story.content}</p>
                     <p className="story-readmore">
                         Read more <FaArrowRight/>
