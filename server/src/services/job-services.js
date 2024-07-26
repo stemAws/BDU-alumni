@@ -34,7 +34,6 @@ exports.getJobs = async () => {
     FROM Jobposting
     LEFT JOIN Person ON Jobposting.personId = Person.personId
     LEFT JOIN Alumni ON Person.personId = Alumni.personId
-    WHERE Jobposting.isApproved = 1
 `);
 
   return result;
