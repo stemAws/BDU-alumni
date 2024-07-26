@@ -29,7 +29,7 @@ setjobOffer(jobOffers?.find((jOff=>jOff.jobPostingId===jobID)))
     }, [])
     
   return (
-    <div className="JO-flex-container body">
+    <div className="JO-flex-container">
     <p className="job-offer"><span className='blue-text'>JOB</span> OFFER</p>
     <div className="job-offer-container ">
         
