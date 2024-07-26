@@ -4,7 +4,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const EventPost = () => {
- 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
@@ -18,26 +17,21 @@ const EventPost = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "image") {
-      const filesArray = Array.from(files);
-      setImages(filesArray);
-    } else {
-      switch (name) {
-        case "title":
-          setTitle(value);
-          setTitleError("");
-          break;
-        case "description":
-          setDescription(value);
-          setDescriptionError("");
-          break;
-        case "link":
-            setLink(value);
-            setLinkError("");
-            break;
-        default:
-          break;
-      }
+    switch (name) {
+      case "title":
+        setTitle(value);
+        setTitleError("");
+        break;
+      case "description":
+        setDescription(value);
+        setDescriptionError("");
+        break;
+      case "link":
+        setLink(value);
+        setLinkError("");
+        break;
+      default:
+        break;
     }
   };
 
@@ -73,32 +67,32 @@ const EventPost = () => {
       );
       valid = false;
     }
-      if (!isValidUrl(link) && link.trim() !== "") {
-        setLinkError("Please enter a valid URL");
-        valid = false;
-      } else {
-        setLinkError("");
-      }
-  
+    if (!isValidUrl(link) && link.trim() !== "") {
+      setLinkError("Please enter a valid URL");
+      valid = false;
+    } else {
+      setLinkError("");
+    }
 
     if (valid) {
       try {
-        const formDataToSend = new FormData();
-        formDataToSend.append("title", title);
-        formDataToSend.append("description", description);
-        formDataToSend.append("link", link);
-
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/add-chapter`,
           {
             method: "POST",
-            body: formDataToSend,
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: title,
+              description: description,
+              link: link,
+            }),
           }
         );
 
         if (response.ok) {
           toast.success("Chapters uploaded successfully");
-          navigate("/admin/chapters");
           setSuccess(true);
         } else {
           console.error("Error uploading chapters", response.statusText);
@@ -120,7 +114,6 @@ const EventPost = () => {
           onSubmit={handleSubmit}
           encType="multipart/form-data"
         >
-         
           <div className="form">
             <label className="label">Club Name:</label>
             <input
@@ -155,7 +148,9 @@ const EventPost = () => {
             />
             {LinkError && <p className="errorMessage">{LinkError}</p>}
           </div>
-          <button type="submit" onClick={handleSubmit}>Upload</button>
+          <button type="submit" onClick={handleSubmit}>
+            Upload
+          </button>
         </form>
       </div>
     </div>
