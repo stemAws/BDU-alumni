@@ -163,7 +163,7 @@ const EventPost = () => {
         formDataToSend.append("eventLocation", eventLocation);
 
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/adminEvents`,
+          `${import.meta.env.VITE_BACKEND_URL}/adminEvents/2`,
           {
             method: "POST",
             body: formDataToSend,
