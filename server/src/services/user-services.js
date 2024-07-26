@@ -14,7 +14,7 @@ exports.addUser = async (alumniData) => {
     [alumniData.fullName, alumniData.gender, alumniData.email, alumniData.username, hashedPassword, alumniData.verified, alumniData.batch]
   );
 
-  if (role === "alumni") {
+  if (alumniData.role === "alumni") {
     await db.query(
       `INSERT INTO Alumni (personId, isNotable)
     VALUES (LAST_INSERT_ID(), ?)`,
