@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const adminservice = require('../services/admin-services');
 
-async function verifyToken(req, res, next, returnSuccessMessage = false) {
+async function verifyToken(req, res, next) {
     try {
         const { token } = req.cookies;
 
@@ -10,15 +11,17 @@ async function verifyToken(req, res, next, returnSuccessMessage = false) {
 
         const decoded = jwt.verify(token, process.env.secretKey);
 
-        req.alumni = decoded.token
-
-        if (returnSuccessMessage) {
-            return res.status(200).json({ message: 'Token verified successfully', auth: true })
+        if (decoded.token.isAdmin) {
+            const adminData = await adminservice.fetchAdminDetailsByPersonId(decoded.token.personId);
+            req.admin = adminData;
         }
+        
+        req.alumni = decoded.token;
 
-        next()
+        next();
     } catch (error) {
-        return res.status(401).json({ error: 'Failed to authenticate token' })
+        console.error('Failed to authenticate token:', error);
+        return res.status(401).json({ error: 'Failed to authenticate token' });
     }
 }
 

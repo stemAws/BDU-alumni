@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles/storiesDetail.css";
-import {useParams} from "react-router-dom"
+import {Link, useParams} from "react-router-dom"
 const StoriesDetail = () => {
     const {id} = useParams()
     const [stories, setstories] = useState()
@@ -12,7 +12,6 @@ const StoriesDetail = () => {
                 credentials: 'include',
               })
               const featuredStoriesFromServer= await res.json()
-              // console.log(featuredStoriesFromServer,"from servers")
               if (!res.ok) {
                 console.error("couldn't fetch the stories")
               }

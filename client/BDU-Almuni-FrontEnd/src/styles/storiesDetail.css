@@ -1,9 +1,9 @@
 .srories-detail-container{
     position: relative;
     display: flex;
-    align-items: center;
+    padding-top: 75px;
     justify-content: center;
-    height:100vh ;
+    height: 100vh;
     gap: 4%;
     background-color: #d0d0d0;
 }
@@ -53,6 +53,7 @@
     align-self: flex-start;
 }
 .stories-detal-right{
+    padding-top: 40px;
 width: 50%;
 }
 .story-title{
