@@ -1,7 +1,6 @@
 const db = require("../config/db");
 
 exports.addEvent = async (adminId, image_path, { title, content, startDate, endDate, organizer, eventLink, category, eventLocation }) => {
-  console.log(image_path)
   try {
     const [result] = await db.query("INSERT INTO Event (adminId, title, content, startDate, endDate, organizer, eventLink, category, eventLocation, imagePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [adminId, title, content, startDate, endDate, organizer, eventLink, category, eventLocation, image_path]);

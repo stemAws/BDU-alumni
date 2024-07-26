@@ -245,3 +245,28 @@ exports.approveJob = async (jobPostingId) => {
     throw error;
   }
 }
+
+
+exports.fetchAdminDetailsByPersonId = async (personId) => {
+  try {
+    const [result] = await db.query(
+      `SELECT 
+         adminId, 
+         role 
+       FROM 
+         Websiteadmin 
+       WHERE 
+         personId = ?`, 
+       [personId]
+    );
+
+    if (result.length === 0) {
+      throw new Error(`Admin with personId ${personId} not found`);
+    }
+    return result[0];
+  } catch (error) {
+    throw new Error(
+      "Error fetching admin details: " + error.message
+    );
+  }
+};
