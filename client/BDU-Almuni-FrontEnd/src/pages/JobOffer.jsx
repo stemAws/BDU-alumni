@@ -73,7 +73,7 @@ setjobOffer(jobOffers?.find((jOff=>jOff.jobPostingId===jobID)))
             })
             if (res.ok){
                 const jobs = await res.json()
-                setjobOffers(jobs)
+                setjobOffers(jobs.filter((filteredJobs)=>filteredJobs.isApproved===1))
             }
         } catch (error) {
             console.error('Error while fetching jobs',error)            
