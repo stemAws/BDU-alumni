@@ -1,55 +1,21 @@
 const db = require("../config/db");
 
-exports.addJob = async (
-  jobTitle,
-  jobDescription,
-  uplodDate,
-  companyName,
-  address,
-  peopleNeeded,
-  salary,
-  deadline,
-  email,
-  phoneNumber,
-  imagePath
-) => {
+exports.addJob = async (imagePath, jobDetails, alumniwhoposteditId) => {
   try {
-    let query, params;
-
-    if (imagePath) {
-      query =
-        "INSERT INTO jobposting (  jobTitle, description,uplodDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,imagePath) VALUES (?,?, ?, ?, ?, ?, ?,?,?,?, ?)";
-      params = [
-        jobTitle,
-        jobDescription,
-        uplodDate,
-        companyName,
-        address,
-        peopleNeeded,
-        salary,
-        deadline,
-        email,
-        phoneNumber,
-        downloadURL
-      ];
-    } else {
-      query =
-        "INSERT INTO jobposting (jobTitle, description,uplodDate,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
-      params = [
-        jobTitle,
-        jobDescription,
-        uplodDate,
-        companyName,
-        address,
-        peopleNeeded,
-        salary,
-        deadline,
-        email,
-        phoneNumber
-      ];
-    }
-
-    const [result] = await db.query(query, params);
+    const [result] = await db.query("INSERT INTO Jobposting (  jobTitle, description,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,personId, imagePath, employmentType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?, ?)", [
+      jobDetails.jobTitle,
+      jobDetails.jobDescription,
+      jobDetails.companyName,
+      jobDetails.address,
+      jobDetails.peopleNeeded,
+      jobDetails.salary,
+      jobDetails.deadline,
+      jobDetails.email,
+      jobDetails.phoneNumber,
+      alumniwhoposteditId,
+      imagePath,
+      jobDetails.employmentType
+    ]);
 
     return result.insertId;
   } catch (error) {
@@ -59,14 +25,23 @@ exports.addJob = async (
 };
 
 exports.getJobs = async () => {
-  const query = `SELECT jobPostingId, jobTitle FROM jobposting`;
-  const [result] = await db.query(query);
+  const [result] = await db.query(`
+    SELECT 
+        Jobposting.*, 
+        Person.fullName, 
+        Person.username, 
+        Alumni.profilePicture
+    FROM Jobposting
+    LEFT JOIN Person ON Jobposting.personId = Person.personId
+    LEFT JOIN Alumni ON Person.personId = Alumni.personId
+`);
+
   return result;
 };
 
 exports.getJob = async (jobId) => {
   const [job] = await db.query(
-    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline,DATE_FORMAT(uplodDate, '%Y-%m-%d') AS uplodDate FROM jobposting WHERE jobPostingId = ?`,
+    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline,DATE_FORMAT(uploadDate, '%Y-%m-%d') AS uploadDate FROM Jobposting WHERE jobPostingId = ?`,
     [jobId]
   );
   return job.length > 0 ? job[0] : null;
@@ -76,7 +51,7 @@ exports.updateJob = async (jobId, updatedJob) => {
   const {
     jobTitle,
     jobDescription,
-    uplodDate,
+    uploadDate,
     companyName,
     address,
     peopleNeeded,
@@ -88,7 +63,7 @@ exports.updateJob = async (jobId, updatedJob) => {
 
   const [result] = await db.query(
     `
-        UPDATE jobposting
+        UPDATE Jobposting
         SET
         jobTitle=?,
         description=?,
@@ -106,7 +81,7 @@ exports.updateJob = async (jobId, updatedJob) => {
     [
       jobTitle,
       jobDescription,
-      uplodDate,
+      uploadDate,
       companyName,
       address,
       peopleNeeded,
@@ -122,7 +97,7 @@ exports.updateJob = async (jobId, updatedJob) => {
 };
 exports.deleteJob = async (jobId) => {
   const [result] = await db.query(
-    "DELETE FROM jobposting WHERE jobPostingId = ?",
+    "DELETE FROM Jobposting WHERE jobPostingId = ?",
     [jobId]
   );
 
@@ -142,7 +117,7 @@ exports.getAllJobs = async () => {
 
 exports.searchJobsBy = async (jobTitle, industry) => {
   try {
-    let q = `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM jobposting WHERE jobTitle LIKE '%${jobTitle}%'`;
+    let q = `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline FROM Jobposting WHERE jobTitle LIKE '%${jobTitle}%'`;
     if (industry != null) {
       q += ` AND industry = '${industry}'`;
     }

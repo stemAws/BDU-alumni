@@ -130,7 +130,7 @@ const ChangePassword = () => {
             <input type="text"  name ='username'className="inputs change_pass_inputs" value={username||'username'} onChange={onChange}/>
         {
           input_values.map((input)=>(
-            <FormInput  class='inputs change_pass_inputs' key= {input.id} {...input}
+            <FormInput  className='inputs change_pass_inputs' key= {input.id} {...input}
             value={values[input.name]}
             onChange={onChange} 
             required={true}/>

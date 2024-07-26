@@ -46,7 +46,7 @@ router.put(
   UserController.changePassword
 );
 router.get("/notable", UserController.getNotableAlumni);
-router.put("/notable/:alumniID", UserController.updateNotable);
+router.put("/notable/:alumniId", UserController.updateNotable);
 router.post("/reset-password", UserController.resetPassword);
 router.post(
   "/confirm-password-change",

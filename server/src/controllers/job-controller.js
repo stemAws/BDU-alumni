@@ -15,23 +15,12 @@ firebsae.initializeApp(firebaseConfig);
 const storage = getStorage();
 exports.createJob = async (req, res) => {
   try {
-    const {
-      jobTitle,
-      jobDescription,
-      uplodDate,
-      companyName,
-      address,
-      peopleNeeded,
-      salary,
-      deadline,
-      email,
-      phoneNumber
-    } = req.body;
-
     const imagePath = req.file
       ? `job/${Date.now()}${path.extname(req.file.originalname)}`
       : null;
     let downloadURL = null;
+
+    // file part should be removed just for now let it stay... will be removed after decision
 
     if (req.file) {
       const fileRef = ref(storage, imagePath);
@@ -43,19 +32,7 @@ exports.createJob = async (req, res) => {
       downloadURL = await getDownloadURL(fileRef);
     }
 
-    const job = await jobService.addJob(
-      jobTitle,
-      jobDescription,
-      uplodDate,
-      companyName,
-      address,
-      peopleNeeded,
-      salary,
-      deadline,
-      email,
-      phoneNumber,
-      downloadURL
-    );
+    const job = await jobService.addJob(downloadURL, req.body, req.alumni.personId);
     res.status(201).json({ message: "Job added successfully", job });
   } catch (error) {
     console.error("Error adding job:", error);
