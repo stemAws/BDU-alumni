@@ -18,12 +18,10 @@ const EachEvent = ({singleEvent}) => {
         <p className="description-title">{singleEvent?.title}</p>
             <div className="description-text">
                 <p className="event-text">{singleEvent?.content}</p>
-                <div className="event-date">
-                    {singleEvent?.startDate} - {singleEvent?.endDate}
-                </div>
                 
             </div>
-            <p className="location"> {singleEvent?.eventLocation}</p>
+            <p className="location"> {singleEvent?.eventLocation} </p>
+            <p>{singleEvent?.startDate} - {singleEvent?.endDate}</p>
             {
                 singleEvent?.registerURL &&(<Button id={"event-btn"} text={"Join"}/>)
             }
@@ -32,9 +30,6 @@ const EachEvent = ({singleEvent}) => {
                 </>
             ):(type === 2 && (
                 <>
-            <div className="event-date">
-            {singleEvent?.startDate} - {singleEvent?.endDate}
-                    </div>
                     <div className="event-description">
                     
             <p className="description-title">{singleEvent?.title}</p>
@@ -42,7 +37,8 @@ const EachEvent = ({singleEvent}) => {
                     <p className="event-text">{singleEvent?.content}</p>
                     
                 </div>
-                        <p className="location"> {singleEvent?.eventLocation}</p>
+                        <p className="location"> {singleEvent?.eventLocation} </p>
+                        <p>{singleEvent?.startDate} - {singleEvent?.endDate}</p>
                 {
                 singleEvent?.registerURL &&(<Button id={"event-btn"} text={"Join"}/>)
             }
