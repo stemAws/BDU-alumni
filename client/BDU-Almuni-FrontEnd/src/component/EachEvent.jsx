@@ -1,3 +1,4 @@
+import { FaMapMarker, FaMarker } from "react-icons/fa";
 import Button from "./Button"
 
 const EachEvent = ({singleEvent}) => {
@@ -7,7 +8,11 @@ const EachEvent = ({singleEvent}) => {
         {
             type === 1 ?(
                 <>
-                <img src={singleEvent?.imagePath} alt="" className="events-img" />
+                <div className="img-category">
+            <img src={singleEvent?.imagePath} alt="" className="events-img" />
+            <p className="event-category">{singleEvent?.category}</p>               
+                </div>
+                
     <div className="separetor"></div>
     <div className="event-description">
         <p className="description-title">{singleEvent?.title}</p>
@@ -18,6 +23,7 @@ const EachEvent = ({singleEvent}) => {
                 </div>
                 
             </div>
+            <p className="location"> {singleEvent?.eventLocation}</p>
             {
                 singleEvent?.registerURL &&(<Button id={"event-btn"} text={"Join"}/>)
             }
@@ -30,17 +36,22 @@ const EachEvent = ({singleEvent}) => {
             {singleEvent?.startDate} - {singleEvent?.endDate}
                     </div>
                     <div className="event-description">
+                    
             <p className="description-title">{singleEvent?.title}</p>
                 <div className="description-text">
                     <p className="event-text">{singleEvent?.content}</p>
                     
                 </div>
+                        <p className="location"> {singleEvent?.eventLocation}</p>
                 {
                 singleEvent?.registerURL &&(<Button id={"event-btn"} text={"Join"}/>)
             }
         </div>
         <div className="separetor"></div>
-        <img src={singleEvent?.imagePath} alt="" className="events-img" />
+        <div className="img-category">
+            <img src={singleEvent?.imagePath} alt="" className="events-img" />
+            <p className="event-category">{singleEvent?.category}</p>               
+                </div>
         
         
         </> 
