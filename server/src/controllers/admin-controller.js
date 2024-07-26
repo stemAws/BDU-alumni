@@ -2,14 +2,11 @@ const adminService = require("../services/admin-services");
 
 exports.uploadAlumniData = async (req, res) => {
   try {
-    const {
-      file,
-      body: { graduationYear },
-    } = req;
-    const alumniData = await adminService.uploadAlumniData(
-      file,
-      graduationYear
-    );
+    const alumniData = adminService.parseExcelFile(req.file.buffer);
+    const graduationYear = req.body.graduationYear;
+
+    await adminService.createAlumniRecord(alumniData, graduationYear);
+
     res.status(200).json({ message: "Alumni data uploaded successfully" });
   } catch (error) {
     console.error("Error uploading alumni data:", error);
@@ -183,10 +180,10 @@ exports.getCompany = async (req, res) => {
 
 exports.approveJob = async (req, res) => {
   try {
-    const result = await adminService.approveJob(req.params.jobPostingId)
-    res.json({success: true})
+    const result = await adminService.approveJob(req.params.jobPostingId);
+    res.json({ success: true });
   } catch (error) {
-    console.error("Error approving the job", error)
-    res.status(500).json({error: "Internal Server Error"})
+    console.error("Error approving the job", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-}
+};
