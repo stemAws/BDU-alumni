@@ -128,7 +128,6 @@ exports.updateVerified = async (alumniID, verified) => {
     );
     return affectedRows;
   } catch (error) {
-    console.error("Error updating verified:", error);
     throw error;
   }
 };
@@ -154,7 +153,6 @@ exports.getDegreeCount = async (graduatingYear) => {
     // Return the result
     return degreeCounts;
   } catch (error) {
-    console.error("Error fetching degree counts:", error);
     throw error;
   }
 };
@@ -178,7 +176,6 @@ exports.getAdmissionCount = async (graduatingYear) => {
     // Return the result
     return result;
   } catch (error) {
-    console.error("Error fetching admission counts:", error);
     throw error;
   }
 };
@@ -196,7 +193,6 @@ exports.getMajorsCount = async (graduatingYear) => {
     // Return the result
     return result;
   } catch (error) {
-    console.error("Error fetching majors counts:", error);
     throw error;
   }
 };
@@ -211,7 +207,6 @@ exports.getJobCount = async () => {
     // Return the result
     return result;
   } catch (error) {
-    console.error("Error fetching job counts:", error);
     throw error;
   }
 };
@@ -226,22 +221,27 @@ exports.getIndustryCount = async () => {
     // Return the result
     return result;
   } catch (error) {
-    console.error("Error fetching company counts:", error);
     throw error;
   }
 };
 
 exports.getCompanyCount = async () => {
   try {
-    let query = `SELECT company, COUNT(*) as count FROM experience GROUP BY company ORDER BY count DESC LIMIT 10 `;
+    const [result] = await db.query(`SELECT company, COUNT(*) as count FROM experience GROUP BY company ORDER BY count DESC LIMIT 10 `);
 
-    // Execute the query
-    const [result] = await db.query(query);
-
-    // Return the result
     return result;
   } catch (error) {
-    console.error("Error fetching company counts:", error);
     throw error;
   }
 };
+
+exports.approveJob = async (jobPostingId) => {
+  try {
+    await db.query(
+      'UPDATE Jobposting SET isApproved = 1 WHERE jobPostingId = ?',
+      [jobPostingId]
+    );
+  } catch (error) {
+    throw error;
+  }
+}
