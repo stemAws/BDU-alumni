@@ -26,11 +26,13 @@
 }
 .srories-detail-container .profile{
   display: flex;
+  align-items: center;
+  margin-bottom: 5px;
   gap: 10px;
 }
 .srories-detail-container .profile-pic{
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
 
 }
