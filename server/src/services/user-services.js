@@ -17,8 +17,11 @@ exports.addUser = async (alumniData) => {
   );
 
   if (role === "alumni") {
-    await db.query(`INSERT INTO Alumni (personId)
-    VALUES (LAST_INSERT_ID());`);
+    await db.query(
+      `INSERT INTO Alumni (personId, isNotable)
+    VALUES (LAST_INSERT_ID(), ?)`,
+      [0]
+    );
     await db.query(`INSERT INTO Custom (alumniId)
     VALUES (LAST_INSERT_ID());`);
   } else if (role === "admin") {
@@ -112,11 +115,13 @@ exports.getAllAlumni = async () => {
   }
 };
 
-
 exports.getAlumniProfilePhotoById = async function (alumniID) {
   try {
-    const queryResult = await db.query('SELECT profilePicture FROM Alumni WHERE alumniID = ?', [alumniID]);
-    
+    const queryResult = await db.query(
+      "SELECT profilePicture FROM Alumni WHERE alumniID = ?",
+      [alumniID]
+    );
+
     if (queryResult.length > 0) {
       return queryResult[0][0].profilePicture;
     }
@@ -125,7 +130,6 @@ exports.getAlumniProfilePhotoById = async function (alumniID) {
     throw error;
   }
 };
-
 
 exports.updateAlumniProfilePhoto = async (alumniID, profilePhoto) => {
   try {
@@ -142,8 +146,11 @@ exports.updateAlumniProfilePhoto = async (alumniID, profilePhoto) => {
 
 exports.getAlumniCoverPhotoById = async function (alumniID) {
   try {
-    const queryResult = await db.query('SELECT coverPicture FROM Alumni WHERE alumniID = ?', [alumniID]);
-    
+    const queryResult = await db.query(
+      "SELECT coverPicture FROM Alumni WHERE alumniID = ?",
+      [alumniID]
+    );
+
     if (queryResult.length > 0) {
       return queryResult[0][0].coverPicture;
     }
@@ -179,8 +186,8 @@ exports.updateAlumni = async (id, alumniData) => {
       socialMedia,
     } = alumniData;
 
-    const {alumniId, personId} = id
-    
+    const { alumniId, personId } = id;
+
     await db.query(
       `UPDATE Person
        SET fullName = ?, gender = ?, email = ?, username = ?
@@ -192,13 +199,7 @@ exports.updateAlumni = async (id, alumniData) => {
       `UPDATE Alumni
        SET currentLocation = ?, socialMedia = ?, phoneNumber = ?, bio = ?
        WHERE alumniId = ?`,
-      [
-        currentLocation,
-        socialMedia,
-        phoneNumber,
-        bio,
-        alumniId,
-      ]
+      [currentLocation, socialMedia, phoneNumber, bio, alumniId]
     );
 
     return { success: true };
@@ -295,7 +296,8 @@ exports.changePassword = async (personID, oldPassword, newPassword) => {
 
 exports.getNotable = async () => {
   try {
-    let query = "SELECT fullName, username, profilePicture, alumniId, isNotable FROM Person p JOIN Alumni a WHERE a.alumniId = p.personId AND isNotable = 1";
+    let query =
+      "SELECT fullName, username, profilePicture, alumniId, isNotable FROM Person p JOIN Alumni a WHERE a.alumniId = p.personId AND isNotable = 1";
 
     const [notableAlumni] = await db.query(query);
 
@@ -406,7 +408,11 @@ exports.getAlumniDirectory = async (searchBy, searchByValue) => {
   try {
     let q = `SELECT fullName, username FROM `;
 
-    if (searchBy === "department" || searchBy === "degree" || searchBy === "graduatingYear") {
+    if (
+      searchBy === "department" ||
+      searchBy === "degree" ||
+      searchBy === "graduatingYear"
+    ) {
       q += `Education ed JOIN Alumni a JOIN Person p ON ed.alumniId = a.alumniId AND a.personId = p.personId `;
       q += `WHERE `;
       if (searchBy === "department") {
@@ -426,7 +432,7 @@ exports.getAlumniDirectory = async (searchBy, searchByValue) => {
       q += `Alumni a JOIN Person p ON a.personId = p.personId `;
       q += `WHERE LOWER(a.currentLocation) LIKE LOWER(?)`;
     }
-    
+
     const queryResult = await db.query(q, [searchByValue]);
 
     return queryResult[0];
