@@ -41,7 +41,7 @@ const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetai
 
           <div className="buttons">
 
-          <Link to={`/Editprofile/${userDetails?.[0].username}`}>
+          <Link to={`/Editprofile/${userDetails?.[0]?.username}`}>
             <Button text={"Edit"} />
             </Link>
             <div onClick={logout} className="logout"><a href="/"><Button text="Log Out" /></a></div>

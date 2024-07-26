@@ -10,10 +10,26 @@
     background-color: #00000071;
     z-index: 11;
 }
+.name-profile{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    width: fit-content;
+    border-radius: 5px;
+    text-transform: capitalize;
+    transition: all 0.3s ease-in-out;
+}
+.name-profile:hover{
+    box-shadow: 0 0 10px 10px #eaeaea;
+}
+.JO-popup-container a{
+    color: #000;
+}
 .JO-popup-container{
     position: absolute;
     width: 500px;
-    max-height: 600px;
+    max-height: 700px;
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
@@ -33,7 +49,12 @@ color: #d44e4e;
 cursor: pointer;
 }
 .job-description.detail{
+    display: unset;
     max-height: 300px;
+    padding-left: 40px;
+    -webkit-box-orient: unset;
+    line-clamp: unset;
+    -webkit-line-clamp: unset;
     overflow: scroll;
 }
 .job-need-conatiner{

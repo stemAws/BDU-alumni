@@ -294,7 +294,7 @@ const EventPost = () => {
             />
             {endDateError && <p className="errorMessage">{endDateError}</p>}
           </div>
-          <button type="submit">Upload</button>
+          <button type="submit" onClick={handleSubmit}>Upload</button>
         </form>
       </div>
     </div>

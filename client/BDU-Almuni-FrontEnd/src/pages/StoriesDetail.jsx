@@ -34,12 +34,12 @@ const StoriesDetail = () => {
       
   return (
     <div className={`srories-detail-container ${!singleStory?.mediaPath&& "no-img"}`}>
-        <div className="stories-detal-left">
+        {singleStory?.mediaPath&&<div className="stories-detal-left">
         {singleStory?.mediaPath&& 
         <>
          <div className="profile">
-                <img className ="profile-pic" src="" alt="" />
-                <p className="full-name">{}</p>
+                <img className ="profile-pic" src={singleStory?.profilePicture} alt="" />
+                <p className="full-name">{singleStory?.fullName}</p>
             </div>
             <img src={singleStory?.mediaPath} alt="" className="story-img" />
             <p className="story-date"> {new Date(singleStory?.createdAt).toLocaleString('default',{
@@ -49,7 +49,7 @@ const StoriesDetail = () => {
             })}</p>
              </>
             }
-        </div>
+        </div>}
             <div className="stories-detal-right">
             {!singleStory?.mediaPath&&  <div className="profile">
                 <img className ="profile-pic" src={singleStory?.profilePicture} alt="" />

@@ -180,3 +180,13 @@ exports.getCompany = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+exports.approveJob = async (req, res) => {
+  try {
+    const result = await adminService.approveJob(req.params.jobPostingId)
+    res.json({success: true})
+  } catch (error) {
+    console.error("Error approving the job", error)
+    res.status(500).json({error: "Internal Server Error"})
+  }
+}

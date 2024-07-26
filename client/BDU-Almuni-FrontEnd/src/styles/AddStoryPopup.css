@@ -9,20 +9,73 @@
   justify-content: center;
   align-items: center;
 }
-
+.success-container{
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+.success-container *{
+  font: 600 18px 'Poppins';
+  text-transform: capitalize;
+  color: #0C8CE9;
+  width: 80%;
+}
+.success-container .btn.ok{
+  border-color: #0C8CE9;
+  font-weight: 300;
+}
+.success-container .btn.ok:hover{
+  background-color: #0C8CE9;
+  color: #fff;
+}
+.story-job-conatianer{
+  position: relative;
+  gap:10px;
+  width: 380px;
+  display: flex;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  align-items: center;
+  overflow: hidden;
+}
 .story-popup-inner {
-  position: relative; 
+  position: relative;
   background-color: #fff; 
   padding: 30px 10px 10px 10px;
   border-radius: 8px;
-  width: fit-content;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  min-width: 370px;
+  border: 1px solid;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+}
+.add-job-offer{
+  position: relative;
+  background-color: #fff; 
+  padding: 30px 10px 10px 10px;
+  border-radius: 8px;
+  min-width: 370px;
+  border: 1px solid;
   height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
   overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  /* left: -100px; */
 }
 
 .story-popup-close-btn {
@@ -36,9 +89,21 @@
   color: #0b0b0b; 
 }
 
-.story-popup .story-popup-inner form {
+.each-job-input{
   display: flex;
   flex-direction: column;
+}
+.each-job-input input{
+  margin: 0 0 10px 10px;
+}
+.form_input label, .job-detail{
+font-weight: 400;
+color: #000000;
+}
+.each-job-input >*{
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
 }
 
 .story-popup .story-popup-inner .story-popup-input
@@ -61,45 +126,43 @@
   color: black;
 }
 .story-popup button[type='submit'] {
-  padding: 8px 16px;
-  border: none;
+  /* padding: 8px 15px;
+  border: none; */
   background: rgb(41, 146, 232);
   border-radius: 4px; 
   color: #fff; 
-  cursor: pointer;
-  margin-top: 1rem;
-  height: 28px;
-  width:60px;
-  font-weight:bold;
+}
+.suggest-toggle{
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 10px;
+  height: 40px;
 }
 .slide-toggle-container {
-  box-sizing: border-box;
+  position: relative;
   width: 30px;
   height: 15px;
   background-color: #ccc9c9;
   border-radius: 15px;
-  position: relative;
   cursor: pointer;
-  margin: 0px 0 0px -30% ;
   z-index: 10;
   transition: background-color 0.3s ease;
 }
 .suggest{
   color:#3a3a3a;
-  font:300 14px 'saira';
+  font:300 14px 'Poppins';
+  min-width: fit-content;
+  text-wrap: nowrap;
 }
 .toggled.slide-toggle-container {
   background-color: #0C8CE9; 
 }
 .slider {
+  position: absolute;
   width: 15px;
   height: 15px;
   background-color:#e5e5e5;
   border-radius: 50%;
-  position: absolute;
   transition: transform 0.3s ease;
 }
 
@@ -107,9 +170,10 @@
   transform: translateX(15px);
 }
 .buttons{
-  margin-top: 0;
-  align-items: center;
-  justify-content: space-between;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: unset;
+    gap: 20px;
 }
 .errorMessage{
   font-size: 14px;

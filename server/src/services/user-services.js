@@ -5,15 +5,13 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 exports.addUser = async (alumniData) => {
-  const { fullName, gender, email, role, username, password, verified } =
-    alumniData;
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(alumniData.password, 10);
 
   await db.query(
     `
-    INSERT INTO Person (fullName, gender, email, username, password, verified)
-    VALUES (?, ?, ?, ?, ?, ?);`,
-    [fullName, gender, email, username, hashedPassword, verified]
+    INSERT INTO Person (fullName, gender, email, username, password, verified, batch)
+    VALUES (?, ?, ?, ?, ?, ?, ?);`,
+    [alumniData.fullName, alumniData.gender, alumniData.email, alumniData.username, hashedPassword, alumniData.verified, alumniData.batch]
   );
 
   if (role === "alumni") {
@@ -24,7 +22,7 @@ exports.addUser = async (alumniData) => {
     );
     await db.query(`INSERT INTO Custom (alumniId)
     VALUES (LAST_INSERT_ID());`);
-  } else if (role === "admin") {
+  } else if (alumniData.role === "admin") {
     await db.query(`
     INSERT INTO WebsiteAdmin (personId)
     VALUES (LAST_INSERT_ID());`);

@@ -44,7 +44,7 @@ const FeedBack = () => {
         const data = await response.json();
 
         // Sort the data by the createdAt timestamp in descending order
-        data.sort((a, b) => new Date(b.sendAT) - new Date(a.sendAT));
+        data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
         setFeedbackData(data);
       } else {
@@ -94,7 +94,7 @@ const FeedBack = () => {
     id: feedback.feedBackID,
     Name: feedback.fullName,
     Email: feedback.email,
-    date: feedback.sendAT, // Convert sendAT to a readable date
+    date: feedback.createdAt, // Convert createdAt to a readable date
     message: feedback.message,
   }));
 

@@ -15,23 +15,12 @@ firebsae.initializeApp(firebaseConfig);
 const storage = getStorage();
 exports.createJob = async (req, res) => {
   try {
-    const {
-      jobTitle,
-      jobDescription,
-      uplodDate,
-      companyName,
-      address,
-      peopleNeeded,
-      salary,
-      deadline,
-      email,
-      phoneNumber
-    } = req.body;
-
     const imagePath = req.file
       ? `job/${Date.now()}${path.extname(req.file.originalname)}`
       : null;
     let downloadURL = null;
+
+    // file part should be removed just for now let it stay... will be removed after decision
 
     if (req.file) {
       const fileRef = ref(storage, imagePath);
@@ -43,19 +32,7 @@ exports.createJob = async (req, res) => {
       downloadURL = await getDownloadURL(fileRef);
     }
 
-    const job = await jobService.addJob(
-      jobTitle,
-      jobDescription,
-      uplodDate,
-      companyName,
-      address,
-      peopleNeeded,
-      salary,
-      deadline,
-      email,
-      phoneNumber,
-      downloadURL
-    );
+    const job = await jobService.addJob(downloadURL, req.body, req.alumni.personId);
     res.status(201).json({ message: "Job added successfully", job });
   } catch (error) {
     console.error("Error adding job:", error);
@@ -110,19 +87,7 @@ exports.updateJobById = async (req, res) => {
 
 exports.deleteJobById = async (req, res) => {
   try {
-    const { jobId } = req.params;
-    let job = await jobService.getJob(jobId);
-    if (job?.image) {
-      const jobRef = ref(storage, eventImage);
-      try {
-        await deleteObject(jobRef);
-        console.log("deleted successfully");
-      } catch (deleteError) {
-        console.error("Error deleting", deleteError);
-      }
-    }
-
-    const affectedRows = await jobService.deleteJob(jobId);
+    const affectedRows = await jobService.deleteJob(req.params.jobId);
     if (affectedRows === 0) res.status(404).json("No record by the given id");
     else res.send("Job deleted.");
   } catch (error) {

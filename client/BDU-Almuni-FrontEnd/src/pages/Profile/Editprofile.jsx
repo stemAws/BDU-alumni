@@ -797,7 +797,7 @@ const getStoryById = async(id)=>{
             </div>
             
         </li>
-        <p> {placeholders?.[0]?.graduationYear} Batch</p>
+        <p> {placeholders?.[0]?.batch} Batch</p>
         <li> 
           {experiances&&<p className="work_place">{stillWorking()}
             </p>}
