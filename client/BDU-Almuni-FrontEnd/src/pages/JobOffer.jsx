@@ -5,62 +5,7 @@ import JobOfferPopup from '../component/JobOfferPopup';
 import JobOffers from '../component/JobOffers';
 const JobOffer = () => {
     const [openJODetail, setopenJODetail] = useState(false);
-    const [jobOffers, setjobOffers] = useState([{
-        id:1,
-        logo:`..${logo}`,
-        companyName:"company name",
-        uploadDate:"Feb 10 2024",
-        jobTitle:"job title new",
-        jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
-        peopleNeeded:10,
-        workingHours : "2:00 am-11:00 pm",
-        workingDays:"weekdays",
-        salary :20000,
-        address: "bahirdar, kebele 00",
-        deadline: "FEb 25 2024"
-    },
-    {
-        id:2,
-        logo:`..${logo}`,
-        companyName:"company name",
-        uploadDate:"Feb 10 2024",
-        jobTitle:"job title",
-        jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
-        peopleNeeded:10,
-        workingHours : "2:00 am-11:00 pm",
-        workingDays:"weekdays",
-        salary :20000,
-        address: "bahirdar, kebele 00",
-        deadline: "FEb 25 2024"
-    },
-    {
-        id:3,
-        logo:`..${logo}`,
-        companyName:"company name",
-        uploadDate:"Feb 10 2024",
-        jobTitle:"job title",
-        jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
-        peopleNeeded:10,
-        workingHours : "2:00 am-11:00 pm",
-        workingDays:"weekdays",
-        salary :20000,
-        address: "bahirdar, kebele 00",
-        deadline: "FEb 25 2024"
-    },
-    {
-        id:4,
-        logo:`..${logo}`,
-        companyName:"company name",
-        uploadDate:"Feb 10 2024",
-        jobTitle:"job title",
-        jobDescription: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi adipisci libero aliquid corporis ullam! Sunt cumque, at soluta architecto, rem quos reprehenderit et assumenda adipisci, odio mollitia distinctio dolorem! Dolorem!",
-        peopleNeeded:10,
-        workingHours : "2:00 am-11:00 pm",
-        workingDays:"weekdays",
-        salary :20000,
-        address: "bahirdar, kebele 00",
-        deadline: "FEb 25 2024"
-    }]);
+    const [jobOffers, setjobOffers] = useState([]);
     const [jobOffer, setjobOffer] = useState([{}]);
     const jobToReadMore=(jobID)=>{
 setjobOffer(jobOffers?.find((jOff=>jOff.jobPostingId===jobID)))
