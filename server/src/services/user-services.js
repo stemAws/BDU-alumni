@@ -6,15 +6,24 @@ require("dotenv").config();
 
 exports.addUser = async (alumniData) => {
   const hashedPassword = await bcrypt.hash(alumniData.password, 10);
+  const isAdmin = alumniData.role === "admin" ? 1 : 0;
+  console.log("Alumnidata", alumniData);
 
   await db.query(
     `
-    INSERT INTO Person (fullName, gender, email, username, password, verified, batch)
-    VALUES (?, ?, ?, ?, ?, ?, ?);`,
-    [alumniData.fullName, alumniData.gender, alumniData.email, alumniData.username, hashedPassword, alumniData.verified, alumniData.batch]
+    INSERT INTO Person (fullName, gender,  username, password, verified, isAdmin)
+    VALUES (?, ?, ?, ?, ?, ?);`,
+    [
+      alumniData.fullName,
+      alumniData.gender,
+      alumniData.username,
+      hashedPassword,
+      1,
+      isAdmin,
+    ]
   );
 
-  if (role === "alumni") {
+  if (alumniData.role === "alumni") {
     await db.query(
       `INSERT INTO Alumni (personId, isNotable)
     VALUES (LAST_INSERT_ID(), ?)`,
@@ -23,10 +32,14 @@ exports.addUser = async (alumniData) => {
     await db.query(`INSERT INTO Custom (alumniId)
     VALUES (LAST_INSERT_ID());`);
   } else if (alumniData.role === "admin") {
-    await db.query(`
-    INSERT INTO WebsiteAdmin (personId)
-    VALUES (LAST_INSERT_ID());`);
+    await db.query(
+      `
+    INSERT INTO WebsiteAdmin (personId, role)
+    VALUES (LAST_INSERT_ID(), ?)`,
+      [alumniData.adminRole]
+    );
   } else {
+    console.log(alumniData.role);
     throw new Error("Unsupported role");
   }
 };
