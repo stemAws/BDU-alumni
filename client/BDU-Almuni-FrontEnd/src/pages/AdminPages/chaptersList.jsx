@@ -119,9 +119,9 @@ const chapterList = () => {
 
   const columns = [
     { field: "chapterId", headerName: "ID", width: 90 },
-    { field: "chapterName", headerName: "Chapter Name", width: 200 },
+    { field: "chapterName", headerName: "Club Name", width: 200 },
     { field: "description", headerName: "Description", width: 300 },
-    { field: "website", headerName: "Website", width: 300 },
+    { field: "website", headerName: "Link", width: 300 },
     {
       field: "actions",
       headerName: "Actions",
