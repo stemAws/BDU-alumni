@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DeleteConfirmation from '../../component/DeleteConfirmation';
 
-const ChaptersList = () => {
+const chapterList = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,11 +15,11 @@ const ChaptersList = () => {
   const navigate = useNavigate();
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [deleteConfirmationchapterId, setDeleteConfirmationchapterId] = useState(null);
+  const [deleteConfirmationChapterId, setDeleteConfirmationChapterId] = useState(null);
 
   const handleDelete = (id) => {
     setDeleteConfirmationOpen(true);
-    setDeleteConfirmationchapterId(id);
+    setDeleteConfirmationChapterId(id);
   };
 
   useEffect(() => {
@@ -35,12 +35,20 @@ const ChaptersList = () => {
         throw new Error(`Failed to fetch chapters. Status: ${response.status}`);
       }
 
-      const chapterData = await response.json();
+      const chaptersData = await response.json();
 
       // Sort the data by the createdAt timestamp in descending order
-      chapterData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      chaptersData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-      setData(chapterData);
+      // Only keep the necessary fields
+      const formattedData = chaptersData.map(({ chapterId, chapterName, description, website }) => ({
+        chapterId,
+        chapterName,
+        description,
+        website,
+      }));
+
+      setData(formattedData);
     } catch (error) {
       console.error("Error fetching data:", error.message);
     } finally {
@@ -52,8 +60,8 @@ const ChaptersList = () => {
     try {
       const filtered = data.filter(
         (item) =>
-          item.title &&
-          item.title.toLowerCase().includes(searchQuery.toLowerCase())
+          item.chapterName &&
+          item.chapterName.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredData(filtered);
     } catch (error) {
@@ -70,7 +78,7 @@ const ChaptersList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/list-chapters/${deleteConfirmationchapterId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/delete-chapter/${deleteConfirmationChapterId}`,
         {
           method: "DELETE",
           headers: {
@@ -83,36 +91,37 @@ const ChaptersList = () => {
         throw new Error(`Failed to delete chapter. Status: ${response.status}`);
       }
 
-      setData(data.filter((item) => item.chapterId !== deleteConfirmationchapterId));
+      setData(data.filter((item) => item.chapterId !== deleteConfirmationChapterId));
     } catch (error) {
       console.error("Error deleting data:", error.message);
     } finally {
       setDeleteConfirmationOpen(false);
-      setDeleteConfirmationchapterId(null);
+      setDeleteConfirmationChapterId(null);
     }
   };
 
   const handleCancelDelete = () => {
     setDeleteConfirmationOpen(false);
-    setDeleteConfirmationchapterId(null);
+    setDeleteConfirmationChapterId(null);
   };
 
   const handleEdit = (chapterId) => {
-    navigate(`/admin/chapters/${chapterId}`);
+    navigate(`/admin/News/${chapterId}`);
   };
 
   const customTheme = createTheme({
     typography: {
-      fontFamily: "Arial, sans-serif", // Replace 'YourDesiredFont' with the actual font-family
+      fontFamily: "Arial, sans-serif",
     },
   });
 
-  const getRowId = (row) => row.chapterId; // Specify the custom ID field
+  const getRowId = (row) => row.chapterId;
 
   const columns = [
     { field: "chapterId", headerName: "ID", width: 90 },
-    { field: "title", headerName: "Chapter Title", width: 200 },
-    { field: "discription", headerName: "Description", width: 500 },
+    { field: "chapterName", headerName: "Club Name", width: 200 },
+    { field: "description", headerName: "Description", width: 300 },
+    { field: "website", headerName: "Link", width: 300 },
     {
       field: "actions",
       headerName: "Actions",
@@ -141,11 +150,11 @@ const ChaptersList = () => {
           <input
             className="search"
             type="text"
-            placeholder="Search by chapter title"
+            placeholder="Search by chapter name"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <h3> Bahir Dar University Alumni Chapters </h3>
+          <h3>Bahir Dar University Alumni Clubs</h3>
           <Link to="/admin/AddChapter">
             <button className="addEvent">+ Add Chapter</button>
           </Link>
@@ -159,7 +168,7 @@ const ChaptersList = () => {
               {isDeleteConfirmationOpen && (
                 <DeleteConfirmation
                   close={handleCancelDelete}
-                  text="chapter"  // You can customize this text based on your needs
+                  text="Chapter"
                   onDelete={handleConfirmDelete}
                 />
               )}
@@ -171,4 +180,4 @@ const ChaptersList = () => {
   );
 };
 
-export default ChaptersList;
+export default chapterList;
