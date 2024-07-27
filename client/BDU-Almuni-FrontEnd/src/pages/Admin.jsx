@@ -22,6 +22,7 @@ import AddGallery from './AdminPages/AddGallery';
 import AdminSignin from '../component/AdminSignin';
 import AuthService from '../component/AuthService';
 import ChaptersList from './AdminPages/chaptersList';
+import Editnews from './AdminPages/Editnews'; 
 const Admin = () => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
@@ -43,6 +44,7 @@ const Admin = () => {
             <Route path='users' element={<Users />} />
             <Route path='News' element={<NewsList />} />
             <Route path='AddNews' element={<News />} />
+            <Route path="/admin/News/:newsId" element={<Editnews />}/>
             <Route path='AddUser' element={<AddUser />} />
             <Route path='story' element={<Stories />} />
             <Route path='addedStories' element={<AddedStory />} />
