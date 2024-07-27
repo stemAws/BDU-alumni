@@ -7,7 +7,8 @@ CREATE TABLE Person (
     lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     username VARCHAR(50) UNIQUE,
     password VARCHAR(255),
-    verified BOOLEAN
+    verified BOOLEAN,
+    isAdmin BOOLEAN DEFAULT 0
 );
 
 CREATE TABLE Alumni (
