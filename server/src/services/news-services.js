@@ -1,17 +1,17 @@
 const db = require("../config/db");
 
-exports.addNews = async (title, content,  image_path) => {
+exports.addNews = async (title, description,  image_path) => {
   try {
     let query, params;
 
     if (image_path) {
       query =
         "INSERT INTO News (title, content, imagePath) VALUES (?, ?, ?)";
-      params = [title, content, image_path];
+      params = [title, description, image_path];
     } else {
       query =
         "INSERT INTO News (title, content) VALUES (?, ?)";
-      params = [title, content];
+      params = [title, description];
     }
 
     const [result] = await db.query(query, params);
@@ -49,7 +49,7 @@ exports.getANews = async (newsId) => {
 };
 
 exports.updateANews = async (newsId, updatedNews) => {
-  const { title, content} = updatedNews;
+  const { title, description} = updatedNews;
 
   const [result] = await db.query(
     `   UPDATE News
@@ -59,7 +59,7 @@ exports.updateANews = async (newsId, updatedNews) => {
         WHERE
           newsId = ?
     `,
-    [title, content, newsId]
+    [title, description, newsId]
   );
 
   return result.affectedRows;
