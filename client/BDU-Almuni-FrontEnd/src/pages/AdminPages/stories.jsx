@@ -3,12 +3,6 @@ import '../../styles/stories.css';
 import Switch from '@mui/material/Switch';
 import { Link } from 'react-router-dom';
 
-// Import images
-import bdu1 from '../../assets/bdu1.png';
-import i1 from '../../assets/i1.jpg';
-import peda from '../../assets/peda.jpg';
-import poly from '../../assets/poly.png';
-
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 const Stories = () => {
@@ -16,23 +10,50 @@ const Stories = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Sample data to simulate the response from the backend
-    const sampleData = [
-      { id: 1, image: bdu1, title: 'Music bdu1', description: 'Join us for a night of great music! Lorem ipsum dolor sit amet, consectetur adipisicing elit.Join us for a night of great music!Join us for a night of great music!Join us for a night of great music! Rerum unde sit aut accusantium asperiores mollitia culpa quos Join us for a night of great music! Lorem ipsum dolor sit amet, consectetur adipisicing elit.Join us for a night of great music!Join us for a night of great music!Join us for a night of great music! Rerum unde sit aut accusantium asperiores mollitia culpa quos corporis ipsam similique!', approved: true },
-      { id: 2, image: i1, title: 'Hiking Trip', description: 'Explore the beautiful trails with us. Lorem ipsum dolor sit amet, consectetur Learn about the latest in peda. Lorem ipsum dolor Learn about the latest in peda. Lorem ipsum dolor Learn about the latest in peda. Lorem ipsum dolor adipisicing elit. Rerum unde sit aut accusantium asperiores mollitia culpa quos corporis ipsam similique!', approved: false },
-      { id: 3, image: peda, title: 'peda Conference', description: 'Learn about the latest in peda. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum unde sit aut accusantium asperiores mollitia culpa quos corporis ipsam similique!', approved: true },
-      { id: 4, image: poly, title: 'poly Exhibition', description: 'Experience Join us for a night of great music! Lorem ipsum dolor sit amet, consectetur adipisicing elit.Join us for a night of great music!Join us for a night of great music!Join us for a night of great music! Rerum unde sit aut accusantium asperiores mollitia culpa quosstunning polyworks.Join us for a night of great music!Lorem ipsum dolor sit amet, ', approved: false },
-    ];
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/addedPosts`
+        );
+        if (!response.ok) {
+          throw new Error(`Failed to fetch stories. Status: ${response.status}`);
+        }
+        const storiesData = await response.json();
+        setStories(storiesData);
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    setStories(sampleData);
-    setLoading(false);
+    fetchData();
   }, []);
 
-  const handleToggle = (storyId, currentStatus) => {
+  const handleToggle = async (storyId, currentStatus) => {
     const updatedStories = stories.map(story =>
-      story.id === storyId ? { ...story, approved: !currentStatus } : story
+      story.id === storyId ? { ...story, suggestToAdmin: !currentStatus } : story
     );
     setStories(updatedStories);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/addedPosts/${storyId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ suggestToAdmin: !currentStatus }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to update story. Status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error updating story:", error.message);
+    }
   };
 
   if (loading) {
@@ -50,23 +71,23 @@ const Stories = () => {
       <section className="Suggestedstory">
         {stories.length === 0 ? (
           <div className="no-storys">
-            <p>No suggested Stories at the moment.</p>
+            <p>No suggested stories at the moment.</p>
           </div>
         ) : (
           <div className='each-suggested-storyContainer'>
             {stories.map(story => (
-              <div key={story.id} className='each-suggested-story'>
-                <img src={story.image} alt={story.title} />
+              <div key={story.alumniID} className='each-suggested-story'>
+                <img src={story.mediaPath} alt={story.content} />
                 <div>
                   <Switch
                     className='storySwitch'
                     {...label}
-                    checked={story.approved}
-                    onChange={() => handleToggle(story.id,story.approved)}
+                    checked={story.suggestToAdmin}
+                    onChange={() => handleToggle(story.alumniID, story.suggestToAdmin)}
                   />
                 </div>
-                <p className='storytitle'>{story.title}</p>
-                <p>{story.description}</p>
+                <p>{story.content}</p>
+                <p>{story.location}</p>
               </div>
             ))}
           </div>
