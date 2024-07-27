@@ -105,7 +105,7 @@ const EventPost = () => {
         formDataToSend.append("title", title);
         formDataToSend.append("description", description);
         // formDataToSend.append("postDate", postDate);
-        formDataToSend.append("location", location);
+        // formDataToSend.append("location", location);
 
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/add-news`,
