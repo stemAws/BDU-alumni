@@ -10,7 +10,7 @@ import '../styles/Gallery.css'
 
 import Category from "./Category";
 
-const Gallery = ({ batch, updateCategories }) => {
+const Gallery = ({ batch, updateCategories, selectedDepartment }) => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedMedia, setSelectedMedia] = useState(null);
@@ -29,9 +29,10 @@ const Gallery = ({ batch, updateCategories }) => {
         );
         const data = await response.json();
 
-        // Filter categories based on the batch year
+        // Filter categories based on the batch year and selected department
         const filteredCategories = data.filter(
-          (category) => category.year === batch.year
+          (category) => category.year === batch.year && 
+          (!selectedDepartment || category.department === selectedDepartment)
         );
 
         setCategories(filteredCategories);
@@ -41,7 +42,7 @@ const Gallery = ({ batch, updateCategories }) => {
     };
 
     fetchData();
-  }, [batch.year, updateCategories, selectedMedia, selectedCategory]);
+  }, [batch.year, updateCategories, selectedMedia, selectedCategory, selectedDepartment]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -208,11 +209,16 @@ const Gallery = ({ batch, updateCategories }) => {
   );
 };
 
-const Batches = ({ batchData, updateCategories }) => {
+const Batches = ({ batchData, updateCategories, selectedDepartment }) => {
   return (
     <div>
       {batchData.map((batch) => (
-        <Gallery key={batch.id} batch={batch} updateCategories={updateCategories} />
+        <Gallery
+          key={batch.id}
+          batch={batch}
+          updateCategories={updateCategories}
+          selectedDepartment={selectedDepartment}
+        />
       ))}
     </div>
   );
@@ -220,6 +226,8 @@ const Batches = ({ batchData, updateCategories }) => {
 
 const App = () => {
   const [years, setYears] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredBatches, setFilteredBatches] = useState([]);
 
@@ -239,7 +247,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    const fetchYears = async () => {
+    const fetchYearsAndDepartments = async () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/gallery`);
         const data = await response.json();
@@ -247,17 +255,19 @@ const App = () => {
         // Sort the data by year in descending order
         const sortedData = data.sort((a, b) => b.year - a.year);
 
-        // Extract unique years from the sorted data
+        // Extract unique years and departments from the sorted data
         const uniqueYears = [...new Set(sortedData.map((item) => item.year))];
+        const uniqueDepartments = [...new Set(sortedData.map((item) => item.department))];
 
         setYears(uniqueYears);
+        setDepartments(uniqueDepartments);
         setFilteredBatches(uniqueYears.map((year) => ({ id: year, year })));
       } catch (error) {
-        console.error("Error fetching years:", error);
+        console.error("Error fetching years and departments:", error);
       }
     };
 
-    fetchYears();
+    fetchYearsAndDepartments();
   }, []);
 
   const handleSearch = (event) => {
@@ -267,11 +277,16 @@ const App = () => {
     setFilteredBatches(filtered.map((year) => ({ id: year, year })));
   };
 
+  const handleDepartmentChange = (event) => {
+    setSelectedDepartment(event.target.value);
+  };
+
   return (
     <div className="body">
       <div className="gallery-header">
         <h1>Our stories through the lens of time</h1>
       </div>
+      <div className="searchAndCategory">
       <input
         className="search"
         type="text"
@@ -279,8 +294,24 @@ const App = () => {
         value={searchTerm}
         onChange={handleSearch}
       />
-
-      <Batches batchData={filteredBatches} updateCategories={updateCategories} />
+      <select
+        className="department-dropdown"
+        value={selectedDepartment}
+        onChange={handleDepartmentChange}
+      >
+        <option value="">All Departments</option>
+        {departments.map((department) => (
+          <option key={department} value={department}>
+            {department}
+          </option>
+        ))}
+      </select>
+      </div>
+      <Batches
+        batchData={filteredBatches}
+        updateCategories={updateCategories}
+        selectedDepartment={selectedDepartment}
+      />
     </div>
   );
 };

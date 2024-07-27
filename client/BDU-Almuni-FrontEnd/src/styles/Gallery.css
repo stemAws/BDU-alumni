@@ -10,6 +10,20 @@
     background-clip: text;
     color: transparent;
   }
+  .department-dropdown {
+    margin: 3rem 15px 0 1rem;
+    height: 30px;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid rgb(9, 131, 196) ;
+    color:rgb(146, 147, 148)  ;
+  }
+  .searchAndCategory{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   
   .line {
     width: 100%;
