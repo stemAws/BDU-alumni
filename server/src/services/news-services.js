@@ -1,17 +1,17 @@
 const db = require("../config/db");
 
-exports.addNews = async (title, content, category, image_path, adminId, location) => {
+exports.addNews = async (title, content,  image_path) => {
   try {
     let query, params;
 
     if (image_path) {
       query =
-        "INSERT INTO News (title, content,  category, imagePath, adminId, location) VALUES (?, ?, ?, ?, ?, ?)";
-      params = [title, content, anouncementDate, category, image_path, adminId, location];
+        "INSERT INTO News (title, content, imagePath) VALUES (?, ?, ?)";
+      params = [title, content, image_path];
     } else {
       query =
-        "INSERT INTO News (title, content, category, adminId, location) VALUES (?, ?, ?, ?, ?)";
-      params = [title, content, category, adminId];
+        "INSERT INTO News (title, content) VALUES (?, ?)";
+      params = [title, content];
     }
 
     const [result] = await db.query(query, params);
@@ -33,7 +33,7 @@ exports.getNews = async () => {
 
 exports.NewsList = async () => {
   const [news] = await db.query(
-    `SELECT title, category, fullName FROM News n JOIN websiteadmin w JOIN person p WHERE n.adminId = w.adminId AND p.personId = w.personId`
+    `SELECT title, fullName FROM News n JOIN websiteadmin w JOIN person p WHERE n.adminId = w.adminId AND p.personId = w.personId`
   );
 
   return news;
@@ -41,7 +41,7 @@ exports.NewsList = async () => {
 
 exports.getANews = async (newsId) => {
   const [news] = await db.query(
-    `SELECT title, content, category, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt FROM News WHERE newsId = ?`,
+    `SELECT title, content, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt FROM News WHERE newsId = ?`,
     [newsId]
   );
 
@@ -49,19 +49,17 @@ exports.getANews = async (newsId) => {
 };
 
 exports.updateANews = async (newsId, updatedNews) => {
-  const { title, content, category } = updatedNews;
-  const par = []
+  const { title, content} = updatedNews;
 
   const [result] = await db.query(
     `   UPDATE News
         SET
           title = ?,
-          content =?,
-          category = ?
+          content =?
         WHERE
           newsId = ?
     `,
-    [title, content, category, newsId]
+    [title, content, newsId]
   );
 
   return result.affectedRows;

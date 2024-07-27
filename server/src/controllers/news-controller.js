@@ -16,8 +16,7 @@ const storage = getStorage();
 
 exports.createNews = async (req, res) => {
   try {
-    const adminId = req.params.adminId;
-    const { title, content, category, location } = req.body;
+    const { title, content } = req.body;
     const imagePath = req.file
       ? `events/${Date.now()}${path.extname(req.file.originalname)}`
       : null;
@@ -33,14 +32,7 @@ exports.createNews = async (req, res) => {
       downloadURL = await getDownloadURL(fileRef);
     }
 
-    const news = await newsService.addNews(
-      title,
-      content,
-      category,
-      downloadURL,
-      adminId,
-      location
-    );
+    const news = await newsService.addNews(title, content, downloadURL);
     res.status(201).json({ message: "news added successfully", news });
   } catch (error) {
     console.error("Error adding news:", error);
@@ -118,12 +110,30 @@ exports.updateNews = async (req, res) => {
 
 exports.deleteNews = async (req, res) => {
   try {
-    const news = await newsService.deleteANews(req.params.newsId);
+    const { newsId } = req.params;
+    const news = await newsService.getANews(newsId);
 
-    if (!news) res.status(404).json("No record by the given id");
-    else res.send(news);
+    if (news?.imagePath) {
+      const mediaRef = ref(storage, news.imagePath);
+      try {
+        await deleteObject(mediaRef);
+        console.log("Photo deleted successfully");
+      } catch (deleteError) {
+        console.error("Error deleting post photo:", deleteError);
+      }
+    }
+
+    const affectedRows = await newsService.deleteANews(newsId);
+
+    if (affectedRows === 0) {
+      res
+        .status(404)
+        .json({ message: `No record with the given id: ${newsId}` });
+    } else {
+      res.json({ message: "News deleted successfully" });
+    }
   } catch (error) {
-    console.error("Error fetching news by ID:", error);
+    console.error("Error deleting news:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

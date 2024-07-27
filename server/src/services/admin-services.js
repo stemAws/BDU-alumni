@@ -170,7 +170,7 @@ exports.fetchDonations = async () => {
 exports.getAlumniList = async () => {
   try {
     const [alumni] = await db.query(
-      `SELECT a.alumniId, fullName, gender, email, verified, isNotable, major FROM person p JOIN alumni a JOIN education e WHERE a.personId = p.personId AND a.alumniId = e.alumniId AND e.institution='Bahir Dar University'`
+      `SELECT a.alumniId, fullName, gender, email, verified, isNotable, major FROM person p JOIN alumni a JOIN education e WHERE a.personId = p.personId AND a.alumniId = e.alumniId AND e.institution='Bahir Dar University' ORDER BY p.createdAt DESC`
     );
     return alumni;
   } catch (error) {
