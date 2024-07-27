@@ -30,15 +30,15 @@ const Stories = () => {
     fetchData();
   }, []);
 
-  const handleToggle = async (storyId, currentStatus) => {
+  const handleToggle = async (postId, currentStatus) => {
     const updatedStories = stories.map(story =>
-      story.id === storyId ? { ...story, suggestToAdmin: !currentStatus } : story
+      story.postId === postId ? { ...story, suggestToAdmin: !currentStatus } : story
     );
     setStories(updatedStories);
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/addedPosts/${storyId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/posts/${postId}`,
         {
           method: "PATCH",
           headers: {
@@ -76,14 +76,14 @@ const Stories = () => {
         ) : (
           <div className='each-suggested-storyContainer'>
             {stories.map(story => (
-              <div key={story.alumniID} className='each-suggested-story'>
+              <div key={story.postId} className='each-suggested-story'>
                 <img src={story.mediaPath} alt={story.content} />
                 <div>
                   <Switch
                     className='storySwitch'
                     {...label}
                     checked={story.suggestToAdmin}
-                    onChange={() => handleToggle(story.alumniID, story.suggestToAdmin)}
+                    onChange={() => handleToggle(story.postId, story.suggestToAdmin)}
                   />
                 </div>
                 <p>{story.content}</p>
