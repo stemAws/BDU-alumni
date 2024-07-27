@@ -43,8 +43,8 @@ const Admin = () => {
             <Route path='home' element={<Home />} />
             <Route path='users' element={<Users />} />
             <Route path='News' element={<NewsList />} />
+            <Route path="/admin/news/:newsId" element={<Editnews />} />
             <Route path='AddNews' element={<News />} />
-            <Route path="/admin/News/:newsId" element={<Editnews />}/>
             <Route path='AddUser' element={<AddUser />} />
             <Route path='story' element={<Stories />} />
             <Route path='addedStories' element={<AddedStory />} />
