@@ -14,30 +14,8 @@ const SearchAndFilter = () => {
         department:false
     }
     )
-    const [multiResults, setmultiResults] = useState()
     const [input, setinput] = useState("")
-const [profiles, setprofiles] = useState([{
-    fullName:"Full Name",
-    position:"president",
-    company:"Bahir Dar University",
-    currentLocation:"Bahir dar",
-    img:`..${profile}`
-},
-{
-    fullName:"Full Name",
-    position:"president",
-    company:"Bahir Dar University",
-    currentLocation:"Bahir dar",
-    img:`..${profile}`
-},
-{
-    fullName:"Full Name",
-    position:"president",
-    company:"Bahir Dar University",
-    currentLocation:"Bahir dar",
-    img:`..${profile}`
-}
-])
+const [profiles, setprofiles] = useState()
 const handleEachoption=(value)=>{
         setsearchBy(value)
         setadjustingInputs((prevState) => ({
@@ -64,6 +42,7 @@ useEffect(() => {
           if (response.ok) {
           const json = await response.json();
           setprofiles(json);
+          console.log(json)
           }  
       } catch (error) {
           console.error('Error during fetching alumni data:', error);
@@ -139,7 +118,7 @@ useEffect(() => {
             </div>
         </div>
         <div className="right-side">
-        {profiles.length !=0?<>
+        {profiles?.length !=0?<>
             <MultipleProfiles
             profiles={profiles}
             />
