@@ -114,7 +114,7 @@ const NewsList = () => {
   const columns = [
     { field: "newsId", headerName: "ID", width: 90 },
     { field: "title", headerName: "News Title", width: 200 },
-    { field: "discription", headerName: "discription", width: 500 },
+    { field: "description", headerName: "description", width: 500 },
     // { field: "startDate", headerName: "Start Date", width: 150 },
     // { field: "endDate", headerName: "End Date", width: 100 },
     { field: "actions", headerName: "Actions", width: 100 },

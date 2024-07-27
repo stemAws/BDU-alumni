@@ -6,6 +6,7 @@
   /* color: rgb(0, 0, 0); */
   overflow-y: auto;
   transition: 0.5s;
+  max-width: 250px;
 }
 .logo-name{
   display: flex;

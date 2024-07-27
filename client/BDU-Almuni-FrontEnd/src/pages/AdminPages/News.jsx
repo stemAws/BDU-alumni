@@ -2,19 +2,21 @@ import { useState } from "react";
 import "../../styles/News.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const EventPost = () => {
-  const [images, setImages] = useState([]);
+  const [image, setImage] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [postDate, setPostDate] = useState("");
+  const navigate = useNavigate("");
+  // const [postDate, setPostDate] = useState("");
   // const [location, setLocation] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
 
   const [titleError, setTitleError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
-  const [postDateError, setPostDateError] = useState("");
+  // const [postDateError, setPostDateError] = useState("");
   // const [locationError, setLocationError] = useState("");
 
   const handleInputChange = (e) => {
@@ -22,7 +24,7 @@ const EventPost = () => {
 
     if (name === "image") {
       const filesArray = Array.from(files);
-      setImages(filesArray);
+      setImage(filesArray);
     } else {
       switch (name) {
         case "title":
@@ -33,10 +35,10 @@ const EventPost = () => {
           setDescription(value);
           setDescriptionError("");
           break;
-        case "postDate":
-          setPostDate(value);
-          setPostDateError("");
-          break;
+        // case "postDate":
+        //   setPostDate(value);
+        //   setPostDateError("");
+        //   break;
         // case "location":
         //   setLocation(value);
         //   setLocationError("");
@@ -49,7 +51,7 @@ const EventPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+   console.log('clicked')
     let valid = true;
 
     if (!title) {
@@ -72,22 +74,22 @@ const EventPost = () => {
       );
       valid = false;
     }
-    if (!postDate) {
-        setPostDateError("Date field cannot be empty!");
-        valid = false;
-      } else {
-        const postDateValue = new Date(postDate);
-        const currentDate = new Date();
+    // if (!postDate) {
+    //     setPostDateError("Date field cannot be empty!");
+    //     valid = false;
+    //   } else {
+    //     const postDateValue = new Date(postDate);
+    //     const currentDate = new Date();
   
-        // Clear the time part of both dates for comparison
-        postDateValue.setHours(0, 0, 0, 0);
-        currentDate.setHours(0, 0, 0, 0);
+    //     // Clear the time part of both dates for comparison
+    //     postDateValue.setHours(0, 0, 0, 0);
+    //     currentDate.setHours(0, 0, 0, 0);
   
-        if (postDateValue.getTime() !== currentDate.getTime()) {
-          setPostDateError("Date should be today!");
-          valid = false;
-        }
-      }
+    //     if (postDateValue.getTime() !== currentDate.getTime()) {
+    //       setPostDateError("Date should be today!");
+    //       valid = false;
+    //     }
+    //   }
     // if (!location) {
     //   setLocationError(location ? "" : "Location field cannot be empty!");
     //   valid = false;
@@ -99,13 +101,13 @@ const EventPost = () => {
     if (valid) {
       try {
         const formDataToSend = new FormData();
-        images.forEach((image, index) => {
-          formDataToSend.append(`image${index}`, image);
-        });
+        // images.forEach((image, index) => {
+          formDataToSend.append("image", image);
+        // });
         formDataToSend.append("title", title);
         formDataToSend.append("description", description);
-        formDataToSend.append("postDate", postDate);
-        formDataToSend.append("location", location);
+        // formDataToSend.append("postDate", postDate);
+        // formDataToSend.append("location", location);
 
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/add-news`,
@@ -140,7 +142,7 @@ const EventPost = () => {
           encType="multipart/form-data"
         >
           <div className="form">
-            <label className="label">Images:</label>
+            <label className="label">Image:</label>
             <input
               className="imageInput"
               type="file"
@@ -194,7 +196,7 @@ const EventPost = () => {
             {postDateError && <p className="errorMessage">{postDateError}</p>}
           </div> */}
 
-          <button type="submit" onClick={handleSubmit}>Upload</button>
+          <button type="submit" >Upload</button>
         </form>
       </div>
     </div>
