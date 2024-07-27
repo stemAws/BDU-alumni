@@ -1,16 +1,14 @@
 const db = require("../config/db");
 
-exports.addNews = async (title, description,  image_path) => {
+exports.addNews = async (title, description, image_path) => {
   try {
     let query, params;
 
     if (image_path) {
-      query =
-        "INSERT INTO News (title, content, imagePath) VALUES (?, ?, ?)";
+      query = "INSERT INTO News (title, content, imagePath) VALUES (?, ?, ?)";
       params = [title, description, image_path];
     } else {
-      query =
-        "INSERT INTO News (title, content) VALUES (?, ?)";
+      query = "INSERT INTO News (title, content) VALUES (?, ?)";
       params = [title, description];
     }
 
@@ -25,7 +23,7 @@ exports.addNews = async (title, description,  image_path) => {
 
 exports.getNews = async () => {
   const [news] = await db.query(
-    `SELECT title, imagePath, content as description, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM News`
+    `SELECT newsId, title, imagePath, content as description, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM News`
   );
 
   return news;
@@ -49,7 +47,7 @@ exports.getANews = async (newsId) => {
 };
 
 exports.updateANews = async (newsId, updatedNews) => {
-  const { title, description} = updatedNews;
+  const { title, description } = updatedNews;
 
   const [result] = await db.query(
     `   UPDATE News
@@ -83,7 +81,7 @@ exports.searchNewsBy = async (title, category) => {
     DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM News WHERE title LIKE '%${title}%'`;
     if (category != null) {
       q += ` AND category = "${category}"`;
-    } 
+    }
     const queryResult = await db.query(q);
 
     return queryResult[0];
