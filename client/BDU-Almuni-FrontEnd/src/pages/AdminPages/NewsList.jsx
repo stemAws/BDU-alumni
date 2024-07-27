@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import DeleteConfirmation from '../../component/DeleteConfirmation'
+import DeleteConfirmation from '../../component/DeleteConfirmation';
 
 const NewsList = () => {
   const [data, setData] = useState([]);
@@ -13,7 +13,6 @@ const NewsList = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deleteConfirmationNewsId, setDeleteConfirmationNewsId] = useState(null);
@@ -99,26 +98,26 @@ const NewsList = () => {
   };
 
   const handleEdit = (newsId) => {
-    // Render the EditEvent component with the onUpdate callback
-   navigate(`/admin/News/:newsId`);
+    console.log(`Navigating to /admin/news/${newsId}`);
+    navigate(`/admin/news/${newsId}`);
   };
 
   const customTheme = createTheme({
     typography: {
-      fontFamily: "Arial, sans-serif", // Replace 'YourDesiredFont' with the actual font-family
+      fontFamily: "Arial, sans-serif",
     },
   });
 
-  const getRowId = (row) => row.newsId; // Specify the custom ID field
+  const getRowId = (row) => row.newsId;
 
   const columns = [
     { field: "newsId", headerName: "ID", width: 90 },
     { field: "title", headerName: "News Title", width: 200 },
-    { field: "description", headerName: "description", width: 300 },
-    // { field: "startDate", headerName: "Start Date", width: 150 },
-    // { field: "endDate", headerName: "End Date", width: 100 },
-    { field: "actions", headerName: "Actions", width: 100 },
+    { field: "description", headerName: "Description", width: 300 },
     {
+      field: "actions",
+      headerName: "Actions",
+      width: 150,
       renderCell: (params) => (
         <>
           <DeleteOutline
@@ -128,7 +127,7 @@ const NewsList = () => {
           />
           <Edit
             key={`edit-${params.row.newsId}`}
-            className="eventListEdit"
+            className="eventListEdit editIcon"
             onClick={() => handleEdit(params.row.newsId)}
           />
         </>
@@ -138,37 +137,37 @@ const NewsList = () => {
 
   return (
     <ThemeProvider theme={customTheme}>
-    <div className="eventlist">
-      <div className="addEventheader">
-        <input
-          className="search"
-          type="text"
-          placeholder="Search by event title"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <h3> Bahir Dar University Alumni News </h3>
-        <Link to="/admin/AddNews">
-          <button className="addEvent">+ Add News</button>
-        </Link>
-      </div>
-      <div className="listCOntainer">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
+      <div className="eventlist">
+        <div className="addEventheader">
+          <input
+            className="search"
+            type="text"
+            placeholder="Search by news title"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <h3>Bahir Dar University Alumni News</h3>
+          <Link to="/admin/AddNews">
+            <button className="addEvent">+ Add News</button>
+          </Link>
+        </div>
+        <div className="listCOntainer">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
               <DataGrid rows={filteredData} columns={columns} getRowId={getRowId} />
               {isDeleteConfirmationOpen && (
                 <DeleteConfirmation
                   close={handleCancelDelete}
-                  text="News"  // You can customize this text based on your needs
+                  text="News"
                   onDelete={handleConfirmDelete}
                 />
               )}
             </>
-      )}
+          )}
+        </div>
       </div>
-    </div>
     </ThemeProvider>
   );
 };
