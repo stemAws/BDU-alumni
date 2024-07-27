@@ -102,9 +102,18 @@ exports.getAlumniProfile = async (id) => {
 
 exports.getAllAlumni = async () => {
   try {
-    const queryResult = await db.query(
-      "SELECT username, fullName name FROM Person"
-    );
+    const queryResult = await db.query(`
+      SELECT 
+          p.username, 
+          p.fullName AS name, 
+          a.profilePicture 
+      FROM 
+          Person p
+      JOIN 
+          Alumni a 
+      ON 
+          p.personId = a.personId
+  `);  
 
     return queryResult[0];
   } catch (error) {
