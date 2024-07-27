@@ -16,7 +16,7 @@ const storage = getStorage();
 
 exports.createNews = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, description } = req.body;
     const imagePath = req.file
       ? `events/${Date.now()}${path.extname(req.file.originalname)}`
       : null;
@@ -32,7 +32,7 @@ exports.createNews = async (req, res) => {
       downloadURL = await getDownloadURL(fileRef);
     }
 
-    const news = await newsService.addNews(title, content, downloadURL);
+    const news = await newsService.addNews(title, description, downloadURL);
     res.status(201).json({ message: "news added successfully", news });
   } catch (error) {
     console.error("Error adding news:", error);
