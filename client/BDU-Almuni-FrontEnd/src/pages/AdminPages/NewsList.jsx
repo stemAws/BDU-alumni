@@ -16,11 +16,11 @@ const NewsList = () => {
 
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [deleteConfirmationnewsId, setDeleteConfirmationnewsId] = useState(null);
+  const [deleteConfirmationNewsId, setDeleteConfirmationNewsId] = useState(null);
 
   const handleDelete = (id) => {
     setDeleteConfirmationOpen(true);
-    setDeleteConfirmationnewsId(id);
+    setDeleteConfirmationNewsId(id);
   };
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const NewsList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/delete-news/:newsId/${deleteConfirmationnewsId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/delete-news/${deleteConfirmationNewsId}`,
         {
           method: "DELETE",
           headers: {
@@ -84,23 +84,23 @@ const NewsList = () => {
         throw new Error(`Failed to delete News. Status: ${response.status}`);
       }
 
-      setData(data.filter((item) => item.newsId !== deleteConfirmationnewsId));
+      setData(data.filter((item) => item.newsId !== deleteConfirmationNewsId));
     } catch (error) {
       console.error("Error deleting data:", error.message);
     } finally {
       setDeleteConfirmationOpen(false);
-      setDeleteConfirmationnewsId(null);
+      setDeleteConfirmationNewsId(null);
     }
   };
 
   const handleCancelDelete = () => {
     setDeleteConfirmationOpen(false);
-    setDeleteConfirmationnewsId(null);
+    setDeleteConfirmationNewsId(null);
   };
 
   const handleEdit = (newsId) => {
     // Render the EditEvent component with the onUpdate callback
-   navigate(`/admin/News/${newsId}`);
+   navigate(`/admin/News/:newsId`);
   };
 
   const customTheme = createTheme({
@@ -114,7 +114,7 @@ const NewsList = () => {
   const columns = [
     { field: "newsId", headerName: "ID", width: 90 },
     { field: "title", headerName: "News Title", width: 200 },
-    { field: "description", headerName: "description", width: 500 },
+    { field: "description", headerName: "description", width: 300 },
     // { field: "startDate", headerName: "Start Date", width: 150 },
     // { field: "endDate", headerName: "End Date", width: 100 },
     { field: "actions", headerName: "Actions", width: 100 },
