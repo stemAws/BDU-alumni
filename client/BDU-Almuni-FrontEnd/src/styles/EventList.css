@@ -3,6 +3,10 @@
     /* height: 100vh;
     z-index: 0; */
 }
+.listContainer{
+    height: 100vh;
+    margin-top: 70px;
+}
 .addEventheader{
     display: flex;
     flex-direction: row;
