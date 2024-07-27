@@ -1,84 +1,79 @@
-import { FaArrowRight } from "react-icons/fa";
-import newsimg from '../../assets/images/photo_2024-02-25_16-12-11.jpg';
-import newsimg1 from '../../assets/images/photo_2024-02-25_15-48-12.jpg';
-import newsimg2 from '../../assets/images/photo_2024-02-25_15-47-18.jpg';
-import { useInView } from 'react-intersection-observer';
-import "../../styles/AStories.css"
-import { useState } from "react";
-import { Link } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-const Stories = () => {
-        
-    const navigate = useNavigate();
-  const [exitingView, setExitingView] = useState(false);
-  const handleClick = () => {
-    navigate("/admin/addedStories");
-  };
-  const handleIntersection = (entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) {
-        setExitingView(true);
-      } else {
-        setExitingView(false);
-      }
-    });
-  };
-  const { ref, inView } = useInView({
-          triggerOnce: true,
-          threshold: 0.01,
-          onChange:handleIntersection 
-        });
-  return (
-    <>
-    {/* <div className="top-Admin-">
-      <div  ref={ref} className={`circle-bg ${inView ? 'wide' : exitingView ? 'return' : ''}`} ></div>
-      <div className="the-line"></div>
-      <div className="line-cover"></div>
-      <p className="top-Admin--title">
-        <span className="blue-text">TOP</span>STORIES
-      </p>
-      </div> */}
-     
-      
-    <div className="Admin-stories-container">
-    <div className="admin-story-header">
-      <h1 className="headerstory"> Bahir Dar University Alumni Stories</h1>
-      <Link to='/admin/addedStories'>
-        <button className="accepted-stories" onClick={handleClick}>Added Stories</button>
-      </Link>
-      </div>
-      <div className="Each-storyCont">
-        <div className="Admin-each-story">
-                <img className="Admin-story-img"src={newsimg2} alt="" />
-            <div className="Admin-story-description-container">
-                <p className="Admin-story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
-                <p className="Admin-story-readmore">
-                    Read more <FaArrowRight/>
-                </p>
-            </div>
-        </div>
-        <div className="Admin-each-story">
-                <img className="Admin-story-img"src={newsimg} alt="" />
-            <div className="Admin-story-description-container">
-                <p className="Admin-story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
-                <p className="Admin-story-readmore">
-                    Read more <FaArrowRight />
-                </p>
-            </div>
-        </div>
-        <div className="Admin-each-story">
-                <img className="Admin-story-img"src={newsimg1} alt="" />
-            <div className="Admin-story-description-container">
-                <p className="Admin-story-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam est repudiandae eius iste laboriosam...</p>
-                <p className="Admin-story-readmore">
-                    Read more <FaArrowRight/>
-                </p>
-            </div>
-        </div>
-        </div>
-    </div>
-    </>
-  )
-}
+import React, { useState, useEffect } from 'react';
+import '../../styles/stories.css';
+import Switch from '@mui/material/Switch';
+import { Link } from 'react-router-dom';
 
-export default Stories
+// Import images
+import bdu1 from '../../assets/bdu1.png';
+import i1 from '../../assets/i1.jpg';
+import peda from '../../assets/peda.jpg';
+import poly from '../../assets/poly.png';
+
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
+
+const Stories = () => {
+  const [stories, setStories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Sample data to simulate the response from the backend
+    const sampleData = [
+      { id: 1, image: bdu1, title: 'Music bdu1', description: 'Join us for a night of great music! Lorem ipsum dolor sit amet, consectetur adipisicing elit.Join us for a night of great music!Join us for a night of great music!Join us for a night of great music! Rerum unde sit aut accusantium asperiores mollitia culpa quos Join us for a night of great music! Lorem ipsum dolor sit amet, consectetur adipisicing elit.Join us for a night of great music!Join us for a night of great music!Join us for a night of great music! Rerum unde sit aut accusantium asperiores mollitia culpa quos corporis ipsam similique!', approved: true },
+      { id: 2, image: i1, title: 'Hiking Trip', description: 'Explore the beautiful trails with us. Lorem ipsum dolor sit amet, consectetur Learn about the latest in peda. Lorem ipsum dolor Learn about the latest in peda. Lorem ipsum dolor Learn about the latest in peda. Lorem ipsum dolor adipisicing elit. Rerum unde sit aut accusantium asperiores mollitia culpa quos corporis ipsam similique!', approved: false },
+      { id: 3, image: peda, title: 'peda Conference', description: 'Learn about the latest in peda. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum unde sit aut accusantium asperiores mollitia culpa quos corporis ipsam similique!', approved: true },
+      { id: 4, image: poly, title: 'poly Exhibition', description: 'Experience Join us for a night of great music! Lorem ipsum dolor sit amet, consectetur adipisicing elit.Join us for a night of great music!Join us for a night of great music!Join us for a night of great music! Rerum unde sit aut accusantium asperiores mollitia culpa quosstunning polyworks.Join us for a night of great music!Lorem ipsum dolor sit amet, ', approved: false },
+    ];
+
+    setStories(sampleData);
+    setLoading(false);
+  }, []);
+
+  const handleToggle = (storyId, currentStatus) => {
+    const updatedStories = stories.map(story =>
+      story.id === storyId ? { ...story, approved: !currentStatus } : story
+    );
+    setStories(updatedStories);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div className='suggested-story-container'>
+      <div className="storyHeader">
+        <h1 className="suggestedstoryHeader">Bahir Dar University Alumni Stories</h1>
+        <Link to='/admin/addedStories'>
+          <button className='accepted-stories'>Added Stories</button>
+        </Link>
+      </div>
+      <section className="Suggestedstory">
+        {stories.length === 0 ? (
+          <div className="no-storys">
+            <p>No suggested Stories at the moment.</p>
+          </div>
+        ) : (
+          <div className='each-suggested-storyContainer'>
+            {stories.map(story => (
+              <div key={story.id} className='each-suggested-story'>
+                <img src={story.image} alt={story.title} />
+                <div>
+                  <Switch
+                    className='storySwitch'
+                    {...label}
+                    checked={story.approved}
+                    onChange={() => handleToggle(story.id,story.approved)}
+                  />
+                </div>
+                <p className='storytitle'>{story.title}</p>
+                <p>{story.description}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+};
+
+export default Stories;

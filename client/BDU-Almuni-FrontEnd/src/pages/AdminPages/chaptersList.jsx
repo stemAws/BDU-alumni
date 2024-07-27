@@ -5,15 +5,14 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import DeleteConfirmation from '../../component/DeleteConfirmation'
+import DeleteConfirmation from '../../component/DeleteConfirmation';
 
-const chaptersList = () => {
+const ChaptersList = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deleteConfirmationchapterId, setDeleteConfirmationchapterId] = useState(null);
@@ -33,7 +32,7 @@ const chaptersList = () => {
         `${import.meta.env.VITE_BACKEND_URL}/list-chapters`
       );
       if (!response.ok) {
-        throw new Error(`Failed to fetch chapter. Status: ${response.status}`);
+        throw new Error(`Failed to fetch chapters. Status: ${response.status}`);
       }
 
       const chapterData = await response.json();
@@ -99,8 +98,7 @@ const chaptersList = () => {
   };
 
   const handleEdit = (chapterId) => {
-    // Render the EditEvent component with the onUpdate callback
-   navigate(`/admin/chapters/${chapterId}`);
+    navigate(`/admin/chapters/${chapterId}`);
   };
 
   const customTheme = createTheme({
@@ -114,11 +112,11 @@ const chaptersList = () => {
   const columns = [
     { field: "chapterId", headerName: "ID", width: 90 },
     { field: "title", headerName: "Chapter Title", width: 200 },
-    { field: "discription", headerName: "discription", width: 500 },
-    // { field: "startDate", headerName: "Start Date", width: 150 },
-    // { field: "endDate", headerName: "End Date", width: 100 },
-    { field: "actions", headerName: "Actions", width: 100 },
+    { field: "discription", headerName: "Description", width: 500 },
     {
+      field: "actions",
+      headerName: "Actions",
+      width: 100,
       renderCell: (params) => (
         <>
           <DeleteOutline
@@ -138,25 +136,25 @@ const chaptersList = () => {
 
   return (
     <ThemeProvider theme={customTheme}>
-    <div className="eventlist">
-      <div className="addEventheader">
-        <input
-          className="search"
-          type="text"
-          placeholder="Search by event title"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <h3> Bahir Dar University Alumni Chapters </h3>
-        <Link to="/admin/AddChapter">
-          <button className="addEvent">+ Add Chapters</button>
-        </Link>
-      </div>
-      <div className="listCOntainer">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
+      <div className="eventlist">
+        <div className="addEventheader">
+          <input
+            className="search"
+            type="text"
+            placeholder="Search by chapter title"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <h3> Bahir Dar University Alumni Chapters </h3>
+          <Link to="/admin/AddChapter">
+            <button className="addEvent">+ Add Chapter</button>
+          </Link>
+        </div>
+        <div className="listContainer">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
               <DataGrid rows={filteredData} columns={columns} getRowId={getRowId} />
               {isDeleteConfirmationOpen && (
                 <DeleteConfirmation
@@ -166,11 +164,11 @@ const chaptersList = () => {
                 />
               )}
             </>
-      )}
+          )}
+        </div>
       </div>
-    </div>
     </ThemeProvider>
   );
 };
 
-export default chaptersList;
+export default ChaptersList;
