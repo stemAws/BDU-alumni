@@ -1,5 +1,62 @@
 const db = require("../config/db");
+const xlsx = require("xlsx");
+const bcrypt = require("bcrypt");
 
+exports.parseExcelFile = (buffer) => {
+  const workbook = xlsx.read(buffer, {
+    cellDates: true,
+    bookFiles: true,
+  });
+  const sheetName = workbook.SheetNames[0];
+  const sheet = workbook.Sheets[sheetName];
+  return xlsx.utils.sheet_to_json(sheet);
+};
+
+exports.createAlumniRecord = async (alumniData, graduationYear) => {
+  for (const row of alumniData) {
+    const password = row.lastName + "123";
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const verified = 1;
+    const username = row.lastName + row.firstName + graduationYear;
+    const fullName = row.firstName + " " + row.lastName;
+    const personQuery = `
+      INSERT INTO person (fullName, gender, password, verified, username)
+      VALUES (?, ?, ?, ?, ?)
+    `;
+
+    const personValues = [
+      fullName,
+      row.gender,
+      hashedPassword,
+      verified,
+      username,
+    ];
+
+    const [personResult] = await db.query(personQuery, personValues);
+    const personId = personResult.insertId;
+
+    const alumniSql = `
+      INSERT INTO alumni (personId, isNotable)
+      VALUES (?, ?)
+    `;
+
+    const alumniValues = [personId, 0];
+    const [alumniResult] = await db.query(alumniSql, alumniValues);
+    const alumniId = alumniResult.insertId;
+    const institution = "Bahir Dar University";
+    const eduSql = `INSERT INTO education (alumniId, institution, degree, major, minor, admission, graduatingYear) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const eduValues = [
+      alumniId,
+      institution,
+      row.degree,
+      row.major,
+      row.minor,
+      row.admission,
+      graduationYear,
+    ];
+    await db.query(eduSql, eduValues);
+  }
+};
 exports.fetchSuggestedPostsToAdmin = async () => {
   try {
     const [result] = await db.query(
@@ -72,6 +129,7 @@ exports.fetchUserDataByCountry = async (req, res) => {
   }
 };
 
+exports.uploadAlumniData = async (req, res) => {};
 exports.addDonation = async (title, link, description) => {
   try {
     if (!title || !link || !description) {
@@ -112,7 +170,7 @@ exports.fetchDonations = async () => {
 exports.getAlumniList = async () => {
   try {
     const [alumni] = await db.query(
-      `SELECT a.alumniId, fullName, gender, email, verified, createdAt, isNotable, major FROM person p JOIN alumni a JOIN education e WHERE a.personId = p.personId AND a.alumniId = e.alumniId AND e.institution='Bahir Dar University'`
+      `SELECT a.alumniId, fullName, gender, email, verified, isNotable, major FROM person p JOIN alumni a JOIN education e WHERE a.personId = p.personId AND a.alumniId = e.alumniId AND e.institution='Bahir Dar University'`
     );
     return alumni;
   } catch (error) {
@@ -227,7 +285,9 @@ exports.getIndustryCount = async () => {
 
 exports.getCompanyCount = async () => {
   try {
-    const [result] = await db.query(`SELECT company, COUNT(*) as count FROM experience GROUP BY company ORDER BY count DESC LIMIT 10 `);
+    const [result] = await db.query(
+      `SELECT company, COUNT(*) as count FROM experience GROUP BY company ORDER BY count DESC LIMIT 10 `
+    );
 
     return result;
   } catch (error) {
@@ -238,7 +298,7 @@ exports.getCompanyCount = async () => {
 exports.approveJob = async (jobPostingId) => {
   try {
     await db.query(
-      'UPDATE Jobposting SET isApproved = 1 WHERE jobPostingId = ?',
+      "UPDATE Jobposting SET isApproved = 1 WHERE jobPostingId = ?",
       [jobPostingId]
     );
   } catch (error) {

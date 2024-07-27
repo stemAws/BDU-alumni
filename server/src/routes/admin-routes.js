@@ -7,7 +7,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.post(
-  "/uploadAlumniData",
+  "/upload-alumni-data",
   upload.single("file"),
   adminController.uploadAlumniData
 );
