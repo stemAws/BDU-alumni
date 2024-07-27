@@ -7,14 +7,14 @@ const EventPost = () => {
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [postDate, setPostDate] = useState("");
+  // const [postDate, setPostDate] = useState("");
   // const [location, setLocation] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
 
   const [titleError, setTitleError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
-  const [postDateError, setPostDateError] = useState("");
+  // const [postDateError, setPostDateError] = useState("");
   // const [locationError, setLocationError] = useState("");
 
   const handleInputChange = (e) => {
@@ -33,10 +33,10 @@ const EventPost = () => {
           setDescription(value);
           setDescriptionError("");
           break;
-        case "postDate":
-          setPostDate(value);
-          setPostDateError("");
-          break;
+        // case "postDate":
+        //   setPostDate(value);
+        //   setPostDateError("");
+        //   break;
         // case "location":
         //   setLocation(value);
         //   setLocationError("");
@@ -49,7 +49,7 @@ const EventPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+   console.log('clicked')
     let valid = true;
 
     if (!title) {
@@ -72,22 +72,22 @@ const EventPost = () => {
       );
       valid = false;
     }
-    if (!postDate) {
-        setPostDateError("Date field cannot be empty!");
-        valid = false;
-      } else {
-        const postDateValue = new Date(postDate);
-        const currentDate = new Date();
+    // if (!postDate) {
+    //     setPostDateError("Date field cannot be empty!");
+    //     valid = false;
+    //   } else {
+    //     const postDateValue = new Date(postDate);
+    //     const currentDate = new Date();
   
-        // Clear the time part of both dates for comparison
-        postDateValue.setHours(0, 0, 0, 0);
-        currentDate.setHours(0, 0, 0, 0);
+    //     // Clear the time part of both dates for comparison
+    //     postDateValue.setHours(0, 0, 0, 0);
+    //     currentDate.setHours(0, 0, 0, 0);
   
-        if (postDateValue.getTime() !== currentDate.getTime()) {
-          setPostDateError("Date should be today!");
-          valid = false;
-        }
-      }
+    //     if (postDateValue.getTime() !== currentDate.getTime()) {
+    //       setPostDateError("Date should be today!");
+    //       valid = false;
+    //     }
+    //   }
     // if (!location) {
     //   setLocationError(location ? "" : "Location field cannot be empty!");
     //   valid = false;
@@ -104,7 +104,7 @@ const EventPost = () => {
         });
         formDataToSend.append("title", title);
         formDataToSend.append("description", description);
-        formDataToSend.append("postDate", postDate);
+        // formDataToSend.append("postDate", postDate);
         formDataToSend.append("location", location);
 
         const response = await fetch(
@@ -194,7 +194,7 @@ const EventPost = () => {
             {postDateError && <p className="errorMessage">{postDateError}</p>}
           </div> */}
 
-          <button type="submit" onClick={handleSubmit}>Upload</button>
+          <button type="submit" >Upload</button>
         </form>
       </div>
     </div>

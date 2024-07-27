@@ -91,7 +91,7 @@ const SideBar = () => {
                 
                <li className="sidebarListItem">
                 <Link to='/admin/chapters'>
-                chapters
+                Clubs
                 </Link>
                 </li>
 
