@@ -2,11 +2,13 @@ import { useState } from "react";
 import "../../styles/News.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const EventPost = () => {
-  const [images, setImages] = useState([]);
+  const [image, setImage] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const navigate = useNavigate("");
   // const [postDate, setPostDate] = useState("");
   // const [location, setLocation] = useState("");
   const [success, setSuccess] = useState(false);
@@ -22,7 +24,7 @@ const EventPost = () => {
 
     if (name === "image") {
       const filesArray = Array.from(files);
-      setImages(filesArray);
+      setImage(filesArray);
     } else {
       switch (name) {
         case "title":
@@ -99,9 +101,9 @@ const EventPost = () => {
     if (valid) {
       try {
         const formDataToSend = new FormData();
-        images.forEach((image, index) => {
-          formDataToSend.append(`image${index}`, image);
-        });
+        // images.forEach((image, index) => {
+          formDataToSend.append("image", image);
+        // });
         formDataToSend.append("title", title);
         formDataToSend.append("description", description);
         // formDataToSend.append("postDate", postDate);
@@ -140,7 +142,7 @@ const EventPost = () => {
           encType="multipart/form-data"
         >
           <div className="form">
-            <label className="label">Images:</label>
+            <label className="label">Image:</label>
             <input
               className="imageInput"
               type="file"
