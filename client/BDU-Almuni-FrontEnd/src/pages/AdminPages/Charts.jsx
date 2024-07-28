@@ -173,7 +173,7 @@ export default function Chart() {
       <div className="chart2">
         <h3 className="chartTitle">
           {" "}
-          BDU students based on geographical location
+          BDU Alumni based on geographical location
         </h3>
 
         <iframe
