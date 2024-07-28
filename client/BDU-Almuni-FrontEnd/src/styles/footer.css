@@ -59,7 +59,11 @@ hr {
 
 .middle___right {
   display: flex;
-  gap: 100px;
+  gap: 50px;
+}
+
+.each ul {
+  padding: 0;
 }
 
 .each li {
