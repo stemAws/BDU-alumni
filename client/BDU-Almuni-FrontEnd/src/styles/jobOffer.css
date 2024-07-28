@@ -154,3 +154,8 @@ transition: all 0s ease-in;
     border: 1px solid #c5c5c5;
     color: #858585;
 }
+
+/*admin css*/
+.Admin-JO-flex-container{
+    flex: 4;
+}
