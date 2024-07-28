@@ -60,6 +60,7 @@
     color: #0c8ce9;
     cursor: pointer;
     margin: 5px;
+    font-size: 2.5rem !important;
 }
 .decline{
     background-color: rgb(255, 20, 20);

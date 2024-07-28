@@ -49,6 +49,7 @@ const chapterList = () => {
       }));
 
       setData(formattedData);
+      
     } catch (error) {
       console.error("Error fetching data:", error.message);
     } finally {

@@ -98,6 +98,8 @@ const EventPost = () => {
           console.error("Error uploading chapters", response.statusText);
           setErrorPopup(true);
         }
+
+        
       } catch (error) {
         console.error("Error:", error);
       }
