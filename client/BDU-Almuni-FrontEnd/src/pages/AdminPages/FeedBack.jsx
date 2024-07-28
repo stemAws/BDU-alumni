@@ -10,7 +10,6 @@ import DeleteConfirmation from "../../component/DeleteConfirmation";
 const FeedBack = () => {
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [feedbackData, setFeedbackData] = useState([]);
-
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deleteConfirmationId, setDeleteConfirmationId] = useState(null);
 
@@ -32,14 +31,12 @@ const FeedBack = () => {
   };
 
   useEffect(() => {
-    // Fetch feedback data when the component mounts
     fetchFeedbackData();
   }, []);
+
   const fetchFeedbackData = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/feedback`
-      );
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/feedback`);
       if (response.ok) {
         const data = await response.json();
 
@@ -57,11 +54,11 @@ const FeedBack = () => {
 
   const customTheme = createTheme({
     typography: {
-      fontFamily: "Arial, sans-serif", // Replace 'YourDesiredFont' with the actual font-family
+      fontFamily: "Arial, sans-serif",
     },
   });
 
-  const handleConfirmDelete = async (id) => {
+  const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/feedback/${deleteConfirmationId}`,
@@ -72,7 +69,7 @@ const FeedBack = () => {
 
       if (response.ok) {
         setFeedbackData((prevData) =>
-          prevData.filter((feedback) => feedback.feedBackID !== deleteConfirmationId)
+          prevData.filter((feedback) => feedback.id !== deleteConfirmationId)
         );
       } else {
         console.error(`Failed to delete row with ID: ${deleteConfirmationId}`);
@@ -91,25 +88,22 @@ const FeedBack = () => {
   };
 
   const rows = feedbackData.map((feedback) => ({
-    id: feedback.feedBackID,
+    id: feedback.id,
     Name: feedback.fullName,
     Email: feedback.email,
-    date: feedback.createdAt, // Convert createdAt to a readable date
+    date: feedback.createdAt,
     message: feedback.message,
   }));
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
-    { field: "Name", headerName: " Name", width: 150 },
+    { field: "Name", headerName: "Name", width: 150 },
     {
       field: "Email",
       headerName: "Email",
       width: 200,
       renderCell: (params) => (
-        <div
-          style={{ cursor: "pointer" }}
-          onClick={() => handleEmailClick(params.value)}
-        >
+        <div style={{ cursor: "pointer" }} onClick={() => handleEmailClick(params.value)}>
           {params.value}
         </div>
       ),
@@ -120,15 +114,14 @@ const FeedBack = () => {
       headerName: "Message",
       width: 300,
       renderCell: (params) => (
-        <div
-          style={{ cursor: "pointer" }}
-          onClick={() => handleMessageClick(params.value)}
-        >
+        <div style={{ cursor: "pointer" }} onClick={() => handleMessageClick(params.value)}>
           {params.value}
         </div>
       ),
     },
     {
+      field: "actions",
+      headerName: "Actions",
       width: 50,
       renderCell: (params) => (
         <div
@@ -144,8 +137,11 @@ const FeedBack = () => {
 
   return (
     <div className="feedback-cont">
-    <ThemeProvider theme={customTheme}>
-      
+      <div className="SuggestedJobheader">
+        <h3> Feedbacks </h3>
+      </div>
+      <div className="listContainer">
+      <ThemeProvider theme={customTheme}>
         <DataGrid rows={rows} columns={columns} autoHeight />
         <Message
           open={Boolean(selectedMessage)}
@@ -155,12 +151,12 @@ const FeedBack = () => {
         {isDeleteConfirmationOpen && (
           <DeleteConfirmation
             close={handleCancelDelete}
-            text="feedback" // You can customize this text based on your needs
+            text="feedback"
             onDelete={handleConfirmDelete}
           />
         )}
-     
-    </ThemeProvider>
+      </ThemeProvider>
+      </div>
     </div>
   );
 };
