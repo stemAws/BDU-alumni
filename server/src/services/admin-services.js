@@ -69,6 +69,18 @@ exports.fetchSuggestedPostsToAdmin = async () => {
     );
   }
 };
+exports.getYear = async () => {
+  try {
+    const [result] = await db.query(
+      " SELECT graduatingYear as year FROM education"
+    );
+    return result;
+  } catch (error) {
+    throw new Error(
+      "Error fetching grduating year: " + error.message
+    );
+  }
+};
 
 exports.updatePost = async (postId, suggestedByAdmin) => {
   try {
@@ -242,7 +254,7 @@ exports.getMajorsCount = async (graduatingYear) => {
   try {
     const year =
       graduatingYear != null ? ` AND graduatingYear = ${graduatingYear}` : "";
-    let query = `SELECT major, COUNT(*) as count FROM education WHERE institution = 'Bahir Dar University' ${year} GROUP BY major ORDER BY count DESC LIMIT 10 
+    let query = `SELECT major as fieldOfStudy, COUNT(*) as count FROM education WHERE institution = 'Bahir Dar University' ${year} GROUP BY major ORDER BY count DESC LIMIT 10 
     `;
 
     // Execute the query
@@ -257,7 +269,7 @@ exports.getMajorsCount = async (graduatingYear) => {
 
 exports.getJobCount = async () => {
   try {
-    let query = `SELECT position, COUNT(*) as count FROM experience GROUP BY position ORDER BY count DESC LIMIT 10 `;
+    let query = `SELECT position as jobTitle, COUNT(*) as count FROM experience GROUP BY position ORDER BY count DESC LIMIT 10 `;
 
     // Execute the query
     const [result] = await db.query(query);
