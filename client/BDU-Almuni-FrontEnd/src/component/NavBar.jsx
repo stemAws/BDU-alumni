@@ -70,7 +70,7 @@ const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/">Home</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/gallery">Gallery</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/joboffer">Job Offer </Link> </li>
-                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/chapters">chapters</Link></li>
+                <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/chapters">Clubs</Link></li>
                 <li className="each-nav-list"onClick={()=>{closeDrops()}}> <Link to="/contactus">Contact us</Link></li>
                 <li className="each-nav-list"> <Link onClick={()=>showdropDown()}>about
                 {
