@@ -192,7 +192,7 @@ const AddGallery = ({ updateCategories }) => {
           </div>
 
           <div className='form'>
-            <label className='label' htmlFor="images">Images:</label>
+            <label className='label' htmlFor="images">Media:</label>
             <input className='imageInput' type="file" id="images" multiple onChange={handleImageChange} />
             {imagesError && <p className="errorMessage">{imagesError}</p>}
           </div>
