@@ -19,7 +19,9 @@ const Stories = () => {
           throw new Error(`Failed to fetch stories. Status: ${response.status}`);
         }
         const storiesData = await response.json();
-        setStories(storiesData);
+        // Filter stories where suggestToAdmin is true
+        const filteredStories = storiesData.filter(story => story.suggestToAdmin);
+        setStories(filteredStories);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       } finally {

@@ -118,9 +118,9 @@ margin-left: -50px;
       padding: 20px;
   }
   .suggestedstoryHeader{
-      color: #0c84db;
+      color: #000000;
       padding: 20px;
-      font-size: 2rem;
+      font-size: 1.5rem;
     text-align: center;
   }
   .storySwitch{
@@ -164,10 +164,10 @@ margin-left: -50px;
     }
   
     .storylist:hover{
-      background-color: #921c20ef;
+      background-color: #1c5f92ef;
     }
     .no-storys>p{
-      color:#921C20;
+      color:#000000;
       font-size: 14px;
       text-align: center;
       margin: 20px;
