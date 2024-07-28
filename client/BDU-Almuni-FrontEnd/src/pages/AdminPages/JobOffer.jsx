@@ -259,7 +259,7 @@ const JobOffer = () => {
             {descriptionError && <p className="errorMessage">{descriptionError}</p>}
           </div>
           <div className="Jobform">
-            <label className="label">Organization:</label>
+            <label className="label">company Name:</label>
             <input
               type="text"
               name="organization"
