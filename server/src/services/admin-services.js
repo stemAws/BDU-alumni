@@ -60,7 +60,7 @@ exports.createAlumniRecord = async (alumniData, graduationYear) => {
 exports.fetchSuggestedPostsToAdmin = async () => {
   try {
     const [result] = await db.query(
-      "SELECT * FROM posts WHERE suggestToAdmin = 1"
+      "SELECT * FROM post WHERE suggestToAdmin = 1"
     );
     return result;
   } catch (error) {
@@ -102,7 +102,7 @@ exports.updatePost = async (postId, suggestedByAdmin) => {
 exports.fetchSuggestedPostsByAdmin = async () => {
   try {
     const [result] = await db.query(
-      "SELECT * FROM posts WHERE suggestedByAdmin = 1"
+      "SELECT * FROM post WHERE suggestedByAdmin = 1"
     );
     return result;
   } catch (error) {
