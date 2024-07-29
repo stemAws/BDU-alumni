@@ -37,7 +37,7 @@ const SuggestedJob = () => {
       <p className="job-offer">
         <span className="blue-text">JOB</span> OFFER
       </p>
-      <div className="Admin-job-offer-container ">
+      <div className="job-offer-container Admin-job-offer-container">
         {jobOffers.length > 0 && (
           <JobOffers
             onReadMore={jobToReadMore}

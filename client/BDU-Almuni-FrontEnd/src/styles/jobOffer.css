@@ -17,6 +17,7 @@
     align-items: center;
     justify-content: center;
     max-width: 1500px;
+   overflow-y: auto;
 }
 .job-offer{
     text-align: center;
@@ -158,22 +159,13 @@ transition: all 0s ease-in;
 /*admin css*/
 .Admin-JO-flex-container{
     flex: 4;
+    overflow-y: auto;
+    margin: 20px;
+    width: 100vw;
 }
 
-.Admin-job-offer-container {
-    display: flex;
-    overflow-x: auto; /* Enable horizontal scrolling */
-    scroll-snap-type: x mandatory;
-    gap: 10px;
-}
-
-.Admin-job-offer-container::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for Webkit browsers */
-}
-
-.offer-item {
-    flex: 0 0 auto; /* Prevent flex items from shrinking or growing */
-    width: calc(50% - 10px); /* Two items per container, with a gap of 10px */
-    scroll-snap-align: start;
-    box-sizing: border-box;
+.Admin-job-offer-container{
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    margin-left: 50px;
 }
