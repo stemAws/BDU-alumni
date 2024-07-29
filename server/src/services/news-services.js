@@ -23,7 +23,7 @@ exports.addNews = async (title, description, image_path) => {
 
 exports.getNews = async () => {
   const [news] = await db.query(
-    `SELECT newsId, title, imagePath, content as description, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM News`
+    `SELECT newsId, title, imagePath, content as description, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM News ORDER BY createdAt DESC`
   );
 
   return news;
