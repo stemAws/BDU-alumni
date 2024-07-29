@@ -34,7 +34,7 @@ exports.getGradYear = async (req, res) => {
 };
 
 exports.updatePost = async (req, res) => {
-  const postId = req.params.postID;
+  const postId = req.params.postId;
   const { suggestedByAdmin } = req.body;
   try {
     const result = await adminService.updatePost(postId, suggestedByAdmin);
