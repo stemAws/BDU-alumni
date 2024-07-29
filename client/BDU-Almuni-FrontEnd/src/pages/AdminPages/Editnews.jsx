@@ -1,26 +1,25 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import '../../styles/editNews.css';
-import { Link } from "@mui/material";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { ChevronLeft } from "@mui/icons-material";
+import '../../styles/editNews.css';
 
 const EditNews = () => {
   const navigate = useNavigate();
   const { newsId } = useParams();
 
   const [titleError, setTitleError] = useState("");
-  const [descriptionError, setDescriptionError] = useState("");
+  const [contentError, setContentError] = useState("");
 
   const [newsData, setNewsData] = useState({
     title: "",
-    description: "",
+    content: "",
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/news/${newsId}`
+          `${import.meta.env.VITE_BACKEND_URL}/edit-news/${newsId}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -61,20 +60,20 @@ const EditNews = () => {
       setTitleError("");
     }
 
-    if (!newsData.description) {
-      setDescriptionError("Description field cannot be empty!");
+    if (!newsData.content) {
+      setContentError("Content field cannot be empty!");
       valid = false;
-    } else if (/^[0-9\s]+$/.test(newsData.description)) {
-      setDescriptionError("Please include meaningful information in the description");
+    } else if (/^[0-9\s]+$/.test(newsData.content)) {
+      setContentError("Please include meaningful information in the content");
       valid = false;
     } else {
-      setDescriptionError("");
+      setContentError("");
     }
 
     if (valid) {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/news/${newsId}`,
+          `${import.meta.env.VITE_BACKEND_URL}/edit-news/${newsId}`,
           {
             method: "PUT",
             headers: {
@@ -85,7 +84,7 @@ const EditNews = () => {
         );
 
         if (response.ok) {
-          navigate.push("/admin/news");
+          navigate("/admin/news");
         } else {
           const errorResponse = await response.json();
           console.error("Error updating news data:", response.status, errorResponse);
@@ -97,7 +96,7 @@ const EditNews = () => {
   };
 
   const handleClick = () => {
-    navigate.push("/admin/news");
+    navigate("/admin/news");
   };
 
   return (
@@ -120,15 +119,14 @@ const EditNews = () => {
             {titleError && <p className="errorMessage">{titleError}</p>}
           </div>
           <div className="form">
-            <label className="label">Description:</label>
+            <label className="label">Content:</label>
             <textarea
-              type="text"
-              placeholder="Description"
-              name="description"
-              value={newsData.description}
+              placeholder="Content"
+              name="content"
+              value={newsData.content}
               onChange={handleInputChange}
             />
-            {descriptionError && <p className="errorMessage">{descriptionError}</p>}
+            {contentError && <p className="errorMessage">{contentError}</p>}
           </div>
           <button type="submit">Save Changes</button>
         </form>
