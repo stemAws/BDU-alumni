@@ -113,8 +113,8 @@ CREATE TABLE Event (
 CREATE TABLE JobPosting (
     jobPostingId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     adminId INT,
+    personId INT,
     jobTitle VARCHAR(100),
-    uploadDate Date,
     description Text,
     companyName VARCHAR(100),
     companyAddress VARCHAR(255),
@@ -125,7 +125,10 @@ CREATE TABLE JobPosting (
     salary INT,
     imagePath VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (personId) REFERENCES Person(personId),
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    employmentType VARCHAR(255),
+    isApproved BOOLEAN,
     FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
 );
 
@@ -161,13 +164,15 @@ CREATE TABLE Gallery (
     FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)  
 );
 
-CREATE TABLE Donations (
+CREATE TABLE Donation (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+
     adminId INT,
     title VARCHAR(255) NOT NULL,
     description TEXT,
     link VARCHAR(255),
-    createdAt DATETIME NOT NULL,
-    updatedAt DATETIME NOT NULL,
+    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
 );
 
