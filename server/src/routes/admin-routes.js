@@ -21,7 +21,7 @@ router.get("/get-alumni", adminController.getAlumni);
 router.get("/degree-count", adminController.getDegree);
 router.get("/admission-count", adminController.getAdmission);
 // router.get("/job-suggested", adminController.getSuggestedJob);
-router.patch("/update-post/:postId", adminController.updatePost)
+router.put("/update-post/:postId", adminController.updatePost)
 router.get("/majors-count", adminController.getMajors);
 router.get("/job-count", adminController.getJob);
 router.get("/industry-count", adminController.getIndustry);

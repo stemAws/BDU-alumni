@@ -60,7 +60,8 @@ exports.createAlumniRecord = async (alumniData, graduationYear) => {
 exports.fetchSuggestedPostsToAdmin = async () => {
   try {
     const [result] = await db.query(
-      "SELECT * FROM post WHERE suggestToAdmin = 1"
+      "SELECT * FROM post WHERE suggestToAdmin = ?",
+      [1]
     );
     return result;
   } catch (error) {
@@ -76,17 +77,16 @@ exports.getYear = async () => {
     );
     return result;
   } catch (error) {
-    throw new Error(
-      "Error fetching grduating year: " + error.message
-    );
+    throw new Error("Error fetching grduating year: " + error.message);
   }
 };
 
 exports.updatePost = async (postId, suggestedByAdmin) => {
+  const suggestToAdmin = suggestedByAdmin ? 1 : 0;
   try {
     const result = await db.query(
-      "UPDATE posts SET suggestToAdmin = 0, suggestedByAdmin = ? WHERE postID = ?",
-      [suggestedByAdmin, postId]
+      "UPDATE post SET suggestToAdmin = ?, suggestedByAdmin = ? WHERE postID = ?",
+      [suggestToAdmin, suggestedByAdmin, postId]
     );
 
     if (result.rowCount === 1) {
@@ -102,7 +102,8 @@ exports.updatePost = async (postId, suggestedByAdmin) => {
 exports.fetchSuggestedPostsByAdmin = async () => {
   try {
     const [result] = await db.query(
-      "SELECT * FROM post WHERE suggestedByAdmin = 1"
+      "SELECT * FROM post WHERE suggestedByAdmin = ?",
+      [1]
     );
     return result;
   } catch (error) {
@@ -316,8 +317,7 @@ exports.approveJob = async (jobPostingId) => {
   } catch (error) {
     throw error;
   }
-}
-
+};
 
 exports.fetchAdminDetailsByPersonId = async (personId) => {
   try {
@@ -328,8 +328,8 @@ exports.fetchAdminDetailsByPersonId = async (personId) => {
        FROM 
          Websiteadmin 
        WHERE 
-         personId = ?`, 
-       [personId]
+         personId = ?`,
+      [personId]
     );
 
     if (result.length === 0) {
@@ -337,8 +337,6 @@ exports.fetchAdminDetailsByPersonId = async (personId) => {
     }
     return result[0];
   } catch (error) {
-    throw new Error(
-      "Error fetching admin details: " + error.message
-    );
+    throw new Error("Error fetching admin details: " + error.message);
   }
 };
