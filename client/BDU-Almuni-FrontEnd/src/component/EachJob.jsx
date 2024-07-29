@@ -10,7 +10,7 @@ const EachJob = ({jobOffer,setopenJODetail,onReadMore}) => {
                 }))
     }
   return (
-    <div className="each-job-offer">
+    <div className="each-job-offer  job-offer-item">
             <div className="JO-top">
                 <div className="company-detail">
                     {/* <img src={jobOffer?.profilePicture} alt="" className="company-logo" /> */}

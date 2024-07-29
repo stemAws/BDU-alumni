@@ -16,13 +16,15 @@ import News from './AdminPages/News';
 import NewsList from './AdminPages/NewsList';
 import Chapters from './AdminPages/Chapters';
 import JobOffer from './AdminPages/JobOffer';
-import suggestedJob from './AdminPages/suggestedJob';
+import SuggestedJob from './AdminPages/SuggestedJob';
 import AGallery from './AdminPages/AGallery';
 import AddGallery from './AdminPages/AddGallery';
 import AdminSignin from '../component/AdminSignin';
 import AuthService from '../component/AuthService';
 import ChaptersList from './AdminPages/chaptersList';
 import Editnews from './AdminPages/Editnews'; 
+import EditDonation from './AdminPages/EditDonation'; 
+
 const Admin = () => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
@@ -53,11 +55,12 @@ const Admin = () => {
             <Route path='Addgallery' element={<AddGallery />} />
             <Route path='AddEvent' element={<AddEvent />} />
             <Route path='jobOffer' element={<JobOffer />} />
-            <Route path='suggestedJob' element={<suggestedJob />} />
+            <Route path='SuggestedJob' element={<SuggestedJob />} />
             <Route path='chapters' element={<ChaptersList />} />
             <Route path='AddChapter' element={<Chapters />} />
             <Route path='feedback' element={<FeedBack />} />
             <Route path='Donation' element={<DonationList />} />
+            <Route path="/admin/donation/:id" element={<EditDonation />} />
             <Route path='AddDonation' element={<AddDonation />} />
             <Route path='*' element={<Navigate to="home" />} />
           </Routes>

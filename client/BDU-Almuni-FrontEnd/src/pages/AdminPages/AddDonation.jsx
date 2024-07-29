@@ -78,7 +78,7 @@ const DonationPost = () => {
         });
   
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/donation`,
+          `${import.meta.env.VITE_BACKEND_URL}/donation`,
           {
             method: "POST",
             headers: {
