@@ -13,7 +13,7 @@ const Stories = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/addedPosts`
+          `${import.meta.env.VITE_BACKEND_URL}/suggested-to-admin`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch stories. Status: ${response.status}`);
@@ -79,7 +79,7 @@ const Stories = () => {
           <div className='each-suggested-storyContainer'>
             {stories.map(story => (
               <div key={story.postId} className='each-suggested-story'>
-                <img src={story.mediaPath} alt={story.content} />
+                <img src={story.mediaPath} alt="Story image" />
                 <div>
                   <Switch
                     className='storySwitch'
