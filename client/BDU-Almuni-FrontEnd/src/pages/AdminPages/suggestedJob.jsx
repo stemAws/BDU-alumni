@@ -29,9 +29,9 @@ setjobOffer(jobOffers?.find((jOff=>jOff.jobPostingId===jobID)))
     }, [])
     
   return (
-    <div className="JO-flex-container">
+    <div className="Admin-JO-flex-container">
     <p className="job-offer"><span className='blue-text'>JOB</span> OFFER</p>
-    <div className="job-offer-container ">
+    <div className="Admin-job-offer-container ">
         
         {
             jobOffers.length > 0 &&(

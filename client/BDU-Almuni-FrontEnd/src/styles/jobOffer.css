@@ -159,3 +159,21 @@ transition: all 0s ease-in;
 .Admin-JO-flex-container{
     flex: 4;
 }
+
+.Admin-job-offer-container {
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+}
+
+.Admin-job-offer-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Webkit browsers */
+}
+
+.offer-item {
+    flex: 0 0 auto; /* Prevent flex items from shrinking or growing */
+    width: calc(50% - 10px); /* Two items per container, with a gap of 10px */
+    scroll-snap-align: start;
+    box-sizing: border-box;
+}
