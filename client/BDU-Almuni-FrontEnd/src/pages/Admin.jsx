@@ -24,6 +24,7 @@ import AuthService from '../component/AuthService';
 import ChaptersList from './AdminPages/chaptersList';
 import Editnews from './AdminPages/Editnews'; 
 import EditDonation from './AdminPages/EditDonation'; 
+import EditGallery from './AdminPages/EditGallery'; 
 
 const Admin = () => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
@@ -52,6 +53,7 @@ const Admin = () => {
             <Route path='addedStories' element={<AddedStory />} />
             <Route path='Events' element={<EventList />} />
             <Route path='gallery' element={<AGallery />} />
+            <Route path="/admin/galleryform/:galleryID" element={<EditGallery />} />
             <Route path='Addgallery' element={<AddGallery />} />
             <Route path='AddEvent' element={<AddEvent />} />
             <Route path='jobOffer' element={<JobOffer />} />
