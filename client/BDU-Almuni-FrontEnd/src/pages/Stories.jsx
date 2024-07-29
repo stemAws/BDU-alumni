@@ -19,7 +19,7 @@ const FeaturedStories = () => {
       event.preventDefault();
 
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/addedPosts`,
+        `${import.meta.env.VITE_BACKEND_URL}/update-post`,
         {
           method: "PUT",
           headers: {
@@ -48,7 +48,7 @@ const FeaturedStories = () => {
       event.preventDefault(); // Prevent the default form submission behavior
 
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/addedPosts/${postId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/update-post/${postId}`,
         {
           method: "PUT",
           headers: {
@@ -77,7 +77,7 @@ const FeaturedStories = () => {
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/addedPosts`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/suggested-to-admin`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

@@ -15,7 +15,7 @@ const Stories = () => {
   const updatePostContent = async (postID) => {
     try {
       // Send PUT request to update the post content to null
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/updatePost/${postID}`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/update-post/${postID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const Stories = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/addedPosts`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/suggested-by-admin`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
