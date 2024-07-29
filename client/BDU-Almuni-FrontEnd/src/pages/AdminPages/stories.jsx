@@ -1,102 +1,146 @@
-import React, { useState, useEffect } from 'react';
-import '../../styles/stories.css';
-import Switch from '@mui/material/Switch';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "../styles/stories.css";
+import { Link } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const label = { inputProps: { 'aria-label': 'Switch demo' } };
+const FeaturedStories = () => {
 
-const Stories = () => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/suggested-to-admin`
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to fetch stories. Status: ${response.status}`);
+  
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/admin/addedStories");
+  };
+
+  const handleAccept = async (postId, event) => {
+    try {
+      event.preventDefault();
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/update-post`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ suggestedByAdmin: 1 }),
         }
-        const storiesData = await response.json();
-        // Filter stories where suggestToAdmin is true
-        const filteredStories = storiesData.filter(story => story.suggestToAdmin);
-        setStories(filteredStories);
+      );
+
+      const data = await response.json();
+      setStories((prevStories) =>
+        prevStories.filter((story) => story.postID !== postId)
+      );
+      if (response.ok) {
+        console.log(data.message);
+      } else {
+        console.error("Error updating post:", data.message);
+      }
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
+  };
+
+  const handleDecline = async (postId, event) => {
+    try {
+      event.preventDefault(); // Prevent the default form submission behavior
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/update-post/${postId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ suggestedByAdmin: 0}),
+        }
+      );
+
+      const data = await response.json();
+      setStories((prevStories) =>
+        prevStories.filter((story) => story.postID !== postId)
+      );
+      if (response.ok) {
+        console.log(data.message);
+      } else {
+        console.error("Error updating post:", data.message);
+        // Handle the error, such as displaying an error message to the user
+      }
+    } catch (error) {
+      console.error("Error updating post:", error);
+      // Handle network errors or other unexpected issues
+    }
+  };
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/suggested-to-admin`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setStories(data);
       } catch (error) {
-        console.error("Error fetching data:", error.message);
+        console.error("Error fetching stories:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchStories();
   }, []);
 
-  const handleToggle = async (postId, currentStatus) => {
-    const updatedStories = stories.map(story =>
-      story.postId === postId ? { ...story, suggestToAdmin: !currentStatus } : story
-    );
-    setStories(updatedStories);
-
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/addedPosts/${postId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ suggestToAdmin: !currentStatus }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Failed to update story. Status: ${response.status}`);
-      }
-    } catch (error) {
-      console.error("Error updating story:", error.message);
-    }
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div className='suggested-story-container'>
-      <div className="storyHeader">
-        <h1 className="suggestedstoryHeader">Bahir Dar University Alumni Stories</h1>
-        <Link to='/admin/addedStories'>
-          <button className='accepted-stories'>Added Stories</button>
-        </Link>
+    <div className="Story">
+      <div className="admin-story-header">
+      <h1 className="headerstory"> Bahir Dar STEM Center Alumni Stories</h1>
+      <Link to='/admin/addedStories'>
+        <button className="accepted-stories" onClick={handleClick}>Added Stories</button>
+      </Link>
+      
       </div>
-      <section className="Suggestedstory">
-        {stories.length === 0 ? (
-          <div className="no-storys">
-            <p>No suggested stories at the moment.</p>
-          </div>
+      
+      <div className="FeaturedStories">
+        {loading ? (
+          <p>Loading...</p>
+        ) : stories.length === 0 ? (
+          <p className="noStories">No stories suggested</p>
         ) : (
-          <div className='each-suggested-storyContainer'>
-            {stories.map(story => (
-              <div key={story.postId} className='each-suggested-story'>
-                <img src={story.mediaPath} alt="Story image" />
-                <div>
-                  <Switch
-                    className='storySwitch'
-                    {...label}
-                    checked={story.suggestToAdmin}
-                    onChange={() => handleToggle(story.postId, story.suggestToAdmin)}
-                  />
-                </div>
-                <p>{story.content}</p>
-                <p>{story.location}</p>
+          stories.map((story, index) => (
+            <div className="FeaturedStories-container" key={index}>
+              <div>
+                <img
+                  src={story.image}
+                  alt=""
+                />
+                <p className="story_p_admin">{story.content}</p>
               </div>
-            ))}
-          </div>
+              <div className="accept-decline-btn">
+              <button
+                className="accept"
+                onClick={(event) => handleAccept(story.postID, event)}
+              >
+                Accept
+              </button>
+              <button
+                className="decline-decline "
+                onClick={(event) => handleDecline(story.postID, event)}
+              >
+                Decline
+              </button>
+              </div>
+              
+            </div>
+          ))
         )}
-      </section>
-    </div>
+      </div>
+      
+      </div>
   );
 };
 
-export default Stories;
+export default FeaturedStories;
