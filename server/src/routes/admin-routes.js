@@ -20,7 +20,7 @@ router.get("/getDonations", adminController.getDonations);
 router.get("/get-alumni", adminController.getAlumni);
 router.get("/degree-count", adminController.getDegree);
 router.get("/admission-count", adminController.getAdmission);
-router.get("/job-suggested", adminController.getSuggestedJob);
+// router.get("/job-suggested", adminController.getSuggestedJob);
 router.patch("/update-post/:postId", adminController.updatePost)
 router.get("/majors-count", adminController.getMajors);
 router.get("/job-count", adminController.getJob);

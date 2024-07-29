@@ -46,8 +46,7 @@ const EditDonation = () => {
       [name]: value,
     }));
   };
-  useEffect(() => {
-  }, [donationData]);
+  useEffect(() => {}, [donationData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
