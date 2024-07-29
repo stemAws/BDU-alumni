@@ -114,7 +114,7 @@ const FeaturedStories = () => {
             <div className="FeaturedStories-container" key={index}>
               <div>
                 <img
-                  src={story.image}
+                  src={story.mediaPath}
                   alt=""
                 />
                 <p className="story_p_admin">{story.content}</p>
