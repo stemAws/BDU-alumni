@@ -1,69 +1,146 @@
-import { FaArrowRight } from "react-icons/fa";
-import newsimg from '../assets/images/photo_2024-02-25_16-12-11.jpg';
-import newsimg1 from '../assets/images/photo_2024-02-25_15-48-12.jpg';
-import newsimg2 from '../assets/images/photo_2024-02-25_15-47-18.jpg';
-import { useInView } from 'react-intersection-observer';
-import "../styles/stories.css"
-import { useEffect, useState } from "react";
-import MultiStories from "../component/MultiStories";
-import StoriesDetail from "./StoriesDetail";
-import { Route, Routes } from "react-router-dom";
-const Stories = () => {
-        
-    
-  // const [exitingView, setExitingView] = useState(false);
-  const [stories, setstories] = useState([])
-  useEffect(() => {
-    const fetchStories=async()=>{
-      try {
-        const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/addedPosts`,{
-            credentials: 'include',
-          })
-          const featuredStoriesFromServer= await res.json()
-          if (!res.ok) {
-            console.error("couldn't fetch the stories")
-          }
-          else{
-            setstories(featuredStoriesFromServer)
-      }} catch (error) {
-        console.error("couldn't fetch the stories",error)
-        
-      }
-    }
-    fetchStories();
-  }, [])
-  const handleIntersection = (entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) {
-        setExitingView(true);
-      } else {
-        setExitingView(false);
-      }
-    });
-  };
-  const { ref, inView } = useInView({
-          triggerOnce: true,
-          threshold: 0.01,
-          onChange:handleIntersection 
-        });
-  return (
-    <div className="stories">
-    <div className="top-stories ">
-      {/* <div  ref={ref} className={`circle-bg ${inView ? 'wide' : exitingView ? 'return' : ''}`} /> */}
-      <div className="the-line"></div>
-      <div className="line-cover"></div>
-      <p className="top-stories-title">
-        <span className="blue-text">TOP</span>STORIES
-      </p>
-      </div>
-    <div className="stories-container">
-        {
-        stories.length!==0&&
-          <MultiStories stories={stories} />
-        }
-    </div>
-    </div>
-  )
-}
+import React, { useState, useEffect } from "react";
+import "./FeaturedStories.css";
+import { Link } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
-export default Stories
+const FeaturedStories = () => {
+
+  const [stories, setStories] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  
+  const history = useHistory();
+  const handleClick = () => {
+    history.push("/admin/addedStories");
+  };
+
+  const handleAccept = async (postId, event) => {
+    try {
+      event.preventDefault();
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/addedPosts`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ suggestedByAdmin: 1 }),
+        }
+      );
+
+      const data = await response.json();
+      setStories((prevStories) =>
+        prevStories.filter((story) => story.postID !== postId)
+      );
+      if (response.ok) {
+        console.log(data.message);
+      } else {
+        console.error("Error updating post:", data.message);
+      }
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
+  };
+
+  const handleDecline = async (postId, event) => {
+    try {
+      event.preventDefault(); // Prevent the default form submission behavior
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/addedPosts/${postId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ suggestedByAdmin: 0}),
+        }
+      );
+
+      const data = await response.json();
+      setStories((prevStories) =>
+        prevStories.filter((story) => story.postID !== postId)
+      );
+      if (response.ok) {
+        console.log(data.message);
+      } else {
+        console.error("Error updating post:", data.message);
+        // Handle the error, such as displaying an error message to the user
+      }
+    } catch (error) {
+      console.error("Error updating post:", error);
+      // Handle network errors or other unexpected issues
+    }
+  };
+
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/addedPosts`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setStories(data);
+      } catch (error) {
+        console.error("Error fetching stories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStories();
+  }, []);
+
+  return (
+    <div className="Story">
+      <div className="admin-story-header">
+      <h1 className="headerstory"> Bahir Dar STEM Center Alumni Stories</h1>
+      <Link to='/admin/addedStories'>
+        <button className="accepted-stories" onClick={handleClick}>Added Stories</button>
+      </Link>
+      
+      </div>
+      
+      <div className="FeaturedStories">
+        {loading ? (
+          <p>Loading...</p>
+        ) : stories.length === 0 ? (
+          <p className="noStories">No stories suggested</p>
+        ) : (
+          stories.map((story, index) => (
+            <div className="FeaturedStories-container" key={index}>
+              <div>
+                <img
+                  src={story.image}
+                  alt=""
+                />
+                <p className="story_p_admin">{story.content}</p>
+              </div>
+              <div className="accept-decline-btn">
+              <button
+                className="accept"
+                onClick={(event) => handleAccept(story.postID, event)}
+              >
+                Accept
+              </button>
+              <button
+                className="decline-decline "
+                onClick={(event) => handleDecline(story.postID, event)}
+              >
+                Decline
+              </button>
+              </div>
+              
+            </div>
+          ))
+        )}
+      </div>
+      
+      </div>
+  );
+};
+
+export default FeaturedStories;

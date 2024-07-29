@@ -40,7 +40,7 @@ const Stories = () => {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/posts/${postId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/addedPosts/${postId}`,
         {
           method: "PATCH",
           headers: {
