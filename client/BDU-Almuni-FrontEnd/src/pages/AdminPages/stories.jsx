@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../styles/stories.css";
+import "../../styles/stories.css";
 import { Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
