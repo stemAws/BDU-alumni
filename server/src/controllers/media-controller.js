@@ -87,11 +87,10 @@ exports.deleteGalleryById = async (req, res) => {
       return res.status(404).json({ error: "Gallery not found" });
     }
 
-    let mediaUrls = [];
-    try {
-      mediaUrls = JSON.parse(gallery.media);
-    } catch (error) {
-      console.error("Error parsing media JSON:", error);
+    const mediaUrls = gallery.media;
+
+    if (!Array.isArray(mediaUrls)) {
+      console.error("Media field is not an array");
       return res.status(500).json({ error: "Internal Server Error" });
     }
 
@@ -99,9 +98,9 @@ exports.deleteGalleryById = async (req, res) => {
       try {
         const fileRef = ref(storage, imageUrl);
 
-        await getDownloadURL(fileRef);
+        await getDownloadURL(fileRef); 
 
-        await deleteObject(fileRef);
+        await deleteObject(fileRef); 
         console.log("Deleted image successfully");
       } catch (error) {
         if (error.code === "storage/object-not-found") {
