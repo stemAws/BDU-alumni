@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./FeaturedStories.css";
+import "../styles/stories.css";
 import { Link } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const FeaturedStories = () => {
 
@@ -9,9 +9,9 @@ const FeaturedStories = () => {
   const [loading, setLoading] = useState(true);
 
   
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleClick = () => {
-    history.push("/admin/addedStories");
+    navigate("/admin/addedStories");
   };
 
   const handleAccept = async (postId, event) => {
