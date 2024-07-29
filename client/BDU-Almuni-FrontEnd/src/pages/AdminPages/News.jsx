@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const EventPost = () => {
   const [image, setImage] = useState([]);
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [content, setContent] = useState("");
   const navigate = useNavigate("");
   // const [postDate, setPostDate] = useState("");
   // const [location, setLocation] = useState("");
@@ -15,7 +15,7 @@ const EventPost = () => {
   const [errorPopup, setErrorPopup] = useState(false);
 
   const [titleError, setTitleError] = useState("");
-  const [descriptionError, setDescriptionError] = useState("");
+  const [contentError, setContentError] = useState("");
   // const [postDateError, setPostDateError] = useState("");
   // const [locationError, setLocationError] = useState("");
 
@@ -31,9 +31,9 @@ const EventPost = () => {
           setTitle(value);
           setTitleError("");
           break;
-        case "description":
-          setDescription(value);
-          setDescriptionError("");
+        case "content":
+          setContent(value);
+          setContentError("");
           break;
         // case "postDate":
         //   setPostDate(value);
@@ -51,7 +51,7 @@ const EventPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   console.log('clicked')
+    console.log("clicked");
     let valid = true;
 
     if (!title) {
@@ -63,14 +63,12 @@ const EventPost = () => {
       );
       valid = false;
     }
-    if (!description) {
-      setDescriptionError(
-        description ? "" : "Description field cannot be empty!"
-      );
+    if (!content) {
+      setContentError(content ? "" : "Content field cannot be empty!");
       valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-      setDescriptionError(
-        "Description must contain only letters and spaces, with numbers allowed anywhere after letters!"
+    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(content)) {
+      setContentError(
+        "Content must contain only letters and spaces, with numbers allowed anywhere after letters!"
       );
       valid = false;
     }
@@ -80,11 +78,11 @@ const EventPost = () => {
     //   } else {
     //     const postDateValue = new Date(postDate);
     //     const currentDate = new Date();
-  
+
     //     // Clear the time part of both dates for comparison
     //     postDateValue.setHours(0, 0, 0, 0);
     //     currentDate.setHours(0, 0, 0, 0);
-  
+
     //     if (postDateValue.getTime() !== currentDate.getTime()) {
     //       setPostDateError("Date should be today!");
     //       valid = false;
@@ -100,20 +98,18 @@ const EventPost = () => {
 
     if (valid) {
       try {
-        const formDataToSend = new FormData();
-        // images.forEach((image, index) => {
-          formDataToSend.append("image", image);
-        // });
-        formDataToSend.append("title", title);
-        formDataToSend.append("description", description);
-        // formDataToSend.append("postDate", postDate);
-        // formDataToSend.append("location", location);
-
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/add-news`,
           {
             method: "POST",
-            body: formDataToSend,
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: title,
+              content: content,
+              image: image,
+            }),
           }
         );
 
@@ -163,17 +159,15 @@ const EventPost = () => {
             {titleError && <p className="errorMessage">{titleError}</p>}
           </div>
           <div className="form">
-            <label className="label">Description:</label>
+            <label className="label">Content:</label>
             <textarea
               type="text"
-              placeholder="Description"
-              name="description"
-              value={description}
+              placeholder="Content"
+              name="content"
+              value={content}
               onChange={handleInputChange}
             />
-            {descriptionError && (
-              <p className="errorMessage">{descriptionError}</p>
-            )}
+            {contentError && <p className="errorMessage">{contentError}</p>}
           </div>
           {/* <div className="form">
             <label className="label">Location:</label>
@@ -196,7 +190,7 @@ const EventPost = () => {
             {postDateError && <p className="errorMessage">{postDateError}</p>}
           </div> */}
 
-          <button type="submit" >Upload</button>
+          <button type="submit">Upload</button>
         </form>
       </div>
     </div>
