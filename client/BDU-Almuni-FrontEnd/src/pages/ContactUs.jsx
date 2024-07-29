@@ -20,7 +20,7 @@ const ContactUs = () => {
     e.preventDefault();
     try {
       setloading(true)
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/feedback`,{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/feedback`,{
         method:'POST',
         headers:{
           'Content-type':'application/json',

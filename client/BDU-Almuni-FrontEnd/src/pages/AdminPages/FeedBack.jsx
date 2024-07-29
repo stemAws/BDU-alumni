@@ -40,8 +40,8 @@ const FeedBack = () => {
       if (response.ok) {
         const data = await response.json();
 
-        // Sort the data by the createdAt timestamp in descending order
-        data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        // Sort the data by the  submittedAt timestamp in descending order
+        data.sort((a, b) => new Date(b. submittedAt) - new Date(a. submittedAt));
 
         setFeedbackData(data);
       } else {
@@ -69,7 +69,7 @@ const FeedBack = () => {
 
       if (response.ok) {
         setFeedbackData((prevData) =>
-          prevData.filter((feedback) => feedback.id !== deleteConfirmationId)
+          prevData.filter((feedback) => feedback.feedbackId !== deleteConfirmationId)
         );
       } else {
         console.error(`Failed to delete row with ID: ${deleteConfirmationId}`);
@@ -88,10 +88,10 @@ const FeedBack = () => {
   };
 
   const rows = feedbackData.map((feedback) => ({
-    id: feedback.id,
-    Name: feedback.fullName,
+    id: feedback.feedbackId,
+    Name: feedback.name,
     Email: feedback.email,
-    date: feedback.createdAt,
+    date: feedback.submittedAt,
     message: feedback.message,
   }));
 
