@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "../../styles/EditDonation.css";
+import "../../styles/editDonation.css";
 import { Link } from "@mui/material";
 import { ChevronLeft } from "@mui/icons-material";
 
@@ -21,7 +21,7 @@ const EditDonation = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/donation/${id}`
+          `${import.meta.env.VITE_BACKEND_URL}/donation/${id}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -82,7 +82,7 @@ const EditDonation = () => {
     if (valid) {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_BACKEND_URL}/donation/${id}`,
+          `${import.meta.env.VITE_BACKEND_URL}/donation/${id}`,
           {
             method: "PUT",
             headers: {

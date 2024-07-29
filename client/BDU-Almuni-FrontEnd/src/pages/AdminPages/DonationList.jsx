@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline, Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import React, { useState, useEffect, useCallback } from "react";
-// import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DeleteConfirmation from '../../component/DeleteConfirmation'
 const DonationList = () => {
@@ -11,7 +11,7 @@ const DonationList = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  // const history = useHistory();
+  const navigate = useNavigate();
 
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
@@ -29,7 +29,7 @@ const DonationList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/donation`
+        `${import.meta.env.VITE_BACKEND_URL}/donation`
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch events. Status: ${response.status}`);
@@ -70,7 +70,7 @@ const DonationList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/donation/${deleteConfirmationId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/donation/${deleteConfirmationId}`,
         {
           method: "DELETE",
           headers: {
@@ -97,10 +97,11 @@ const DonationList = () => {
     setDeleteConfirmationId(null);
   };
 
-  // const handleEdit = (id) => {
-  //   // Render the EditEvent component with the onUpdate callback
-  //   history.push(`/admin/donation/${id}`);
-  // };
+  const handleEdit = (id) => {
+    console.log('clicked')
+    // Render the EditEvent component with the onUpdate callback
+    navigate(`/admin/donation/${id}`);
+  };
 
   const customTheme = createTheme({
     typography: {
@@ -127,7 +128,7 @@ const DonationList = () => {
           <Edit
             key={`edit-${params.row.id}`}
             className="eventListEdit"
-            // onClick={() => handleEdit(params.row.id)}
+            onClick={() => handleEdit(params.row.id)}
           />
         </>
       ),
