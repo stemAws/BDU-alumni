@@ -23,6 +23,15 @@ exports.getSuggestedToAdmin = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+exports.getGradYear = async (req, res) => {
+  try {
+    const gradYears = await adminService.getYear();
+    res.json(gradYears);
+  } catch (error) {
+    console.error("Error fetching grduating years:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 exports.updatePost = async (req, res) => {
   const postId = req.params.postID;
@@ -117,7 +126,7 @@ exports.veifyAlumni = async function (req, res) {
 
 exports.getDegree = async (req, res) => {
   try {
-    const { graduatingYear } = req.body;
+    const { graduatingYear } = req.query;
     const result = await adminService.getDegreeCount(graduatingYear);
     res.json(result);
   } catch (error) {
@@ -128,7 +137,7 @@ exports.getDegree = async (req, res) => {
 
 exports.getAdmission = async (req, res) => {
   try {
-    const { graduatingYear } = req.body;
+    const { graduatingYear } = req.query;
     const result = await adminService.getAdmissionCount(graduatingYear);
     res.json(result);
   } catch (error) {
@@ -139,7 +148,7 @@ exports.getAdmission = async (req, res) => {
 
 exports.getMajors = async (req, res) => {
   try {
-    const { graduatingYear } = req.body;
+    const { graduatingYear } = req.query;
     const result = await adminService.getMajorsCount(graduatingYear);
     res.json(result);
   } catch (error) {
