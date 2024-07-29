@@ -3,7 +3,7 @@ const db = require("../config/db");
 exports.addFeedback = async (fullName, email, message) => {
   try {
     const [result] = await db.query(
-      "INSERT INTO feedback (fullName, email, message) VALUES (?, ?, ?)",
+      "INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)",
       [fullName, email, message]
     );
 
