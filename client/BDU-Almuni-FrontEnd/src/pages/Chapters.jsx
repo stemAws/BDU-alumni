@@ -9,7 +9,7 @@ const Chapters = () => {
   useEffect(() => {
     const fetchChapters = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/get-chapter`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/list-chapters`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
