@@ -1,6 +1,12 @@
 const db = require("../config/db");
 
-exports.createGallery = async ({ images, event, year, department, description}) => {
+exports.createGallery = async ({
+  images,
+  event,
+  year,
+  department,
+  description,
+}) => {
   try {
     const [result] = await db.query(
       "INSERT INTO Gallery (media, title, year, department, description) VALUES (?,?,?, ?, ?)",
@@ -15,9 +21,10 @@ exports.createGallery = async ({ images, event, year, department, description}) 
 
 exports.getGalleryById = async (gID) => {
   try {
-    const result = await db.query("SELECT * FROM Gallery WHERE galleryID = ?", [
-      gID,
-    ]);
+    const result = await db.query(
+      "SELECT galleryId as galleryID, title as event, description, year, department, media as images FROM Gallery WHERE galleryId = ?",
+      [gID]
+    );
     return result[0][0];
   } catch (error) {
     throw error;
@@ -26,7 +33,9 @@ exports.getGalleryById = async (gID) => {
 
 exports.getAllGallery = async () => {
   try {
-    const [result] = await db.query("SELECT * FROM Gallery");
+    const [result] = await db.query(
+      "SELECT galleryId as galleryID, title as event, description, year, department, media as images FROM Gallery"
+    );
     return result;
   } catch (error) {
     throw error;
