@@ -25,33 +25,38 @@ import ChaptersList from './AdminPages/chaptersList';
 import Editnews from './AdminPages/Editnews'; 
 import EditDonation from './AdminPages/EditDonation'; 
 import EditGallery from './AdminPages/EditGallery'; 
+import EditEvent from './AdminPages/EditEvent'; 
+import EditClub from './AdminPages/EditClub'; 
+
+import PageNotFound from './AdminPages/PageNotFound';
 
 const Admin = () => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
-  useEffect(() => {
-    if (AuthService.isAuthenticated('admin')) {
-      setIsAdminAuthenticated(true);
-    } else {
-      setIsAdminAuthenticated(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (AuthService.isAuthenticated('admin')) {
+  //     setIsAdminAuthenticated(true);
+  //   } else {
+  //     setIsAdminAuthenticated(false);
+  //   }
+  // }, []);
 
   return (
     <>
-      {isAdminAuthenticated ? (
+      {/* {isAdminAuthenticated ? ( */}
         <div className="admincontainer">
           <SideBar />
           <Routes>
             <Route path='home' element={<Home />} />
             <Route path='users' element={<Users />} />
             <Route path='News' element={<NewsList />} />
-            <Route path="/admin/news/:newsId" element={<Editnews />} />
+            <Route path='edit-news/:newsId' element={<Editnews />} />
             <Route path='AddNews' element={<News />} />
             <Route path='AddUser' element={<AddUser />} />
             <Route path='story' element={<Stories />} />
             <Route path='addedStories' element={<AddedStory />} />
             <Route path='Events' element={<EventList />} />
+            <Route path='/adminEvents/:id' element={<EditEvent />} />
             <Route path='gallery' element={<AGallery />} />
             <Route path="/admin/galleryform/:galleryID" element={<EditGallery />} />
             <Route path='Addgallery' element={<AddGallery />} />
@@ -59,19 +64,21 @@ const Admin = () => {
             <Route path='jobOffer' element={<JobOffer />} />
             <Route path='SuggestedJob' element={<SuggestedJob />} />
             <Route path='chapters' element={<ChaptersList />} />
+            <Route path='/chapters/:chapterId' element={<EditClub />} />
             <Route path='AddChapter' element={<Chapters />} />
             <Route path='feedback' element={<FeedBack />} />
             <Route path='Donation' element={<DonationList />} />
-            <Route path="/admin/donation/:id" element={<EditDonation />} />
+            <Route path="/donation/:id" element={<EditDonation />} />
             <Route path='AddDonation' element={<AddDonation />} />
-            <Route path='*' element={<Navigate to="home" />} />
+            <Route path="*"  Component = {PageNotFound} />
+            {/* <Route path='*' element={<Navigate to="home" />} /> */}
           </Routes>
         </div>
-      ) : (
+      {/* ) : (
         <Routes>
           <Route path='*' element={<AdminSignin />} />
         </Routes>
-      )}
+      )} */}
     </>
   );
 };
