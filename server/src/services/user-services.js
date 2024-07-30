@@ -113,6 +113,38 @@ exports.getAlumniProfile = async (id) => {
   }
 };
 
+exports.getAdminProfile = async (id) => {
+  try {
+    let result;
+
+    if (!isNaN(id)) {
+      result = await db.query(
+        `SELECT *
+        FROM WebsiteAdmin
+        JOIN Person ON WebsiteAdmin.personId = Person.personId
+        WHERE WebsiteAdmin.personId = ?;`,
+        [id]
+      );
+    } else {
+      result = await db.query(
+        `SELECT *
+        FROM WebsiteAdmin
+        JOIN Person ON WebsiteAdmin.personId = Person.personId
+        WHERE Person.username = ?;`,
+        [id]
+      );
+    }
+
+    if (result.length > 0) {
+      return result[0];
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error retrieving admin information:", error);
+    return null;
+  }
+};
 exports.getAllAlumni = async () => {
   try {
     const queryResult = await db.query(`
