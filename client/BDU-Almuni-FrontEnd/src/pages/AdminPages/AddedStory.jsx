@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import Button from '../../component/Button';
-import '../../styles/AddedStory.css';
+import React, { useState, useEffect } from "react";
+import Button from "../../component/Button";
+import "../../styles/AddedStory.css";
 import { ChevronLeft } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { Link } from "@mui/material";
@@ -15,24 +15,27 @@ const Stories = () => {
   const updatePostContent = async (postID) => {
     try {
       // Send PUT request to update the post content to null
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/update-post/${postID}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content: null,
-        }),
-      });
-  
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/update-post/${postID}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ suggestedByAdmin: 0 }),
+        }
+      );
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       // Remove the story from the frontend
-      setStories((prevStories) => prevStories.filter((story) => story.postID !== postID));
+      setStories((prevStories) =>
+        prevStories.filter((story) => story.postID !== postID)
+      );
     } catch (error) {
-      console.error('Error updating post content:', error);
+      console.error("Error updating post content:", error);
     }
   };
 
@@ -40,7 +43,7 @@ const Stories = () => {
     const newToggledStates = [...toggledStates];
     newToggledStates[index] = !newToggledStates[index];
     setToggledStates(newToggledStates);
-  
+
     if (!newToggledStates[index]) {
       // If toggle is turned off, update post content to null
       await updatePostContent(stories[index].postID);
@@ -50,7 +53,7 @@ const Stories = () => {
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
-  
+
   const handleClick = () => {
     navigate("/admin/story");
   };
@@ -58,49 +61,58 @@ const Stories = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/suggested-by-admin`);
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/suggested-by-admin`
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-  
+
         const data = await response.json();
-        const initialToggledStates = data.map(story => story.suggestToAdmin); // Initialize toggled states based on suggestToAdmin field
+        const initialToggledStates = data.map((story) => story.suggestToAdmin); // Initialize toggled states based on suggestToAdmin field
 
         setToggledStates(initialToggledStates);
         setStories(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchData();
   }, []);
 
   const storiesToDisplay = showMore ? stories : stories.slice(0, 3);
 
   return (
-    <div className='Admin-stories'>
-      <Link to='/admin/story' className="userGoBack">
-        <ChevronLeft className='userGoBackIcon' onClick={handleClick}/>
+    <div className="Admin-stories">
+      <Link to="/admin/story" className="userGoBack">
+        <ChevronLeft className="userGoBackIcon" onClick={handleClick} />
       </Link>
-      <h1 className='Admin-stories_heading'>Stories</h1>
-      <div className='Admin-ind-story'>
+      <h1 className="Admin-stories_heading">Stories</h1>
+      <div className="Admin-ind-story">
         {storiesToDisplay.map((story, index) => (
-          <div key={index} className='Admin-story-container'>
+          <div key={index} className="Admin-story-container">
             <div>
-              <img src={story.mediaPath} alt='' />
-              <p className='Admin-story_p'>{story.content}</p>
+              <img src={story.mediaPath} alt="" />
+              <p className="Admin-story_p">{story.content}</p>
             </div>
-            <div className={`slide-toggle-container ${toggledStates[index] ? 'toggled' : ''}`}>
+            <div
+              className={`slide-toggle-container ${
+                toggledStates[index] ? "toggled" : ""
+              }`}
+            >
               <div className="slider" onClick={() => handleToggle(index)}></div>
             </div>
           </div>
         ))}
       </div>
-      <div className='Admin-btn_cont-btn'>
+      <div className="Admin-btn_cont-btn">
         {stories.length > 3 && (
-          <div className='Admin-btn_cont-show_more'>
-            <Button text={showMore ? 'Show Less' : 'Show More'} onClick={toggleShowMore} />
+          <div className="Admin-btn_cont-show_more">
+            <Button
+              text={showMore ? "Show Less" : "Show More"}
+              onClick={toggleShowMore}
+            />
           </div>
         )}
       </div>
