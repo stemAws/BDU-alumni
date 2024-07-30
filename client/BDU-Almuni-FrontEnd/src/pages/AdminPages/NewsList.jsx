@@ -98,8 +98,8 @@ const NewsList = () => {
   };
 
   const handleEdit = (newsId) => {
-    console.log(`Navigating to /admin/news/${newsId}`);
-    navigate(`/admin/news/${newsId}`);
+    // console.log(`Navigating to News/${newsId}`);
+    navigate(`edit-news/${newsId}`);
   };
 
   const customTheme = createTheme({
