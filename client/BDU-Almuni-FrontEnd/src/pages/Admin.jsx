@@ -33,17 +33,17 @@ import PageNotFound from './AdminPages/PageNotFound';
 const Admin = () => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
-  // useEffect(() => {
-  //   if (AuthService.isAuthenticated('admin')) {
-  //     setIsAdminAuthenticated(true);
-  //   } else {
-  //     setIsAdminAuthenticated(false);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (AuthService.isAuthenticated('admin')) {
+      setIsAdminAuthenticated(true);
+    } else {
+      setIsAdminAuthenticated(false);
+    }
+  }, []);
 
   return (
     <>
-      {/* {isAdminAuthenticated ? ( */}
+      {isAdminAuthenticated ? (
         <div className="admincontainer">
           <SideBar />
           <Routes>
@@ -74,11 +74,11 @@ const Admin = () => {
             {/* <Route path='*' element={<Navigate to="home" />} /> */}
           </Routes>
         </div>
-      {/* ) : (
+      ) : (
         <Routes>
           <Route path='*' element={<AdminSignin />} />
         </Routes>
-      )} */}
+      )}
     </>
   );
 };
