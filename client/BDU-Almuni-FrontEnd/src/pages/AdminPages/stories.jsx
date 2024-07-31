@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/stories.css";
 import { Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ const FeaturedStories = () => {
       event.preventDefault();
 
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/update-post`,
+        `${import.meta.env.VITE_BACKEND_URL}/update-post/${postId}`,
         {
           method: "PUT",
           headers: {
