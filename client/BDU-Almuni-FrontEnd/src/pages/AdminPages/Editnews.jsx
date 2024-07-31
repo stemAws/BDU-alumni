@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { ChevronLeft } from "@mui/icons-material";
-import '../../styles/editNews.css';
+import "../../styles/editNews.css";
 
 const EditNews = () => {
   const navigate = useNavigate();
@@ -19,14 +19,14 @@ const EditNews = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/edit-news/${newsId}`
+          `${import.meta.env.VITE_BACKEND_URL}/get-news/${newsId}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const newsDataFromServer = await response.json();
-
+        console.log(newsDataFromServer);
         setNewsData(newsDataFromServer);
       } catch (error) {
         console.error("Error fetching news data:", error);
@@ -38,6 +38,7 @@ const EditNews = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log(`Changing ${name} to ${value}`);
 
     setNewsData((prevData) => ({
       ...prevData,
@@ -54,7 +55,9 @@ const EditNews = () => {
       setTitleError("Title field cannot be empty!");
       valid = false;
     } else if (!/^[a-zA-Z0-9\s]+$/.test(newsData.title)) {
-      setTitleError("Title field must contain only letters, numbers, and spaces!");
+      setTitleError(
+        "Title field must contain only letters, numbers, and spaces!"
+      );
       valid = false;
     } else {
       setTitleError("");
@@ -72,12 +75,13 @@ const EditNews = () => {
 
     if (valid) {
       try {
+        console.log(newsData)
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/edit-news/${newsId}`,
           {
             method: "PUT",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify(newsData),
           }
@@ -87,7 +91,11 @@ const EditNews = () => {
           navigate("/admin/news");
         } else {
           const errorResponse = await response.json();
-          console.error("Error updating news data:", response.status, errorResponse);
+          console.error(
+            "Error updating news data:",
+            response.status,
+            errorResponse
+          );
         }
       } catch (error) {
         console.error("Error:", error);
@@ -106,7 +114,11 @@ const EditNews = () => {
       </Link>
       <h2>Edit News</h2>
       <div className="formContainer">
-        <form className="formform" onSubmit={handleSubmit} encType="multipart/form-data">
+        <form
+          className="formform"
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+        >
           <div className="form">
             <label className="label">News Title:</label>
             <input
