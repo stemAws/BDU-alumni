@@ -64,13 +64,13 @@ const Admin = () => {
             <Route path='jobOffer' element={<JobOffer />} />
             <Route path='SuggestedJob' element={<SuggestedJob />} />
             <Route path='chapters' element={<ChaptersList />} />
-            <Route path='chapters/:chapterId' element={<EditClub />} />
+            <Route path='chapters/chapters/:chapterId' element={<EditClub />} />
             <Route path='AddChapter' element={<Chapters />} />
             <Route path='feedback' element={<FeedBack />} />
             <Route path='Donation' element={<DonationList />} />
             <Route path="/donation/:id" element={<EditDonation />} />
             <Route path='AddDonation' element={<AddDonation />} />
-            <Route path='*' element={<Navigate to="home" />} />
+            {/* <Route path='*' element={<Navigate to="home" />} /> */}
           </Routes>
         </div>
       ) : (

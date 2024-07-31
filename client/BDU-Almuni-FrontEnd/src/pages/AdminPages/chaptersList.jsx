@@ -107,7 +107,7 @@ const chapterList = () => {
   };
 
   const handleEdit = (chapterId) => {
-    navigate(`/chapters/${chapterId}`);
+    navigate(`chapters/${chapterId}`);
   };
 
   const customTheme = createTheme({
