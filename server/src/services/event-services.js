@@ -1,9 +1,9 @@
 const db = require("../config/db");
 
-exports.addEvent = async (adminId, image_path, { title, content, startDate, endDate, organizer, eventLink, category, eventLocation }) => {
+exports.addEvent = async ( image_path, { title, content, startDate, endDate, organizer, eventLink, category, eventLocation }) => {
   try {
-    const [result] = await db.query("INSERT INTO Event (adminId, title, content, startDate, endDate, organizer, eventLink, category, eventLocation, imagePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [adminId, title, content, startDate, endDate, organizer, eventLink, category, eventLocation, image_path]);
+    const [result] = await db.query("INSERT INTO Event (title, content, startDate, endDate, organizer, eventLink, category, eventLocation, imagePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [title, content, startDate, endDate, organizer, eventLink, category, eventLocation, image_path]);
 
     return result.insertId;
   } catch (error) {

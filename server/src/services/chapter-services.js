@@ -5,7 +5,7 @@ exports.addChapters = async (title, description, link) => {
     let query, params;
 
     query =
-      "INSERT INTO chapters (chapterName, description, website ) VALUES (?, ?, ?)";
+      "INSERT INTO Chapters (chapterName, description, website ) VALUES (?, ?, ?)";
     params = [title, description, link];
 
     const [result] = await db.query(query, params);
@@ -18,14 +18,14 @@ exports.addChapters = async (title, description, link) => {
 };
 
 exports.chaptersList = async () => {
-  const [chapter] = await db.query(`SELECT * from chapters`);
+  const [chapter] = await db.query(`SELECT * from Chapters`);
 
   return chapter;
 };
 
 exports.getAChapter = async (chapterId) => {
   const [chapter] = await db.query(
-    `SELECT chapterName, description, website, DATE_FORMAT(createdAt, '%Y-%m-%d'),DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM chapters WHERE chapterId = ?`,
+    `SELECT chapterName, description, website, DATE_FORMAT(createdAt, '%Y-%m-%d'),DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM Chapters WHERE chapterId = ?`,
     [chapterId]
   );
 
@@ -36,7 +36,7 @@ exports.updateAChapter = async (chapterId, updateChapter) => {
   const { title, description, link } = updateChapter;
 
   const [result] = await db.query(
-    `   UPDATE chapters
+    `   UPDATE Chapters
         SET
           chapterName = ?,
           description =?,
@@ -51,7 +51,7 @@ exports.updateAChapter = async (chapterId, updateChapter) => {
 };
 
 exports.deleteAChapter = async (chapterId) => {
-  const [result] = await db.query("DELETE FROM chapters WHERE chapterId = ?", [
+  const [result] = await db.query("DELETE FROM Chapters WHERE chapterId = ?", [
     chapterId,
   ]);
 

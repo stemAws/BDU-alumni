@@ -20,7 +20,7 @@ exports.createAlumniRecord = async (alumniData, graduationYear) => {
     const username = row.lastName + row.firstName + graduationYear;
     const fullName = row.firstName + " " + row.lastName;
     const personQuery = `
-      INSERT INTO person (fullName, gender, password, verified, username)
+      INSERT INTO Person (fullName, gender, password, verified, username)
       VALUES (?, ?, ?, ?, ?)
     `;
 
@@ -36,7 +36,7 @@ exports.createAlumniRecord = async (alumniData, graduationYear) => {
     const personId = personResult.insertId;
 
     const alumniSql = `
-      INSERT INTO alumni (personId, isNotable)
+      INSERT INTO Alumni (personId, isNotable)
       VALUES (?, ?)
     `;
 
@@ -44,7 +44,7 @@ exports.createAlumniRecord = async (alumniData, graduationYear) => {
     const [alumniResult] = await db.query(alumniSql, alumniValues);
     const alumniId = alumniResult.insertId;
     const institution = "Bahir Dar University";
-    const eduSql = `INSERT INTO education (alumniId, institution, degree, major, minor, admission, graduatingYear) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const eduSql = `INSERT INTO Education (alumniId, institution, degree, major, minor, admission, graduatingYear) VALUES (?, ?, ?, ?, ?, ?, ?)`;
     const eduValues = [
       alumniId,
       institution,
@@ -60,7 +60,7 @@ exports.createAlumniRecord = async (alumniData, graduationYear) => {
 exports.fetchSuggestedPostsToAdmin = async () => {
   try {
     const [result] = await db.query(
-      "SELECT * FROM post WHERE suggestToAdmin = ?",
+      "SELECT * FROM Post WHERE suggestToAdmin = ?",
       [1]
     );
     return result;
@@ -73,7 +73,7 @@ exports.fetchSuggestedPostsToAdmin = async () => {
 exports.getYear = async () => {
   try {
     const [result] = await db.query(
-      " SELECT graduatingYear as year FROM education"
+      " SELECT graduatingYear as year FROM Education"
     );
     return result;
   } catch (error) {
@@ -85,7 +85,7 @@ exports.updatePost = async (postId, suggestedByAdmin) => {
   const suggestToAdmin = suggestedByAdmin ? 1 : 0;
   try {
     const result = await db.query(
-      "UPDATE post SET suggestToAdmin = ?, suggestedByAdmin = ? WHERE postID = ?",
+      "UPDATE Post SET suggestToAdmin = ?, suggestedByAdmin = ? WHERE postID = ?",
       [suggestToAdmin, suggestedByAdmin, postId]
     );
 
@@ -102,7 +102,7 @@ exports.updatePost = async (postId, suggestedByAdmin) => {
 exports.fetchSuggestedPostsByAdmin = async () => {
   try {
     const [result] = await db.query(
-      "SELECT * FROM post WHERE suggestedByAdmin = ?",
+      "SELECT * FROM Post WHERE suggestedByAdmin = ?",
       [1]
     );
     return result;
@@ -150,7 +150,7 @@ exports.addDonation = async (title, link, description) => {
     }
 
     const donationSql = `
-      INSERT INTO donation (title, link, description)
+      INSERT INTO Donation (title, link, description)
       VALUES (?, ?, ?)
     `;
 
@@ -173,7 +173,7 @@ exports.addDonation = async (title, link, description) => {
 
 exports.fetchDonations = async () => {
   try {
-    const [result] = await db.query("SELECT * FROM donation");
+    const [result] = await db.query("SELECT * FROM Donation");
     return result;
   } catch (error) {
     throw new Error("Error fetching donations: " + error.message);
@@ -183,7 +183,7 @@ exports.fetchDonations = async () => {
 exports.getAlumniList = async () => {
   try {
     const [alumni] = await db.query(
-      `SELECT a.alumniId, fullName, gender, email, verified, isNotable, major FROM person p JOIN alumni a JOIN education e WHERE a.personId = p.personId AND a.alumniId = e.alumniId AND e.institution='Bahir Dar University' ORDER BY p.createdAt DESC`
+      `SELECT a.alumniId, fullName, gender, email, verified, isNotable, major FROM Person p JOIN Alumni a JOIN Education e WHERE a.personId = p.personId AND a.alumniId = e.alumniId AND e.institution='Bahir Dar University' ORDER BY p.createdAt DESC`
     );
     return alumni;
   } catch (error) {
@@ -212,7 +212,7 @@ exports.getDegreeCount = async (graduatingYear) => {
         COUNT(CASE WHEN degree = 'Master' THEN 1 END) as Master,
         COUNT(CASE WHEN degree = 'Doctorate' THEN 1 END) as Doctorate,
         COUNT(CASE WHEN degree NOT IN ('Associate', 'Bachelor', 'Master', 'Doctorate') THEN 1 END) as Other
-      FROM education `;
+      FROM Education `;
 
     if (graduatingYear != null) {
       query += ` WHERE graduatingYear = ${graduatingYear}`;
@@ -236,7 +236,7 @@ exports.getAdmissionCount = async (graduatingYear) => {
         COUNT(CASE WHEN admission = 'Regular' THEN 1 END) as Regular,
         COUNT(CASE WHEN admission = 'Summer' THEN 1 END) as Summer,
         COUNT(CASE WHEN admission NOT IN ('Extension', 'Regular', 'Summer') THEN 1 END) as Other
-      FROM education`;
+      FROM Education`;
     if (graduatingYear != null) {
       query += ` WHERE graduatingYear = ${graduatingYear}`;
     }
@@ -255,7 +255,7 @@ exports.getMajorsCount = async (graduatingYear) => {
   try {
     const year =
       graduatingYear != null ? ` AND graduatingYear = ${graduatingYear}` : "";
-    let query = `SELECT major as fieldOfStudy, COUNT(*) as count FROM education WHERE institution = 'Bahir Dar University' ${year} GROUP BY major ORDER BY count DESC LIMIT 10 
+    let query = `SELECT major as fieldOfStudy, COUNT(*) as count FROM Education WHERE institution = 'Bahir Dar University' ${year} GROUP BY major ORDER BY count DESC LIMIT 10 
     `;
 
     // Execute the query
@@ -270,7 +270,7 @@ exports.getMajorsCount = async (graduatingYear) => {
 
 exports.getJobCount = async () => {
   try {
-    let query = `SELECT position as jobTitle, COUNT(*) as count FROM experience GROUP BY position ORDER BY count DESC LIMIT 10 `;
+    let query = `SELECT position as jobTitle, COUNT(*) as count FROM Experience GROUP BY position ORDER BY count DESC LIMIT 10 `;
 
     // Execute the query
     const [result] = await db.query(query);
@@ -284,7 +284,7 @@ exports.getJobCount = async () => {
 
 exports.getIndustryCount = async () => {
   try {
-    let query = `SELECT industry, COUNT(*) as count FROM experience GROUP BY industry ORDER BY count DESC LIMIT 10 `;
+    let query = `SELECT industry, COUNT(*) as count FROM Experience GROUP BY industry ORDER BY count DESC LIMIT 10 `;
 
     // Execute the query
     const [result] = await db.query(query);
@@ -299,7 +299,7 @@ exports.getIndustryCount = async () => {
 exports.getCompanyCount = async () => {
   try {
     const [result] = await db.query(
-      `SELECT company, COUNT(*) as count FROM experience GROUP BY company ORDER BY count DESC LIMIT 10 `
+      `SELECT company, COUNT(*) as count FROM Experience GROUP BY company ORDER BY count DESC LIMIT 10 `
     );
 
     return result;

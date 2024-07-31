@@ -3,7 +3,7 @@ const db = require("../config/db");
 exports.addFeedback = async (fullName, email, message) => {
   try {
     const [result] = await db.query(
-      "INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)",
+      "INSERT INTO Feedback (name, email, message) VALUES (?, ?, ?)",
       [fullName, email, message]
     );
 
@@ -17,12 +17,12 @@ exports.addFeedback = async (fullName, email, message) => {
 exports.getAllfeedback = async () => {
   const [feedback] =
     await db.query(`SELECT *, DATE_FORMAT(submittedAt, '%Y-%m-%d') AS submittedAt
-    FROM feedback`);
+    FROM Feedback`);
   return feedback;
 };
 
 exports.deleteFeedback = async (feedBackID) => {
-  const [result] = await db.query("DELETE FROM feedback WHERE feedBackID = ?", [
+  const [result] = await db.query("DELETE FROM Feedback WHERE feedBackID = ?", [
     feedBackID,
   ]);
 
