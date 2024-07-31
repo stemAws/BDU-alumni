@@ -1,10 +1,16 @@
 const db = require("../config/db");
 
-exports.createGallery = async ({ images, event, year, department, description}) => {
+exports.createGallery = async ({
+  images,
+  event,
+  year,
+  department,
+  description,
+}) => {
   try {
     const [result] = await db.query(
-      "INSERT INTO Gallery (media, title, year, department, description) VALUES (?,?,?, ?, ?)",
-      [JSON.stringify(images), event, year, department, description]
+      "INSERT INTO Gallery (media, title, year,  description) VALUES (?,?,?, ?)",
+      [JSON.stringify(images), event, year, description]
     );
 
     return result.insertId;
@@ -15,9 +21,10 @@ exports.createGallery = async ({ images, event, year, department, description}) 
 
 exports.getGalleryById = async (gID) => {
   try {
-    const result = await db.query("SELECT * FROM Gallery WHERE galleryID = ?", [
-      gID,
-    ]);
+    const result = await db.query(
+      "SELECT galleryId as galleryID, title as event, description, year,media as images FROM Gallery WHERE galleryId = ?",
+      [gID]
+    );
     return result[0][0];
   } catch (error) {
     throw error;
@@ -26,7 +33,9 @@ exports.getGalleryById = async (gID) => {
 
 exports.getAllGallery = async () => {
   try {
-    const [result] = await db.query("SELECT * FROM Gallery");
+    const [result] = await db.query(
+      "SELECT galleryId as galleryID, title as event, description, year, media as images FROM Gallery"
+    );
     return result;
   } catch (error) {
     throw error;
@@ -45,12 +54,12 @@ exports.deleteGallery = async (galleryID) => {
 };
 
 exports.updateGallery = async (galleryID, updatedGallery) => {
-  const { event, year, department, description } = updatedGallery;
+  const { event, year, description } = updatedGallery;
 
   try {
     const [result] = await db.query(
-      "UPDATE Gallery SET title = ?, year = ? , department = ?,  description = ? WHERE galleryID = ?",
-      [event, year, department, description, galleryID]
+      "UPDATE Gallery SET title = ?, year = ? ,   description = ? WHERE galleryID = ?",
+      [event, year, description, galleryID]
     );
     return result.affectedRows;
   } catch (error) {

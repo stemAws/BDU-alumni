@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const AddGallery = ({ updateCategories }) => {
   const [event, setEvent] = useState('');
   const [description, setDescription] = useState("");
-  const [department, setDepartment] = useState("");
+  // const [department, setDepartment] = useState("");
   const [year, setYear] = useState('');
   const [images, setImages] = useState('');
   const [eventError, setEventError] = useState('');
@@ -19,7 +19,7 @@ const AddGallery = ({ updateCategories }) => {
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [descriptionError, setDescriptionError] = useState("");
-  const [departmentError, setDepartmentError] = useState("");
+  // const [departmentError, setDepartmentError] = useState("");
   const navigate = useNavigate();
 
   // Fetch categories or other initial data if needed
@@ -42,10 +42,10 @@ const AddGallery = ({ updateCategories }) => {
     setEventError('');
   };
 
-  const handleDepartmentChange = (e) => {
-    setDepartment(e.target.value);
-    setDepartmentError('');
-  };
+  // const handleDepartmentChange = (e) => {
+  //   setDepartment(e.target.value);
+  //   setDepartmentError('');
+  // };
 
   const handleDiscriptionChange = (e) => {
     setDescription(e.target.value);
@@ -76,15 +76,15 @@ const AddGallery = ({ updateCategories }) => {
       setEventError('');
     }
 
-    if (!department) {
-      setDepartmentError('Department field cannot be empty!');
-      valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(department)) {
-      setDepartmentError("Department must contain only letters and spaces, with numbers allowed anywhere after letters!");
-      valid = false;
-    } else {
-      setDepartmentError('');
-    }
+    // if (!department) {
+    //   setDepartmentError('Department field cannot be empty!');
+    //   valid = false;
+    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(department)) {
+    //   setDepartmentError("Department must contain only letters and spaces, with numbers allowed anywhere after letters!");
+    //   valid = false;
+    // } else {
+    //   setDepartmentError('');
+    // }
 
     if (!year) {
       setYearError('Year field cannot be empty!');
@@ -122,7 +122,7 @@ const AddGallery = ({ updateCategories }) => {
         const formData = new FormData();
         formData.append('event', event);
         formData.append('description', description);
-        formData.append('department', department);
+        // formData.append('department', department);
         formData.append('year', year);
         Array.from(images).forEach((image) => formData.append('images', image));
 
@@ -167,11 +167,11 @@ const AddGallery = ({ updateCategories }) => {
             {eventError && <p className="errorMessage">{eventError}</p>}
           </div>
 
-          <div className='form'>
+          {/* <div className='form'>
             <label className='label' htmlFor="department">Department:</label>
             <input type="text" id="department" placeholder='Department' value={department} onChange={handleDepartmentChange} />
             {departmentError && <p className="errorMessage">{departmentError}</p>}
-          </div>
+          </div> */}
          
           <div className="form">
             <label className="label">Description:</label>

@@ -2,7 +2,7 @@ import "../../styles/EventList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline, Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DeleteConfirmation from '../../component/DeleteConfirmation';
@@ -37,8 +37,7 @@ const NewsList = () => {
 
       const newsData = await response.json();
 
-      // Sort the data by the createdAt timestamp in descending order
-      newsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      newsData.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).reverse();
 
       setData(newsData);
     } catch (error) {
@@ -53,7 +52,7 @@ const NewsList = () => {
       const filtered = data.filter(
         (item) =>
           item.title &&
-          item.title.toLowerCase().includes(searchQuery.toLowerCase())
+          item.title.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
       setFilteredData(filtered);
     } catch (error) {
@@ -98,8 +97,8 @@ const NewsList = () => {
   };
 
   const handleEdit = (newsId) => {
-    console.log(`Navigating to /admin/news/${newsId}`);
-    navigate(`/admin/news/${newsId}`);
+    // console.log(`Navigating to News/${newsId}`);
+    navigate(`edit-news/${newsId}`);
   };
 
   const customTheme = createTheme({

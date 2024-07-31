@@ -17,19 +17,24 @@ import NewsList from './AdminPages/NewsList';
 import Chapters from './AdminPages/Chapters';
 import JobOffer from './AdminPages/JobOffer';
 import SuggestedJob from './AdminPages/SuggestedJob';
-import AGallery from './AdminPages/AGallery';
+import GalleryList from './AdminPages/GalleryList';
 import AddGallery from './AdminPages/AddGallery';
 import AdminSignin from '../component/AdminSignin';
 import AuthService from '../component/AuthService';
 import ChaptersList from './AdminPages/chaptersList';
 import Editnews from './AdminPages/Editnews'; 
 import EditDonation from './AdminPages/EditDonation'; 
+import EditGallery from './AdminPages/EditGallery'; 
+import EditEvent from './AdminPages/EditEvent'; 
+import EditClub from './AdminPages/EditClub'; 
+
+import PageNotFound from './AdminPages/PageNotFound';
 
 const Admin = () => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (AuthService.isAuthenticated('admin')) {
+    if (AuthService.isAuthenticated("admin")) {
       setIsAdminAuthenticated(true);
     } else {
       setIsAdminAuthenticated(false);
@@ -45,29 +50,32 @@ const Admin = () => {
             <Route path='home' element={<Home />} />
             <Route path='users' element={<Users />} />
             <Route path='News' element={<NewsList />} />
-            <Route path="/admin/news/:newsId" element={<Editnews />} />
+            <Route path='News/edit-news/:newsId' element={<Editnews />} />
             <Route path='AddNews' element={<News />} />
             <Route path='AddUser' element={<AddUser />} />
             <Route path='story' element={<Stories />} />
             <Route path='addedStories' element={<AddedStory />} />
             <Route path='Events' element={<EventList />} />
-            <Route path='gallery' element={<AGallery />} />
+            <Route path='/adminEvents/:id' element={<EditEvent />} />
+            <Route path='gallery' element={<GalleryList />} />
+            <Route path="/admin/edit-gallery/:galleryID" element={<EditGallery />} />
             <Route path='Addgallery' element={<AddGallery />} />
             <Route path='AddEvent' element={<AddEvent />} />
             <Route path='jobOffer' element={<JobOffer />} />
             <Route path='SuggestedJob' element={<SuggestedJob />} />
             <Route path='chapters' element={<ChaptersList />} />
+            <Route path='chapters/chapters/:chapterId' element={<EditClub />} />
             <Route path='AddChapter' element={<Chapters />} />
             <Route path='feedback' element={<FeedBack />} />
             <Route path='Donation' element={<DonationList />} />
-            <Route path="/admin/donation/:id" element={<EditDonation />} />
+            <Route path="/donation/:id" element={<EditDonation />} />
             <Route path='AddDonation' element={<AddDonation />} />
-            <Route path='*' element={<Navigate to="home" />} />
+            {/* <Route path='*' element={<Navigate to="home" />} /> */}
           </Routes>
         </div>
       ) : (
         <Routes>
-          <Route path='*' element={<AdminSignin />} />
+          <Route path="*" element={<AdminSignin />} />
         </Routes>
       )}
     </>

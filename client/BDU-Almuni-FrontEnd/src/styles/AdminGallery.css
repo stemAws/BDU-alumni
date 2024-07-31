@@ -1,3 +1,358 @@
-.G-container{
-    flex: 4;
+.Admingallerycont {
+  margin-top: 80px;
+}
+.admin-galleryContainers .addGallery {
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  background-color: #0c8ce9;
+  height: 35px;
+  width: 100px;
+  color: white;
+  margin: 20px 30px -20px 0;
+  cursor: pointer;
+  transition: 0.5s ease;
+}
+.admin-galleryContainers h3 {
+  margin-left: -100px;
+  font-size: 30px;
+}
+.admin-gallery .addGallery button:hover {
+  background-color: #0880d5;
+}
+.admin-galleryContainers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  margin-top: 5px;
+  position: fixed;
+  top: 0;
+  width: 80%;
+  background-color: white;
+}
+.admin-gallery {
+  flex: 4;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-gallery .userGoBackIcon {
+  color: black;
+  margin: 10px;
+  transition: 0.5s ease;
+}
+.admin-gallery .userGoBackIcon:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
+.deletegal {
+  color: rgb(255, 15, 15);
+  transition: 0.5s ease;
+}
+.deletegal:hover {
+  background-color: rgba(255, 15, 15, 0.5);
+  border-radius: 5px;
+}
+.line {
+  width: 100%;
+  height: 2px;
+  background: radial-gradient(circle, rgb(9, 131, 196), white);
+}
+
+.admin-galleryContainers .search {
+  margin: 20px 0 0 1rem;
+  border: 1px solid rgb(9, 131, 196);
+  border-radius: 10px;
+  height: 30px;
+  display: inline-block;
+  padding: 5px;
+  width: 150px;
+}
+
+.gal-header-txt {
+  display: inline-block;
+  color: black;
+  transform: uppercase;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin: 0 0 0 100px;
+}
+
+.batch-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: uppercase;
+  margin-top: 3rem;
+  color: black;
+  font-weight: bold;
+}
+
+.gal-heading {
+  color: black;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin: 2rem;
+}
+
+.admin-cat-container {
+  display: flex;
+  margin: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 3rem 0;
+  overflow-x: auto;
+  gap: 10px;
+}
+.admin-cat-container::-webkit-scrollbar {
+  width: 1px;
+  height: 5px;
+  margin: 1rem;
+}
+
+.admin-cat-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-cat-container::-webkit-scrollbar-thumb {
+  background-color: #99c0e5;
+  border-radius: 5px;
+}
+.Admin-gallery img:hover {
+  filter: opacity(0.7);
+  z-index: 0;
+}
+
+.Admin-gallery {
+  border: none;
+  margin: 10px;
+  padding: 0;
+  width: 23%;
+  flex-shrink: 0;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+.image-grid {
+  width: calc(100vw - 10px);
+  column-count: 3;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+.image-grid .image-wrapper {
+  flex: 0 0 auto; /* Don't allow flex items to grow or shrink */
+  margin-right: 10px;
+}
+
+.image-grid::-webkit-scrollbar {
+  width: 3px;
+  background-color: transparent;
+}
+
+.image-grid::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.Admin-gallery:hover {
+  transform: scale(1.1);
+  
+}
+
+.Admin-gallery h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 15px;
+  padding: 5px;
+}
+
+.Admin-gallery img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.9);
+}
+
+.admin-selected-category {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 1);
+  z-index: 999;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.admin-selected-category img {
+  max-width: 80%;
+  max-height: 80%;
+  margin: 20px;
+}
+
+.image-wrapper {
+  width: 100%;
+}
+
+.image-wrapper img {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  padding: 0;
+  margin: 3rem 0 0 1rem;
+}
+
+.image-wrapper img.active {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: auto;
+  height: 80vh;
+}
+
+.individual-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(15, 14, 14);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  border: none;
+}
+
+.full-image {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+}
+
+.close-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+.close-icon:hover {
+  color: #ccc;
+}
+
+.arrow-icon-left {
+  position: fixed;
+  left: 30px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+}
+
+.arrow-icon-right {
+  position: fixed;
+  right: 30px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+}
+
+@media (max-width: 950px) {
+  .admin-cat-container {
+    column-count: 2;
+    width: 100%;
+  }
+}
+
+@media (max-width: 650px) {
+  .line {
+    display: none;
+  }
+
+  .admin-cat-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .Admin-gallery-header h1 {
+    font-size: 22px;
+  }
+
+  .Admin-gallery {
+    margin: 10px;
+    padding: 0;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    width: 80%;
+  }
+
+  .batch-header,
+  .batch-header2,
+  .batch-header3 {
+    background: radial-gradient(circle, rgb(179, 178, 178), white);
+    color: black;
+  }
+
+  .admin-selected-category {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .image-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .close-icon {
+    position: absolute;
+    right: 30px;
+  }
+
+  .gal-header-txt {
+    display: none;
+  }
+
+  .gal-header-txt h1 {
+    display: block;
+    font-size: 25px;
+  }
+
+  .batch-header,
+  .batch-header2,
+  .batch-header3 {
+    font-size: 25px;
+  }
+
+  .Admin-gallery h2 {
+    font-size: 18px;
+  }
+
+  .search {
+    height: 20px;
+    width: 150px;
+  }
 }

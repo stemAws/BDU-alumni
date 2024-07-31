@@ -16,3 +16,9 @@
     font-size: 40px;
     font-family: unset;
 }
+
+/*admin css*/
+
+.admin-not_found{
+    width: 100%;
+}

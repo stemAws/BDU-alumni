@@ -2,12 +2,12 @@ import "../../styles/EventList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline, Edit } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import DeleteConfirmation from '../../component/DeleteConfirmation';
+import DeleteConfirmation from "../../component/DeleteConfirmation";
 
-const chapterList = () => {
+const ChapterList = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +15,8 @@ const chapterList = () => {
   const navigate = useNavigate();
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [deleteConfirmationChapterId, setDeleteConfirmationChapterId] = useState(null);
+  const [deleteConfirmationChapterId, setDeleteConfirmationChapterId] =
+    useState(null);
 
   const handleDelete = (id) => {
     setDeleteConfirmationOpen(true);
@@ -38,18 +39,21 @@ const chapterList = () => {
       const chaptersData = await response.json();
 
       // Sort the data by the createdAt timestamp in descending order
-      chaptersData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      chaptersData
+        .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+        .reverse();
 
       // Only keep the necessary fields
-      const formattedData = chaptersData.map(({ chapterId, chapterName, description, website }) => ({
-        chapterId,
-        chapterName,
-        description,
-        website,
-      }));
+      const formattedData = chaptersData.map(
+        ({ chapterId, chapterName, description, website }) => ({
+          chapterId,
+          chapterName,
+          description,
+          website,
+        })
+      );
 
       setData(formattedData);
-      
     } catch (error) {
       console.error("Error fetching data:", error.message);
     } finally {
@@ -79,7 +83,9 @@ const chapterList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/delete-chapter/${deleteConfirmationChapterId}`,
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/delete-chapter/${deleteConfirmationChapterId}`,
         {
           method: "DELETE",
           headers: {
@@ -92,7 +98,9 @@ const chapterList = () => {
         throw new Error(`Failed to delete chapter. Status: ${response.status}`);
       }
 
-      setData(data.filter((item) => item.chapterId !== deleteConfirmationChapterId));
+      setData(
+        data.filter((item) => item.chapterId !== deleteConfirmationChapterId)
+      );
     } catch (error) {
       console.error("Error deleting data:", error.message);
     } finally {
@@ -107,7 +115,7 @@ const chapterList = () => {
   };
 
   const handleEdit = (chapterId) => {
-    navigate(`/admin/News/${chapterId}`);
+    navigate(`chapters/${chapterId}`);
   };
 
   const customTheme = createTheme({
@@ -165,7 +173,11 @@ const chapterList = () => {
             <p>Loading...</p>
           ) : (
             <>
-              <DataGrid rows={filteredData} columns={columns} getRowId={getRowId} />
+              <DataGrid
+                rows={filteredData}
+                columns={columns}
+                getRowId={getRowId}
+              />
               {isDeleteConfirmationOpen && (
                 <DeleteConfirmation
                   close={handleCancelDelete}
@@ -181,4 +193,4 @@ const chapterList = () => {
   );
 };
 
-export default chapterList;
+export default ChapterList;

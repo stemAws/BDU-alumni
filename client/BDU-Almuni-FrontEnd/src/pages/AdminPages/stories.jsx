@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/stories.css";
 import { Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const FeaturedStories = () => {
-
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/admin/addedStories");
@@ -19,7 +17,7 @@ const FeaturedStories = () => {
       event.preventDefault();
 
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/update-post`,
+        `${import.meta.env.VITE_BACKEND_URL}/update-post/${postId}`,
         {
           method: "PUT",
           headers: {
@@ -31,7 +29,7 @@ const FeaturedStories = () => {
 
       const data = await response.json();
       setStories((prevStories) =>
-        prevStories.filter((story) => story.postID !== postId)
+        prevStories.filter((story) => story.postId !== postId)
       );
       if (response.ok) {
         console.log(data.message);
@@ -45,7 +43,7 @@ const FeaturedStories = () => {
 
   const handleDecline = async (postId, event) => {
     try {
-      event.preventDefault(); // Prevent the default form submission behavior
+      event.preventDefault();
 
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/update-post/${postId}`,
@@ -60,24 +58,24 @@ const FeaturedStories = () => {
 
       const data = await response.json();
       setStories((prevStories) =>
-        prevStories.filter((story) => story.postID !== postId)
+        prevStories.filter((story) => story.postId !== postId)
       );
       if (response.ok) {
         console.log(data.message);
       } else {
         console.error("Error updating post:", data.message);
-        // Handle the error, such as displaying an error message to the user
       }
     } catch (error) {
       console.error("Error updating post:", error);
-      // Handle network errors or other unexpected issues
     }
   };
 
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/suggested-to-admin`);
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/suggested-to-admin`
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -97,13 +95,14 @@ const FeaturedStories = () => {
   return (
     <div className="Story">
       <div className="admin-story-header">
-      <h1 className="headerstory"> Bahir Dar STEM Center Alumni Stories</h1>
-      <Link to='/admin/addedStories'>
-        <button className="accepted-stories" onClick={handleClick}>Added Stories</button>
-      </Link>
-      
+        <h1 className="headerstory"> Bahir Dar STEM Center Alumni Stories</h1>
+        <Link to="/admin/addedStories">
+          <button className="accepted-stories" onClick={handleClick}>
+            Added Stories
+          </button>
+        </Link>
       </div>
-      
+
       <div className="FeaturedStories">
         {loading ? (
           <p>Loading...</p>
@@ -113,33 +112,28 @@ const FeaturedStories = () => {
           stories.map((story, index) => (
             <div className="FeaturedStories-container" key={index}>
               <div>
-                <img
-                  src={story.mediaPath}
-                  alt=""
-                />
+                <img src={story.mediaPath} alt="" />
                 <p className="story_p_admin">{story.content}</p>
               </div>
               <div className="accept-decline-btn">
-              <button
-                className="accept"
-                onClick={(event) => handleAccept(story.postID, event)}
-              >
-                Accept
-              </button>
-              <button
-                className="decline-decline "
-                onClick={(event) => handleDecline(story.postID, event)}
-              >
-                Decline
-              </button>
+                <button
+                  className="accept"
+                  onClick={(event) => handleAccept(story.postId, event)}
+                >
+                  Accept
+                </button>
+                <button
+                  className="decline-decline "
+                  onClick={(event) => handleDecline(story.postId, event)}
+                >
+                  Decline
+                </button>
               </div>
-              
             </div>
           ))
         )}
       </div>
-      
-      </div>
+    </div>
   );
 };
 

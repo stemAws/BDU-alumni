@@ -1,5 +1,4 @@
 import "../../styles/jobOffer.css";
-import logo from "../../assets/images/photo_2024-02-27_14-20-52.jpg";
 import { useEffect, useState } from "react";
 import JobOfferPopup from "../../component/JobOfferPopup";
 import JobOffers from "../../component/JobOffers";
@@ -22,7 +21,7 @@ const SuggestedJob = () => {
         if (res.ok) {
           const jobs = await res.json();
           setjobOffers(
-            jobs.filter((filteredJobs) => filteredJobs.isApproved === 1)
+            jobs.filter((filteredJobs) => filteredJobs.isApproved != 1)
           );
         }
       } catch (error) {

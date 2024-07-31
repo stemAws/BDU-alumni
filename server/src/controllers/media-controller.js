@@ -16,7 +16,7 @@ const storage = getStorage();
 
 exports.uploadGallery = async (req, res) => {
   try {
-    const { event, year, description, department } = req.body;
+    const { event, year, description } = req.body;
     const images = req.files.map((file) => file);
 
     const imageUrls = [];
@@ -39,7 +39,6 @@ exports.uploadGallery = async (req, res) => {
       event,
       year,
       description,
-      department,
     });
 
     res.json({ galleryID, message: "Gallery created successfully" });
