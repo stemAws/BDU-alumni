@@ -12,11 +12,11 @@ const Stories = () => {
 
   const navigate = useNavigate();
 
-  const updatePostContent = async (postID) => {
+  const updatePostContent = async (postId) => {
     try {
       // Send PUT request to update the post content to null
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/update-post/${postID}`,
+        `${import.meta.env.VITE_BACKEND_URL}/update-post/${postId}`,
         {
           method: "PUT",
           headers: {
@@ -32,7 +32,7 @@ const Stories = () => {
 
       // Remove the story from the frontend
       setStories((prevStories) =>
-        prevStories.filter((story) => story.postID !== postID)
+        prevStories.filter((story) => story.postId !== postId)
       );
     } catch (error) {
       console.error("Error updating post content:", error);
@@ -46,7 +46,7 @@ const Stories = () => {
 
     if (!newToggledStates[index]) {
       // If toggle is turned off, update post content to null
-      await updatePostContent(stories[index].postID);
+      await updatePostContent(stories[index].postId);
     }
   };
 

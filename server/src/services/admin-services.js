@@ -83,20 +83,15 @@ exports.getYear = async () => {
 
 exports.updatePost = async (postId, suggestedByAdmin) => {
   const suggestToAdmin = suggestedByAdmin ? 1 : 0;
-  try {
-    const result = await db.query(
-      "UPDATE Post SET suggestToAdmin = ?, suggestedByAdmin = ? WHERE postID = ?",
-      [suggestToAdmin, suggestedByAdmin, postId]
-    );
-
-    if (result.rowCount === 1) {
-      return { message: "Post updated successfully" };
-    } else {
-      throw new Error("Post not found");
-    }
-  } catch (error) {
-    throw new Error("Error updating post: " + error.message);
+  const [result] = await db.query(
+    "UPDATE Post SET suggestToAdmin = ?, suggestedByAdmin = ? WHERE postId = ?",
+    [suggestToAdmin, suggestedByAdmin, postId]
+  );
+  if (result.affectedRows === 0) {
+    return { success: false, message: "No record by the given id" };
   }
+
+  return { success: true, message: "Post updated successfully" };
 };
 
 exports.fetchSuggestedPostsByAdmin = async () => {
