@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import "../styles/Chapters.css";
-
+import Button from "../component/Button";
 const Chapters = () => {
   const [chapters, setChapters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [chaptersToShow, setchaptersToShow] = useState(3);
+  const handleSeemore=()=>{
+    setchaptersToShow(chaptersToShow + 3)
+}
+const handleSeeless=()=>{
+  setchaptersToShow(chaptersToShow - 3)
+}
   useEffect(() => {
     const fetchChapters = async () => {
       try {
@@ -48,7 +54,7 @@ const Chapters = () => {
             <p>No chapters posted</p>
           </div>
         ) : (
-          chapters.map((chapter, index) => (
+          chapters.slice(-chaptersToShow).reverse().map((chapter, index) => (
             <div key={index} className="ind-chapters">
               <h4>{chapter.chapterName}</h4>
               <p>{chapter.description}</p>
@@ -70,7 +76,12 @@ const Chapters = () => {
             </div>
           ))
         )}
-      </div>
+        
+      </div> 
+      <div className="buttons">
+       {chaptersToShow < chapters.length && <Button className={`see-more`} onClick={()=>handleSeemore()} text={"More"} />}
+       {(chaptersToShow > 3 ) && <Button className={`see-less`} onClick={()=>handleSeeless()} text={"Less"} />}
+       </div>
     </div>
   );
 };
