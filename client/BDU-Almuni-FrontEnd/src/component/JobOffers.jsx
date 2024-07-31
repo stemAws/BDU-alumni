@@ -1,9 +1,9 @@
 import EachJob from "./EachJob";
 
-const JobOffers = ({jobOffers,setopenJODetail,onReadMore}) => {
+const JobOffers = ({jobsToShow,jobOffers,setopenJODetail,onReadMore}) => {
   return (
     <>
-      {jobOffers.slice(-6).reverse().map((jobOffer, index) => {
+      {jobOffers.slice(-jobsToShow).reverse().map((jobOffer, index) => {
         
           return (
             <EachJob
