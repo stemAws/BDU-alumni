@@ -1,0 +1,64 @@
+.EditgalleryUpload{
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    padding: 20px;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    height: calc(100vh - 90px);
+    overflow-y: auto;
+}
+
+
+.EditgalleryUpload h2{
+    color: black;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    font-size: 50px;
+}
+ .EditformContainer .form{
+    margin: 10px 20px 10px 60px;
+    font-size: 30px;
+}
+.EditformContainer .form input{
+    height: 20px;
+    width: 300px;
+    border: 1px solid #555;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 10px;
+}
+.EditformContainer .label{
+    margin-right: 10px;
+    color: #555;
+}
+
+.EditformContainer button{
+    border: none;
+    border-radius: 10px;
+    background-color: #037cd3;
+    height: 30px;
+    width: 110px;
+    color: white;
+    font-weight: bold;
+    margin: 3px 0 0 3.7rem;
+    cursor: pointer;
+    transition: 0.5s ease;
+}
+.EditformContainer button:hover{
+    background-color: #006bb8;
+}
+.EditgalleryUpload .userGoBackIcon{
+    color: black;
+    transition: 0.5s ease;
+
+}
+.EditgalleryUpload .userGoBackIcon:hover{
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 5px;
+  }
