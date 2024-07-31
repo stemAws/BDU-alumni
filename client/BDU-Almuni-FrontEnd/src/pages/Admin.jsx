@@ -58,7 +58,7 @@ const Admin = () => {
             <Route path='Events' element={<EventList />} />
             <Route path='/adminEvents/:id' element={<EditEvent />} />
             <Route path='gallery' element={<GalleryList />} />
-            <Route path="/admin/galleryform/:galleryID" element={<EditGallery />} />
+            <Route path="/admin/edit-gallery/:galleryID" element={<EditGallery />} />
             <Route path='Addgallery' element={<AddGallery />} />
             <Route path='AddEvent' element={<AddEvent />} />
             <Route path='jobOffer' element={<JobOffer />} />
