@@ -17,7 +17,7 @@ const EditEvent = () => {
   const [eventData, setEventData] = useState({
     image: null,
     title: "",
-    description: "",
+    content: "",
     startDate: "",
     endDate: "",
     organizer: "",
@@ -73,12 +73,12 @@ const EditEvent = () => {
       setTitleError("");
     }    
 
-    if (!eventData.description) {
+    if (!eventData.content) {
       setDescriptionError(
         eventData.description ? "" : "Description field cannot be empty!"
       );
       valid = false;
-    } else if (/^[0-9\s]+$/.test(eventData.description)) {
+    } else if (/^[0-9\s]+$/.test(eventData.content)) {
       setDescriptionError(
         "Please include meaningful information in the description"
       );
@@ -154,7 +154,7 @@ const EditEvent = () => {
       );
 
       if (response.ok) {
-        navigate("/admin/adminEvents");
+        navigate("/admin/Events");
       } else {
         const errorResponse = await response.json();
         console.error("Error updating event data:", response.status, errorResponse);
@@ -197,8 +197,8 @@ const EditEvent = () => {
             <textarea
               type="text"
               placeholder="Description"
-              name="description"
-              value={eventData.description}
+              name="content"
+              value={eventData.content}
               onChange={handleInputChange}
             />
             {descriptionError && (

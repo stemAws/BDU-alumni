@@ -18,14 +18,16 @@ exports.addChapters = async (title, description, link) => {
 };
 
 exports.chaptersList = async () => {
-  const [chapter] = await db.query(`SELECT * from Chapters`);
+  const [chapter] = await db.query(
+    `SELECT *, DATE_FORMAT(createdAt, '%Y-%m-%d') as createdAt FROM Chapters`
+  );
 
   return chapter;
 };
 
 exports.getAChapter = async (chapterId) => {
   const [chapter] = await db.query(
-    `SELECT chapterName, description, website, DATE_FORMAT(createdAt, '%Y-%m-%d'),DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM Chapters WHERE chapterId = ?`,
+    `SELECT chapterName as title, description, website, DATE_FORMAT(createdAt, '%Y-%m-%d'),DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM Chapters WHERE chapterId = ?`,
     [chapterId]
   );
 
@@ -33,7 +35,7 @@ exports.getAChapter = async (chapterId) => {
 };
 
 exports.updateAChapter = async (chapterId, updateChapter) => {
-  const { title, description, link } = updateChapter;
+  const { title, description, website } = updateChapter;
 
   const [result] = await db.query(
     `   UPDATE Chapters
@@ -44,7 +46,7 @@ exports.updateAChapter = async (chapterId, updateChapter) => {
         WHERE
           chapterId = ?
     `,
-    [title, description, link, chapterId]
+    [title, description, website, chapterId]
   );
 
   return result.affectedRows;
@@ -61,5 +63,3 @@ exports.deleteAChapter = async (chapterId) => {
 
   return { success: true, message: "Chapter deleted successfully" };
 };
-
-

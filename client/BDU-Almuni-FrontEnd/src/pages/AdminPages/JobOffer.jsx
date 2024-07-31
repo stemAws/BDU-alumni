@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../../styles/AJobOffer.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const JobOffer = () => {
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [organization, setOrganization] = useState("");
@@ -31,15 +31,14 @@ const JobOffer = () => {
   const [peopleNeededError, setPeopleNeededError] = useState("");
   const [salaryError, setSalaryError] = useState("");
 
-  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
 
-    if (name === "image") {
-      const file = files && files.length > 0 ? files[0] : null;
-      setImage(file);
-    } else {
+    // if (name === "image") {
+    //   const file = files && files.length > 0 ? files[0] : null;
+    //   setImage(file);
+    // } else {
       switch (name) {
         case "title":
           setTitle(value);
@@ -84,7 +83,7 @@ const JobOffer = () => {
         default:
           break;
       }
-    }
+    // }
   };
 
   const handleSubmit = async (e) => {
@@ -182,7 +181,7 @@ const JobOffer = () => {
         setLoading(true);
 
         const formDataToSend = new FormData();
-        formDataToSend.append("image", image);
+        // formDataToSend.append("image", image);
         formDataToSend.append("title", title);
         formDataToSend.append("description", description);
         formDataToSend.append("deadline", deadline);
@@ -233,7 +232,7 @@ const JobOffer = () => {
           onSubmit={handleSubmit}
           encType="multipart/form-data"
         >
-          <div className="Jobform">
+          {/* <div className="Jobform">
             <label className="label">Image:</label>
             <input
               className="imageInput"
@@ -241,7 +240,7 @@ const JobOffer = () => {
               name="image"
               onChange={handleInputChange}
             />
-          </div>
+          </div> */}
           <div className="Jobform">
             <label className="label">Job Title:</label>
             <input
