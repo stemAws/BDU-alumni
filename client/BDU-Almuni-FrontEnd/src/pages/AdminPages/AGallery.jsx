@@ -68,7 +68,7 @@ const Gallery = ({
       const fetchData = async () => {
         try {
           const response = await fetch(
-            `${import.meta.env.VITE_BACKEND_URL}/gallery?department=law`
+            `${import.meta.env.VITE_BACKEND_URL}/gallery`
           );
           const data = await response.json();
 
