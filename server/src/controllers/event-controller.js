@@ -31,7 +31,7 @@ exports.createAdminEvent = async (req, res) => {
       downloadURL = await getDownloadURL(fileRef);
     }
 
-    const event = await eventsService.addEvent(req.admin.adminId, downloadURL, req.body);
+    const event = await eventsService.addEvent( downloadURL, req.body);
     res.status(201).json({ message: "Event added successfully", event });
   } catch (error) {
     console.error("Error adding event:", error);
