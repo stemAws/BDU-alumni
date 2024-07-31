@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../styles/GalleryEdit.css";
+import "../../styles/EditGallery.css";
 import { Link } from "react-router-dom";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import {
@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 
-const GalleryForm = () => {
+const EditGallery = () => {
   const navigate = useNavigate();
   const { galleryID } = useParams();
 
@@ -153,4 +153,4 @@ const GalleryForm = () => {
   );
 };
 
-export default GalleryForm;
+export default EditGallery;
