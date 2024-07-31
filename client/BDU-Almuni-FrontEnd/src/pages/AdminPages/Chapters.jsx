@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../../styles/AChapters.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const EventPost = () => {
   const [title, setTitle] = useState("");
@@ -9,7 +10,7 @@ const EventPost = () => {
   const [link, setLink] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
-
+  const navigate = useNavigate();
   const [titleError, setTitleError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
   const [LinkError, setLinkError] = useState("");
@@ -94,12 +95,11 @@ const EventPost = () => {
         if (response.ok) {
           toast.success("Chapters uploaded successfully");
           setSuccess(true);
+          navigate("/admin/chapters");
         } else {
           console.error("Error uploading chapters", response.statusText);
           setErrorPopup(true);
         }
-
-        
       } catch (error) {
         console.error("Error:", error);
       }
