@@ -120,16 +120,16 @@ exports.getAdminProfile = async (id) => {
     if (!isNaN(id)) {
       result = await db.query(
         `SELECT *
-        FROM WebsiteAdmin
-        JOIN Person ON WebsiteAdmin.personId = Person.personId
-        WHERE WebsiteAdmin.personId = ?;`,
+        FROM Websiteadmin
+        JOIN Person ON Websiteadmin.personId = Person.personId
+        WHERE Websiteadmin.personId = ?;`,
         [id]
       );
     } else {
       result = await db.query(
         `SELECT *
-        FROM WebsiteAdmin
-        JOIN Person ON WebsiteAdmin.personId = Person.personId
+        FROM Websiteadmin
+        JOIN Person ON Websiteadmin.personId = Person.personId
         WHERE Person.username = ?;`,
         [id]
       );

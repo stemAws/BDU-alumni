@@ -70,8 +70,7 @@ const Admin = () => {
             <Route path='Donation' element={<DonationList />} />
             <Route path="/donation/:id" element={<EditDonation />} />
             <Route path='AddDonation' element={<AddDonation />} />
-            <Route path="*"  Component = {PageNotFound} />
-            {/* <Route path='*' element={<Navigate to="home" />} /> */}
+            <Route path='*' element={<Navigate to="home" />} />
           </Routes>
         </div>
       ) : (
