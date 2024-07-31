@@ -40,8 +40,11 @@ exports.signIn = async function (req, res) {
     );
 
     if (authenticationResult.success) {
-      const [token] = await alumniService.getAlumniProfile(username);
-      const id2 = token.alumniId;
+
+      const [token] = isAdmin
+        ? await alumniService.getAdminProfile(username)
+        :  await alumniService.getAlumniProfile(username);
+      const id2 = isAdmin ? token.adminId : token.alumniId;
       const id = token.personId;
 
       const realToken = jwt.sign({ token }, process.env.secretKey, {
@@ -49,26 +52,27 @@ exports.signIn = async function (req, res) {
       });
 
       if (isAdmin) {
-        const adminToken = jwt.sign({ token, isAdmin: true }, process.env.secretKey, {
-          expiresIn: "7d",
-        });
+        const adminToken = jwt.sign(
+          { token, isAdmin: true },
+          process.env.secretKey,
+          {
+            expiresIn: "7d",
+          }
+        );
 
-        if (process.env.NODE_ENV === 'dev') {
-          res
-            .cookie("adminToken", adminToken)
-        } else if (process.env.NODE_ENV === 'prod') {
-          res
-            .cookie("adminToken", adminToken, { secure: true });
+        if (process.env.NODE_ENV === "dev") {
+          res.cookie("adminToken", adminToken);
+        } else if (process.env.NODE_ENV === "prod") {
+          res.cookie("adminToken", adminToken, { secure: true });
         }
       } else {
-        if (process.env.NODE_ENV === 'dev') {
+        if (process.env.NODE_ENV === "dev") {
           res
             .cookie("token", realToken, { httpOnly: true })
             .cookie("id2", id2)
             .cookie("id", id, { httpOnly: false });
-        } else if (process.env.NODE_ENV === 'prod') {
-          res
-            .cookie("token", realToken, { httpOnly: true, secure: true });
+        } else if (process.env.NODE_ENV === "prod") {
+          res.cookie("token", realToken, { httpOnly: true, secure: true });
         }
       }
 
@@ -86,7 +90,6 @@ exports.signIn = async function (req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 
 exports.getAlumniProfile = async function (req, res) {
   try {
@@ -200,7 +203,7 @@ exports.uploadCoverPicture = async function (req, res) {
       alumniId
     );
 
-    console.log(currentCoverPhotoPath)
+    console.log(currentCoverPhotoPath);
 
     if (currentCoverPhotoPath) {
       const currentCoverPhotoRef = ref(storage, currentCoverPhotoPath);
@@ -273,10 +276,7 @@ exports.getCoverPicture = async function (req, res) {
 
 exports.updateAlumni = async function (req, res) {
   try {
-    const affectedRows = await alumniService.updateAlumni(
-      req.alumni,
-      req.body
-    );
+    const affectedRows = await alumniService.updateAlumni(req.alumni, req.body);
 
     if (affectedRows) {
       res
@@ -311,7 +311,10 @@ exports.checkEmailAvailability = async function (req, res) {
   try {
     const { email } = req.body;
 
-    const isEmailTaken = await alumniService.isEmailTaken(email, req.alumni.personId);
+    const isEmailTaken = await alumniService.isEmailTaken(
+      email,
+      req.alumni.personId
+    );
 
     res.json({ isEmailTaken });
   } catch (error) {
@@ -443,7 +446,13 @@ exports.updateCustomSetting = async function (req, res) {
 exports.searchAlumni = async function (req, res) {
   try {
     let { searchBy, searchByValue } = req.body;
-    if (searchBy === "name" || searchBy === "department" || searchBy === "degree" || searchBy === "industry" || searchBy === "location") {
+    if (
+      searchBy === "name" ||
+      searchBy === "department" ||
+      searchBy === "degree" ||
+      searchBy === "industry" ||
+      searchBy === "location"
+    ) {
       searchByValue = `%${searchByValue}%`;
     }
     const alumni = await alumniService.getAlumniDirectory(
