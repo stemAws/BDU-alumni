@@ -9,6 +9,7 @@ const EventPost = () => {
   const [link, setLink] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [titleError, setTitleError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
@@ -76,6 +77,9 @@ const EventPost = () => {
 
     if (valid) {
       try {
+
+        setLoading(true);
+
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/add-chapter`,
           {
@@ -102,6 +106,8 @@ const EventPost = () => {
         
       } catch (error) {
         console.error("Error:", error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -150,9 +156,11 @@ const EventPost = () => {
             />
             {LinkError && <p className="errorMessage">{LinkError}</p>}
           </div>
-          <button type="submit" onClick={handleSubmit}>
-            Upload
-          </button>
+          <div className='buttonss'>
+            <button type="submit" disabled={loading}>
+              {loading ? 'Uploading...' : 'Upload'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
