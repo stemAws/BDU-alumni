@@ -13,6 +13,7 @@ const DonationPost = () => {
   const [link, setLink] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [titleError, setTitleError] = useState("");
@@ -66,6 +67,8 @@ const DonationPost = () => {
   
     if (valid) {
       try {
+        setLoading(true);
+
         const formDataToSend = new FormData();
         formDataToSend.append("title", title);
         formDataToSend.append("link", link);
@@ -98,6 +101,8 @@ const DonationPost = () => {
         }
       } catch (error) {
         console.error("Error:", error);
+      }finally {
+        setLoading(false);
       }
     }
   };
@@ -153,8 +158,11 @@ const DonationPost = () => {
             />
             {LinkError && <p className="errorMessage">{LinkError}</p>}
           </div>
-
-          <button type="submit">Upload</button>
+          <div className='buttonss'>
+          <button type="submit" disabled={loading}>
+              {loading ? 'Uploading...' : 'Upload'}
+            </button>
+            </div>
         </form>
       </div>
     </div>
