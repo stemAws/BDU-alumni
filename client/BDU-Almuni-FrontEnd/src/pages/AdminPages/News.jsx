@@ -9,6 +9,7 @@ const EventPost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const navigate = useNavigate("");
+  const [loading, setLoading] = useState(false);
   // const [postDate, setPostDate] = useState("");
   // const [location, setLocation] = useState("");
   const [success, setSuccess] = useState(false);
@@ -98,6 +99,9 @@ const EventPost = () => {
 
     if (valid) {
       try {
+
+        setLoading(true);
+
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/add-news`,
           {
@@ -123,6 +127,8 @@ const EventPost = () => {
         }
       } catch (error) {
         console.error("Error:", error);
+      }finally {
+        setLoading(false);
       }
     }
   };
@@ -190,7 +196,11 @@ const EventPost = () => {
             {postDateError && <p className="errorMessage">{postDateError}</p>}
           </div> */}
 
-          <button type="submit">Upload</button>
+          <div className='buttonss'>
+            <button type="submit" disabled={loading}>
+              {loading ? 'Uploading...' : 'Upload'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
