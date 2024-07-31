@@ -2,6 +2,7 @@ import "../../styles/AddUser.css";
 import { ChevronLeft } from "@mui/icons-material";
 import { Link } from "@mui/material";
 import { useState } from "react";
+import { FaEye, FaEyeSlash, FaTimes, FaGoogle } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -13,7 +14,9 @@ const AddUser = () => {
   const [errorUsers, setUsersError] = useState("");
   const [graduationYearMultipleUsers, setGraduationYearMultipleUsers] =
     useState("");
-
+    const [visiblePassword, setVisiblePassword] = useState(false);
+    const [visibleConfirmPassword, setVisibleConfirmPassword] = useState(false);
+    
   const [roleSingleUser, setRoleSingleUser] = useState("");
   const [staffRole, setStaffRole] = useState("");
   const [usernameError, setUsernameError] = useState("");
@@ -270,24 +273,40 @@ const AddUser = () => {
 
           <div className="newUseritem">
             <label>Password</label>
+           <div className='add-pass'>
             <input
-              type="password"
+               type={visiblePassword ? 'text' : 'password'}
               placeholder="password"
               name="password"
               value={formData.password}
               onChange={handleChangeSingleUser}
             />
+             <div className='input_img' onClick={() => setVisiblePassword(!visiblePassword)}>
+                {
+                  visiblePassword ? <FaEye className="eye-icon admin-eye-icon"/> :
+                    <FaEyeSlash className="eye-icon  admin-eye-icon" />
+                }
+              </div>
+              </div>
             {passwordError && <p className="errorMessage">{passwordError}</p>}
           </div>
           <div className="newUseritem">
             <label>Confirm Password</label>
+            <div className='add-pass'>
             <input
-              type="password"
+              type={visibleConfirmPassword ? 'text' : 'password'}
               placeholder="password"
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChangeSingleUser}
             />
+            <div className='input_img' onClick={() => setVisibleConfirmPassword(!visibleConfirmPassword)}>
+                {
+                  visibleConfirmPassword ? <FaEye className="eye-icon admin-eye-icon"/> :
+                    <FaEyeSlash className="eye-icon  admin-eye-icon" />
+                }
+              </div>
+              </div>
             {confirmPasswordError && (
               <p className="errorMessage">{confirmPasswordError}</p>
             )}

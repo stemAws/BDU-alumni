@@ -1,3 +1,35 @@
+.admin-visiblity{
+    position: relative;
+    left: -30px;
+    padding-top: 10px;
+}
+
+.add-pass{
+display: flex;
+
+    box-sizing: border-box;
+    width: 300px;
+    height: 40px;
+    border-radius: 50px;
+    z-index: 100;
+}
+
+.add-pass .admin-eye-icon{
+    width: 20px;
+    height: 20px;
+    position: relative;
+  left: -30px;
+  top: 10px;
+
+}
+
+.add-pass>input{
+    height: 40px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 450px;
+}
 .Allcontainer{
     overflow-y: auto;
     height: 100vh;
