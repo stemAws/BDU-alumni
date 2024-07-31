@@ -28,7 +28,8 @@ const Signin = () => {
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          window.location.reload()
+          window.location.reload();
+          <Navigate to="home" />
         } else {
           setErrorPopup(true);
           setloading(false)
