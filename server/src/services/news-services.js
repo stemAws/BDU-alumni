@@ -47,7 +47,7 @@ exports.getANews = async (newsId) => {
 };
 
 exports.updateANews = async (newsId, updatedNews) => {
-  const { title, description } = updatedNews;
+  const { title, content } = updatedNews;
 
   const [result] = await db.query(
     `   UPDATE News
@@ -57,7 +57,7 @@ exports.updateANews = async (newsId, updatedNews) => {
         WHERE
           newsId = ?
     `,
-    [title, description, newsId]
+    [title, content, newsId]
   );
 
   return result.affectedRows;
