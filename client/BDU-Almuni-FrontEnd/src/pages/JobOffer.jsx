@@ -3,10 +3,18 @@ import logo from "../assets/images/photo_2024-02-27_14-20-52.jpg";
 import { useEffect, useState } from 'react';
 import JobOfferPopup from '../component/JobOfferPopup';
 import JobOffers from '../component/JobOffers';
+import Button from '../component/Button';
 const JobOffer = () => {
     const [openJODetail, setopenJODetail] = useState(false);
     const [jobOffers, setjobOffers] = useState([]);
     const [jobOffer, setjobOffer] = useState([{}]);
+    const [jobsToShow, setjobsToShow] = useState(6);
+    const handleSeemore=()=>{
+        setjobsToShow(jobsToShow + 3)
+    }
+    const handleSeeless=()=>{
+        setjobsToShow(jobsToShow - 3)
+    }
     const jobToReadMore=(jobID)=>{
 setjobOffer(jobOffers?.find((jOff=>jOff.jobPostingId===jobID)))
     }
@@ -35,10 +43,14 @@ setjobOffer(jobOffers?.find((jOff=>jOff.jobPostingId===jobID)))
         
         {
             jobOffers.length > 0 &&(
-                <JobOffers onReadMore={jobToReadMore} jobOffers={jobOffers} setopenJODetail={setopenJODetail} />
+                <JobOffers jobsToShow={jobsToShow} onReadMore={jobToReadMore} jobOffers={jobOffers} setopenJODetail={setopenJODetail} />
             )
         }
+         <div className="buttons">
+       </div>
     </div>
+       {jobsToShow < jobOffers.length && <Button className={`see-more`} onClick={()=>handleSeemore()} text={"More"} />}
+       {(jobsToShow > 6 ) && <Button className={`see-less`} onClick={()=>handleSeeless()} text={"Less"} />}
     {
         openJODetail&&(
             <JobOfferPopup jobOffer={jobOffer} setopenJODetail={setopenJODetail} />
