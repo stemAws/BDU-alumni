@@ -50,7 +50,7 @@ const Admin = () => {
             <Route path='home' element={<Home />} />
             <Route path='users' element={<Users />} />
             <Route path='News' element={<NewsList />} />
-            <Route path='edit-news/:newsId' element={<Editnews />} />
+            <Route path='News/edit-news/:newsId' element={<Editnews />} />
             <Route path='AddNews' element={<News />} />
             <Route path='AddUser' element={<AddUser />} />
             <Route path='story' element={<Stories />} />
@@ -64,7 +64,7 @@ const Admin = () => {
             <Route path='jobOffer' element={<JobOffer />} />
             <Route path='SuggestedJob' element={<SuggestedJob />} />
             <Route path='chapters' element={<ChaptersList />} />
-            <Route path='/chapters/:chapterId' element={<EditClub />} />
+            <Route path='chapters/:chapterId' element={<EditClub />} />
             <Route path='AddChapter' element={<Chapters />} />
             <Route path='feedback' element={<FeedBack />} />
             <Route path='Donation' element={<DonationList />} />
