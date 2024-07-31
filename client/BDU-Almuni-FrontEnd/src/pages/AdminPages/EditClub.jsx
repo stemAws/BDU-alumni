@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { ChevronLeft } from "@mui/icons-material";
-import '../../styles/editNews.css';
-
+import "../../styles/editNews.css";
 
 const EditClub = () => {
   const navigate = useNavigate();
@@ -13,22 +12,22 @@ const EditClub = () => {
 
   const [chaptersData, setchaptersData] = useState({
     title: "",
-    content: "",
-    link:""
+    description: "",
+    website: "",
   });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/edit-chapter/${chapterId}`
+          `${import.meta.env.VITE_BACKEND_URL}/get-chapter/${chapterId}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const chaptersDataFromServer = await response.json();
-
+        console.log(chaptersDataFromServer);
         setchaptersData(chaptersDataFromServer);
       } catch (error) {
         console.error("Error fetching chapters data:", error);
@@ -56,16 +55,18 @@ const EditClub = () => {
       setTitleError("Title field cannot be empty!");
       valid = false;
     } else if (!/^[a-zA-Z0-9\s]+$/.test(chaptersData.title)) {
-      setTitleError("Title field must contain only letters, numbers, and spaces!");
+      setTitleError(
+        "Title field must contain only letters, numbers, and spaces!"
+      );
       valid = false;
     } else {
       setTitleError("");
     }
 
-    if (!chaptersData.content) {
+    if (!chaptersData.description) {
       setContentError("Content field cannot be empty!");
       valid = false;
-    } else if (/^[0-9\s]+$/.test(chaptersData.content)) {
+    } else if (/^[0-9\s]+$/.test(chaptersData.description)) {
       setContentError("Please include meaningful information in the content");
       valid = false;
     } else {
@@ -79,7 +80,7 @@ const EditClub = () => {
           {
             method: "PUT",
             headers: {
-              'Content-Type': 'application/json',
+              "Content-Type": "application/json",
             },
             body: JSON.stringify(chaptersData),
           }
@@ -89,7 +90,11 @@ const EditClub = () => {
           navigate("/admin/chapters");
         } else {
           const errorResponse = await response.json();
-          console.error("Error updating chapters data:", response.status, errorResponse);
+          console.error(
+            "Error updating chapters data:",
+            response.status,
+            errorResponse
+          );
         }
       } catch (error) {
         console.error("Error:", error);
@@ -108,7 +113,11 @@ const EditClub = () => {
       </Link>
       <h2>Edit Club</h2>
       <div className="formContainer">
-        <form className="formform" onSubmit={handleSubmit} encType="multipart/form-data">
+        <form
+          className="formform"
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+        >
           <div className="form">
             <label className="label">chapters Title:</label>
             <input
@@ -124,8 +133,8 @@ const EditClub = () => {
             <label className="label">Content:</label>
             <textarea
               placeholder="Content"
-              name="content"
-              value={chaptersData.content}
+              name="description"
+              value={chaptersData.description}
               onChange={handleInputChange}
             />
             {contentError && <p className="errorMessage">{contentError}</p>}
@@ -134,8 +143,8 @@ const EditClub = () => {
             <label className="label">Link:</label>
             <input
               type="text"
-              name="eventLink"
-              value={chaptersData.link}
+              name="website"
+              value={chaptersData.website}
               onChange={handleInputChange}
             />
             {/* {LinkError && <p className="errorMessage">{LinkError}</p>} */}
