@@ -18,6 +18,7 @@ const JobOffer = () => {
   const [salary, setSalary] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [titleError, setTitleError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
@@ -177,6 +178,9 @@ const JobOffer = () => {
 
     if (valid) {
       try {
+
+        setLoading(true);
+
         const formDataToSend = new FormData();
         formDataToSend.append("image", image);
         formDataToSend.append("title", title);
@@ -208,6 +212,8 @@ const JobOffer = () => {
         }
       } catch (error) {
         console.error("Error:", error);
+      }finally {
+        setLoading(false);
       }
     }
   };
@@ -338,7 +344,11 @@ const JobOffer = () => {
             />
             {salaryError && <p className="errorMessage">{salaryError}</p>}
           </div>
-          <button type="submit">Upload</button>
+          <div className='buttonss'>
+            <button type="submit" disabled={loading}>
+              {loading ? 'Uploading...' : 'Upload'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
