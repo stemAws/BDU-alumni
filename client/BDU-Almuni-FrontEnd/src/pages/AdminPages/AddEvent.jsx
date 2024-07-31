@@ -18,6 +18,7 @@ const EventPost = () => {
   const [eventLocation, setEventLocation] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [titleError, setTitleError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
@@ -151,6 +152,9 @@ const EventPost = () => {
 
     if (valid) {
       try {
+
+        setLoading(true);
+
         const formDataToSend = new FormData();
         formDataToSend.append("image", image);
         formDataToSend.append("title", title);
@@ -181,6 +185,8 @@ const EventPost = () => {
         }
       } catch (error) {
         console.error("Error:", error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -295,7 +301,11 @@ const EventPost = () => {
             />
             {endDateError && <p className="errorMessage">{endDateError}</p>}
           </div>
-          <button type="submit" onClick={handleSubmit}>Upload</button>
+          <div className='buttonss'>
+            <button type="submit" disabled={loading} onClick={handleSubmit}>
+              {loading ? 'Uploading...' : 'Upload'}
+            </button>
+          </div>
         </form>
       </div>
     </div>
