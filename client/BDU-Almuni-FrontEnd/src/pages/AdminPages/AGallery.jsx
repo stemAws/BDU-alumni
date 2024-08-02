@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faChevronRight,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import { CloudDone, DeleteOutline, Edit } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import DeleteConfirmation from "../../component/DeleteConfirmation";
 import Category from "./Category";
 import "../../styles/AdminGallery.css";
 
-const Gallery = ({ batch, updateCategories, years, setYears, setFilteredBatches }) => {
+const Gallery = ({
+  batch,
+  updateCategories,
+  years,
+  setYears,
+  setFilteredBatches,
+}) => {
   const navigate = useNavigate();
   const [editCategory, setEditCategory] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -40,9 +50,13 @@ const Gallery = ({ batch, updateCategories, years, setYears, setFilteredBatches 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/gallery`);
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/gallery`
+        );
         const data = await response.json();
-        const filteredCategories = data.filter((category) => category.year === batch.year);
+        const filteredCategories = data.filter(
+          (category) => category.year === batch.year
+        );
         setCategories(filteredCategories);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -60,7 +74,7 @@ const Gallery = ({ batch, updateCategories, years, setYears, setFilteredBatches 
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-          }
+          },
         }
       );
 
@@ -85,12 +99,14 @@ const Gallery = ({ batch, updateCategories, years, setYears, setFilteredBatches 
           const deletedYear = selectedCategory.year;
 
           await fetch(
-            `${import.meta.env.VITE_BACKEND_URL}/gallery/galleryID?year=${deletedYear}`,
+            `${
+              import.meta.env.VITE_BACKEND_URL
+            }/gallery/galleryID?year=${deletedYear}`,
             {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-              }
+              },
             }
           );
 
@@ -109,7 +125,7 @@ const Gallery = ({ batch, updateCategories, years, setYears, setFilteredBatches 
   };
 
   const handleCategoryClick = (category) => {
-    console.log('Selected category ID:', category.galleryID);
+    console.log("Selected category ID:", category.galleryID);
     setSelectedCategory(category);
     setSelectedImage(null);
   };
@@ -134,23 +150,26 @@ const Gallery = ({ batch, updateCategories, years, setYears, setFilteredBatches 
           {categories &&
             categories.map((category) => (
               <div className="edit-cont" key={category.galleryID}>
-              <div
-                className="Admin-gallery"
-                key={category.galleryID}
-                onClick={() => handleCategoryClick(category)}
-              >
-                {category.images && category.images.length > 0 ? (
-                  <img src={category.images[0]} alt={category.event} />
-                ) : null}
-                <div className="gallery-overlay">
-                  <h2>{category.event}</h2>
-                </div>
+                <div
+                  className="Admin-gallery"
+                  key={category.galleryID}
+                  onClick={() => handleCategoryClick(category)}
+                >
+                  {category.images && category.images.length > 0 ? (
+                    <img src={category.images[0]} alt={category.event} />
+                  ) : null}
+                  <div className="gallery-overlay">
+                    <h2>{category.event}</h2>
+                  </div>
                 </div>
                 <DeleteOutline
                   className="deletegal"
                   onClick={(e) => handleDeleteCategory(category.galleryID, e)}
                 />
-                <Link className='' to={`/admin/edit-gallery/${category.galleryID}`}>
+                <Link
+                  className=""
+                  to={`/admin/edit-gallery/${category.galleryID}`}
+                >
                   <Edit
                     className="editEdit"
                     onClick={(e) => handleEditCategory(category, e)}
@@ -172,6 +191,13 @@ const Gallery = ({ batch, updateCategories, years, setYears, setFilteredBatches 
           </div>
           <Category galleryID={selectedCategory.galleryID} />
         </div>
+      )}
+      {showDeleteConfirmation && (
+        <DeleteConfirmation
+          close={() => setShowDeleteConfirmation(false)}
+          text="category"
+          onDelete={handleConfirmDelete}
+        />
       )}
     </div>
   );
