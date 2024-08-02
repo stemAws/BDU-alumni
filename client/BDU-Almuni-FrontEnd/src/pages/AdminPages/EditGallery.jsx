@@ -2,19 +2,17 @@ import React, { useState, useEffect } from "react";
 import "../../styles/EditGallery.css";
 import { Link } from "react-router-dom";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import {
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditGallery = () => {
   const navigate = useNavigate();
   const { galleryID } = useParams();
-
+  console.log(galleryID);
   // const [imageError, setImageError] = useState('');
-  const [titleError, setTitleError] = useState('');
-  const [yearError, setYearError] = useState('');
+  const [titleError, setTitleError] = useState("");
+  const [yearError, setYearError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+
 
   const handleClick = () => {
     navigate("/gallery");
@@ -22,8 +20,8 @@ const EditGallery = () => {
 
   const [formData, setFormData] = useState({
     event: "",
-    year: ""
-    });
+    year: "",
+  });
 
   useEffect(() => {
     const fetchGalleryData = async () => {
@@ -31,12 +29,13 @@ const EditGallery = () => {
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/gallery/${galleryID}`
         );
-        const [galleryData] = await response.json();
+        const galleryData = await response.json();
 
         if (galleryData) {
           setFormData({
             event: galleryData.event || "",
-            year: galleryData.year || ""
+            year: galleryData.year || "",
+            description: galleryData.description || "",
           });
         }
       } catch (error) {
@@ -48,68 +47,69 @@ const EditGallery = () => {
   }, [galleryID]);
 
   const handleInputChange = (e) => {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [e.target.id]: e.target.value,
-      }));
-   
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [e.target.id]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     let valid = true;
 
-    if (!formData.event){
-      setTitleError(formData.event ? '' : 'Title field cannot be empty!');
+    if (!formData.event) {
+      setTitleError(formData.event ? "" : "Title field cannot be empty!");
       valid = false;
-    }else if(!/^[a-zA-Z\s]+$/.test(formData.event)){
-      setTitleError('Title field must contain only letters and spaces!');
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.event)) {
+      setTitleError("Title field must contain only letters and spaces!");
       valid = false;
-    }else{
-      setTitleError('')
+    } else {
+      setTitleError("");
     }
 
     if (!formData.year) {
-      setYearError('Year field cannot be empty!');
-     valid = false;
-    } else if (isNaN(formData.year)){
-      setYearError('Year must be a number!');
+      setYearError("Year field cannot be empty!");
       valid = false;
-    }else if (formData.year.length !== 4){
-      setYearError('Year must be a 4-digit number!');
+    } else if (isNaN(formData.year)) {
+      setYearError("Year must be a number!");
       valid = false;
-    }else if (formData.year < 2019){
-      setYearError('Year must not be before 2019!!');
+    } else if (formData.year.length !== 4) {
+      setYearError("Year must be a 4-digit number!");
       valid = false;
-    }else {
-      setYearError('');
+    } else if (formData.year < 2019) {
+      setYearError("Year must not be before 2019!!");
+      valid = false;
+    } else {
+      setYearError("");
     }
-    
-
+    if (!formData.description) {
+      setDescriptionError(formData.description ? "" : "Description field cannot be empty!");
+      valid = false;
+    }
     if (valid) {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/gallery/${galleryID}`,
-        {
-          method: "PUT",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/gallery/${galleryID}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        // Redirect to the gallery page or handle success as needed
+        navigate("/admin/gallery");
+      } catch (error) {
+        console.error("Error updating gallery:", error);
+        // Handle the error, show an error message, or redirect to an error page
       }
-      // Redirect to the gallery page or handle success as needed
-      navigate("/admin/gallery");
-    } catch (error) {
-      console.error("Error updating gallery:", error);
-      // Handle the error, show an error message, or redirect to an error page
     }
-  }
   };
 
   return (
@@ -145,6 +145,19 @@ const EditGallery = () => {
               onChange={handleInputChange}
             />
             {yearError && <p className="errorMessage">{yearError}</p>}
+          </div>
+          <div className="form">
+            <label className="label" htmlFor="description">
+              Description:
+            </label>
+            <input
+              type="text"
+              id="description"
+              placeholder="Category description"
+              value={formData.description}
+              onChange={handleInputChange}
+            />
+            {descriptionError && <p className="errorMessage">{descriptionError}</p>}
           </div>
           <button type="submit">Save Change</button>
         </form>
