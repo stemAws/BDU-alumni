@@ -63,13 +63,13 @@ const EventPost = () => {
       setDescriptionError(
         description ? "" : "Description field cannot be empty!"
       );
-      valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-      setDescriptionError(
-        "Description must contain only letters and spaces, with numbers allowed anywhere after letters!"
-      );
-      valid = false;
-    }
+      valid = false;}
+    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
+    //   setDescriptionError(
+    //     "Description must contain only letters and spaces, with numbers allowed anywhere after letters!"
+    //   );
+    //   valid = false;
+    // }
     if (!isValidUrl(link) && link.trim() !== "") {
       setLinkError("Please enter a valid URL");
       valid = false;
