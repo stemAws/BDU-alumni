@@ -1,43 +1,13 @@
-// import '../../styles/AdminGallery.css'
-// import { Link } from "react-router-dom";
-
-// const AGallery = () => {
-//   return (
-//     <div className='G-container'>
-//         <div className="SuggestedJobheader">
-//         <h3> Gallery </h3>
-//         <Link to="/admin/Addgallery">
-//           <button className="addJob"> Add Gallery</button>
-//         </Link>
-//       </div>
-//         AGallery
-
-//         </div>
-//   )
-// }
-
-// export default AGallery
-
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronLeft,
-  faChevronRight,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
-import { DeleteOutline, Edit } from "@mui/icons-material";
+import { faChevronLeft, faChevronRight, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { CloudDone, DeleteOutline, Edit } from "@mui/icons-material";
 import { Link, useNavigate } from "react-router-dom";
 import DeleteConfirmation from "../../component/DeleteConfirmation";
 import Category from "./Category";
 import "../../styles/AdminGallery.css";
 
-const Gallery = ({
-  batch,
-  updateCategories,
-  years,
-  setYears,
-  setFilteredBatches,
-}) => {
+const Gallery = ({ batch, updateCategories, years, setYears, setFilteredBatches }) => {
   const navigate = useNavigate();
   const [editCategory, setEditCategory] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -64,32 +34,23 @@ const Gallery = ({
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-
-      const fetchData = async () => {
-        try {
-          const response = await fetch(
-            `${import.meta.env.VITE_BACKEND_URL}/gallery`
-          );
-          const data = await response.json();
-
-          const filteredCategories = data.filter(
-            (category) => category.year === batch.year
-          );
-
-          setCategories(filteredCategories);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-
-      fetchData();
     };
-  }, [
-    batch.year,
-    updateCategories.currentIndex,
-    selectedImage,
-    selectedCategory,
-  ]);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/gallery`);
+        const data = await response.json();
+        const filteredCategories = data.filter((category) => category.year === batch.year);
+        setCategories(filteredCategories);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [batch.year, updateCategories.currentIndex]);
 
   const handleConfirmDelete = async () => {
     try {
@@ -99,7 +60,7 @@ const Gallery = ({
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-          },
+          }
         }
       );
 
@@ -124,14 +85,12 @@ const Gallery = ({
           const deletedYear = selectedCategory.year;
 
           await fetch(
-            `${
-              import.meta.env.VITE_BACKEND_URL
-            }/gallery/galleryID?year=${deletedYear}`,
+            `${import.meta.env.VITE_BACKEND_URL}/gallery/galleryID?year=${deletedYear}`,
             {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
-              },
+              }
             }
           );
 
@@ -150,13 +109,8 @@ const Gallery = ({
   };
 
   const handleCategoryClick = (category) => {
+    console.log('Selected category ID:', category.galleryID);
     setSelectedCategory(category);
-    setSelectedImage(null);
-
-    navigate(`/admin/gallery/${category.galleryID}`);
-  };
-
-  const handleCloseImage = () => {
     setSelectedImage(null);
   };
 
@@ -164,58 +118,22 @@ const Gallery = ({
     setSelectedCategory(null);
   };
 
-  const handleImageClick = (image) => {
-    setSelectedImage(image);
-  };
-
-  const handleEscapeKey = () => {
-    setSelectedImage(null);
-    setSelectedCategory(null);
-  };
-
   const handleKeyDown = (event) => {
     if (event.key === "Escape") {
-      if (selectedImage) {
-        setSelectedImage(null);
-      } else if (selectedCategory) {
-        handleEscapeKey();
-      }
+      handleCloseCategory();
     }
-    if (event.key === "ArrowLeft" && selectedCategory) {
-      navigateImage("prev");
-    } else if (event.key === "ArrowRight" && selectedCategory) {
-      navigateImage("next");
-    }
-  };
-
-  const navigateImage = (direction) => {
-    const currentIndex = selectedCategory.images.findIndex(
-      (img) => img === selectedImage
-    );
-    let newIndex;
-
-    if (direction === "prev") {
-      newIndex = currentIndex === 0 ? 0 : currentIndex - 1;
-    } else if (direction === "next") {
-      newIndex =
-        currentIndex === selectedCategory.images.length - 1
-          ? currentIndex
-          : currentIndex + 1;
-    }
-
-    setSelectedImage(selectedCategory.images[newIndex]);
   };
 
   return (
     <div className="Admingallerycont">
       <div>
-        {/* <p>class of 2023</p> */}
         <h1 className="batch-header">Class of {batch.year}</h1>
       </div>
       {!selectedCategory && (
         <div className="admin-cat-container">
           {categories &&
             categories.map((category) => (
+              <div className="edit-cont" key={category.galleryID}>
               <div
                 className="Admin-gallery"
                 key={category.galleryID}
@@ -224,14 +142,15 @@ const Gallery = ({
                 {category.images && category.images.length > 0 ? (
                   <img src={category.images[0]} alt={category.event} />
                 ) : null}
-                <h2 style={{ color: "#000000", fontSize: "18" }}>
-                  {category.event}
-                </h2>
+                <div className="gallery-overlay">
+                  <h2>{category.event}</h2>
+                </div>
+                </div>
                 <DeleteOutline
                   className="deletegal"
                   onClick={(e) => handleDeleteCategory(category.galleryID, e)}
                 />
-                <Link to={`/admin/edit-gallery/${category.galleryID}`}>
+                <Link className='' to={`/admin/edit-gallery/${category.galleryID}`}>
                   <Edit
                     className="editEdit"
                     onClick={(e) => handleEditCategory(category, e)}
@@ -242,7 +161,7 @@ const Gallery = ({
         </div>
       )}
       <div className="line"></div>
-      {selectedCategory && !selectedImage && (
+      {selectedCategory && (
         <div className="admin-selected-category">
           <div className="close-icon" onClick={handleCloseCategory}>
             <FontAwesomeIcon
@@ -251,55 +170,8 @@ const Gallery = ({
               style={{ background: "rgba(0, 0, 0, 0.9)" }}
             />
           </div>
-          <div className="image-grid">
-            {selectedCategory.images && selectedCategory.images.length > 0
-              ? selectedCategory.images.map((image, index) => (
-                  <div key={index} className="image-wrapper">
-                    <img
-                      src={image}
-                      alt={image}
-                      onClick={() => handleImageClick(image)}
-                    />
-                  </div>
-                ))
-              : null}
-          </div>
+          <Category galleryID={selectedCategory.galleryID} />
         </div>
-      )}
-
-      {selectedImage && (
-        <div className="individual-image">
-          <FontAwesomeIcon
-            icon={faTimes}
-            size="1x"
-            className="close-icon"
-            onClick={handleCloseImage}
-          />
-          <div className="navigation">
-            <FontAwesomeIcon
-              icon={faChevronLeft}
-              className="arrow-icon-left"
-              onClick={() => navigateImage("prev")}
-            />
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              className="arrow-icon-right"
-              onClick={() => navigateImage("next")}
-            />
-          </div>
-          <img src={selectedImage} alt={selectedImage} className="full-image" />
-        </div>
-      )}
-
-      {selectedCategory && !selectedImage && (
-        <Category category={selectedCategory} />
-      )}
-      {showDeleteConfirmation && (
-        <DeleteConfirmation
-          close={() => setShowDeleteConfirmation(false)}
-          text="category"
-          onDelete={handleConfirmDelete}
-        />
       )}
     </div>
   );
