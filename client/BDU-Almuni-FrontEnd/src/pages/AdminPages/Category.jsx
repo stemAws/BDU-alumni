@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-const Category = () => {
+const Category = ({ galleryID }) => {
   const [category, setCategory] = useState(null);
-  const { id: galleryID } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('galleryID from URL:', galleryID);
       try {
         if (galleryID) {
           const response = await fetch(
             `${import.meta.env.VITE_BACKEND_URL}/gallery/${galleryID}`
           );
           const data = await response.json();
-
+          console.log('Fetched category data:', data);
           setCategory(data);
         }
       } catch (error) {
@@ -30,7 +30,6 @@ const Category = () => {
         <>
           <h2>{category.event}</h2>
           <div>
-            {/* Render images for the selected category */}
             {category.images &&
               category.images.map((image, index) => (
                 <img
