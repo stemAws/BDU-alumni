@@ -155,20 +155,5 @@ transition: all 0s ease-in;
     border: 1px solid #c5c5c5;
     color: #858585;
 }
-.userSwitch{
-display: none;
-}
 
 /*admin css*/
-.Admin-JO-flex-container{
-    flex: 4;
-    overflow-y: auto;
-    margin: 20px;
-    width: 100vw;
-}
-
-.Admin-job-offer-container{
-    width: 100%;
-    grid-template-columns: repeat(2, 1fr);
-    margin-left: 50px;
-}
