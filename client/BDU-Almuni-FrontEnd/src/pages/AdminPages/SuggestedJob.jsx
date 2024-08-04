@@ -1,4 +1,5 @@
 import "../../styles/jobOffer.css";
+import '../../styles/suggestedJob.css'
 import { useEffect, useState } from "react";
 import JobOfferPopup from "../../component/JobOfferPopup";
 import JobOffers from "../../component/JobOffers";
