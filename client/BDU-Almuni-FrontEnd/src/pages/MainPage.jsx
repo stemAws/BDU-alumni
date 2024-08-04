@@ -3,6 +3,7 @@ import MainBody from './MainBody';
 import Stories from './Stories';
 import Events from './Events';
 import Gallery from './Gallery'
+import GalleryList from './GalleryList'
 import Signin from '../component/Signin';
 import Chapters from './Chapters';
 import History from './History';
@@ -14,7 +15,6 @@ import Footer from '../component/Footer';
 import ContactUS from "./ContactUs"
 import JobOffer from './JobOffer';
 import AuthService from '../component/AuthService';
-import Cookies from 'js-cookie';
 import ProfilePage from './Profile/ProfilePage';
 import ChangePassword from './ChangePassword';
 import PageNotFound from './PageNotFound';
@@ -24,6 +24,7 @@ import SearchAndFilter from './SearchAndFilter';
 import AboutDevs from './AboutDevs';
 import StoriesDetail from './StoriesDetail';
 import Explore from './Explore';
+
 export const SigninContext = createContext();
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
@@ -54,7 +55,8 @@ const MainPage = () => {
           <Route path="/" exact Component = {MainBody} />
           {/* <Route path="/stories"  Component = {Stories} />
           <Route path="/events"  Component = {Events} /> */}
-          <Route path="/gallery"  Component = {Gallery} />
+        <Route path="/gallery/:galleryID" element={<Gallery />} />
+        <Route path="gallery" element={<GalleryList />} />
           <Route path="/newsAndUpdates"  Component = {NewsAndUpdates} />
           <Route path="/Chapters"  Component = {loginState?Chapters:Signin} />
           <Route path="/jobOffer"  Component = {loginState?JobOffer:Signin} />
