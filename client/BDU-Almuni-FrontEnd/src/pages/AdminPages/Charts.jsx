@@ -187,7 +187,7 @@ export default function Chart() {
       <DegreeAnalytics />
       <AdmissionAnalytics />
       <div className="chart6">
-        <h3 className="chartTitle"> STEM Students Job Title</h3>
+        <h3 className="chartTitle"> BDU Alumni Job Title</h3>
         <ResponsiveContainer width="100%" height={600}>
           <BarChart
             width={500}

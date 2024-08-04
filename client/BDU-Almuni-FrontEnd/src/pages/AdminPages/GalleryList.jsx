@@ -72,7 +72,7 @@ const GalleryList = () => {
           value={searchTerm}
           onChange={handleSearch}
         />
-        <h3> Bahir Dar STEM Center Gallery </h3>
+        <h3> Bahir Dar University Alumni Gallery </h3>
         <Link to="/admin/AddGallery">
           <button className="addGallery" onClick={handleClick}>
             + Add Gallery
