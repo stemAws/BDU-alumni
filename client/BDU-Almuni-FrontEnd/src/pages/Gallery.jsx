@@ -1,19 +1,44 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-
-import '../styles/Gallery.css'
-
-import Category from "./Category";
-
-const Gallery = ({ batch, updateCategories, selectedDepartment }) => {
+import { useNavigate } from "react-router-dom";
+import DeleteConfirmation from "../component/DeleteConfirmation";
+import "../styles/Gallery.css";
+const Gallery = ({
+  batch,
+  updateCategories,
+  years,
+  setYears,
+  setFilteredBatches,
+}) => {
+  const navigate = useNavigate();
+  const [editCategory, setEditCategory] = useState(null);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedMedia, setSelectedMedia] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
+  const [showImageOverlay, setShowImageOverlay] = useState(false);
+  const [categoryDescription, setCategoryDescription] = useState("");
+  const [categoryTitle, setCategoryTitle] = useState("");
+
+  const handleEditCategory = (category, e) => {
+    e.stopPropagation();
+    setEditCategory(category);
+    navigate(`/admin/edit-gallery/${category.galleryID}`);
+  };
+
+  const handleDeleteCategory = (categoryID, e) => {
+    e.stopPropagation();
+    setCategoryToDelete(categoryID);
+    setShowDeleteConfirmation(true);
+  };
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
@@ -21,20 +46,18 @@ const Gallery = ({ batch, updateCategories, selectedDepartment }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+  }, []);
 
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/gallery`
         );
         const data = await response.json();
-
-        // Filter categories based on the batch year and selected department
         const filteredCategories = data.filter(
-          (category) => category.year === batch.year && 
-          (!selectedDepartment || category.department === selectedDepartment)
+          (category) => category.year === batch.year
         );
-
         setCategories(filteredCategories);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -42,90 +65,152 @@ const Gallery = ({ batch, updateCategories, selectedDepartment }) => {
     };
 
     fetchData();
-  }, [batch.year, updateCategories, selectedMedia, selectedCategory, selectedDepartment]);
+  }, [batch.year, updateCategories.currentIndex]);
+
+  const handleConfirmDelete = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/gallery/${categoryToDelete}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const updatedCategories = categories.filter(
+        (category) => category.galleryID !== categoryToDelete
+      );
+      setCategories(updatedCategories);
+      setSelectedCategories(
+        selectedCategories.filter((id) => id !== categoryToDelete)
+      );
+
+      if (selectedCategory !== null) {
+        const categoriesInBatch = updatedCategories.filter(
+          (category) => category.year === selectedCategory.year
+        );
+
+        if (categoriesInBatch.length === 1) {
+          const deletedYear = selectedCategory.year;
+
+          await fetch(
+            `${
+              import.meta.env.VITE_BACKEND_URL
+            }/gallery/galleryID?year=${deletedYear}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const updatedYears = years.filter((year) => year !== deletedYear);
+          setYears(updatedYears);
+          setFilteredBatches(updatedYears.map((year) => ({ id: year, year })));
+        }
+      }
+
+      setSelectedCategory(null);
+      setShowDeleteConfirmation(false);
+      setCategoryToDelete(null);
+    } catch (error) {
+      console.error("Error deleting category:", error);
+    }
+  };
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    setSelectedMedia(null);
+    setCategoryDescription(category.description);
+    setCategoryTitle(category.event);
   };
 
-  const handleCloseMedia = () => {
-    setSelectedMedia(null);
+  const handleImageClick = (image, index) => {
+    setSelectedImage(image);
+    setSelectedImageIndex(index);
+    setShowImageOverlay(true);
   };
 
   const handleCloseCategory = () => {
     setSelectedCategory(null);
   };
 
-  const handleMediaClick = (media) => {
-    setSelectedMedia(media);
-  };
-
-  const handleEscapeKey = () => {
-    setSelectedMedia(null);
-    setSelectedCategory(null);
+  const handleCloseImageOverlay = () => {
+    setShowImageOverlay(false);
   };
 
   const handleKeyDown = (event) => {
     if (event.key === "Escape") {
-      if (selectedMedia) {
-        setSelectedMedia(null);
-      } else if (selectedCategory) {
-        handleEscapeKey();
-      }
-    }
-    if (event.key === "ArrowLeft" && selectedCategory) {
-      navigateMedia("prev");
-    } else if (event.key === "ArrowRight" && selectedCategory) {
-      navigateMedia("next");
+      handleCloseImageOverlay();
+    } else if (event.key === "ArrowRight") {
+      handleNextImage();
+    } else if (event.key === "ArrowLeft") {
+      handlePrevImage();
     }
   };
 
-  const navigateMedia = (direction) => {
-    const currentIndex = selectedCategory.media.findIndex(
-      (media) => media === selectedMedia
-    );
-    let newIndex;
-
-    if (direction === "prev") {
-      newIndex = currentIndex === 0 ? 0 : currentIndex - 1;
-    } else if (direction === "next") {
-      newIndex =
-        currentIndex === selectedCategory.media.length - 1
-          ? currentIndex
-          : currentIndex + 1;
+  const handleNextImage = () => {
+    if (selectedImageIndex < selectedCategory.images.length - 1) {
+      const newIndex = selectedImageIndex + 1;
+      setSelectedImageIndex(newIndex);
+      setSelectedImage(selectedCategory.images[newIndex]);
     }
-
-    setSelectedMedia(selectedCategory.media[newIndex]);
   };
+
+  const handlePrevImage = () => {
+    if (selectedImageIndex > 0) {
+      const newIndex = selectedImageIndex - 1;
+      setSelectedImageIndex(newIndex);
+      setSelectedImage(selectedCategory.images[newIndex]);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedImageIndex, selectedCategory]);
 
   return (
-    <div>
+    <div className="Admingallerycont">
       <div>
-        <h1 className="batch-header">{`Class of ${batch.year}`}</h1>
+        <h1 className="batch-header">Class of {batch.year}</h1>
       </div>
       {!selectedCategory && (
-        <div className="cat-container">
-          {categories.map((category) => (
-            <div
-              className="gallery"
-              key={category.galleryID}
-              onClick={() => handleCategoryClick(category)}
-            >
-              {category.media.length > 0 && (
-                <img src={category.media[0].url} alt={category.event} />
-              )}
-              <h2 style={{ color: "#000000", fontSize: "18" }}>
-                {category.event}
-              </h2>
-            </div>
-          ))}
+        <div className="admin-cat-container">
+          {categories &&
+            categories.map((category) => (
+              <div className="edit-cont" key={category.galleryID}>
+                <div
+                  className="Admin-gallery"
+                  key={category.galleryID}
+                  onClick={() => handleCategoryClick(category)}
+                >
+                  {category.images && category.images.length > 0 ? (
+                    <img src={category.images[0]} alt={category.description} />
+                  ) : null}
+                  <div className="gallery-overlay">
+                    <h2>{category.description}</h2>
+                  </div>
+                </div>
+
+                <div className="gallery-title">
+                  <h2>{category.event}</h2>
+                </div>
+              </div>
+            ))}
         </div>
       )}
       <div className="line"></div>
-
-      {selectedCategory && !selectedMedia && (
-        <div className="selected-category">
+      {selectedCategory && (
+        <div className="admin-selected-category">
           <div className="close-icon" onClick={handleCloseCategory}>
             <FontAwesomeIcon
               icon={faTimes}
@@ -133,187 +218,65 @@ const Gallery = ({ batch, updateCategories, selectedDepartment }) => {
               style={{ background: "rgba(0, 0, 0, 0.9)" }}
             />
           </div>
-          <div className="media-grid">
-            {selectedCategory.media.map((media, index) => (
-              <div key={index} className="media-wrapper">
-                {media.type === "image" && (
-                  <img
-                    src={media.url}
-                    alt={media.url}
-                    onClick={() => handleMediaClick(media)}
-                  />
-                )}
-                {media.type === "audio" && (
-                  <div onClick={() => handleMediaClick(media)}>
-                    <audio controls>
-                      <source src={media.url} type="audio/mpeg" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </div>
-                )}
-                {media.type === "video" && (
-                  <div onClick={() => handleMediaClick(media)}>
-                    <video width="320" height="240" controls>
-                      <source src={media.url} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                )}
+          <div className="category-title">
+            <h2>{categoryTitle}</h2>
+          </div>
+          <div className="category-description">
+            <h2>{categoryDescription}</h2>
+          </div>
+          <div className="image-grid">
+            {selectedCategory.images.map((image, index) => (
+              <div
+                className="image-wrapper"
+                key={index}
+                onClick={() => handleImageClick(image, index)}
+              >
+                <img src={image} alt={`Image ${index}`} />
               </div>
             ))}
           </div>
         </div>
       )}
-      {selectedMedia && (
-        <div className="individual-media">
+
+      {showDeleteConfirmation && (
+        <DeleteConfirmation
+          close={() => setShowDeleteConfirmation(false)}
+          text="category"
+          onDelete={handleConfirmDelete}
+        />
+      )}
+      {showImageOverlay && selectedImage && (
+        <div className="individual-image">
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            size="2x"
+            className="arrow-icon-left"
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePrevImage();
+            }}
+          />
+          <img src={selectedImage} alt="Selected" className="full-image" />
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            size="2x"
+            color="white"
+            className="arrow-icon-right"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNextImage();
+            }}
+          />
           <FontAwesomeIcon
             icon={faTimes}
-            size="1x"
+            size="2x"
             className="close-icon"
-            onClick={handleCloseMedia}
+            onClick={handleCloseImageOverlay}
           />
-          <div className="navigation">
-            <FontAwesomeIcon
-              icon={faChevronLeft}
-              className="arrow-icon-left"
-              onClick={() => navigateMedia("prev")}
-            />
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              className="arrow-icon-right"
-              onClick={() => navigateMedia("next")}
-            />
-          </div>
-          {selectedMedia.type === "image" && (
-            <img src={selectedMedia.url} alt={selectedMedia.url} className="full-media" />
-          )}
-          {selectedMedia.type === "audio" && (
-            <audio controls className="full-media">
-              <source src={selectedMedia.url} type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
-          )}
-          {selectedMedia.type === "video" && (
-            <video controls className="full-media">
-              <source src={selectedMedia.url} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          )}
         </div>
       )}
-
-      {selectedCategory && !selectedMedia && (
-        <Category category={selectedCategory} />
-      )}
     </div>
   );
 };
 
-const Batches = ({ batchData, updateCategories, selectedDepartment }) => {
-  return (
-    <div>
-      {batchData.map((batch) => (
-        <Gallery
-          key={batch.id}
-          batch={batch}
-          updateCategories={updateCategories}
-          selectedDepartment={selectedDepartment}
-        />
-      ))}
-    </div>
-  );
-};
-
-const App = () => {
-  const [years, setYears] = useState([]);
-  const [departments, setDepartments] = useState([]);
-  const [selectedDepartment, setSelectedDepartment] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredBatches, setFilteredBatches] = useState([]);
-
-  const updateCategories = async (year) => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/gallery`);
-      const data = await response.json();
-
-      // Sort the data by year in descending order
-      const sortedData = data.sort((a, b) => b.year - a.year);
-
-      setYears(sortedData.map((item) => item.year));
-      setFilteredBatches(sortedData.map((item) => ({ id: item.year, year: item.year })));
-    } catch (error) {
-      console.error("Error updating categories:", error);
-    }
-  };
-
-  useEffect(() => {
-    const fetchYearsAndDepartments = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/gallery`);
-        const data = await response.json();
-
-        // Sort the data by year in descending order
-        const sortedData = data.sort((a, b) => b.year - a.year);
-
-        // Extract unique years and departments from the sorted data
-        const uniqueYears = [...new Set(sortedData.map((item) => item.year))];
-        const uniqueDepartments = [...new Set(sortedData.map((item) => item.department))];
-
-        setYears(uniqueYears);
-        setDepartments(uniqueDepartments);
-        setFilteredBatches(uniqueYears.map((year) => ({ id: year, year })));
-      } catch (error) {
-        console.error("Error fetching years and departments:", error);
-      }
-    };
-
-    fetchYearsAndDepartments();
-  }, []);
-
-  const handleSearch = (event) => {
-    const term = event.target.value;
-    setSearchTerm(term);
-    const filtered = years.filter((year) => year.toString().includes(term));
-    setFilteredBatches(filtered.map((year) => ({ id: year, year })));
-  };
-
-  const handleDepartmentChange = (event) => {
-    setSelectedDepartment(event.target.value);
-  };
-
-  return (
-    <div className="body">
-      <div className="gallery-header">
-        <h1>Our stories through the lens of time</h1>
-      </div>
-      <div className="searchAndCategory">
-      <input
-        className="search"
-        type="text"
-        placeholder="Search by year"
-        value={searchTerm}
-        onChange={handleSearch}
-      />
-      <select
-        className="department-dropdown"
-        value={selectedDepartment}
-        onChange={handleDepartmentChange}
-      >
-        <option value="">All Departments</option>
-        {departments.map((department) => (
-          <option key={department} value={department}>
-            {department}
-          </option>
-        ))}
-      </select>
-      </div>
-      <Batches
-        batchData={filteredBatches}
-        updateCategories={updateCategories}
-        selectedDepartment={selectedDepartment}
-      />
-    </div>
-  );
-};
-
-export default App;
+export default Gallery;
