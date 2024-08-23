@@ -158,7 +158,7 @@ exports.getAllAlumni = async () => {
           Alumni a 
       ON 
           p.personId = a.personId
-  `);  
+  `);
 
     return queryResult[0];
   } catch (error) {
@@ -493,5 +493,21 @@ exports.getAlumniDirectory = async (searchBy, searchByValue) => {
   } catch (error) {
     console.error("Error fetching alumni:", error);
     throw error;
+  }
+};
+
+
+exports.reserveTranscriptPlace = async (alumniId) => {
+  const [result] = await db.query(
+    'INSERT INTO TranscriptReservations (alumniId) VALUES (?)',
+    [alumniId]
+  );
+
+  if (result.affectedRows > 0) {
+    console.log(`Reserved place for studentId: ${alumniId}`);
+    return true;
+  } else {
+    console.log(`Failed to reserve place for studentId: ${alumniId}`);
+    return false;
   }
 };
