@@ -102,7 +102,6 @@ const checkbox=()=>{
         else if(res.ok){
         const personalInfoFromServer= await res.json();
         setPlaceholders(personalInfoFromServer)
-        console.log(personalInfoFromServer,"data from server")
         }
         else if (!res.ok) {
           throw new Error(`Failed to fetch personal info: ${res.status} - ${res.statusText}`);
