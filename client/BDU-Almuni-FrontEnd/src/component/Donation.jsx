@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaBook, FaHeart, FaRoad, FaSchool, FaTimes } from "react-icons/fa";
 import Button from "./Button";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo.svg";
 import '../styles/donation.css'
 const Donation = ({close}) => {
     let lastSelectedIcon = -1;

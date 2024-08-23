@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import "../styles/footer.css";
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo.svg";
 import Donation from './Donation';
 const sections = [
   {
