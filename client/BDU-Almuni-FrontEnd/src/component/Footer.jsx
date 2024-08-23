@@ -93,7 +93,7 @@ const Footer = () => {
       <hr />
       <div className="footer___bottom">
         <div className="bottom___left">
-          <p>&copy; 2024 Bahir Dar University</p>
+          <p>&copy; {new Date().getFullYear()} Bahir Dar University</p>
         </div>
         <div className="bottom___right">
           <a href="#">Terms of Service</a>
