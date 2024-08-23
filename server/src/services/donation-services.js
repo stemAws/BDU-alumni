@@ -3,7 +3,7 @@ const db = require('../config/db');
 exports.createDonation = async function (title, link, description) {
   try {
     const [result] = await db.query(
-      "INSERT INTO donation (title, link, description) VALUES (?, ?, ?)",
+      "INSERT INTO Donation (title, link, description) VALUES (?, ?, ?)",
       [title, link, description]
     );
 
@@ -19,7 +19,7 @@ exports.updateDonation = async function (id, updateDonation) {
 
   const [result] = await db.query(
     `
-    UPDATE donation
+    UPDATE Donation
     SET title = ?, link = ?, description = ?
     WHERE id = ?
   `,
@@ -31,7 +31,7 @@ exports.updateDonation = async function (id, updateDonation) {
 
 exports.getDonationById = async function (id) {
   try {
-    const [rows] = await db.query("SELECT * FROM donation WHERE id = ?", [
+    const [rows] = await db.query("SELECT * FROM Donation WHERE id = ?", [
       id,
     ]);
 
@@ -48,7 +48,7 @@ exports.getDonationById = async function (id) {
 
 exports.getAllDonation = async function () {
   try {
-    const [donation] = await db.query("SELECT * FROM donation");
+    const [donation] = await db.query("SELECT * FROM Donation");
 
     return donation;
   } catch (error) {
@@ -59,7 +59,7 @@ exports.getAllDonation = async function () {
 
 exports.deleteDonation = async function (id) {
   try {
-    const [result] = await db.query("DELETE FROM donation WHERE id = ?", [
+    const [result] = await db.query("DELETE FROM Donation WHERE id = ?", [
       id,
     ]);
 
