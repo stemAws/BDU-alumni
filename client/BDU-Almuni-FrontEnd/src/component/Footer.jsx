@@ -1,8 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 import "../styles/footer.css";
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import logo from "../assets/images/logo.png";
-
+import Donation from './Donation';
 const sections = [
   {
     title: 'Academics',
@@ -50,13 +50,12 @@ const sections = [
     ]
   }
 ];
-
-const FooterSection = ({ title, links }) => (
+const FooterSection = ({ title, links ,setdonationPopUp }) => (
   <div className="each">
     <h4>{title}</h4>
     <ul>
       {links.map((link, index) => (
-        <li key={index}>
+        <li key={index} onClick={ ()=>setdonationPopUp(true)}>
           <a href={link.url}>{link.text}</a>
         </li>
       ))}
@@ -65,6 +64,7 @@ const FooterSection = ({ title, links }) => (
 );
 
 const Footer = () => {
+  const [donationPopUp, setdonationPopUp] = useState(false)
   return (
     <footer className='footer___container'>
       <div className="footer___top">
@@ -86,7 +86,7 @@ const Footer = () => {
         </div>
         <div className="middle___right">
           {sections.map((section, index) => (
-            <FooterSection key={index} title={section.title} links={section.links} />
+            <FooterSection setdonationPopUp={setdonationPopUp} key={index} title={section.title} links={section.links} />
           ))}
         </div>
       </div>
@@ -101,6 +101,10 @@ const Footer = () => {
           <a href="#">Cookies</a>
         </div>
       </div>
+      {
+        donationPopUp&&
+          <Donation close={()=>setdonationPopUp(false)}/>
+      }
     </footer>
   )
 }
