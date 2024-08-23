@@ -131,9 +131,10 @@
     margin-right:10px ;
     object-fit: cover;
 }
-.profile_container .userdetail{
+.profile_container .userdetail {
+    display: flex;
     text-transform: capitalize;
-    margin:10px 0 10px 80px;
+    justify-content: center;
 }
 .profile_container .socialmedia{
     display: flex;
