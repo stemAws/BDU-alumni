@@ -465,3 +465,21 @@ exports.searchAlumni = async function (req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+exports.reserveTranscriptPlace = async function(req, res) {
+  try {
+    const alumniId = req.alumni.alumniId;
+
+    const result = await alumniService.reserveTranscriptPlace(alumniId);
+
+    if (result) {
+      res.status(200).json({ success: true});
+    } else {
+      res.status(500).json({ error: 'Failed to reserve place' });
+    }
+  } catch (error) {
+    console.error('Error reserving place:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
