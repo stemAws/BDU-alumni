@@ -247,11 +247,13 @@ exports.updateAlumni = async (id, alumniData) => {
       [fullName, gender, email, username, personId]
     );
 
+    const socialMediaJson = JSON.stringify(socialMedia);
+
     await db.query(
       `UPDATE Alumni
        SET currentLocation = ?, socialMedia = ?, phoneNumber = ?, bio = ?
        WHERE alumniId = ?`,
-      [currentLocation, socialMedia, phoneNumber, bio, alumniId]
+      [currentLocation, socialMediaJson, phoneNumber, bio, alumniId]
     );
 
     return { success: true };
