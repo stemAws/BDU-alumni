@@ -3,6 +3,7 @@ import "../styles/footer.css";
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
 import logo from "../assets/images/logo.svg";
 import Donation from './Donation';
+import Confirmation from "./Confirmation";
 const sections = [
   {
     title: 'Academics',
@@ -65,17 +66,41 @@ const FooterSection = ({ title, links ,setdonationPopUp }) => (
 
 const Footer = () => {
   const [donationPopUp, setdonationPopUp] = useState(false)
+  const [emailSuccess, setemailSuccess] = useState(false)
+  const [emailInput, setemailInput] = useState()
+  const handleEmailSent=(e)=>{
+    e.preventDefault()
+    // try {
+      // const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/emailSub`)
+    // } catch (error) {
+      
+    // }
+    
+    if (emailInput) {
+      setemailSuccess(true)
+      setemailInput('')
+    }
+      // setemailSuccess(true)
+  }
   return (
     <footer className='footer___container'>
       <div className="footer___top">
         <h2>Join our newsletter to <br /> keep up to date with us!</h2>
-        <form action="">
+        <form onSubmit={handleEmailSent} >
           <div className="subscribe">
             <Person2OutlinedIcon />
-            <input type="email" placeholder='Enter your email' />
+            <input 
+              onChange={(e)=>setemailInput(e.target.value)}  
+              value={emailInput}
+              type="email"
+              required
+              placeholder='Enter your email' />
           </div>
          <input className='submit-btn' type="submit" value="Subscribe" />
         </form>
+        {emailSuccess&&
+          <Confirmation close={()=>{setemailSuccess(false)}}text={'Thanks For Registering We Will Keep In Touch'} />
+        }
       </div>
       <hr />
       <div className="footer___middle">

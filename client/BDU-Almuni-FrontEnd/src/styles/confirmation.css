@@ -1,0 +1,34 @@
+.confirmation-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #0000003e;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+.confirmation-overlay > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    width: 30%;
+    height: 30%;
+    background-color: #fff;
+    border-radius: 10px;
+    color: #000;
+    font: 600 16px 'Poppins';
+}
+.confirmation-overlay > div>p{
+    width: 80%;
+}
+.confirmation-overlay .btn{
+    width: 50%;
+    font-weight: 600;
+    border:1px solid ;
+}
