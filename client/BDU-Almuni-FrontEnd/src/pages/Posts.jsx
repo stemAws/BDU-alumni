@@ -105,8 +105,8 @@ const Posts = (props) => {
       }, [userDetails]); 
   useEffect(()=>{
     const settingSocialfromDatabase=()=>{
-      if (userDetails.socialMediaHandles) {
-        const SocialfromDatabase = userDetails.socialMediaHandles;
+      if (userDetails.socialMedia) {
+        const SocialfromDatabase = userDetails.socialMedia;
       setSocialValues(SocialfromDatabase)
       }
   }

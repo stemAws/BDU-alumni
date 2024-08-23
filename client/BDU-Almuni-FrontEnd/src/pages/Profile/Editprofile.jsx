@@ -33,23 +33,7 @@ const Editprofile = () => {
   const [experiance,setExperiance]=useState([])
   const[education,setEducation]=useState([])
   const[activities,setActivities]=useState([])
-  const [placeholders,setPlaceholders]=useState([{
-    fullName:'',
-    gender:'',
-    dateOfBirth:'',
-    email:'',
-    phoneNumber:'',
-    currentLocation:'',
-    additionalInfo:'',
-    username:'',
-    password:'',
-    enrollmentYear:'',
-    graduationYear:'',
-    staffRole:'',
-    hiredDate:'',
-    leftDate:'',
-    socialMediaHandles:['','',''],
-  }])
+  const [placeholders,setPlaceholders]=useState([])
   const [notauth, setnotauth] = useState(false)
   // const { isSigninOpen, setSigninOpen } = useContext(SigninContext);
   const [showEditExperiance,setshowEditExperiance]= useState(true)
@@ -66,7 +50,7 @@ const forsocials=(value)=>{
   setPlaceholders((prevPlaceholders) => [
     {
       ...prevPlaceholders[0],
-      socialMediaHandles: value,
+      socialMedia: value,
     },
   ]);
 }
@@ -117,7 +101,8 @@ const checkbox=()=>{
         }
         else if(res.ok){
         const personalInfoFromServer= await res.json();
-      setPlaceholders(personalInfoFromServer)
+        setPlaceholders(personalInfoFromServer)
+        console.log(personalInfoFromServer,"data from server")
         }
         else if (!res.ok) {
           throw new Error(`Failed to fetch personal info: ${res.status} - ${res.statusText}`);
@@ -599,7 +584,7 @@ const getStoryById = async(id)=>{
                 username: placeholders[0].username,
                 enrollmentYear: placeholders[0].enrollmentYear,
                 graduationYear: placeholders[0].graduationYear,
-                socialMediaHandles:placeholders[0].socialMediaHandles,  
+                socialMedia:placeholders[0].socialMedia,  
               }),
               }) ;
                 

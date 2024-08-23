@@ -9,7 +9,7 @@ const ContactInfo = ({display,personalInfo,close,forsocials,edit,handlePlacehold
   const [inputDirty,setInputDirty]=useState(false);
   useEffect(()=>{
     const settingSocialfromDatabase=()=>{
-      const SocialfromDatabase = personalInfo[0].socialMediaHandles;
+      const SocialfromDatabase = personalInfo[0].socialMedia;
       setSocialValues(SocialfromDatabase)
   }
     settingSocialfromDatabase()
@@ -82,7 +82,7 @@ const ContactInfo = ({display,personalInfo,close,forsocials,edit,handlePlacehold
                 )
                 }
 
-            {edit&&<input  type="text" name="" className="social_inputs" value={socialValues?.[0]} placeholder={personalInfo[0]?.socialMediaHandles?.[0]} onChange={(e) =>handleSocialChange(0,e.target.value)}/>}</div>
+            {edit&&<input  type="text" name="" className="social_inputs" value={socialValues?.[0]} placeholder={personalInfo[0]?.socialMedia?.[0]} onChange={(e) =>handleSocialChange(0,e.target.value)}/>}</div>
             <div className="social">
            
             {socialValues?.[1]&&(
@@ -93,7 +93,7 @@ const ContactInfo = ({display,personalInfo,close,forsocials,edit,handlePlacehold
                 </a>
                 )
                 }
-            {edit&&<input type="text" name="" className="social_inputs" value={socialValues?.[1]} placeholder={personalInfo[0]?.socialMediaHandles?.[1]} onChange={(e) =>handleSocialChange(1,e.target.value)}/>}</div>
+            {edit&&<input type="text" name="" className="social_inputs" value={socialValues?.[1]} placeholder={personalInfo[0]?.socialMedia?.[1]} onChange={(e) =>handleSocialChange(1,e.target.value)}/>}</div>
             <div className="social">
            
                 {socialValues?.[2]&&(
@@ -104,7 +104,7 @@ const ContactInfo = ({display,personalInfo,close,forsocials,edit,handlePlacehold
                 </a>
                 )
                 }
-            {edit&&<input type="text" name="" className="social_inputs" value={socialValues?.[2]} placeholder={personalInfo[0]?.socialMediaHandles?.[2]} onChange={(e) =>handleSocialChange(2,e.target.value)} />}</div>
+            {edit&&<input type="text" name="" className="social_inputs" value={socialValues?.[2]} placeholder={personalInfo[0]?.socialMedia?.[2]} onChange={(e) =>handleSocialChange(2,e.target.value)} />}</div>
             {display&&<input type="submit" id='submit'  value="Save Changes" />}
           </form>
     </section>
