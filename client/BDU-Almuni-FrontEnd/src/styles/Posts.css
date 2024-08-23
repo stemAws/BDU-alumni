@@ -51,7 +51,7 @@
 }
 .full_name{
     font-weight: 400;
-    color: #727272;
+    color: #000000;
     text-transform: capitalize;
     min-width: fit-content;
 }

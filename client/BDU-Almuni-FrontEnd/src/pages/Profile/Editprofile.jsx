@@ -18,6 +18,7 @@ import Activities from "../../component/Activities";
 import { Link ,useNavigate} from "react-router-dom";
 import EditPersonalInfo from "../../component/EditPersonalInfo";
 import Cookies from 'js-cookie';
+import Confirmation from "../../component/Confirmation";
 // import SigninWrapper from "../../component/SigninWrapper";
 // import { SigninContext } from '../../Pages/UsersPage'
 const Editprofile = () => {
@@ -699,8 +700,28 @@ const getStoryById = async(id)=>{
     });
     setInputDirty(true)
   };
+  const [transcriptSuccess, settranscriptSuccess] = useState(false)
+  const [successMessage, setsuccessMessage] = useState('Requesting...')
+  const handleRequestTranscript=async()=>{
+    settranscriptSuccess(true)
+    try {
+      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/reserve-transcript`,{
+        credentials:'include'
+      })
+      const data= await res.json();
+        if (data.success)
+          setsuccessMessage('Request Sent Successfully, Your Transcript Will Be Emailed To You Once Approved By Admin')
+        else
+        setsuccessMessage('Something Went Wrong Please Try Again Later')
+    } catch (error) {
+      setsuccessMessage('Something Went Wrong Please Try Again Later')
+      
+    }
+
+    }
   
   return (
+
     <div className="User_profile_container">
       <div  className="upper_slide">
       <img className="profile_img" src={imageUrl} alt="profile image" />
@@ -771,6 +792,7 @@ const getStoryById = async(id)=>{
         {placeholders?.length > 0 ? (
             <>
         <li className="name_edit"> 
+          <div>
           <p className="full_name">{placeholders?.[0]?.fullName}</p>
           <div className='edit_save_icon' 
           >
@@ -779,9 +801,14 @@ const getStoryById = async(id)=>{
                '':<FaPen  onClick={()=>setshowEditpersonalinfoPopup(true)}/>
                 }
             </div>
-            
+          </div>
+            <Button onClick={handleRequestTranscript} text={'Request For Transcript'} />
         </li>
-        <p> {placeholders?.[0]?.batch} Batch</p>
+        {/* <p> {placeholders?.[0]?.batch} Batch</p> */}
+        {
+          transcriptSuccess &&
+          <Confirmation text={successMessage} close={()=>settranscriptSuccess(false)} />
+        }
         <li> 
           {experiances&&<p className="work_place">{stillWorking()}
             </p>}
@@ -789,11 +816,11 @@ const getStoryById = async(id)=>{
           <div className="address_contact_info">
             <p>{placeholders?.[0]?.currentLocation} </p>
         </div>
-        {educations?.length > 0 &&
+        {/* {educations?.length > 0 &&
           <div className="learning_place">
             <p>{`${educations[educations?.length - 1]?.degree} in ${educations[educations?.length - 1]?.major} at ${educations[educations?.length - 1]?.institution}`}</p>
           </div>
-        }
+        } */}
           </div>
         </li>
         </>
