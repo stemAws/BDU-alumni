@@ -3,43 +3,43 @@ import "../styles/aboutDevs.css"
 import { useState } from "react";
 const AboutDevs = () => {
     const [devs, setdevs] = useState([{
-        fullName:"Kebede Chebude",
+        fullName:"Hailemichael Mulugeta",
         img:"",
-        detail:"lorLorem ipsum, dolor sit amet consectetur adipisicing elit. Vel itaque laudantium, id dolorum velit animi nihil, error alias dolores et veritatis nostrum. Tempore ipsa possimus obcaecati totam harum quisquam reprehenderit.",
+        detail:"UI/UX Designer & Frontend Developer Hailemichael is a skilled UI/UX designer and frontend developer, specializing in translating design concepts into interactive and responsive web experiences. Hailemichael's commitment to quality and usability ensures that your website not only looks great but also performs flawlessly across devices and browsers.",
         socialLinks:{
-            gitHub:"",
+            gitHub:"https://github.com/hailemichael-ayana",
             linkedin:"",
-            telegram:""
+            telegram:"https://t.me/shady10001"
         }
     },
     {
-        fullName:"Kebede Chebude",
+        fullName:"Yordanos Ayenew",
         img:"",
-        detail:"lorLorem ipsum, dolor sit amet consectetur adipisicing elit. Vel itaque laudantium, id dolorum velit animi nihil, error alias dolores et veritatis nostrum. Tempore ipsa possimus obcaecati totam harum quisquam reprehenderit.",
+        detail:"UI/UX Designer & Frontend Developer Yordanos is a talented UI/UX designer and frontend developer with a passion for creating visually appealing and user-friendly interfaces. With a keen eye for design trends and a deep understanding of user behavior, she crafts intuitive and engaging user experiences that resonate with your target audience. Yordanos's proficiency in frontend technologies like HTML, CSS, and JavaScript ensures the seamless translation of design concepts into functional web interfaces.",
         socialLinks:{
-            gitHub:"",
+            gitHub:"https://github.com/YordanosAyenew",
             linkedin:"",
-            telegram:""
+            telegram:"https://t.me/Benyas_3"
         }
     },
     {
-        fullName:"Kebede Chebude",
+        fullName:"Abrham Abayneh",
         img:"",
-        detail:"lorLorem ipsum, dolor sit amet consectetur adipisicing elit. Vel itaque laudantium, id dolorum velit animi nihil, error alias dolores et veritatis nostrum. Tempore ipsa possimus obcaecati totam harum quisquam reprehenderit.",
+        detail:"Backend Developer Abrham is a dedicated backend developer and hosting specialist with an experience in web development and system administration. Abrham's meticulous approach to coding and testing guarantees the reliability and security of your backend infrastructure.",
         socialLinks:{
-            gitHub:"",
+            gitHub:"https://github.com/a-abrham",
             linkedin:"",
-            telegram:""
+            telegram:"https://t.me/a_abrham"
         }
     },
     {
-        fullName:"Kebede Chebude",
+        fullName:"Netsanet Alemu",
         img:"",
-        detail:"lorLorem ipsum, dolor sit amet consectetur adipisicing elit. Vel itaque laudantium, id dolorum velit animi nihil, error alias dolores et veritatis nostrum. Tempore ipsa possimus obcaecati totam harum quisquam reprehenderit.",
+        detail:"Fullstack Developer Netsanet is a fullstack developer specializing in building robust and scalable web applications. Netsanet's attention to detail and problem-solving skills ensure that your website is optimized for performance and efficiency.",
         socialLinks:{
-            gitHub:"",
-            linkedin:"",
-            telegram:""
+            gitHub:"https://github.com/NetsanetAlemu",
+            linkedin:"https://www.linkedin.com/in/netsanet-alemu-8a8855264",
+            telegram:"https://t.me/medhin94"
         }
     },
 ])
