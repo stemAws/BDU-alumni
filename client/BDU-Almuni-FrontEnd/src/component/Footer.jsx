@@ -1,8 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 import "../styles/footer.css";
 import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
-import logo from "../assets/images/logo.png";
-
+import logo from "../assets/images/logo.svg";
+import Donation from './Donation';
+import Confirmation from "./Confirmation";
 const sections = [
   {
     title: 'Academics',
@@ -50,13 +51,12 @@ const sections = [
     ]
   }
 ];
-
-const FooterSection = ({ title, links }) => (
+const FooterSection = ({ title, links ,setdonationPopUp }) => (
   <div className="each">
     <h4>{title}</h4>
     <ul>
       {links.map((link, index) => (
-        <li key={index}>
+        <li key={index} onClick={ ()=>setdonationPopUp(true)}>
           <a href={link.url}>{link.text}</a>
         </li>
       ))}
@@ -65,17 +65,42 @@ const FooterSection = ({ title, links }) => (
 );
 
 const Footer = () => {
+  const [donationPopUp, setdonationPopUp] = useState(false)
+  const [emailSuccess, setemailSuccess] = useState(false)
+  const [emailInput, setemailInput] = useState()
+  const handleEmailSent=(e)=>{
+    e.preventDefault()
+    // try {
+      // const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/emailSub`)
+    // } catch (error) {
+      
+    // }
+    
+    if (emailInput) {
+      setemailSuccess(true)
+      setemailInput('')
+    }
+      // setemailSuccess(true)
+  }
   return (
     <footer className='footer___container'>
       <div className="footer___top">
         <h2>Join our newsletter to <br /> keep up to date with us!</h2>
-        <form action="">
+        <form onSubmit={handleEmailSent} >
           <div className="subscribe">
             <Person2OutlinedIcon />
-            <input type="email" placeholder='Enter your email' />
+            <input 
+              onChange={(e)=>setemailInput(e.target.value)}  
+              value={emailInput}
+              type="email"
+              required
+              placeholder='Enter your email' />
           </div>
          <input className='submit-btn' type="submit" value="Subscribe" />
         </form>
+        {emailSuccess&&
+          <Confirmation close={()=>{setemailSuccess(false)}}text={'Thanks For Registering We Will Keep In Touch'} />
+        }
       </div>
       <hr />
       <div className="footer___middle">
@@ -86,14 +111,14 @@ const Footer = () => {
         </div>
         <div className="middle___right">
           {sections.map((section, index) => (
-            <FooterSection key={index} title={section.title} links={section.links} />
+            <FooterSection setdonationPopUp={setdonationPopUp} key={index} title={section.title} links={section.links} />
           ))}
         </div>
       </div>
       <hr />
       <div className="footer___bottom">
         <div className="bottom___left">
-          <p>&copy; 2024 Bahir Dar University</p>
+          <p>&copy; {new Date().getFullYear()} Bahir Dar University</p>
         </div>
         <div className="bottom___right">
           <a href="#">Terms of Service</a>
@@ -101,6 +126,10 @@ const Footer = () => {
           <a href="#">Cookies</a>
         </div>
       </div>
+      {
+        donationPopUp&&
+          <Donation close={()=>setdonationPopUp(false)}/>
+      }
     </footer>
   )
 }

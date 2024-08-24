@@ -105,8 +105,8 @@ const Posts = (props) => {
       }, [userDetails]); 
   useEffect(()=>{
     const settingSocialfromDatabase=()=>{
-      if (userDetails.socialMediaHandles) {
-        const SocialfromDatabase = userDetails.socialMediaHandles;
+      if (userDetails.socialMedia) {
+        const SocialfromDatabase = JSON.parse(userDetails.socialMedia);
       setSocialValues(SocialfromDatabase)
       }
   }
@@ -236,10 +236,10 @@ const Posts = (props) => {
               <p>{userDetails.fullName} </p>
             </div>
           )}
-          {socialValues[0] && (
+          {socialValues.length>0 && (
             <div className="socialmedia">
               {socialValues.map((value, index) => (
-                <a key={index} href={`http://${value}`} target="_blank" rel="noopener noreferrer">
+                value.length!==0&&<a key={index} href={`http://${value}`} target="_blank" rel="noopener noreferrer">
                     {value.includes('facebook') ? (
                       <FaFacebookF className='each_icons'/>
                     ) : value.includes('t.me') ? (

@@ -8,7 +8,7 @@ import SearchBar from "./SearchBar"
 import { Link, useLocation } from 'react-router-dom';
 import NavDropDown from "./NavDropDown"
 import { FaCaretDown, FaCaretUp } from "react-icons/fa"
-import logo from "../assets/images/logo.png"
+import logo from "../assets/images/logo.svg"
 const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
   const [scroll, setscroll] = useState(false)
   const location =useLocation()

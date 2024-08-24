@@ -56,4 +56,6 @@ router.post(
 router.put("/updateCustom/:alumniId", UserController.updateCustomSetting);
 router.post("/alumni-directory", UserController.searchAlumni);
 
+router.get('/reserve-transcript',verifyToken, UserController.reserveTranscriptPlace);
+
 module.exports = router;

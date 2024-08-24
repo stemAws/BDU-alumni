@@ -11,15 +11,14 @@
     border: 1px solid #777777;
   }
   .activity_grid_conatiner {
-    display: flex;
-    flex-direction: column;
+    display: grid;
   }
 .activity {
     display: flex;
     flex-direction: column;
     border: 0;
     border-radius: 0%;
-    border-bottom: 1px solid #717171;
+    border-bottom: 1px solid #dedede;
 
 }
 .image_content{
@@ -52,7 +51,7 @@
 }
 .full_name{
     font-weight: 400;
-    color: #727272;
+    color: #000000;
     text-transform: capitalize;
     min-width: fit-content;
 }
@@ -132,9 +131,10 @@
     margin-right:10px ;
     object-fit: cover;
 }
-.profile_container .userdetail{
+.profile_container .userdetail {
+    display: flex;
     text-transform: capitalize;
-    margin:10px 0 10px 80px;
+    justify-content: center;
 }
 .profile_container .socialmedia{
     display: flex;

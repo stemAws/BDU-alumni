@@ -15,7 +15,7 @@ async function verifyToken(req, res, next) {
             const adminData = await adminservice.fetchAdminDetailsByPersonId(decoded.token.personId);
             req.admin = adminData;
         }
-        
+
         req.alumni = decoded.token;
 
         next();
@@ -25,4 +25,22 @@ async function verifyToken(req, res, next) {
     }
 }
 
-module.exports = { verifyToken };
+async function verifyAdmin(req, res, next) {
+    try {
+        const { adminToken } = req.cookies;
+
+        if (!adminToken) {
+            return res.status(403).json({ error: 'Token not provided' });
+        }
+
+        const decoded = jwt.verify(adminToken, process.env.secretKey);
+        console.log(decoded)
+        req.admin = decoded.token
+
+        next();
+    } catch (error) {
+        console.error('Failed to authenticate token:', error);
+        return res.status(401).json({ error: 'Failed to authenticate token' });
+    }
+}
+module.exports = { verifyToken, verifyAdmin };
