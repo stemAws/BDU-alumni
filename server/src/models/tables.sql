@@ -176,4 +176,8 @@ CREATE TABLE Donation (
     FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
 );
 
+CREATE TABLE Transcript {
+    fullName, email, phoneNumber, degree, admission, major, purpose, delivery{mail, email, in-person}, recipentEmail, noOfCopies, isPaid, requestAccepted, requestFulfilled 
+}
+
 

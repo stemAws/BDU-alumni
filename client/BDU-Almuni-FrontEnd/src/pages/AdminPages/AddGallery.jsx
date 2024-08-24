@@ -69,9 +69,9 @@ const AddGallery = ({ updateCategories }) => {
     if (!event) {
       setEventError('Event field cannot be empty!');
       valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(event)) {
-      setEventError("Event must contain only letters and spaces, with numbers allowed anywhere after letters!");
-      valid = false;
+    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(event)) {
+    //   setEventError("Event must contain only letters and spaces, with numbers allowed anywhere after letters!");
+    //   valid = false;
     } else {
       setEventError('');
     }
@@ -95,9 +95,9 @@ const AddGallery = ({ updateCategories }) => {
     } else if (year.length !== 4) {
       setYearError('Year must be a 4-digit number!');
       valid = false;
-    } else if (year < 2019) {
-      setYearError('Year must not be before 2019!');
-      valid = false;
+    // } else if (year < 2019) {
+    //   setYearError('Year must not be before 2019!');
+    //   valid = false;
     } else {
       setYearError('');
     }
@@ -109,11 +109,11 @@ const AddGallery = ({ updateCategories }) => {
 
     if (!description) {
       setDescriptionError('Description field cannot be empty!');
-      valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-      setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
-      valid = false;
-    }
+      valid = false;}
+    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
+    //   setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      // valid = false;
+    
 
     if (valid) {
       try {

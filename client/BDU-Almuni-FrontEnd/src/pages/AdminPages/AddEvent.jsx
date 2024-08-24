@@ -93,16 +93,16 @@ const EventPost = () => {
     if (!title) {
       setTitleError("Title field cannot be empty!");
       valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
-      setTitleError("Title must contain only letters and spaces, with numbers allowed anywhere after letters!");
-      valid = false;
+    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
+    //   setTitleError("Title must contain only letters and spaces, with numbers allowed anywhere after letters!");
+    //   valid = false;
     }
     if (!description) {
       setDescriptionError("Description field cannot be empty!");
       valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-      setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
-      valid = false;
+    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
+    //   setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
+    //   valid = false;
     }
     if (!startDate) {
       setStartDateError("StartDate field cannot be empty!");

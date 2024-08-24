@@ -57,16 +57,17 @@ const GalleryList = () => {
 
   return (
     <div className="admin-gallery">
-      <div className="admin-galleryContainers">
-        <input
-          className="search"
+      <div className="admin-galleryContainers galleryContainer">
+       
+        <h3> Bahir Dar University Alumni Gallery </h3>
+      </div>
+       <input
+          className="search Search"
           type="text"
           placeholder="Search by year"
           value={searchTerm}
           onChange={handleSearch}
         />
-        <h3> Bahir Dar University Alumni Gallery </h3>
-      </div>
       <Batches
         batchData={filteredBatches}
         updateCategories={updateCategories}
