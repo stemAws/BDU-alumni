@@ -70,6 +70,17 @@ exports.fetchSuggestedPostsToAdmin = async () => {
     );
   }
 };
+exports.fetchTranscriptList = async () => {
+  try {
+    const [result] = await db.query(
+      "SELECT reservationId as id, status, fullName, DATE_FORMAT(reservationDate, '%Y-%m-%d') AS reservationDate FROM transcriptreservations t JOIN alumni a JOIN person p WHERE a.alumniId = t.alumniId AND a.personId = p.personId"
+    );
+    return result;
+  } catch (error) {
+    throw new Error("Error fetching requested transcripts: " + error.message);
+  }
+};
+
 exports.getYear = async () => {
   try {
     const [result] = await db.query(
@@ -79,6 +90,17 @@ exports.getYear = async () => {
   } catch (error) {
     throw new Error("Error fetching grduating year: " + error.message);
   }
+};
+exports.updateTranscriptStatus = async (reqId, reqStatus) => {
+  const [result] = await db.query(
+    "UPDATE transcriptreservations SET status = ? WHERE reservationId = ?",
+    [reqStatus, reqId]
+  );
+  if (result.affectedRows === 0) {
+    return { success: false, message: "No record by the given id" };
+  }
+
+  return { success: true, message: "Transcript request updated successfully" };
 };
 
 exports.updatePost = async (postId, suggestedByAdmin) => {

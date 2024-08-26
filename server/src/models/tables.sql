@@ -176,8 +176,17 @@ CREATE TABLE Donation (
     FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
 );
 
-CREATE TABLE Transcript {
-    fullName, email, phoneNumber, degree, admission, major, purpose, delivery{mail, email, in-person}, recipentEmail, noOfCopies, isPaid, requestAccepted, requestFulfilled 
-}
+CREATE TABLE TranscriptReservations (
+    reservationId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    alumniId INT,
+    reservationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('Confirmed', 'Pending', 'Canceled') DEFAULT 'Pending',
+    FOREIGN KEY (alumniId) REFERENCES Alumni(alumniId)
+
+);
+
+-- CREATE TABLE Transcript {
+--     fullName, email, phoneNumber, degree, admission, major, purpose, delivery{mail, email, in-person}, recipentEmail, noOfCopies, isPaid, requestAccepted, requestFulfilled 
+-- }
 
 
