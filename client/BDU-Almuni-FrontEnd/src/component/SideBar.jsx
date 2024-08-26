@@ -1,4 +1,3 @@
-import React from 'react'
 import '../styles/sidebar.css'
 import { Link } from 'react-router-dom';
 // import Button from '../components/Button'
@@ -10,9 +9,9 @@ const SideBar = () => {
 
    const [showLogoutPopup, setShowLogoutPopup] = useState(false);
 
-   const handleClick = () => {
-     window.open('/', '_blank');
-   };
+  //  const handleClick = () => {
+  //    window.open('/', '_blank');
+  //  };
  
    const handleLogoutClick = () => {
      setShowLogoutPopup(true);
@@ -108,7 +107,7 @@ const SideBar = () => {
                 </li>
                 <li className="sidebarListItem notifications">
                   <Link to='/admin/transcript'>
-                     Requested Transcript
+                     Transcript requests
                   </Link>
                 </li>
                 <div className="topavatar"  onClick={handleLogoutClick}>

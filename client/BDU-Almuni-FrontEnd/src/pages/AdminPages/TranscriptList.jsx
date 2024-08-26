@@ -164,7 +164,7 @@ const RequestedTranscript = () => {
       <div className="eventlist">
         <div className="addEventheader">
           <h3 className="title">
-            Bahir Dar University Alumni Requested Transcripts{" "}
+            Bahir Dar University Alumni Transcript requests{" "}
           </h3>
         </div>
         <div className="listCOntainer">
