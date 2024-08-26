@@ -302,7 +302,7 @@
 }
 /* .story_p_admin::-webkit-scrollbar {
   display: ; /* For Chrome, Safari, and Opera: hide scrollbar */
-} */
+/* } */ 
 
 .story_p_title {
   font-weight: bold;
