@@ -13,6 +13,30 @@ exports.uploadAlumniData = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+exports.updateStatus = async (req, res) => {
+  try {
+    const reqId = req.params.id;
+    const reqStatus = req.body.requestStatus;
+
+    await adminService.updateTranscriptStatus(reqId, reqStatus);
+
+    res.status(200).json({ message: "updated transcript request status successfully" });
+  } catch (error) {
+    console.error("Error uploading alumni data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.getTranscript = async (req, res) => {
+  try {
+
+    const transcriptList = await adminService.fetchTranscriptList();
+    res.json(transcriptList);
+  } catch (error) {
+    console.error("Error fetching requested transcript list:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 exports.getSuggestedToAdmin = async (req, res) => {
   try {
