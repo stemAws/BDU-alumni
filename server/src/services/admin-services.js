@@ -73,7 +73,8 @@ exports.fetchSuggestedPostsToAdmin = async () => {
 exports.fetchTranscriptList = async () => {
   try {
     const [result] = await db.query(
-      "SELECT reservationId as id, status, fullName, DATE_FORMAT(reservationDate, '%Y-%m-%d') AS reservationDate FROM transcriptreservations t JOIN alumni a JOIN person p WHERE a.alumniId = t.alumniId AND a.personId = p.personId"
+      "SELECT reservationId as id, status, fullName, DATE_FORMAT(reservationDate, '%Y-%m-%d') AS reservationDate FROM transcriptreservations t JOIN alumni a JOIN person p WHERE a.alumniId = t.alumniId AND a.personId = p.personId AND status=?",
+      ["Pending"]
     );
     return result;
   } catch (error) {
