@@ -52,7 +52,7 @@ const FeaturedStories = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ suggestedByAdmin: 0}),
+          body: JSON.stringify({ suggestedByAdmin: 0 }),
         }
       );
 
@@ -95,7 +95,7 @@ const FeaturedStories = () => {
   return (
     <div className="Story">
       <div className="admin-story-header">
-        <h1 className="headerstory"> Bahir Dar STEM Center Alumni Stories</h1>
+        <h1 className="headerstory"> Bahir Dar University Alumni Stories</h1>
         <Link to="/admin/addedStories">
           <button className="accepted-stories" onClick={handleClick}>
             Added Stories
@@ -111,7 +111,8 @@ const FeaturedStories = () => {
         ) : (
           stories.map((story, index) => (
             <div className="FeaturedStories-container" key={index}>
-              <div>
+              <div className="story-image">
+         
                 <img src={story.mediaPath} alt="" />
                 <p className="story_p_admin">{story.content}</p>
               </div>
