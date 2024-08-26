@@ -106,7 +106,11 @@ const SideBar = () => {
                      Donation
                   </Link>
                 </li>
-
+                <li className="sidebarListItem notifications">
+                  <Link to='/admin/transcript'>
+                     Requested Transcript
+                  </Link>
+                </li>
                 <div className="topavatar"  onClick={handleLogoutClick}>
             <button className='admin-logout-btn'>log out</button>
             {showLogoutPopup && (
