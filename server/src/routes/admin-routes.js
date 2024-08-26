@@ -28,6 +28,9 @@ router.get("/industry-count", adminController.getIndustry);
 router.get("/company-count", adminController.getCompany);
 router.put("/verify-alumni/:alumniId", adminController.veifyAlumni);
 router.get("/grad-year", adminController.getGradYear);
+router.get("/requested-transcrpts", adminController.getTranscript);
+router.put("/update-status/:id", adminController.updateStatus);
 
 router.put("/approveJob/:jobPostingId", adminController.approveJob);
 module.exports = router;
+
