@@ -143,14 +143,14 @@ const RequestedTranscript = () => {
           <button
             className="userListEdit"
             onClick={() => handleConfirmStatus(params.row.id)}
-            disabled={params.row.status === "Confirmed"}
+            // disabled={params.row.status === "Confirmed"}
           >
             Accept
           </button>
           <button
             className="decline"
             onClick={() => updateStatus(params.row.id, "Canceled")}
-            disabled={params.row.status === "Canceled"}
+            // disabled={params.row.status === "Canceled"}
           >
             Delete
           </button>
