@@ -28,6 +28,8 @@ import EditGallery from "./AdminPages/EditGallery";
 import EditEvent from "./AdminPages/EditEvent";
 import EditClub from "./AdminPages/EditClub";
 import AGallery from "./AdminPages/AGallery";
+import RequestedTranscript from "./AdminPages/TranscriptList";
+
 
 
 const Admin = () => {
@@ -69,6 +71,7 @@ const Admin = () => {
             <Route path="AddChapter" element={<Chapters />} />
             <Route path="feedback" element={<FeedBack />} />
             <Route path="Donation" element={<DonationList />} />
+            <Route path="transcript" element={<RequestedTranscript />} />
             <Route path="/donation/:id" element={<EditDonation />} />
             <Route path="AddDonation" element={<AddDonation />} />
             {/* <Route path="*" element={<Navigate to="home" />} /> */}
