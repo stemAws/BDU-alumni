@@ -47,9 +47,7 @@ const UserList = () => {
   const filterData = useCallback(() => {
     try {
       const filtered = data.filter((item) => {
-        const lowerFirstName = item.firstname
-          ? item.firstname.toLowerCase()
-          : "";
+        const lowerFirstName = item.fullName ? item.fullName.toLowerCase() : "";
         const lowerSearchQuery = searchQuery.toLowerCase();
 
         // Check if the first name starts with the search query
