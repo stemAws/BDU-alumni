@@ -14,13 +14,14 @@ const AddUser = () => {
   const [errorUsers, setUsersError] = useState("");
   const [graduationYearMultipleUsers, setGraduationYearMultipleUsers] =
     useState("");
-    const [visiblePassword, setVisiblePassword] = useState(false);
-    const [visibleConfirmPassword, setVisibleConfirmPassword] = useState(false);
-    
+  const [visiblePassword, setVisiblePassword] = useState(false);
+  const [visibleConfirmPassword, setVisibleConfirmPassword] = useState(false);
+
   const [roleSingleUser, setRoleSingleUser] = useState("");
   const [staffRole, setStaffRole] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const [graduationYearError, setGraduationYearError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -39,6 +40,7 @@ const AddUser = () => {
     gender: "",
     role: "",
     staffRole: "",
+    email: "",
   });
   const handleChangeSingleUser = (e) => {
     const { name, value, checked } = e.target;
@@ -96,7 +98,16 @@ const AddUser = () => {
     const regexLower = /[a-z]/;
     const regexNumber = /[0-9]/;
     const regexSpecial = /[$&+,:;=?@#|'<>.^*()%!-]/;
-
+    const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!formData.email) {
+      setEmailError("Email can not be empty!");
+      valid = false;
+    } else if (!regexEmail.test(formData.email)) {
+      setEmailError("Enter a valid email address");
+      valid = false;
+    } else {
+      setEmailError("");
+    }
     if (!formData.username) {
       setUsernameError("User Name cannot be empty!");
       valid = false;
@@ -180,6 +191,7 @@ const AddUser = () => {
           gender: "",
           role: "",
           staffRole: "",
+          email: "",
         });
 
         navigate("/admin/users");
@@ -273,40 +285,50 @@ const AddUser = () => {
 
           <div className="newUseritem">
             <label>Password</label>
-           <div className='add-pass'>
-            <input
-               type={visiblePassword ? 'text' : 'password'}
-              placeholder="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChangeSingleUser}
-            />
-             <div className='input_img' onClick={() => setVisiblePassword(!visiblePassword)}>
-                {
-                  visiblePassword ? <FaEye className="eye-icon admin-eye-icon"/> :
-                    <FaEyeSlash className="eye-icon  admin-eye-icon" />
-                }
+            <div className="add-pass">
+              <input
+                type={visiblePassword ? "text" : "password"}
+                placeholder="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChangeSingleUser}
+              />
+              <div
+                className="input_img"
+                onClick={() => setVisiblePassword(!visiblePassword)}
+              >
+                {visiblePassword ? (
+                  <FaEye className="eye-icon admin-eye-icon" />
+                ) : (
+                  <FaEyeSlash className="eye-icon  admin-eye-icon" />
+                )}
               </div>
-              </div>
+            </div>
             {passwordError && <p className="errorMessage">{passwordError}</p>}
           </div>
           <div className="newUseritem">
             <label>Confirm Password</label>
-            <div className='add-pass'>
-            <input
-              type={visibleConfirmPassword ? 'text' : 'password'}
-              placeholder="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChangeSingleUser}
-            />
-            <div className='input_img' onClick={() => setVisibleConfirmPassword(!visibleConfirmPassword)}>
-                {
-                  visibleConfirmPassword ? <FaEye className="eye-icon admin-eye-icon"/> :
-                    <FaEyeSlash className="eye-icon  admin-eye-icon" />
+            <div className="add-pass">
+              <input
+                type={visibleConfirmPassword ? "text" : "password"}
+                placeholder="password"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChangeSingleUser}
+              />
+              <div
+                className="input_img"
+                onClick={() =>
+                  setVisibleConfirmPassword(!visibleConfirmPassword)
                 }
+              >
+                {visibleConfirmPassword ? (
+                  <FaEye className="eye-icon admin-eye-icon" />
+                ) : (
+                  <FaEyeSlash className="eye-icon  admin-eye-icon" />
+                )}
               </div>
-              </div>
+            </div>
             {confirmPasswordError && (
               <p className="errorMessage">{confirmPasswordError}</p>
             )}
@@ -333,6 +355,17 @@ const AddUser = () => {
               <label htmlFor="female">Female</label>
               {genderError && <p className="errorMessage">{genderError}</p>}
             </div>
+          </div>
+          <div className="newUseritem">
+            <label> Email</label>
+            <input
+              type="text"
+              placeholder="abebe@gmail.com"
+              name="email"
+              value={formData.email}
+              onChange={handleChangeSingleUser}
+            />
+            {emailError && <p className="errorMessage">{emailError}</p>}
           </div>
           <div className="newUseritem">
             <label>Role</label>
