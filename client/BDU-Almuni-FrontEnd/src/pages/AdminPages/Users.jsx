@@ -28,9 +28,10 @@ const UserList = () => {
 
       // Sort the data by the createdAt timestamp in descending order
       userData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
       setData(userData);
       setFilteredData(userData); // Update filteredData with the fetched and sorted data
+      console.log(data)
+
     } catch (error) {
       console.error("Error fetching data:", error.message);
     } finally {
@@ -197,7 +198,7 @@ const UserList = () => {
     { field: "alumniID", headerName: "ID", width: 30 },
     { field: "fullName", headerName: "Full Name", width: 200 },
     { field: "gender", headerName: "Gender", width: 100 },
-    { field: "major", headerName: "Department", width: 250 },
+    { field: "email", headerName: "Email", width: 250 },
     { field: "isNotable", headerName: "Is Notable", width: 100 },
     {
       field: "notable",
@@ -274,7 +275,7 @@ const UserList = () => {
     alumniID: item.alumniId,
     fullName: item.fullName, // Change here to match your data's key
     gender: item.gender,
-    major: item.major,
+    email: item.email,
     isNotable: getNotable(item.isNotable),
     notable: item.isNotable,
     status: getStatus(item.verified),
