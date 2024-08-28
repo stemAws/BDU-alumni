@@ -44,13 +44,12 @@ exports.createAlumniRecord = async (alumniData, graduationYear) => {
     const [alumniResult] = await db.query(alumniSql, alumniValues);
     const alumniId = alumniResult.insertId;
     const institution = "Bahir Dar University";
-    const eduSql = `INSERT INTO Education (alumniId, institution, degree, major, minor, admission, graduatingYear) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const eduSql = `INSERT INTO Education (alumniId, institution, degree, major, admission, graduatingYear) VALUES (?, ?, ?, ?, ?, ?)`;
     const eduValues = [
       alumniId,
       institution,
       row.degree,
       row.major,
-      row.minor,
       row.admission,
       graduationYear,
     ];
@@ -160,7 +159,6 @@ exports.fetchUserDataByCountry = async (req, res) => {
   }
 };
 
-exports.uploadAlumniData = async (req, res) => {};
 exports.addDonation = async (title, link, description) => {
   try {
     if (!title || !link || !description) {
@@ -201,7 +199,10 @@ exports.fetchDonations = async () => {
 exports.getAlumniList = async () => {
   try {
     const [alumni] = await db.query(
-      `SELECT a.alumniId, fullName, gender, email, verified, isNotable, major FROM Person p JOIN Alumni a JOIN Education e WHERE a.personId = p.personId AND a.alumniId = e.alumniId AND e.institution='Bahir Dar University' ORDER BY p.createdAt DESC`
+      `SELECT alumniId, fullName, gender, email, verified, isNotable
+      FROM Person p JOIN Alumni a 
+      WHERE a.personId = p.personId 
+      ORDER BY p.createdAt DESC`
     );
     return alumni;
   } catch (error) {
