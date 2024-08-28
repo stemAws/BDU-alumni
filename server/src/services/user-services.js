@@ -11,12 +11,14 @@ exports.addUser = async (alumniData) => {
 
   await db.query(
     `
-    INSERT INTO Person (fullName, gender,  username, password, verified, isAdmin)
-    VALUES (?, ?, ?, ?, ?, ?);`,
+    INSERT INTO Person (fullName, gender,  email,username, password, verified, isAdmin)
+    VALUES (?, ?, ?, ?, ?,?, ?);`,
     [
       alumniData.fullName,
       alumniData.gender,
       alumniData.username,
+      alumniData.email,
+
       hashedPassword,
       1,
       isAdmin,
@@ -496,10 +498,9 @@ exports.getAlumniDirectory = async (searchBy, searchByValue) => {
   }
 };
 
-
 exports.reserveTranscriptPlace = async (alumniId) => {
   const [result] = await db.query(
-    'INSERT INTO TranscriptReservations (alumniId) VALUES (?)',
+    "INSERT INTO TranscriptReservations (alumniId) VALUES (?)",
     [alumniId]
   );
 
