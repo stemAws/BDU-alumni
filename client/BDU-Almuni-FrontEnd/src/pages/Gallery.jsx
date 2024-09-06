@@ -194,10 +194,12 @@ const Gallery = ({
                   onClick={() => handleCategoryClick(category)}
                 >
                   {category.images && category.images.length > 0 ? (
-                    <img src={category.images[0]} alt={category.description} />
+                    <img src={category.images[0]} alt={category.event} />
                   ) : null}
                   <div className="gallery-overlay">
-                    <h2>{category.description}</h2>
+                    <h2 className="overlay_discription">
+                      {category.description}
+                    </h2>
                   </div>
                 </div>
 
