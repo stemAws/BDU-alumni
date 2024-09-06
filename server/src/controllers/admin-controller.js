@@ -3,9 +3,12 @@ const adminService = require("../services/admin-services");
 exports.uploadAlumniData = async (req, res) => {
   try {
     const alumniData = adminService.parseExcelFile(req.file.buffer);
-    const graduationYear = req.body.graduationYear;
+    // const graduationYear = req.body.graduationYear;
 
-    await adminService.createAlumniRecord(alumniData, graduationYear);
+    await adminService.createAlumniRecord(
+      alumniData
+      // graduationYear
+    );
 
     res.status(200).json({ message: "Alumni data uploaded successfully" });
   } catch (error) {
@@ -20,20 +23,39 @@ exports.updateStatus = async (req, res) => {
 
     await adminService.updateTranscriptStatus(reqId, reqStatus);
 
-    res.status(200).json({ message: "updated transcript request status successfully" });
+    res
+      .status(200)
+      .json({ message: "updated transcript request status successfully" });
   } catch (error) {
     console.error("Error uploading alumni data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-exports.getTranscript = async (req, res) => {
+exports.getDocRequests = async (req, res) => {
   try {
-
-    const transcriptList = await adminService.fetchTranscriptList();
+    const transcriptList = await adminService.fetchDocRequestList();
     res.json(transcriptList);
   } catch (error) {
     console.error("Error fetching requested transcript list:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+exports.deleteDocRequest = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const affectedRows = await adminService.deleteRequest(id);
+
+    if (affectedRows === 0) {
+      res
+        .status(404)
+        .json({ message: `No record with the given id: ${newsId}` });
+    } else {
+      res.json({ message: "Document request deleted successfully" });
+    }
+  } catch (error) {
+    console.error("Error deleting document request:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
