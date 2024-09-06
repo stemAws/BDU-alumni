@@ -16,8 +16,9 @@ exports.addUser = async (alumniData) => {
     [
       alumniData.fullName,
       alumniData.gender,
-      alumniData.username,
       alumniData.email,
+
+      alumniData.username,
 
       hashedPassword,
       1,
@@ -36,7 +37,7 @@ exports.addUser = async (alumniData) => {
   } else if (alumniData.role === "admin") {
     await db.query(
       `
-    INSERT INTO WebsiteAdmin (personId, role)
+    INSERT INTO Websiteadmin (personId, role)
     VALUES (LAST_INSERT_ID(), ?)`,
       [alumniData.adminRole]
     );
