@@ -12,49 +12,50 @@ exports.parseExcelFile = (buffer) => {
   return xlsx.utils.sheet_to_json(sheet);
 };
 
-// exports.createAlumniRecord = async (alumniData, graduationYear) => {
-//   for (const row of alumniData) {
-//     const password = row.lastName + "123";
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const verified = 1;
-//     const username = row.fullName + graduationYear;
-//     const personQuery = `
-//       INSERT INTO Person (fullName, gender, password, verified, username)
-//       VALUES (?, ?, ?, ?, ?)
-//     `;
+exports.createAlumniRecord = async (alumniData, graduationYear) => {
+  for (const row of alumniData) {
+    const password = row.lastName + "123";
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const verified = 1;
+    const username = row.lastName + row.firstName + graduationYear;
+    const fullName = row.firstName + " " + row.lastName;
+    const personQuery = `
+      INSERT INTO Person (fullName, gender, password, verified, username)
+      VALUES (?, ?, ?, ?, ?)
+    `;
 
-//     const personValues = [
-//       row.fullName,
-//       row.gender,
-//       hashedPassword,
-//       verified,
-//       username,
-//     ];
+    const personValues = [
+      fullName,
+      row.gender,
+      hashedPassword,
+      verified,
+      username,
+    ];
 
-//     const [personResult] = await db.query(personQuery, personValues);
-//     const personId = personResult.insertId;
+    const [personResult] = await db.query(personQuery, personValues);
+    const personId = personResult.insertId;
 
-//     const alumniSql = `
-//       INSERT INTO Alumni (personId, isNotable)
-//       VALUES (?, ?)
-//     `;
+    const alumniSql = `
+      INSERT INTO Alumni (personId, isNotable)
+      VALUES (?, ?)
+    `;
 
-//     const alumniValues = [personId, 0];
-//     const [alumniResult] = await db.query(alumniSql, alumniValues);
-//     const alumniId = alumniResult.insertId;
-//     const institution = "Bahir Dar University";
-//     const eduSql = `INSERT INTO Education (alumniId, institution, degree, major, admission, graduatingYear) VALUES (?, ?, ?, ?, ?, ?)`;
-//     const eduValues = [
-//       alumniId,
-//       institution,
-//       row.degree,
-//       row.major,
-//       row.admission,
-//       graduationYear,
-//     ];
-//     await db.query(eduSql, eduValues);
-//   }
-// };
+    const alumniValues = [personId, 0];
+    const [alumniResult] = await db.query(alumniSql, alumniValues);
+    const alumniId = alumniResult.insertId;
+    const institution = "Bahir Dar University";
+    const eduSql = `INSERT INTO Education (alumniId, institution, degree, major, admission, graduatingYear) VALUES (?, ?, ?, ?, ?, ?)`;
+    const eduValues = [
+      alumniId,
+      institution,
+      row.degree,
+      row.major,
+      row.admission,
+      graduationYear,
+    ];
+    await db.query(eduSql, eduValues);
+  }
+};
 exports.fetchSuggestedPostsToAdmin = async () => {
   try {
     const [result] = await db.query(
@@ -68,7 +69,6 @@ exports.fetchSuggestedPostsToAdmin = async () => {
     );
   }
 };
-
 exports.deleteRequest = async (id) => {
   const [result] = await db.query(
     "DELETE FROM TranscriptReservations WHERE reservationId = ?",
