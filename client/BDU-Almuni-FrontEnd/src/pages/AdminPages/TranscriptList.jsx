@@ -3,21 +3,17 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DeleteConfirmation from "../../component/DeleteConfirmation";
+import { DeleteOutline } from "@mui/icons-material";
+
 const RequestedTranscript = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [reqStatus, setReqStatus] = useState("");
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deleteConfirmationId, setDeleteConfirmationId] = useState(null);
 
-  const updateStatus = (id, status) => {
-    console.log(status);
-    console.log(id);
-    if (status === "Canceled") {
-      setDeleteConfirmationOpen(true);
-      setDeleteConfirmationId(id);
-    }
-    setReqStatus(status);
+  const handleDelete = (id) => {
+    setDeleteConfirmationOpen(true);
+    setDeleteConfirmationId(id);
   };
 
   const handleConfirmStatus = async (id) => {
@@ -58,7 +54,7 @@ const RequestedTranscript = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/requested-transcrpts`
+        `${import.meta.env.VITE_BACKEND_URL}/doc-requests`
       );
       if (!response.ok) {
         throw new Error(
@@ -67,11 +63,8 @@ const RequestedTranscript = () => {
       }
 
       const transcriptData = await response.json();
-
       // Sort the data by the createdAt timestamp in descending order
-      transcriptData.sort(
-        (a, b) => new Date(b.reservationDate) - new Date(a.reservationDate)
-      );
+      transcriptData.sort((a, b) => b.status - a.status).reverse();
 
       setData(transcriptData);
     } catch (error) {
@@ -80,22 +73,44 @@ const RequestedTranscript = () => {
       setLoading(false);
     }
   };
-
   const handleConfirmDelete = async () => {
-    console.log(deleteConfirmationId);
-    console.log("status", reqStatus);
     try {
       const response = await fetch(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/update-status/${deleteConfirmationId}`,
+        }/delete-request/${deleteConfirmationId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete News. Status: ${response.status}`);
+      }
+
+      setData(data.filter((item) => item.id !== deleteConfirmationId));
+    } catch (error) {
+      console.error("Error deleting data:", error.message);
+    } finally {
+      setDeleteConfirmationOpen(false);
+      deleteConfirmationId(null);
+    }
+  };
+
+  const handleCancel = async (id) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/update-status/${id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            requestStatus: reqStatus,
+            requestStatus: "Canceled",
           }),
         }
       );
@@ -108,10 +123,7 @@ const RequestedTranscript = () => {
 
       setData(data.filter((item) => item.id !== deleteConfirmationId));
     } catch (error) {
-      console.error("Error deleting data:", error.message);
-    } finally {
-      setDeleteConfirmationOpen(false);
-      setDeleteConfirmationId(null);
+      console.error("Error canceling request:", error.message);
     }
   };
 
@@ -130,14 +142,15 @@ const RequestedTranscript = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
-    { field: "fullName", headerName: "Transcript requestor", width: 200 },
+    { field: "fullName", headerName: "Document requestor", width: 200 },
+    { field: "email", headerName: "Requestor Email", width: 200 },
     { field: "reservationDate", headerName: "Requested Date", width: 150 },
     { field: "status", headerName: "Status", width: 150 },
 
     {
       field: "action",
       headerName: "Actions",
-      width: 150,
+      width: 250,
       renderCell: (params) => (
         <>
           <button
@@ -149,11 +162,16 @@ const RequestedTranscript = () => {
           </button>
           <button
             className="decline"
-            onClick={() => updateStatus(params.row.id, "Canceled")}
+            onClick={() => handleCancel(params.row.id)}
             // disabled={params.row.status === "Canceled"}
           >
-            Delete
+            Cancel
           </button>
+          <DeleteOutline
+            key={`delete-${params.row.id}`}
+            className="eventListDelete"
+            onClick={() => handleDelete(params.row.id)}
+          />
         </>
       ),
     },
