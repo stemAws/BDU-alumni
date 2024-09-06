@@ -9,7 +9,7 @@
   justify-content: space-between;
   height: 70px;
   position: fixed;
-  top: 0;
+  top: 50px;
   width: 100%;
   background-color: white;
   z-index: 10;
@@ -173,7 +173,7 @@
 
 .gallery-overlay {
   position: absolute;
-  top: 0;
+  top: 40%;
   left: 0;
   width: 100%;
   height: 100%;
@@ -190,10 +190,10 @@
   opacity: 1;
 }
 
-.gallery-overlay h2 {
+/* .gallery-overlay h2 {
   font-size: 18px;
   margin: 0;
-}
+} */
 
 .edit-cont {
   display: flex;
@@ -238,14 +238,22 @@
   background-color: #ccc;
   border-radius: 4px;
 }
-
-.Admin-gallery h2 {
+.overlay_discription {
+  position: relative;
+  top: 0;
+  height: 100%;
+  margin-top: 20px;
+  font-size: 15px;
+  overflow-y: auto;
+  font-weight: normal;
+}
+/* .Admin-gallery h2 {
   margin-top: 0;
   margin-bottom: 10px;
   border: none;
   border-radius: 15px;
   padding: 5px;
-}
+} */
 
 .admin-selected-category {
   position: fixed;
@@ -274,6 +282,7 @@
   cursor: pointer;
   padding: 0;
   margin: 3rem 0 0 1rem;
+  width: 100%;
 }
 
 .image-wrapper img.active {
@@ -344,15 +353,15 @@
 }
 
 .category-description {
-  margin: 10px; 
+  margin: 10px;
   color: white;
   text-align: justify;
   font-size: 10px;
 }
 .category-title {
-  margin-bottom: 10px; 
-  color: white; 
-  text-align: center; 
+  margin-bottom: 10px;
+  color: white;
+  text-align: center;
 }
 
 @media (max-width: 950px) {
@@ -378,12 +387,14 @@
   }
 
   .Admin-gallery {
-    margin: 10px;
-    padding: 0;
+    /* margin: 10px; */
+    /* padding: 0; */
     text-align: center;
     cursor: pointer;
-    display: inline-block;
-    width: 80%;
+    /* display: inline-block; */
+    width: 100%;
+    display: flex;
+    /* flex-direction: column; */
   }
 
   .batch-header,
@@ -404,9 +415,25 @@
   .admin-galleryContainers h3 {
     margin: 0;
     padding: 0;
+    display: none;
   }
-
+  .admin-galleryContainers {
+    width: 100%;
+  }
   .editlink {
     margin: -4px 0 0 10px;
+  }
+
+  .edit-cont {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    /* position: relative; */
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+  }
+  .footer___container {
+    display: none;
   }
 }
