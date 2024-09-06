@@ -3,12 +3,9 @@ const adminService = require("../services/admin-services");
 exports.uploadAlumniData = async (req, res) => {
   try {
     const alumniData = adminService.parseExcelFile(req.file.buffer);
-    // const graduationYear = req.body.graduationYear;
+    const graduationYear = req.body.graduationYear;
 
-    await adminService.createAlumniRecord(
-      alumniData
-      // graduationYear
-    );
+    await adminService.createAlumniRecord(alumniData, graduationYear);
 
     res.status(200).json({ message: "Alumni data uploaded successfully" });
   } catch (error) {
@@ -25,7 +22,7 @@ exports.updateStatus = async (req, res) => {
 
     res
       .status(200)
-      .json({ message: "updated transcript request status successfully" });
+      .json({ message: "updated document request status successfully" });
   } catch (error) {
     console.error("Error uploading alumni data:", error);
     res.status(500).json({ error: "Internal Server Error" });
