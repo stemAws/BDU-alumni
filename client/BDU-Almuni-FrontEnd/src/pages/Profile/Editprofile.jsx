@@ -19,6 +19,7 @@ import { Link ,useNavigate} from "react-router-dom";
 import EditPersonalInfo from "../../component/EditPersonalInfo";
 import Cookies from 'js-cookie';
 import Confirmation from "../../component/Confirmation";
+import Transcript from "../../component/Transcript";
 // import SigninWrapper from "../../component/SigninWrapper";
 // import { SigninContext } from '../../Pages/UsersPage'
 const Editprofile = () => {
@@ -700,26 +701,7 @@ const getStoryById = async(id)=>{
     });
     setInputDirty(true)
   };
-  const [transcriptSuccess, settranscriptSuccess] = useState(false)
-  const [successMessage, setsuccessMessage] = useState('Requesting...')
-  const handleRequestTranscript=async()=>{
-    settranscriptSuccess(true)
-    try {
-      const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/reserve-transcript`,{
-        credentials:'include'
-      })
-      const data= await res.json();
-        if (data.success)
-          setsuccessMessage('Request Sent Successfully, Your Transcript Will Be Emailed To You Once Approved By Admin')
-        else
-        setsuccessMessage('Something Went Wrong Please Try Again Later')
-    } catch (error) {
-      setsuccessMessage('Something Went Wrong Please Try Again Later')
-      
-    }
-
-    }
-  
+  const [transcriptPopUp, settranscriptPopUp] = useState(false)
   return (
 
     <div className="User_profile_container">
@@ -802,13 +784,13 @@ const getStoryById = async(id)=>{
                 }
             </div>
           </div>
-            <Button onClick={handleRequestTranscript} text={'Request For Transcript'} />
+            <Button onClick={()=>settranscriptPopUp(true)} text={'Request For Transcript'} />
         </li>
         {/* <p> {placeholders?.[0]?.batch} Batch</p> */}
-        {
-          transcriptSuccess &&
-          <Confirmation text={successMessage} close={()=>settranscriptSuccess(false)} />
-        }
+       {
+        transcriptPopUp&&
+        <Transcript close={()=>settranscriptPopUp(false)} email={placeholders[0].email} />
+       }
         <li> 
           {experiances&&<p className="work_place">{stillWorking()}
             </p>}

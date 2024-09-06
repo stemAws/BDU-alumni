@@ -99,7 +99,7 @@ const Footer = () => {
          <input className='submit-btn' type="submit" value="Subscribe" />
         </form>
         {emailSuccess&&
-          <Confirmation close={()=>{setemailSuccess(false)}}text={'Thanks For Registering We Will Keep In Touch'} />
+          <Confirmation close={()=>{setemailSuccess(false)}} text={'Thanks For Registering We Will Keep In Touch'} />
         }
       </div>
       <hr />
