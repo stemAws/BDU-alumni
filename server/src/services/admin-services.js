@@ -12,50 +12,49 @@ exports.parseExcelFile = (buffer) => {
   return xlsx.utils.sheet_to_json(sheet);
 };
 
-exports.createAlumniRecord = async (alumniData, graduationYear) => {
-  for (const row of alumniData) {
-    const password = row.lastName + "123";
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const verified = 1;
-    const username = row.lastName + row.firstName + graduationYear;
-    const fullName = row.firstName + " " + row.lastName;
-    const personQuery = `
-      INSERT INTO Person (fullName, gender, password, verified, username)
-      VALUES (?, ?, ?, ?, ?)
-    `;
+// exports.createAlumniRecord = async (alumniData, graduationYear) => {
+//   for (const row of alumniData) {
+//     const password = row.lastName + "123";
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const verified = 1;
+//     const username = row.fullName + graduationYear;
+//     const personQuery = `
+//       INSERT INTO Person (fullName, gender, password, verified, username)
+//       VALUES (?, ?, ?, ?, ?)
+//     `;
 
-    const personValues = [
-      fullName,
-      row.gender,
-      hashedPassword,
-      verified,
-      username,
-    ];
+//     const personValues = [
+//       row.fullName,
+//       row.gender,
+//       hashedPassword,
+//       verified,
+//       username,
+//     ];
 
-    const [personResult] = await db.query(personQuery, personValues);
-    const personId = personResult.insertId;
+//     const [personResult] = await db.query(personQuery, personValues);
+//     const personId = personResult.insertId;
 
-    const alumniSql = `
-      INSERT INTO Alumni (personId, isNotable)
-      VALUES (?, ?)
-    `;
+//     const alumniSql = `
+//       INSERT INTO Alumni (personId, isNotable)
+//       VALUES (?, ?)
+//     `;
 
-    const alumniValues = [personId, 0];
-    const [alumniResult] = await db.query(alumniSql, alumniValues);
-    const alumniId = alumniResult.insertId;
-    const institution = "Bahir Dar University";
-    const eduSql = `INSERT INTO Education (alumniId, institution, degree, major, admission, graduatingYear) VALUES (?, ?, ?, ?, ?, ?)`;
-    const eduValues = [
-      alumniId,
-      institution,
-      row.degree,
-      row.major,
-      row.admission,
-      graduationYear,
-    ];
-    await db.query(eduSql, eduValues);
-  }
-};
+//     const alumniValues = [personId, 0];
+//     const [alumniResult] = await db.query(alumniSql, alumniValues);
+//     const alumniId = alumniResult.insertId;
+//     const institution = "Bahir Dar University";
+//     const eduSql = `INSERT INTO Education (alumniId, institution, degree, major, admission, graduatingYear) VALUES (?, ?, ?, ?, ?, ?)`;
+//     const eduValues = [
+//       alumniId,
+//       institution,
+//       row.degree,
+//       row.major,
+//       row.admission,
+//       graduationYear,
+//     ];
+//     await db.query(eduSql, eduValues);
+//   }
+// };
 exports.fetchSuggestedPostsToAdmin = async () => {
   try {
     const [result] = await db.query(
@@ -69,11 +68,23 @@ exports.fetchSuggestedPostsToAdmin = async () => {
     );
   }
 };
-exports.fetchTranscriptList = async () => {
+
+exports.deleteRequest = async (id) => {
+  const [result] = await db.query(
+    "DELETE FROM TranscriptReservations WHERE reservationId = ?",
+    [id]
+  );
+
+  if (result.affectedRows === 0) {
+    return { success: false, message: "No record by the given id" };
+  }
+
+  return { success: true, message: "Document request deleted successfully" };
+};
+exports.fetchDocRequestList = async () => {
   try {
     const [result] = await db.query(
-      "SELECT reservationId as id, status, fullName, DATE_FORMAT(reservationDate, '%Y-%m-%d') AS reservationDate FROM transcriptreservations t JOIN alumni a JOIN person p WHERE a.alumniId = t.alumniId AND a.personId = p.personId AND status=?",
-      ["Pending"]
+      "SELECT reservationId as id, status, email, fullName, DATE_FORMAT(reservationDate, '%Y-%m-%d') AS reservationDate FROM TranscriptReservations t JOIN alumni a JOIN person p WHERE a.alumniId = t.alumniId AND a.personId = p.personId"
     );
     return result;
   } catch (error) {
@@ -93,7 +104,7 @@ exports.getYear = async () => {
 };
 exports.updateTranscriptStatus = async (reqId, reqStatus) => {
   const [result] = await db.query(
-    "UPDATE transcriptreservations SET status = ? WHERE reservationId = ?",
+    "UPDATE TranscriptReservations SET status = ? WHERE reservationId = ?",
     [reqStatus, reqId]
   );
   if (result.affectedRows === 0) {
