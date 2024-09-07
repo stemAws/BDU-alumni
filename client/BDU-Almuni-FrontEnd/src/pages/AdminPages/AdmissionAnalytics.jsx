@@ -145,7 +145,7 @@ const AdmissionAnalytics = () => {
       </div>
       <ResponsiveContainer width="100%" height={500}>
         <RadialBarChart
-          cx="70%"
+          cx="50%"
           cy="50%"
           innerRadius="35%"
           outerRadius="100%"
@@ -168,22 +168,6 @@ const AdmissionAnalytics = () => {
             ))}
           </RadialBar>
 
-          <Legend
-            iconSize={10}
-            layout="vertical"
-            verticalAlign="middle"
-            wrapperStyle={{
-              top: "50%",
-              right: "",
-              transform: "translate(0, -50%)",
-              lineHeight: "24px",
-            }}
-            payload={admissionCount.map((entry, index) => ({
-              value: entry.name,
-              type: "circle",
-              color: COLORS[index % COLORS.length],
-            }))}
-          />
           <Tooltip
             content={({ payload, label }) => {
               if (payload && payload.length) {
@@ -203,6 +187,23 @@ const AdmissionAnalytics = () => {
               return null;
             }}
             cursor={{ fill: "transparent" }}
+          />
+
+          <Legend
+            iconSize={10}
+            layout="horizontal"
+            verticalAlign="middle"
+            wrapperStyle={{
+              bottom: "0",
+              right: "",
+              transform: "translate(0, -50%)",
+              lineHeight: "24px",
+            }}
+            payload={admissionCount.map((entry, index) => ({
+              value: entry.name,
+              type: "circle",
+              color: COLORS[index % COLORS.length],
+            }))}
           />
         </RadialBarChart>
       </ResponsiveContainer>

@@ -197,9 +197,9 @@ const Gallery = ({
                     <img src={category.images[0]} alt={category.event} />
                   ) : null}
                   <div className="gallery-overlay">
-                    <h2 className="overlay_discription">
+                    <h className="overlay_discription">
                       {category.description}
-                    </h2>
+                    </h>
                   </div>
                 </div>
 

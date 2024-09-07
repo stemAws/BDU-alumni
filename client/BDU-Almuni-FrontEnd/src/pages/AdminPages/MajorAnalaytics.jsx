@@ -15,13 +15,7 @@ const MajorAnalytics = () => {
   const [availableYears, setAvailableYears] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const formatName = (originalName) => {
-    return originalName
-      .replace(/([A-Z])/g, " $1")
-      .trim()
-      .toLowerCase()
-      .replace(/\b\w/g, (c) => c.toUpperCase());
-  };
+  const formatName = (major) => major.split(" ").join("\n");
 
   useEffect(() => {
     fetchData();
@@ -68,7 +62,7 @@ const MajorAnalytics = () => {
       const data = await response.json();
 
       const transformedData = data.map(({ fieldOfStudy, count }) => ({
-        name: formatName(fieldOfStudy),
+        Major: formatName(fieldOfStudy),
         Count: count,
       }));
 
@@ -87,6 +81,26 @@ const MajorAnalytics = () => {
   if (loading) {
     return <p className="loading">Loading...</p>;
   }
+  const CustomXAxis = ({ x, y, payload }) => {
+    const lines = payload.value.split("\n");
+    return (
+      <g transform={`translate(${x},${y})`}>
+        {lines.map((line, index) => (
+          <text
+            key={index}
+            x={0}
+            y={index * 15}
+            dy={15}
+            textAnchor="end"
+            fill="#666"
+            transform="rotate(-45)"
+          >
+            {line}
+          </text>
+        ))}
+      </g>
+    );
+  };
 
   return (
     <>
@@ -113,20 +127,25 @@ const MajorAnalytics = () => {
         ) : (
           <ResponsiveContainer width="100%" height={750}>
             <BarChart
-              layout="vertical"
               width={500}
               height={500}
               data={Bardata}
               margin={{
                 top: 25,
                 right: 30,
-                left: 200,
+                left: 0,
                 bottom: 100,
               }}
             >
               <CartesianGrid strokeDasharray="1 1" />
-              <XAxis type="number" />
-              <YAxis dataKey="name" type="category" textAnchor="end" />
+              <XAxis
+                type="category"
+                dataKey="Major"
+                axisLine={false}
+                tick={<CustomXAxis />}
+                height={100} // Adjust the height to accommodate multiline labels
+              />
+              <YAxis type="number" />
               <Tooltip />
               <Bar
                 dataKey="Count"

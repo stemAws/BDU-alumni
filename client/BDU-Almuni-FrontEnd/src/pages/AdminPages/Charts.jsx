@@ -20,39 +20,7 @@ export default function Chart() {
   const [industryCount, setIndustryCount] = useState([]);
   const [companyCount, setCompanyCount] = useState([]);
 
-  // function countOccurrences(string, letter) {
-  //   return string.split("").filter((char) => char === letter).length;
-  // }
-
-  // const formatInput = (input) => {
-  //   if (countOccurrences(input, " ") > 2) {
-  //     const words = input.split(" "); // Split the input into words
-  //     const lines = [];
-
-  //     for (let i = 0; i < words.length; i += 2) {
-  //       const pair = words.slice(i, i + 2).join(" "); // Take pairs of words
-  //       lines.push(pair); // Format each pair and add to lines
-  //     }
-  //     console.log(lines.join("\n"));
-  //     // for(const line of lines){
-  //     //   line.replace()
-  //     // }
-  //     return lines.join("\n"); // Join the lines with newlines
-  //   }
-  //   return formatName(input);
-  // };
-
-  const formatJobTitle = function (jobTitle) {
-    if (jobTitle.includes(",")) {
-      const jobTitleParts = jobTitle.split(", ");
-
-      return jobTitleParts.join("\n");
-    } else {
-      const jobTitleParts = jobTitle.split(" ");
-
-      return jobTitleParts.join("\n");
-    }
-  };
+  const formatName = (name) => name.split(" ").join("\n");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +31,7 @@ export default function Chart() {
         const data = await response.json();
 
         const transformedData = data.map(({ jobTitle, count }) => ({
-          jobCategory: formatJobTitle(jobTitle),
+          jobCategory: formatName(jobTitle),
           count,
         }));
 
@@ -85,15 +53,13 @@ export default function Chart() {
           `${import.meta.env.VITE_BACKEND_URL}/industry-count`
         );
         const data = await response.json();
-
         const transformedData = data.map(({ industry, count }) => ({
-          industryCategory: formatJobTitle(industry),
-          count,
+          Industry: formatName(industry),
+          Count: count,
         }));
-
-        transformedData.sort((a, b) => b.count - a.count);
-
+        transformedData.sort((a, b) => b.Count - a.Count);
         setIndustryCount(transformedData);
+        console.log(industryCount);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -110,11 +76,11 @@ export default function Chart() {
         const data = await response.json();
 
         const transformedData = data.map(({ company, count }) => ({
-          companyCategory: formatJobTitle(company),
-          count,
+          Company: formatName(company),
+          Count: count,
         }));
 
-        transformedData.sort((a, b) => b.count - a.count);
+        transformedData.sort((a, b) => b.Count - a.Count);
 
         setCompanyCount(transformedData);
       } catch (error) {
@@ -184,7 +150,6 @@ export default function Chart() {
       </div>
 
       <MajorAnalaytics />
-      <DegreeAnalytics />
       <AdmissionAnalytics />
       <div className="chart6">
         <h3 className="chartTitle"> BDU Alumni Job Title</h3>
@@ -195,8 +160,8 @@ export default function Chart() {
             data={jobCount}
             margin={{
               top: 25,
-              right: 30,
-              left: 90,
+              right: 10,
+              left: 0,
               bottom: 100,
             }}
           >
@@ -219,33 +184,34 @@ export default function Chart() {
           </BarChart>
         </ResponsiveContainer>
       </div>
+      <DegreeAnalytics />
+
       <div className="chart6">
         <h3 className="chartTitle"> BDU alumni industry</h3>
         <ResponsiveContainer width="100%" height={750}>
           <BarChart
-            layout="vertical"
             width={500}
             height={500}
             data={industryCount}
             margin={{
               top: 25,
-              right: 30,
-              left: 200,
+              right: 10,
+              left: 20,
               bottom: 100,
             }}
           >
             <CartesianGrid strokeDasharray="1 1" />
-            <YAxis
+            <XAxis
               type="category"
-              dataKey="industryCategory"
+              dataKey="Industry"
               axisLine={false}
-              // tick={<CustomXAxis />}
-              height={100}
+              tick={<CustomXAxis />}
+              height={100} // Adjust the height to accommodate multiline labels
             />
-            <XAxis type="number" />
+            <YAxis type="number" />
             <Tooltip />
             <Bar
-              dataKey="count"
+              dataKey="Count"
               fill="#8884d8"
               barSize={40}
               label={{ position: "right", fill: "#8884d8" }}
@@ -257,29 +223,28 @@ export default function Chart() {
         <h3 className="chartTitle"> BDU alumni company</h3>
         <ResponsiveContainer width="100%" height={750}>
           <BarChart
-            layout="vertical"
             width={500}
             height={500}
             data={companyCount}
             margin={{
               top: 25,
-              right: 30,
-              left: 200,
+              right: 10,
+              left: 20,
               bottom: 100,
             }}
           >
             <CartesianGrid strokeDasharray="1 1" />
-            <YAxis
+            <XAxis
               type="category"
-              dataKey="companyCategory"
+              dataKey="Company"
               axisLine={false}
-              // tick={<CustomXAxis />}
-              height={100}
+              tick={<CustomXAxis />}
+              height={100} // Adjust the height to accommodate multiline labels
             />
-            <XAxis type="number" />
+            <YAxis type="number" />
             <Tooltip />
             <Bar
-              dataKey="count"
+              dataKey="Count"
               fill="#8884d8"
               barSize={40}
               label={{ position: "right", fill: "#8884d8" }}
