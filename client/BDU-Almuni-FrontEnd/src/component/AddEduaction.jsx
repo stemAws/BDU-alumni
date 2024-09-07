@@ -86,7 +86,6 @@ useEffect(()=>{
         placeholder={"What did you Minor in"}  
         value={minor||''} 
         onChange={(e)=>setminor(e.target.value)}
-        required
         />
         </div>
         <div className='form_control'>
@@ -96,9 +95,9 @@ useEffect(()=>{
           value={admission||''} 
           onChange={(e)=>setadmission(e.target.value)}>
             <option value="" disabled hidden>Select Type of Admission</option>
-            <option value="Bachelor">Regular</option>
-            <option value="Master">Summer</option>
-            <option value="Associate">Extension</option>
+            <option value="Regular">Regular</option>
+            <option value="Summer">Summer</option>
+            <option value="Extension">Extension</option>
             <option value="Other">Other</option>
           </select>
         </div>
