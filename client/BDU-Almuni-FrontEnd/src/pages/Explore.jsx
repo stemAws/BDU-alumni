@@ -34,14 +34,15 @@ const Explore = () => {
         <h3>Notable Alumni</h3>
         <div className="NotableAlumni">
           {notableAlumni.map((alumni, index) => (
-            <div key={index} className="IndividualNotableAlumni"  onClick={() =>
-              window.open(`ProfilePage/${alumni.username}`, "_blank")
-            }>
+            <div
+              key={index}
+              className="IndividualNotableAlumni"
+              onClick={() =>
+                window.open(`ProfilePage/${alumni.username}`, "_blank")
+              }
+            >
               <Avatar src={alumni.profilePicture} />
-              <div
-                className="alumniDetail"
-               
-              >
+              <div className="alumniDetail">
                 <p>{alumni.fullName}</p>
                 {/* <a href={alumni.companyWebsite} target="_blank" rel="noopener noreferrer">{alumni.companyName}</a> */}
               </div>
