@@ -9,7 +9,7 @@
   justify-content: space-between;
   height: 70px;
   position: fixed;
-  top: 0;
+  top: 50px;
   width: 100%;
   background-color: white;
   z-index: 10;
@@ -33,7 +33,7 @@
 }
 
 .admin-galleryContainers h3 {
-  margin-left: -100px;
+  margin-left: 0;
   font-size: 30px;
 }
 
@@ -189,6 +189,7 @@
 }
 .gallery-title h2 {
   font-size: 18px;
+  margin-left: 20px;
 }
 .Admin-gallery:hover .gallery-overlay {
   opacity: 1;
@@ -277,7 +278,7 @@
   transition: transform 0.3s ease;
   cursor: pointer;
   padding: 0;
-  margin: 3rem 0 0 1rem;
+  margin: 0;
   width: 300px;
   height: 500px;
   object-fit: contain;
@@ -408,7 +409,7 @@
   .batch-header,
   .batch-header2,
   .batch-header3 {
-    background: radial-gradient(circle, rgb(179, 178, 178), white);
+    background: radial-gradient(circle, #0c8ce9, white);
     color: black;
   }
 
@@ -422,10 +423,10 @@
   .gallery-title h2 {
     font-size: 15px;
   }
-  .admin-galleryContainers h3 {
+  /* .admin-galleryContainers h3 {
     margin: 0;
     padding: 0;
-  }
+  } */
 
   .editlink {
     margin: -4px 0 0 10px;
@@ -439,5 +440,38 @@
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.9);
     display: block;
     object-fit: cover;
+  }
+  .image-grid {
+    width: 100%;
+    column-count: 3;
+    overflow-y: auto;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .image-grid .image-wrapper {
+    flex: 0 0 auto;
+    margin-right: 10px;
+    top: 350px;
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  .category-description {
+    margin: 10px;
+    color: white;
+    text-align: justify;
+    font-size: 10px;
+    height: 800px;
+    overflow-y: auto;
+  }
+
+  .admin-galleryContainers h3 {
+    margin: 20px 0 0 0;
+    font-size: 16px;
+    align-self: center;
   }
 }

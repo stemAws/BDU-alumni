@@ -1,80 +1,80 @@
-.chart{
-    max-height: 100vh ;
-    overflow-y: auto;
+.chart {
+  max-height: 100vh;
+  /* overflow-y: auto; */
 }
 
-.chart1{
-    margin: 20px;
-    padding: 20px;
-    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    /* overflow-y: auto; */
-    height: 400px;
+.chart1 {
+  margin: 20px;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  /* overflow-y: auto; */
+  height: 400px;
 }
 
-.chart2{
-    margin: 20px;
-    padding: 10px;
-    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    /* overflow-y: auto; */
+.chart2 {
+  margin: 20px;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  /* overflow-y: auto; */
 }
-.geo_chart{
-    width:100%;
-    height:490px;
-    border: none;
+.geo_chart {
+  width: 100%;
+  height: 490px;
+  border: none;
 }
-.chart3{
-    margin: 20px;
-    padding: 10px;
-    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    /* overflow-y: auto; */
-    height: 500px;
-}
-
-.chart4{
-    margin: 20px;
-    padding: 10px;
-    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    /* overflow-y: auto; */
+.chart3 {
+  margin: 20px;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  /* overflow-y: auto; */
+  height: 500px;
 }
 
-.chart5{
-    margin: 20px;
-    padding: 10px;
-    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    /* overflow-y: auto; */
+.chart4 {
+  margin: 20px;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  /* overflow-y: auto; */
 }
-.chart6{
-    margin: 20px;
-    padding: 10px;
-    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    /* overflow-y: auto; */
+
+.chart5 {
+  margin: 20px;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  /* overflow-y: auto; */
 }
-.chartTitle{
-    margin-bottom: 10px;
-    color: black;
+.chart6 {
+  margin: 20px;
+  padding: 10px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  /* overflow-y: auto; */
 }
-.selection-header{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.chartTitle {
+  margin-bottom: 10px;
+  color: black;
 }
-.selection label{
-    padding: 10px;
+.selection-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
-.selections{
-    padding: 5px;
+.selection label {
+  padding: 10px;
 }
-.selection{
-    overflow-y: auto;
-    max-height: '200px';
+.selections {
+  padding: 5px;
 }
-.no-data{
-   margin-top: 300px;
-   margin-left: 500px;
+.selection {
+  overflow-y: auto;
+  max-height: "200px";
+}
+.no-data {
+  margin-top: 300px;
+  margin-left: 500px;
 }
