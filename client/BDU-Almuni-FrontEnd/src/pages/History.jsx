@@ -58,20 +58,19 @@ const History = () => {
         <div className="section-discription">
           <h1 className="section-one"> PEDA</h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            omnis iure quos doloremque pariatur error deserunt enim nam ratione?
-            Earum, provident laborum laboriosam atque beatae ducimus reiciendis
-            reprehenderit error ea nemo impedit officiis ipsa saepe quam maxime
-            iste, veniam sed! Ut tempore natus voluptatem aspernatur minus atque
-            nisi porro commodi neque facilis tempora provident nesciunt fugiat
-            nobis officia, modi doloremque. Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Commodi sit eveniet quas, officia
-            voluptatibus molestiae nemo harum molestias nobis sed!Lorem, ipsum
-            dolor sit amet consectetur adipisicing elit. Illum magni fugit ipsam
-            Ipsam illum iste, eligendi voluptatum ipsa quis sequi harum magni.
-            Dicta vel fugit omnis, velit, beatae odit fugiat aperiam, sit
-            aspernatur nemo molestiae nam labore quam ipsam? Voluptatem nisi
-            beatae dolores illo ipsa facere magnam?
+            A decade after the establishment of Haile Sellase I University, the
+            Imperial Government of Ethiopia signed an agreement with the United
+            National Development Program (UNDP) and the United Nations
+            Educational, Scientific and Cultural Organization (UNESCO) to set up
+            another higher education institution. To that end, two experts from
+            the University of London came to Ethiopia and conducted a
+            feasibility study. In their report submitted to the Ethiopian
+            government, UNDP and UNESCO, they suggested the establishment of a
+            college known as Academy of Pedagogy in Bahir Dar. That came into
+            effect in 1972 with the foundation of the Academy at the cost of 5.5
+            million Birr. At the time of its establishment, the Academy was
+            planned to be the best model higher education institution in the
+            field of Pedagogy for the whole African continent.
           </p>
         </div>
         <img src={i2} alt="" />
@@ -79,7 +78,7 @@ const History = () => {
 
       <div className="pimg3">
         <div className="ptext">
-          <span className="border trans">HOW THEY EMERGED</span>
+          <span className="border trans">HOW THEY MERGED</span>
         </div>
       </div>
 
@@ -88,21 +87,16 @@ const History = () => {
           <h1 className="section-one"> BDU </h1>
           <p>
             {" "}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae,
-            consequatur veritatis necessitatibus error cumque obcaecati autem in
-            ratione odio sit inventore ducimus optio quia reiciendis, sequi
-            suscipit aliquid alias vero itaque, non eius blanditiis. Mollitia,
-            porro quia suscipit unde, dolores exercitationem voluptates
-            perspiciatis consectetur, eveniet fugiat quam inventore ducimus
-            officia.Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Quod, quis fuga eveniet explicabo expedita exercitationem odio animi
-            pariatur soluta quibusdam omnis ea. Aliquid ex tempore tenetur
-            perferendis quisquam, maiores inventore.Lorem, ipsum dolor sit amet
-            consectetur adipisicing elit. Illum magni fugit ipsam Ipsam illum
-            iste, eligendi voluptatum ipsa quis sequi harum magni. Dicta vel
-            fugit omnis, velit, beatae odit fugiat aperiam, sit aspernatur nemo
-            molestiae nam labore quam ipsam? Voluptatem nisi beatae dolores illo
-            ipsa facere magnam?
+            Prior to the establishment of Bahir Dar University, the Polytechnic
+            Institute and the Bahir Dar Teachers College upgraded all their
+            diploma programs to a degree level in 1996. Then in May, 2000, the
+            two colleges were united to form Bahir Dar University. While the
+            former Polytechnic Institute became the Engineering Faculty, the
+            Bahir Dar Teachers College was renamed the Faculty of Education. In
+            less than a decade, new schools, faculties and colleges came into
+            existence. At the Engineering Faculty, all departments were raised
+            to school levels in 2010. Then, a year later, they evolved into two
+            technology institutes.
           </p>
         </div>
 
