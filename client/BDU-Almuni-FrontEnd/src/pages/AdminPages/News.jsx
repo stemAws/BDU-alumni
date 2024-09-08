@@ -58,21 +58,23 @@ const EventPost = () => {
     if (!title) {
       setTitleError(title ? "" : "Title field cannot be empty!");
       valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
-      setTitleError(
-        "Title must contain only letters and spaces, with numbers allowed anywhere after letters!"
-      );
-      valid = false;
     }
+    //else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
+    //   setTitleError(
+    //     "Title must contain only letters and spaces, with numbers allowed anywhere after letters!"
+    //   );
+    //   valid = false;
+    // }
     if (!content) {
       setContentError(content ? "" : "Content field cannot be empty!");
       valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(content)) {
-      setContentError(
-        "Content must contain only letters and spaces, with numbers allowed anywhere after letters!"
-      );
-      valid = false;
     }
+    // else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(content)) {
+    //   setContentError(
+    //     "Content must contain only letters and spaces, with numbers allowed anywhere after letters!"
+    //   );
+    //   valid = false;
+    // }
     // if (!postDate) {
     //     setPostDateError("Date field cannot be empty!");
     //     valid = false;
@@ -99,7 +101,6 @@ const EventPost = () => {
 
     if (valid) {
       try {
-
         setLoading(true);
 
         const response = await fetch(
@@ -127,7 +128,7 @@ const EventPost = () => {
         }
       } catch (error) {
         console.error("Error:", error);
-      }finally {
+      } finally {
         setLoading(false);
       }
     }
@@ -196,9 +197,9 @@ const EventPost = () => {
             {postDateError && <p className="errorMessage">{postDateError}</p>}
           </div> */}
 
-          <div className='buttonss'>
+          <div className="buttonss">
             <button type="submit" disabled={loading}>
-              {loading ? 'Uploading...' : 'Upload'}
+              {loading ? "Uploading..." : "Upload"}
             </button>
           </div>
         </form>
