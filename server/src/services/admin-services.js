@@ -14,18 +14,18 @@ exports.parseExcelFile = (buffer) => {
 
 exports.createAlumniRecord = async (alumniData, graduationYear) => {
   for (const row of alumniData) {
-    const password = row.lastName + "123";
+    const password = row.fullName.split(" ").join("") + "123";
     const hashedPassword = await bcrypt.hash(password, 10);
     const verified = 1;
-    const username = row.lastName + row.firstName + graduationYear;
-    const fullName = row.firstName + " " + row.lastName;
+    const username = row.fullName.split(" ").join("") + graduationYear;
     const personQuery = `
-      INSERT INTO Person (fullName, gender, password, verified, username)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO Person (fullName, email, gender, password, verified, username)
+      VALUES (?, ?, ?, ?, ?,?)
     `;
 
     const personValues = [
-      fullName,
+      row.fullName,
+      row.email,
       row.gender,
       hashedPassword,
       verified,
@@ -56,6 +56,7 @@ exports.createAlumniRecord = async (alumniData, graduationYear) => {
     await db.query(eduSql, eduValues);
   }
 };
+
 exports.fetchSuggestedPostsToAdmin = async () => {
   try {
     const [result] = await db.query(
