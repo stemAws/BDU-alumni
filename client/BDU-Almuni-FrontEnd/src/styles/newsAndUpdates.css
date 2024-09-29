@@ -283,4 +283,8 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
         height: 45px;
         margin-right: 27px;
     }
+    .top-stories>.top-stories-title{
+        margin-left: unset;
+        font-size: 22px;
+      } 
 }
