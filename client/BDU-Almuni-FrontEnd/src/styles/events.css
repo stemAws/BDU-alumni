@@ -103,12 +103,12 @@
     color: #9f9f9fb1;
 }
 .event-date{
-border: 1px solid rgba(208, 208, 208, 0.263);
-border-radius: 12px;
-color: rgba(170, 169, 169, 0.658);
-height: fit-content;
-padding: 10px;
-align-self: center;
+    border: 1px solid rgba(208, 208, 208, 0.263);
+    border-radius: 12px;
+    color: rgba(170, 169, 169, 0.658);
+    height: fit-content;
+    padding: 10px;
+    align-self: center;
 }
 
 .each-event.type2 .event-description{
