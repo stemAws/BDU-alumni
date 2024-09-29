@@ -256,3 +256,22 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     margin-left: -60px;
     z-index: -2;
 }
+@media(max-width:320px){
+    .news-bottom{
+        flex-direction: column;
+    }
+    .news-bottom>*{
+        width: 100%;
+    }
+    .news-small-detail,.news-date,.headline-texts>p,.news-description{
+        font-size: 13px;
+    
+    }
+    .headline-texts{
+        width: 210px;
+    }
+    .catagory-detail{
+        height: 165px;
+        margin-top: -165px;
+    }
+}
