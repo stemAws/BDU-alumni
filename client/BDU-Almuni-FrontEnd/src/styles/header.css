@@ -224,7 +224,7 @@ background-color: #454545;
 }
 .side-menu-conatiner>ul>li{
     width: 100%;
-    border-bottom: 1px solid #333333 ;
+    font-family: 'Poppins';
 }
 .for-mobile{
     display: none;

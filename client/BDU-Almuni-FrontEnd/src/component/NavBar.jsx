@@ -116,7 +116,7 @@ const [expand, setexpand] = useState(false)
               </div>:<Button id={"signin-btn"} onClick={()=>setsignin(true)} text='SIGN IN'/>}
             
         </nav>
-        <div className="searchBar_container for-mobile">
+        <div className="searchBar_container active for-mobile">
                 <SearchBar setOutput={setOutput}/>
                 <SearchResult outPut={outPut}/>
             </div>
