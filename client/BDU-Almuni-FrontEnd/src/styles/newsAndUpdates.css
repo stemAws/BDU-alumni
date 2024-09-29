@@ -256,9 +256,10 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     margin-left: -60px;
     z-index: -2;
 }
-@media(max-width:320px){
+@media(max-width:425px){
     .news-bottom{
         flex-direction: column;
+        margin-top: 0;
     }
     .news-bottom>*{
         width: 100%;
@@ -273,5 +274,13 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
     .catagory-detail{
         height: 165px;
         margin-top: -165px;
+    }
+    .nUTitle>p {
+        font-size:20px;
+    }
+    .circle-bg {
+        width: 45px;
+        height: 45px;
+        margin-right: 27px;
     }
 }
