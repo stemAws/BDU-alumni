@@ -1,4 +1,4 @@
-.srories-detail-container{
+.stories-detail-container{
     position: relative;
     display: flex;
     padding-top: 75px;
@@ -24,13 +24,13 @@
 .stories-detal-left>*{
     text-transform: capitalize;
 }
-.srories-detail-container .profile{
+.stories-detail-container .profile{
   display: flex;
   align-items: center;
   margin-bottom: 5px;
   gap: 10px;
 }
-.srories-detail-container .profile-pic{
+.stories-detail-container .profile-pic{
     width: 35px;
     height: 35px;
     border-radius: 50%;
@@ -65,4 +65,12 @@ width: 50%;
     max-height:350px ;
     color: #5e5e5e;
     overflow: scroll;
+}
+@media(max-width:425px){
+    .stories-detail-container{
+        flex-direction: column;
+    }
+    .stories-detal-left,.stories-detal-right{
+        width: 100%;
+    }
 }
