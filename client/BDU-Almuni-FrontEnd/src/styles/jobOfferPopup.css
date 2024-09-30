@@ -68,3 +68,11 @@ cursor: pointer;
 .job-need.JO-deadline{
     color: #ff7d7d;
 }
+@media(max-width:425px){
+    .JO-popup-container {
+        width: 100%;
+    }
+    .job-need-conatiner {
+        flex-direction: column;
+    }
+}
