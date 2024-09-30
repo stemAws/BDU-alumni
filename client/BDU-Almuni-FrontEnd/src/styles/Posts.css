@@ -318,13 +318,13 @@ color: #6fbae6;
 }
 @media(max-width:649px){
     .all_posts_container{
-        margin-top: 10px;
+        margin-top: 30px;
     }
     .Posts{
         margin-top: 77px;
     }
     .profile_container{
-        margin-top: -51px;
+        margin-top: -28px;
     }
     .date_proflepic .profile_name {
         font-size: 12px;
