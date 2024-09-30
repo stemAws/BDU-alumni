@@ -205,13 +205,14 @@ background-color: #454545;
 .side-menu-conatiner{
     position: fixed;
     right: 0;
+    top: 0;
     height: 100%;
     width: 45%;
     display: flex;
     justify-content: space-between;
     padding: 10px;
     background-color: #000000;
-    z-index: 10;
+    z-index: 100;
 }
 .side-menu-conatiner>ul{
     list-style: none;

@@ -157,3 +157,22 @@ transition: all 0s ease-in;
 }
 
 /*admin css*/
+
+
+
+
+
+
+
+
+
+
+@media(max-width:425px){
+    .job-offer-container{
+        display: flex;
+    }
+    .each-job-offer{
+        min-width: 350px;
+        max-width: unset;
+    }
+}
