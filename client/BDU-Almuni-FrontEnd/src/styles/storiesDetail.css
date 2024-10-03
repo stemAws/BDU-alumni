@@ -69,6 +69,7 @@ width: 50%;
 @media(max-width:425px){
     .stories-detail-container{
         flex-direction: column;
+        padding-inline: 10px;
     }
     .stories-detal-left,.stories-detal-right{
         width: 100%;
