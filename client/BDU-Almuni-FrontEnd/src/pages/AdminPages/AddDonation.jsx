@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../../styles/AddDonation.css";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { Link } from "@mui/material";
 import { ChevronLeft } from "@mui/icons-material";
 
@@ -23,48 +23,48 @@ const DonationPost = () => {
     const { name, value } = e.target;
 
     switch (name) {
-        case "title":
-          setTitle(value);
-          setTitleError("");
-          break;
-        case "description":
-          setDescription(value);
-          setDescriptionError("");
-          break;
-        case "link":
-          setLink(value);
-          setLinkError("");
-          break;
-        default:
-          break;
-      }
+      case "title":
+        setTitle(value);
+        setTitleError("");
+        break;
+      case "description":
+        setDescription(value);
+        setDescriptionError("");
+        break;
+      case "link":
+        setLink(value);
+        setLinkError("");
+        break;
+      default:
+        break;
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     let valid = true;
-  
+
     if (!title) {
       setTitleError(title ? "" : "Title field cannot be empty!");
       valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
-      setTitleError("title must contain only letters and spaces, with numbers allowed anywhere after letters!");
-      valid = false;
-    }else if (title.length > 27) {
-      setTitleError("Title must be at most 27 characters long!");
-      valid = false;
-    }
+    } // else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
+    //   setTitleError("title must contain only letters and spaces, with numbers allowed anywhere after letters!");
+    //   valid = false;
+    // }else if (title.length > 27) {
+    //   setTitleError("Title must be at most 27 characters long!");
+    //   valid = false;
+    // }
     if (!description) {
       setDescriptionError(
         description ? "" : "Description field cannot be empty!"
       );
       valid = false;
-    } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-      setDescriptionError("description must contain only letters and spaces, with numbers allowed anywhere after letters!");
-      valid = false;
-    }
-  
+    } //else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
+    //   setDescriptionError("description must contain only letters and spaces, with numbers allowed anywhere after letters!");
+    //   valid = false;
+    // }
+
     if (valid) {
       try {
         setLoading(true);
@@ -73,13 +73,13 @@ const DonationPost = () => {
         formDataToSend.append("title", title);
         formDataToSend.append("link", link);
         formDataToSend.append("description", description);
-  
+
         // Convert FormData to plain JavaScript object
         const formDataObject = {};
         formDataToSend.forEach((value, key) => {
           formDataObject[key] = value;
         });
-  
+
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/donation`,
           {
@@ -90,7 +90,7 @@ const DonationPost = () => {
             body: JSON.stringify(formDataObject), // Send the plain JavaScript object
           }
         );
-  
+
         if (response.ok) {
           toast.success("Donation data uploaded successfully");
           navigate("/admin/donation");
@@ -101,20 +101,20 @@ const DonationPost = () => {
         }
       } catch (error) {
         console.error("Error:", error);
-      }finally {
+      } finally {
         setLoading(false);
       }
     }
   };
-  
+
   const handleClick = () => {
-   navigate("/admin/donation");
+    navigate("/admin/donation");
   };
 
   return (
     <div className="eventUpload">
       <Link to="/donation" className="userGoBack">
-        <ChevronLeft className="userGoBackIcon" onClick={handleClick}/>
+        <ChevronLeft className="userGoBackIcon" onClick={handleClick} />
       </Link>
       <h2> Add Donation </h2>
       <div className="formContainer">
@@ -158,11 +158,11 @@ const DonationPost = () => {
             />
             {LinkError && <p className="errorMessage">{LinkError}</p>}
           </div>
-          <div className='buttonss'>
-          <button type="submit" disabled={loading}>
-              {loading ? 'Uploading...' : 'Upload'}
+          <div className="buttonss">
+            <button type="submit" disabled={loading}>
+              {loading ? "Uploading..." : "Upload"}
             </button>
-            </div>
+          </div>
         </form>
       </div>
     </div>
