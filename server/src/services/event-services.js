@@ -1,9 +1,33 @@
 const db = require("../config/db");
 
-exports.addEvent = async ( image_path, { title, content, startDate, endDate, organizer, eventLink, category, eventLocation }) => {
+exports.addEvent = async (
+  image_path,
+  {
+    title,
+    content,
+    startDate,
+    endDate,
+    organizer,
+    eventLink,
+    category,
+    eventLocation,
+  }
+) => {
   try {
-    const [result] = await db.query("INSERT INTO Event (title, content, startDate, endDate, organizer, eventLink, category, eventLocation, imagePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [title, content, startDate, endDate, organizer, eventLink, category, eventLocation, image_path]);
+    const [result] = await db.query(
+      "INSERT INTO Event (title, content, startDate, endDate, organizer, eventLink, category, eventLocation, imagePath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        title,
+        content,
+        startDate,
+        endDate,
+        organizer,
+        eventLink,
+        category,
+        eventLocation,
+        image_path,
+      ]
+    );
 
     return result.insertId;
   } catch (error) {
@@ -20,7 +44,7 @@ exports.getAllEvents = async () => {
 };
 
 exports.getEvents = async () => {
-  const query = `SELECT eventId, title, 
+  const query = `SELECT eventId, title, content, category,
     DATE_FORMAT(startDate, '%Y-%m-%d') AS startDate,
     DATE_FORMAT(endDate, '%Y-%m-%d') AS endDate,
     organizer, eventLink, createdAt FROM Event`;
@@ -43,7 +67,7 @@ exports.updateEvent = async (eventId, updatedEvent) => {
 
   const [result] = await db.query(
     `
-        UPDATE event
+        UPDATE Event
         SET
             title = ?,
             content = ?,
