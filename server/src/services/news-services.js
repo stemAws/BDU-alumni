@@ -1,15 +1,16 @@
 const db = require("../config/db");
 
-exports.addNews = async (title, description, image_path) => {
+exports.addNews = async (title, description, category, image_path) => {
   try {
     let query, params;
 
     if (image_path) {
-      query = "INSERT INTO News (title, content, imagePath) VALUES (?, ?, ?)";
-      params = [title, description, image_path];
+      query =
+        "INSERT INTO News (title, content, category, imagePath) VALUES (?,?, ?, ?)";
+      params = [title, description, category, image_path];
     } else {
-      query = "INSERT INTO News (title, content) VALUES (?, ?)";
-      params = [title, description];
+      query = "INSERT INTO News (title, content,category) VALUES (?,?, ?)";
+      params = [title, description, category];
     }
 
     const [result] = await db.query(query, params);
@@ -31,7 +32,7 @@ exports.getNews = async () => {
 
 exports.NewsList = async () => {
   const [news] = await db.query(
-    `SELECT title, fullName FROM News n JOIN websiteadmin w JOIN person p WHERE n.adminId = w.adminId AND p.personId = w.personId`
+    `SELECT title, category, fullName FROM News n JOIN websiteadmin w JOIN person p WHERE n.adminId = w.adminId AND p.personId = w.personId`
   );
 
   return news;
@@ -47,17 +48,18 @@ exports.getANews = async (newsId) => {
 };
 
 exports.updateANews = async (newsId, updatedNews) => {
-  const { title, content } = updatedNews;
+  const { title, content, category } = updatedNews;
 
   const [result] = await db.query(
     `   UPDATE News
         SET
           title = ?,
-          content =?
+          content =?,
+          category=?
         WHERE
           newsId = ?
     `,
-    [title, content, newsId]
+    [title, content, category, newsId]
   );
 
   return result.affectedRows;
