@@ -9,10 +9,11 @@ const EditNews = () => {
 
   const [titleError, setTitleError] = useState("");
   const [contentError, setContentError] = useState("");
-
+  const [categoryError, setCategoryError] = useState("");
   const [newsData, setNewsData] = useState({
     title: "",
     content: "",
+    category: "",
   });
 
   useEffect(() => {
@@ -26,7 +27,6 @@ const EditNews = () => {
         }
 
         const newsDataFromServer = await response.json();
-        console.log(newsDataFromServer);
         setNewsData(newsDataFromServer);
       } catch (error) {
         console.error("Error fetching news data:", error);
@@ -38,7 +38,6 @@ const EditNews = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(`Changing ${name} to ${value}`);
 
     setNewsData((prevData) => ({
       ...prevData,
@@ -54,28 +53,36 @@ const EditNews = () => {
     if (!newsData.title) {
       setTitleError("Title field cannot be empty!");
       valid = false;
-    } else if (!/^[a-zA-Z0-9\s]+$/.test(newsData.title)) {
-      setTitleError(
-        "Title field must contain only letters, numbers, and spaces!"
-      );
-      valid = false;
-    } else {
+    }
+    // else if (!/^[a-zA-Z0-9\s]+$/.test(newsData.title)) {
+    //   setTitleError(
+    //     "Title field must contain only letters, numbers, and spaces!"
+    //   );
+    //   valid = false;
+    // }
+    else {
       setTitleError("");
     }
 
     if (!newsData.content) {
       setContentError("Content field cannot be empty!");
       valid = false;
-    } else if (/^[0-9\s]+$/.test(newsData.content)) {
-      setContentError("Please include meaningful information in the content");
-      valid = false;
-    } else {
+    }
+    // else if (/^[0-9\s]+$/.test(newsData.content)) {
+    //   setContentError("Please include meaningful information in the content");
+    //   valid = false;
+    // }
+    else {
       setContentError("");
+    }
+    if (!newsData.category) {
+      setCategoryError("Category field cannot be empty!");
+      valid = false;
     }
 
     if (valid) {
       try {
-        console.log(newsData)
+        console.log(newsData);
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/edit-news/${newsId}`,
           {
@@ -139,6 +146,17 @@ const EditNews = () => {
               onChange={handleInputChange}
             />
             {contentError && <p className="errorMessage">{contentError}</p>}
+          </div>
+          <div className="form">
+            <label className="label">Category:</label>
+            <input
+              type="text"
+              placeholder="Category"
+              name="category"
+              value={newsData.category}
+              onChange={handleInputChange}
+            />
+            {categoryError && <p className="errorMessage">{categoryError}</p>}
           </div>
           <button type="submit">Save Changes</button>
         </form>
