@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import DeleteConfirmation from '../../component/DeleteConfirmation';
+import DeleteConfirmation from "../../component/DeleteConfirmation";
 
 const NewsList = () => {
   const [data, setData] = useState([]);
@@ -15,7 +15,8 @@ const NewsList = () => {
   const navigate = useNavigate();
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [deleteConfirmationNewsId, setDeleteConfirmationNewsId] = useState(null);
+  const [deleteConfirmationNewsId, setDeleteConfirmationNewsId] =
+    useState(null);
 
   const handleDelete = (id) => {
     setDeleteConfirmationOpen(true);
@@ -37,7 +38,9 @@ const NewsList = () => {
 
       const newsData = await response.json();
 
-      newsData.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).reverse();
+      newsData
+        .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+        .reverse();
 
       setData(newsData);
     } catch (error) {
@@ -69,7 +72,9 @@ const NewsList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/delete-news/${deleteConfirmationNewsId}`,
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/delete-news/${deleteConfirmationNewsId}`,
         {
           method: "DELETE",
           headers: {
@@ -113,6 +118,8 @@ const NewsList = () => {
     { field: "newsId", headerName: "ID", width: 90 },
     { field: "title", headerName: "News Title", width: 200 },
     { field: "content", headerName: "Content", width: 300 },
+    { field: "category", headerName: "Category", width: 200 },
+
     {
       field: "actions",
       headerName: "Actions",
@@ -155,7 +162,11 @@ const NewsList = () => {
             <p>Loading...</p>
           ) : (
             <>
-              <DataGrid rows={filteredData} columns={columns} getRowId={getRowId} />
+              <DataGrid
+                rows={filteredData}
+                columns={columns}
+                getRowId={getRowId}
+              />
               {isDeleteConfirmationOpen && (
                 <DeleteConfirmation
                   close={handleCancelDelete}
