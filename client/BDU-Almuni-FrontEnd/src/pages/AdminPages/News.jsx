@@ -11,14 +11,14 @@ const EventPost = () => {
   const navigate = useNavigate("");
   const [loading, setLoading] = useState(false);
   // const [postDate, setPostDate] = useState("");
-  // const [location, setLocation] = useState("");
+  const [category, setCategory] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
 
   const [titleError, setTitleError] = useState("");
   const [contentError, setContentError] = useState("");
   // const [postDateError, setPostDateError] = useState("");
-  // const [locationError, setLocationError] = useState("");
+  const [categoryError, setCategoryError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
@@ -40,10 +40,10 @@ const EventPost = () => {
         //   setPostDate(value);
         //   setPostDateError("");
         //   break;
-        // case "location":
-        //   setLocation(value);
-        //   setLocationError("");
-        //   break;
+        case "category":
+          setCategory(value);
+          setCategoryError("");
+          break;
         default:
           break;
       }
@@ -91,10 +91,10 @@ const EventPost = () => {
     //       valid = false;
     //     }
     //   }
-    // if (!location) {
-    //   setLocationError(location ? "" : "Location field cannot be empty!");
-    //   valid = false;
-    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(location)) {
+    if (!category) {
+      setCategoryError(category ? "" : "Category field cannot be empty!");
+      valid = false;
+    } //else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(location)) {
     //   setLocationError("Location must contain only letters and spaces!");
     //   valid = false;
     // }
@@ -111,9 +111,10 @@ const EventPost = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              title: title,
-              content: content,
-              image: image,
+              title,
+              content,
+              image,
+              category,
             }),
           }
         );
@@ -176,16 +177,16 @@ const EventPost = () => {
             />
             {contentError && <p className="errorMessage">{contentError}</p>}
           </div>
-          {/* <div className="form">
-            <label className="label">Location:</label>
+          <div className="form">
+            <label className="label">Category:</label>
             <input
               type="text"
-              name="location"
-              value={location}
+              name="category"
+              value={category}
               onChange={handleInputChange}
             />
-            {locationError && <p className="errorMessage">{locationError}</p>}
-          </div> */}
+            {categoryError && <p className="errorMessage">{categoryError}</p>}
+          </div>
           {/* <div className="form">
             <label className="label">Date:</label>
             <input
