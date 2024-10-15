@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import DeleteConfirmation from '../../component/DeleteConfirmation'
+import DeleteConfirmation from "../../component/DeleteConfirmation";
 const EventList = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -13,9 +13,9 @@ const EventList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [deleteConfirmationEventId, setDeleteConfirmationEventId] = useState(null);
+  const [deleteConfirmationEventId, setDeleteConfirmationEventId] =
+    useState(null);
 
   const handleDelete = (id) => {
     setDeleteConfirmationOpen(true);
@@ -70,7 +70,9 @@ const EventList = () => {
   const handleConfirmDelete = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/adminEvents/${deleteConfirmationEventId}`,
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/adminEvents/${deleteConfirmationEventId}`,
         {
           method: "DELETE",
           headers: {
@@ -83,7 +85,9 @@ const EventList = () => {
         throw new Error(`Failed to delete event. Status: ${response.status}`);
       }
 
-      setData(data.filter((item) => item.eventId !== deleteConfirmationEventId));
+      setData(
+        data.filter((item) => item.eventId !== deleteConfirmationEventId)
+      );
     } catch (error) {
       console.error("Error deleting data:", error.message);
     } finally {
@@ -99,7 +103,7 @@ const EventList = () => {
 
   const handleEdit = (eventId) => {
     // Render the EditEvent component with the onUpdate callback
-   navigate(`/admin/adminEvents/${eventId}`);
+    navigate(`/admin/adminEvents/${eventId}`);
   };
 
   const customTheme = createTheme({
@@ -112,12 +116,18 @@ const EventList = () => {
 
   const columns = [
     { field: "eventId", headerName: "ID", width: 90 },
-    { field: "title", headerName: "Event Title", width: 100 },
+    { field: "title", headerName: "Event Title", width: 200 },
+    { field: "content", headerName: "Content", width: 300 },
+    { field: "category", headerName: "Category", width: 200 },
+
     { field: "organizer", headerName: "Organizer", width: 100 },
     { field: "startDate", headerName: "Start Date", width: 150 },
     { field: "endDate", headerName: "End Date", width: 100 },
-    { field: "actions", headerName: "Actions", width: 100 },
     {
+      field: "actions",
+      headerName: "Actions",
+      width: 100,
+
       renderCell: (params) => (
         <>
           <DeleteOutline
@@ -137,37 +147,41 @@ const EventList = () => {
 
   return (
     <ThemeProvider theme={customTheme}>
-    <div className="eventlist">
-      <div className="addEventheader">
-        <input
-          className="search"
-          type="text"
-          placeholder="Search by event title"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <h3> Bahir Dar University Alumni Events </h3>
-        <Link to="/admin/AddEvent">
-          <button className="addEvent">+ Add Event</button>
-        </Link>
-      </div>
-      <div className="listCOntainer">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-              <DataGrid rows={filteredData} columns={columns} getRowId={getRowId} />
+      <div className="eventlist">
+        <div className="addEventheader">
+          <input
+            className="search"
+            type="text"
+            placeholder="Search by event title"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <h3> Bahir Dar University Alumni Events </h3>
+          <Link to="/admin/AddEvent">
+            <button className="addEvent">+ Add Event</button>
+          </Link>
+        </div>
+        <div className="listCOntainer">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              <DataGrid
+                rows={filteredData}
+                columns={columns}
+                getRowId={getRowId}
+              />
               {isDeleteConfirmationOpen && (
                 <DeleteConfirmation
                   close={handleCancelDelete}
-                  text="event"  // You can customize this text based on your needs
+                  text="event" // You can customize this text based on your needs
                   onDelete={handleConfirmDelete}
                 />
               )}
             </>
-      )}
+          )}
+        </div>
       </div>
-    </div>
     </ThemeProvider>
   );
 };
