@@ -85,7 +85,7 @@ exports.deleteRequest = async (id) => {
 exports.fetchDocRequestList = async () => {
   try {
     const [result] = await db.query(
-      "SELECT reservationId as id, status, email, fullName, DATE_FORMAT(reservationDate, '%Y-%m-%d') AS reservationDate FROM TranscriptReservations t JOIN alumni a JOIN person p WHERE a.alumniId = t.alumniId AND a.personId = p.personId"
+      "SELECT reservationId as id, status, email, fullName, DATE_FORMAT(reservationDate, '%Y-%m-%d') AS reservationDate FROM TranscriptReservations t JOIN Alumni a JOIN Person p WHERE a.alumniId = t.alumniId AND a.personId = p.personId"
     );
     return result;
   } catch (error) {
