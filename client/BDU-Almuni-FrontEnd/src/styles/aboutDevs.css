@@ -69,3 +69,28 @@
     font:100 14px "Poppins" ;
     width: 450px;
 }
+@media(max-width:425px){
+    .each-dev {
+        max-width: 400px;
+    }
+    .img-overlay {
+        height: 120px;
+        min-width: 120px;
+        border-radius: 20px;
+        margin: 30px -150px 0 0;
+        overflow: hidden;
+    }
+    .about-dev-container .description {
+        height: 250px;
+        width: 1000px;
+    }
+    .devName {
+        font: 600 12px "Poppins";
+    }
+    .devDetail {
+        font: 100 10px "Poppins";
+        width: 130px;
+        height: 100px;
+        overflow: scroll;
+    }
+}

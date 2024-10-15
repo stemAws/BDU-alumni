@@ -32,7 +32,7 @@ const StoriesDetail = () => {
       }, [stories])
       
   return (
-    <div className={`srories-detail-container ${!singleStory?.mediaPath&& "no-img"}`}>
+    <div className={`stories-detail-container ${!singleStory?.mediaPath&& "no-img"}`}>
         {singleStory?.mediaPath&&<div className="stories-detal-left">
         {singleStory?.mediaPath&& 
         <>

@@ -91,10 +91,19 @@ z-index: 1;
     .search_input {
     font-size: 0.7rem;
     }
-    .search_icon.active{
-        transform: translateX(80px);
+    .searchBar_container.active .input_warper{
+        width: 145px ;
+        border: 1px solid #747474;
+        border-radius: 10px;
+    }
+    .searchBar_container.active .search_icon{
+        transform: translateX(119px);
+        background-color: transparent;
     }
     .search_icon{
         height: 18px;
+    }
+    .searchBar_container.active .search_input{
+        font-size: 13px;
     }
 }

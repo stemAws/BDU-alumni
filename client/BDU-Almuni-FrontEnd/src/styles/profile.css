@@ -538,8 +538,8 @@ margin:0px 0 10px 13px;
       height: 100px;
     }
     .backcamera{
-      top: 35%;
-      left: 90%;
+      top: 22%;
+      left: 84%;
       width: 25px;
       height: 25px;
     }
@@ -590,10 +590,10 @@ margin:0px 0 10px 13px;
       }
       .upper_slide{
         z-index: 0;
-        transform: translateY(-50%);
+        transform: translateY(-60%);
       }
       .upper_slide_show{
-        transform: translateY(50%);
+        transform: translateY(30%);
         z-index: 1;
         
       }
@@ -624,5 +624,10 @@ margin:0px 0 10px 13px;
     .personal_info ul{
         display: flex;
         flex-direction: column;
+    }
+    .name_edit .btn {
+      position: relative;
+      top: 52px;
+      font-size: 10px;
     }
 }

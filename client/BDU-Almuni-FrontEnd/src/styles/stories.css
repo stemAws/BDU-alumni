@@ -391,3 +391,24 @@
   padding: 10px;
   margin-bottom: 40px;
 }
+@media(max-width:425px){
+  .stories-container{
+    height: unset;
+  }
+  .event-title{
+      font-size: 20px;
+      margin-left: unset;
+  }
+  .each-story {
+    width: 335px;
+    border-radius: 10px;
+    height: 300px;
+    overflow: hidden;
+  }
+  .story-img,.story-description-container{
+    border-radius: unset;
+  }
+  .story-readmore{
+    font-size: 16px;
+  }  
+}

@@ -97,6 +97,7 @@ display: flex;
     color: #fff;
     top: 0;
     padding-right: 20px;
+    align-items: center;
     /* mix-blend-mode: difference; */
 }
 .scroll{
@@ -165,17 +166,22 @@ cursor: pointer;
 .dropDown-container{
     position: absolute;
     background-color: #2a2a2a;
-    width: 140px;
     max-height: 120px;
     top: 165%;
     padding-bottom: 10px;
-    
-}
-.dropDown-container.drop2{
     left: -80%;
     width: 170px;
+    transition: all 0.2s ease-in-out;
+}
+.dropDown-container.side-menu{
+    border-top: 1px solid #333333;
+    position: relative;
+    background-color: #000;
+    top: 0;
+    left: 0;
 }
 .each-list-container{
+    list-style: none;
     display: flex;
     flex-direction: column;
     /* gap: 10px; */
@@ -192,4 +198,78 @@ cursor: pointer;
 }
 .each-list-container>li:hover{
 background-color: #454545;
+}
+.hamburger{
+    display: none;
+}
+.side-menu-conatiner{
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 45%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #000000;
+    z-index: 100;
+}
+.side-menu-conatiner>ul{
+    list-style: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top:50px;
+    padding-left: 0;
+}
+.side-menu-conatiner>ul>li{
+    width: 100%;
+    font-family: 'Poppins';
+}
+.for-mobile{
+    display: none;
+}
+.user{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 80px;
+    width: 100%;
+}
+.btn.log-out{
+    background-color: #F17318;
+    color: #fff;
+    border: none;
+}
+@media(max-width:425px){
+    .nav-lists,.logo>p{
+        display: none;
+    }
+    .header-container,.overlay,.background-img{
+        height: 320px;
+    }
+    .navBar-container{
+        padding-right: 0;
+    }
+    .hamburger{
+        display: block;
+    }
+    .wellcome-text{
+        font: 400 20px 'Poppins';
+    }
+    .wellcome-text .bottom-title{
+        width: unset;
+        height: 60px;
+        overflow: hidden;
+        font-size: 14px;
+    }
+    .for-mobile{
+        display: block;
+    }
+    .side-menu-conatiner>svg{
+        position: fixed;
+        right: 0;
+    }
 }

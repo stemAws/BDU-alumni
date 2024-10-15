@@ -387,7 +387,7 @@ const updateEducation = async (institution,degree,admission,major,minor,graduati
     }
 } catch (error) {
   setloading(false)
-    console.error('Error updating experience:', error);
+    console.error('Error updating education:', error);
 }
 
 }
