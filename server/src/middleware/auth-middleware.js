@@ -6,8 +6,9 @@ async function verifyToken(req, res, next) {
         const { token } = req.cookies;
 
         if (!token) {
-            return res.status(403).json({ error: 'Token not provided' });
+            res.clearCookie('id')
         }
+        else{
 
         const decoded = jwt.verify(token, process.env.secretKey);
 
@@ -18,11 +19,12 @@ async function verifyToken(req, res, next) {
 
         req.alumni = decoded.token;
 
-        next();
+        next();}
     } catch (error) {
-        console.error('Failed to authenticate token:', error);
-        return res.status(401).json({ error: 'Failed to authenticate token' });
-    }
+         res.clearCookie('token');
+         res.clearCookie('id');
+         res.redirect('http://localhost:5173/');
+    }   
 }
 
 async function verifyAdmin(req, res, next) {
