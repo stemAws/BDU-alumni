@@ -4,6 +4,12 @@ const transporter = require("../config/mailerConfig");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+exports.fakereset = async ({newpass, personId}) => {
+  const hashedPassword = await bcrypt.hash(newpass, 10);
+
+  await db.query('UPDATE Person SET password = ? WHERE personId = ?', [hashedPassword, personId])
+}
+
 exports.addUser = async (alumniData) => {
   const hashedPassword = await bcrypt.hash(alumniData.password, 10);
   const isAdmin = alumniData.role === "admin" ? 1 : 0;

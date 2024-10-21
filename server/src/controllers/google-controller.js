@@ -15,11 +15,12 @@ exports.failed = async (req, res) => {
 exports.profile = async (req, res) => {
     console.log(req.user.emails[0].value)
     try {
-        const [result] = await db.query('SELECT username, personId FROM Person WHERE email = ?', [req.user.emails[0].value]);
-        console.log(result)
-        const id = result[0].personId
+        const [result] = await db.query('SELECT username FROM Person WHERE email = ?', [req.user.emails[0].value]);
         const token = await alumniService.getAlumniProfile(result[0].username);
-
+        console.log(token)
+        const { alumniId: id2 } = token[0];
+        const { personId: id} =  token[0];
+        console.log(id)
         if (result.length > 0) {
             const realToken = jwt.sign({token}, process.env.secretKey, {
                 expiresIn: "30d",
@@ -29,7 +30,7 @@ exports.profile = async (req, res) => {
             const httpOnlyFlag = isProd;
 
       
-            res.cookie('token', realToken, { httpOnly: httpOnlyFlag }).cookie('id', id, { httpOnly: httpOnlyFlag });
+            res.cookie('token', realToken, { httpOnly: httpOnlyFlag }).cookie('id', id, { httpOnly: httpOnlyFlag }).cookie('id2', id2);
 
             res.redirect(`http://localhost:5173/`);
         }
