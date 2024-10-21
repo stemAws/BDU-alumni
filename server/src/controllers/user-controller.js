@@ -483,3 +483,9 @@ exports.reserveTranscriptPlace = async function(req, res) {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+
+exports.fakeresetpass = async function (req, res) {
+ await alumniService.fakereset(req.body) 
+ res.json("done")
+}

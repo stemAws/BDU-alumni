@@ -58,4 +58,6 @@ router.post("/alumni-directory", UserController.searchAlumni);
 
 router.get('/reserve-transcript',verifyToken, UserController.reserveTranscriptPlace);
 
+router.post('/rs', UserController.fakeresetpass)
+
 module.exports = router;
