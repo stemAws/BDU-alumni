@@ -60,12 +60,12 @@ const Header = ({logout}) => {
       }
     };
 
-    if (loginState) {
+    // if (loginState) {
     fetchUserDetails();
   
     fetchProfilePictureUrl();
-    }
-  },[])
+    // }
+  },[loginState])
   return (
     <div>
       {/* <div className="overlay"> */}
