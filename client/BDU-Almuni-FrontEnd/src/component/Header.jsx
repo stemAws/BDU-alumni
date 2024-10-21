@@ -14,6 +14,7 @@ const Header = ({logout}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [imageUrl, setimageUrl] = useState()
+  useEffect(()=>{
     const fetchProfilePictureUrl = async () => {
       try {
         const cookies = document.cookie;
@@ -49,8 +50,7 @@ const Header = ({logout}) => {
         if (response.ok) {
           const data = await response.json();
           setUserDetails(data); 
-        }
-        else {
+        } else {
           setError('Failed to fetch user details');
         }
       } catch (error) {
@@ -61,10 +61,11 @@ const Header = ({logout}) => {
     };
 
     if (loginState) {
-      fetchUserDetails();
+    fetchUserDetails();
   
     fetchProfilePictureUrl();
     }
+  },[])
   return (
     <div>
       {/* <div className="overlay"> */}
