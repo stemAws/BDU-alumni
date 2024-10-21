@@ -123,20 +123,6 @@
    color: #ffffff;
    margin-top: -30px;
 }
-.each-event{
-    opacity:0;
-    transform: translateX(-100px);
-    transition:transform 0.5s;
-    
-}
-.each-event.type2{
-    transform: translateX(100px);
-}
-
- .each-event.in-view {
-    opacity:1;
-    transform: translateX(0px);
-     animation: appear 1.5s forwards;}
 @media (max-width:425px) {
     .events-container{
         margin-top: 0;
