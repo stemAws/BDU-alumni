@@ -60,7 +60,7 @@
     margin-top: 50px;
     gap: 20px;
     width: 60%;
-    overflow: hidden;
+    overflow: scroll;
 }
 .each-profile{
     display: flex;
@@ -70,12 +70,15 @@
     background-color: #E5E5E5;
     padding: 15px;
     gap: 20px;
-    border-radius: 40px;
+    /* border-radius: 40px; */
     color: #484848;
     align-items: center;
     text-transform: capitalize;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
+}
+.right-side a{
+    align-self: unset;
 }
 .searched-profile{
     width: 50px;

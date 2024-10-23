@@ -28,11 +28,11 @@ const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetai
         <>
           {userDetails?.[0] && (
             <>
-              <div className='detail_out'>First Name: {firstName}</div>
+              <div className='detail_out'>{userDetails?.[0].fullName}</div>
               <hr />
-              <div className='detail_out'>Last Name: {lastName}</div>
+              <div className='detail_out'>@{userDetails?.[0].username}</div>
               <hr />
-              <div className='detail_out'>Username: {userDetails?.[0].username}</div>
+              <div className='detail_out'>Notification</div>
               <hr />
               <div className='detail_out'><Link to={`/changePassword/${userDetails?.[0]?.username}`}>Change Password</Link></div>
               <hr />

@@ -16,7 +16,7 @@
     flex-direction: column;
     justify-content: center;
     /* align-items: center; */
-    width: 400px;
+    width: 33%;
     height: 350px;
     padding: 10px 10px 10px 50px;
     background-color: #dedede;
@@ -34,7 +34,10 @@
 }
 .close-icon{
     align-self: flex-end;
-    color: #7f0000;
+    color: #c4c4c4;
+}
+.close-icon:hover{
+    color: #000000;
 }
 input.pay-btn{
     width: 100%;
@@ -50,5 +53,5 @@ input.pay-btn:active{
 }
 .transcript-container input{
     margin: unset;
-    width: 100%;
+    width: 93%;
 }
