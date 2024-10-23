@@ -1,13 +1,12 @@
 .contactInfo_container{
     box-sizing: border-box;
     position: relative;
-    margin: -173px 0 0 150px;
-
     width: 500px;
     height: fit-content;
-    background-color: #dadada;
+    background-color: #eaeaea;
     border: 1px solid #373737;
     border-radius: 10px;
+    top:-25px;
     z-index: 1;
 }
 .contactInfo_container_ghost{

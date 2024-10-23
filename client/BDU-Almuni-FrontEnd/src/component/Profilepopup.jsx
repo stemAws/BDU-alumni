@@ -6,17 +6,9 @@ const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetai
   const [firstName, setfirstName] = useState("")
   const [lastName, setlastName] = useState("")
   useEffect(() => {
-    const slicer=()=>{for (let i = 0; i <userDetails?.[0].fullName.length; i++) {
-      if (userDetails?.[0].fullName[i]===" " &&userDetails?.[0].fullName.length>0) {
-        setfirstName(userDetails?.[0].fullName.slice(0,i))
-         setlastName(userDetails?.[0].fullName.slice(i+1))
-      }
-      
-    }}
-    
-    
-  slicer();
-    
+    const names=userDetails?.[0].fullName.split(' ',3)
+    setfirstName(names[0])
+    setlastName(names[names.length-1])
   }, [userDetails?.[0]])
   return (
     <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={showdetail ? 'profile_detail' : 'hidden_detail'}>
@@ -28,7 +20,7 @@ const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetai
         <>
           {userDetails?.[0] && (
             <>
-              <div className='detail_out'>{userDetails?.[0].fullName}</div>
+              <div className='detail_out'>{`${firstName} ${lastName}`}</div>
               <hr />
               <div className='detail_out'>@{userDetails?.[0].username}</div>
               <hr />

@@ -92,6 +92,7 @@ border: 1px solid;
     height: 100%;
     background-color: #0000009c;
     z-index: 11;
+    backdrop-filter: blur(10px);
 }
   .upploaded_overlay{
     position: fixed;
@@ -212,7 +213,7 @@ color: #e0e0e0;
     transform: translateX(-70%);
     padding: 20px;
     font: 200 17px 'Inter';
-
+    cursor: pointer;
 }
 .buttons{
     display: flex;
@@ -250,7 +251,10 @@ color: #e0e0e0;
 }
 .detail_out{
   font: 400 16px "Inter";
-  
+  text-transform: capitalize;
+}
+.detail_out:nth-of-type(2){
+  text-transform: unset;
 }
 .detail_out a{
   color: #000000;
