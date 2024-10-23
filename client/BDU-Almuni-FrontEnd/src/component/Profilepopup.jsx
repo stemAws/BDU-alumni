@@ -7,8 +7,8 @@ const Profilepopup = ({ showdetail, onMouseLeave, onMouseEnter, logout,userDetai
   const [lastName, setlastName] = useState("")
   useEffect(() => {
     const names=userDetails?.[0].fullName.split(' ',3)
-    setfirstName(names[0])
-    setlastName(names[names.length-1])
+    setfirstName(names?.[0])
+    setlastName(names?.[names.length-1])
   }, [userDetails?.[0]])
   return (
     <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={showdetail ? 'profile_detail' : 'hidden_detail'}>
