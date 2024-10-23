@@ -9,6 +9,7 @@ import { Link, useLocation } from 'react-router-dom';
 import NavDropDown from "./NavDropDown"
 import { FaBars, FaCaretDown, FaCaretUp, FaHamburger, FaTimes } from "react-icons/fa"
 import logo from "../assets/images/logo.svg"
+import { ToastContainer } from "react-toastify"
 const NavBar = ({logout,userDetails,error,loading,imgUrl}) => {
   const [scroll, setscroll] = useState(false)
   const location =useLocation()
@@ -59,6 +60,7 @@ const [showSideMenu, setshowSideMenu] = useState(false)
 const [expand, setexpand] = useState(false)
   return (
     <>
+      <ToastContainer autoClose={1000}/>
     <div className={`navBar-container ${(location.pathname==='/')? scroll&& 'scroll':'black-bg'}`}>
         <div className="logo">
           <Link to={'/'}><img src={logo} alt="" /></Link> <p>BDU ALUMNI</p>

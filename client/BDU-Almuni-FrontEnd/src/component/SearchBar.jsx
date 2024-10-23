@@ -1,7 +1,7 @@
 import { FaArrowDown, FaCaretDown, FaFilter, FaSearch, FaSlidersH} from 'react-icons/fa'
 import "../styles/searchBar.css"
 import {useNavigate}from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 const SearchBar = ({setOutput}) => {
     const [input,setInput]=useState("");
@@ -20,7 +20,17 @@ const SearchBar = ({setOutput}) => {
     //       }
     //     });
     //   };
+    const resultLists= document.querySelector(".results_lists")
       
+      useEffect(()=>{
+        if (resultLists) {
+          if (input === '') {
+            resultLists.style.display = "none";
+          } else {
+            resultLists.style.display = "flex";
+          }
+        }
+      },[input])
     const fetchData = async (value) => {
         try {
           const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni`,{
@@ -48,19 +58,18 @@ const SearchBar = ({setOutput}) => {
     }
     const handelEnter=(event)=>{
       if (event.key === 'Enter'|| event.type=== 'click') {
-        if (input) {
-          navigate(`/search/${input}`); 
-          document.querySelector(".results_lists").style.display="none" 
+        if (!input) {
+          toast.error('Please enter a name to search')
         }
         else{
-          toast.error('Please enter a name to search')
+          navigate(`/search/${input}`); 
+          resultLists.style.display="none" 
         }
       }
      
     }
   return (
     <div className="input_warper">
-      <ToastContainer/>
             <FaSearch onClick={handelEnter} className='search_icon' />
     <input 
     className='search_input' 
