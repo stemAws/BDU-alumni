@@ -42,7 +42,6 @@ useEffect(() => {
           if (response.ok) {
           const json = await response.json();
           setprofiles(json);
-          console.log(json)
           }  
       } catch (error) {
           console.error('Error during fetching alumni data:', error);
@@ -50,7 +49,7 @@ useEffect(() => {
   }
 
  fetchData();
-}, [input])
+}, [name])
 
   return (
     <div className=" seachAndFilter-container">

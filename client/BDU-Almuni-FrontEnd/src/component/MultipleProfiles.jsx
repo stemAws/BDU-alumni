@@ -5,11 +5,10 @@ const MultipleProfiles = ({profiles}) => {
     <>
     {
     profiles?.slice(-7)?.map((profile,index)=>
-    <>
     <EachProfile 
+    key={index}
     profile={profile}
-    key={index} />
-    </>
+     />
     )
     }
     </>

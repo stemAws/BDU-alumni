@@ -59,7 +59,7 @@ z-index: 1;
     display: flex;
     flex-direction: column;
     border-radius: 0 0 10px 10px;
-  position: absolute;
+    position: absolute;
     max-height: 300px;
     overflow: scroll;
     font: 300 14px 'Poppins' ;
