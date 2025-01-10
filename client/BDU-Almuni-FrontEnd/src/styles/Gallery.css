@@ -48,6 +48,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 70px; /* Added margin to account for fixed header */
+  font-family: 'Poppins';
 }
 .gallery-title {
   align-self: center;
