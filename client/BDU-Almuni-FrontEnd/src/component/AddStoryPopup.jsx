@@ -22,51 +22,60 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
       
       },
       {
-        id:'peopleNeeded',
+        id:'jobLink',
         className:"story-popup-input",
-        label:'People Needed',
-        placeholder:'How many people are needed ',
-        type:"number" 
+        label:'Job Link',
+        placeholder:'Add job link',
+        type:"text",
+      
       },
-      {
-        id:'salary',
-        className:"story-popup-input",
-        label:'Salary',
-        placeholder:'Salary per month',
-        type:"number"
-      },
-      {
-        id:'employmentType',
-        className:"story-popup-input",
-        label:'Employment Type',
-        placeholder:'Set employment Type',
-        type:"text" 
-      },
-      {
-        id:'address',
-        className:"story-popup-input",
-        label:'Address',
-        placeholder:'where is it located',
-        type:"text"
-      },
+      // {
+      //   id:'peopleNeeded',
+      //   className:"story-popup-input",
+      //   label:'People Needed',
+      //   placeholder:'How many people are needed ',
+      //   type:"number" 
+      // },
+      // {
+      //   id:'salary',
+      //   className:"story-popup-input",
+      //   label:'Salary',
+      //   placeholder:'Salary per month',
+      //   type:"number"
+      // },
+      // {
+      //   id:'employmentType',
+      //   className:"story-popup-input",
+      //   label:'Employment Type',
+      //   placeholder:'Set employment Type',
+      //   type:"text" 
+      // },
+      // {
+      //   id:'address',
+      //   className:"story-popup-input",
+      //   label:'Address',
+      //   placeholder:'where is it located',
+      //   type:"text"
+      // }
+      ,
       {
         id:'deadline',
         className:"story-popup-input",
         label:'Deadline',
         type:"date"
       },
-      {
-        id:'email',
-        className:"story-popup-input",
-        label:'Email',
-        type:"email"
-      } ,
-      {
-        id:'phoneNumber',
-        className:"story-popup-input",
-        label:'Phone Number',
-        type:"tel"
-      }  
+      // {
+      //   id:'email',
+      //   className:"story-popup-input",
+      //   label:'Email',
+      //   type:"email"
+      // } ,
+      // {
+      //   id:'phoneNumber',
+      //   className:"story-popup-input",
+      //   label:'Phone Number',
+      //   type:"tel"
+      // }  
 ])
   const [success, setsuccess] = useState(false)
   const [imageFile, setImageFile] = useState(null);
