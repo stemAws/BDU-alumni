@@ -49,7 +49,7 @@ useEffect(() => {
   }
 
  fetchData();
-}, [name])
+}, [name,input])
 
   return (
     <div className=" seachAndFilter-container">
@@ -59,7 +59,6 @@ useEffect(() => {
                 <FaSlidersH />
                 <p>Filter</p>
                 </div>
-                <FaCaretLeft/>
             </div>
             <div className="filter-bottom">
                 <div  className="filter-option">
@@ -117,6 +116,9 @@ useEffect(() => {
             </div>
         </div>
         <div className="right-side">
+            {/* <div className="setted-filters">
+            {searchBy==='location'&&<FaMapMarkerAlt/>}<p>{input}</p>
+            </div> */}
         {profiles?.length !=0?<>
             <MultipleProfiles
             profiles={profiles}

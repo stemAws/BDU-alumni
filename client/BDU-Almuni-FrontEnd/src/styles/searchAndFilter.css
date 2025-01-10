@@ -62,6 +62,24 @@
     width: 60%;
     overflow: scroll;
 }
+/* .setted-filters svg{
+    min-width: 25px;
+}
+.setted-filters{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #E5E5E5;
+    width: 32px;
+    height: 30px;
+    overflow: hidden;
+    padding: 5px;
+    gap: 5px;
+    border-radius: 10px;
+}
+.setted-filters:hover{
+    width: fit-content;
+} */
 .each-profile{
     display: flex;
     height: 80px;
