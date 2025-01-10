@@ -5,11 +5,13 @@ import FormInput from "./FormInput";
 import Button from "./Button";
 import AuthService from "./AuthService";
 import { SigninContext } from "../pages/MainPage";
+import ChangePassword from "./ChangePassword";
 const Signin = () => {
   const { setsignin } = useContext(SigninContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [step, setStep] = useState("login");
   const [visible, setVisible] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [loading, setloading] = useState(false);
@@ -33,6 +35,9 @@ const Signin = () => {
           // AuthService.login(data.token,data.realToken);
           setsignin(false);
           window.location.reload();
+          if (data.firstTime) {
+            setStep("changePassword");
+          }
         } else {
           setErrorPopup(true);
           setloading(false);
@@ -79,6 +84,8 @@ const Signin = () => {
           >
             <FaTimes />
           </div>
+          <div className={`authentication ${step}`}>
+          
           <form className="sign_in">
             <h1>LOGIN</h1>
             {errorPopup ? (
@@ -126,7 +133,11 @@ const Signin = () => {
               text={loading ? "Loging..." : "LOGIN"}
               onClick={handleSignIn}
             />
+          </form>:
+          <form className="sign_in first-time">
+            <ChangePassword/>
           </form>
+          </div>
         </div>
       </div>
     </div>

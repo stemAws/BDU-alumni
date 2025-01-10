@@ -82,7 +82,7 @@ const Header = ({logout}) => {
       <div className='header-container'>
         <div className="overlay"/><img className='background-img'src={background} alt="" />
         <div className="wellcome-text">
-            <p className="top-title">Welcome to Bahir Dar University</p>
+            <p className="top-title">Welcome to Bahir Dar University Alumni</p>
             <p className="bottom-title">Connecting the past, shaping the future. Join our alumni network to stay informed, get involved, and give back. Together, we can create opportunities and build a stronger community.</p>
             <div className="main-page-buttons">
              { !loginState&&<Button id={"signin-btn"} onClick={()=>setsignin(true)} text='SIGN IN'/>} 

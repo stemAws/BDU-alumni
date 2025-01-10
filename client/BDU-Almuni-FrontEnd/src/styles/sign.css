@@ -135,6 +135,18 @@ transition: all 0.6s ease-in-out;
     z-index: 0;
     outline: none;
 }
+.form_input label{
+    font-family: 'Poppins';
+}
+.input_img.visibility{
+    justify-self: flex-start;
+}
+.show-hide{
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
 .sign_up>h1{
     font:normal 35px 'Saira Condensed';
     margin:10px 0 0 100px;
@@ -186,6 +198,13 @@ max-width: 800px;
 z-index: 21;
 height: 550px;
 }
+.authentication{
+    display: flex;
+    transform: translateX(50%);
+}
+.authentication.changePassword{
+    transform: translateX(0%);
+}
 .sign_in{
 position: relative;
 display: flex;
@@ -199,8 +218,16 @@ z-index: 25;
 color: #000000;
 padding-right: 10px;
 margin:60px 0 0 0; 
-left: 50%;
+/* left: 50%; */
+transition: all 0.5s ease-in-out;
 }
+
+/* .sign_in.first-time{
+    left: -50%;
+} */
+ .first-time{
+    gap: 30px;
+ }
  .authentication_Failed{
     color: red;
     margin-left: 20px;
