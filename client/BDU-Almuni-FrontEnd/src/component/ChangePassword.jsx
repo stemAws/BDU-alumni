@@ -2,7 +2,6 @@ import { useState } from 'react';
 import FormInput from './FormInput'
 import { FaEye, FaEyeSlash, FaTimes, FaGoogle } from "react-icons/fa";
 import { toast} from 'react-toastify';
-
 import Button from "./Button";
 const ChangePassword = () => {
   const [visible, setVisible] = useState(false);

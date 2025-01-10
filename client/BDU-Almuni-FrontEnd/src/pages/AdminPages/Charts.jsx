@@ -1,5 +1,5 @@
 import "../../styles/charts.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   XAxis,
   YAxis,
@@ -12,14 +12,14 @@ import {
 import DegreeAnalytics from "../AdminPages/DegreeAnalytics";
 import AdmissionAnalytics from "../AdminPages/AdmissionAnalytics";
 import MajorAnalaytics from "../AdminPages/MajorAnalaytics";
-
+import { SigninContext } from "../../pages/MainPage";
 export default function Chart() {
   // State variables
 
   const [jobCount, setJobCount] = useState([]);
   const [industryCount, setIndustryCount] = useState([]);
   const [companyCount, setCompanyCount] = useState([]);
-
+  const { loginState } = useContext(SigninContext);
   const formatName = (name) => name.split(" ").join("\n");
 
   useEffect(() => {
@@ -136,7 +136,7 @@ export default function Chart() {
         {loading && <p>Loading...</p>}
       </div> */}
 
-      <div className="chart2">
+      {loginState&&<div className="chart2">
         <h3 className="chartTitle">
           {" "}
           BDU Alumni based on geographical location
@@ -147,7 +147,7 @@ export default function Chart() {
           title="Geographical Representation"
           src={"https://geo-marked-users.netlify.app"}
         ></iframe>
-      </div>
+      </div>}
 
       <MajorAnalaytics />
       <AdmissionAnalytics />
