@@ -24,6 +24,7 @@ import SearchAndFilter from './SearchAndFilter';
 import AboutDevs from './AboutDevs';
 import StoriesDetail from './StoriesDetail';
 import Explore from './Explore';
+import Donations from './Donations';
 
 export const SigninContext = createContext();
 const MainPage = () => {
@@ -69,6 +70,7 @@ const MainPage = () => {
           <Route path="/post/:username"  Component = {loginState?Posts:Signin} />
           <Route path="/aboutDevs"  Component = {AboutDevs} />
           <Route path="/forgetPassword"  Component = {ForgetPassword} />
+          <Route path="/donations"  Component = {Donations} />
           <Route path="/search/:name"  Component = {SearchAndFilter} />
           <Route path="/stories/:id"  Component = {StoriesDetail} />
           <Route path="*"  Component = {PageNotFound} />

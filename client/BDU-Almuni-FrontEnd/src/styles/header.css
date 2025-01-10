@@ -45,9 +45,9 @@ display: flex;
     /* font: 200 16px "Saira"; */
     border: 1px solid #fff;
 }
-.main-page-buttons #signin-btn{
+/* .main-page-buttons #signin-btn{
     background-color: #086cb4;
-}
+} */
 .wellcome-text{ 
     position: absolute;
     display: flex;
@@ -101,14 +101,26 @@ display: flex;
     /* mix-blend-mode: difference; */
 }
 .scroll{
-    background-color: #fafafa;
+    background-color: #fff;
     color: #000;
 }
 .scroll .each-nav-list a{
     color: #000;
 }
-.black-bg{
-    background-color:#000;
+.donation{
+    background-color: #0C8CE9;
+    width: 90px;
+    height: 30px;
+    padding-left: 10px;
+}
+.white-bg{
+    background-color:#fff;
+}
+.white-bg .each-nav-list a{
+    color: #000;
+}
+.donation.each-nav-list a{
+    color: #fff;
 }
 .nav-lists{
     position: relative;
@@ -167,6 +179,14 @@ cursor: pointer;
             border: none;
 
         }
+#nav-sign{
+    width: 90px;
+    height: 30px;
+    background-color: transparent;
+    border: 1px solid #00B2FF;
+    color: #00B2FF;
+
+}
 .dropDown-container{
     position: absolute;
     background-color: #fafafa;
@@ -180,7 +200,7 @@ cursor: pointer;
 .dropDown-container.side-menu{
     border-top: 1px solid #333333;
     position: relative;
-    /* background-color: #000; */
+    background-color: #000;
     top: 0;
     left: 0;
 }
@@ -197,11 +217,11 @@ cursor: pointer;
     gap: 5px;
     align-items: center;
     font:400 13px  "Inter";
-    color: #ffffff;
+    color: #000000;
     padding: 10px 0 10px 10px;
 }
 .each-list-container>li:hover{
-background-color: #454545;
+background-color: #8d8d8d5d;
 }
 .hamburger{
     display: none;

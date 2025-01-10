@@ -61,7 +61,7 @@ const [expand, setexpand] = useState(false)
   return (
     <>
       <ToastContainer autoClose={1000}/>
-    <div className={`navBar-container ${(location.pathname==='/')? scroll&& 'scroll':'black-bg'}`}>
+    <div className={`navBar-container ${(location.pathname==='/')? scroll&& 'scroll':'white-bg'}`}>
         <div className="logo">
           <Link to={'/'}><img src={logo} alt="" /></Link> <p>BDU ALUMNI</p>
         </div>
@@ -97,6 +97,7 @@ const [expand, setexpand] = useState(false)
                 <SearchBar setOutput={setOutput}/>
                 <SearchResult outPut={outPut}/>
             </div>
+            <li className="each-nav-list donation"onClick={()=>{closeDrops()}}> <Link to="/donations">Donations</Link></li>
             </ul>
             {loginState?
                 <div >
@@ -115,7 +116,7 @@ const [expand, setexpand] = useState(false)
               />
               </div>
               
-              </div>:<Button id={"signin-btn"} onClick={()=>setsignin(true)} text='SIGN IN'/>}
+              </div>:<Button id={"nav-sign"}  onClick={()=>setsignin(true)} text='SIGN IN'/>}
             
         </nav>
         <div className="searchBar_container active for-mobile">

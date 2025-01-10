@@ -1,68 +1,62 @@
-.donation_overlay{
+.donation-back{
     position:fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #0a0a0a8a;
+    background-color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 11;
 }
 .donate_container{
-    width: 700px;
+    min-height: 500px;
+    width: 1000px;
+    align-items: center;
+    justify-content: center;
     margin-top: 30px;
     height: fit-content;
     max-height: 90vh;
-    padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #232323;
+    background-color: #fff;
     overflow: scroll;
-}
-.close{
-    color: #ffffff;
-    align-self:flex-end ;
-    position: fixed;
-}
-.close:hover{
-    color: #ff5f5f;
-    cursor: pointer;
 }
 .each_donation_section{
     box-sizing: border-box;
     /* margin-top: 40px; */
+    background-color: #fafafa;
     display: flex;
     justify-content: space-between;
     padding: 20px;
-    width: 98%;
+    width: 85%;
     min-height: 230px;
     border: 1px solid #c1c0c0;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
-    color: #d2d2d2;
+    color: #393939;
     border-radius: 10px;
     overflow: clip;
 }
 .each_donation_section.stem{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.5fr 1fr;
     grid-template-rows: 0.2fr 0fr 1fr;
     gap: 5px;
 }
 .each_donation_section img{
-    width:100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     grid-row: span 4;
-    object-fit: cover;
+    object-fit: contain;
+    padding-top: 10%;
 }
 .each_donation_section .donate_title{
     display: flex;
     gap: 5px;
     align-items: center;
     justify-content: center;
-    font: bold 24px 'saira';
+    font: bold 24px 'Poppins';
     text-transform: uppercase;
     /* margin:50px 0 20px 50px; */
     /* min-width: max-content;  */
@@ -83,7 +77,7 @@ word-break: break-all;
     margin-top: 20px;
 }
 .each_donation_section.stem>.donate_title{
-    font: bold 22px 'saira';
+    font: bold 22px 'Poppins';
     min-width: max-content;
     margin: 55px 0 0 10px;
 }
@@ -91,10 +85,13 @@ word-break: break-all;
     margin-left: 122px;
 }
 .each_donation_section.stem>.btn{
+    background-color: #0C8CE9;
     margin-left: 12px;
+    color: #fff;
+    border:none;
 }
 .each_donation_section p{
-    font: normal 14px 'saira'; 
+    font: normal 14px 'Poppins'; 
 
     }
 .description{
@@ -118,7 +115,7 @@ word-break: break-all;
         margin-left: 30px;
     }
     .each_donation_section>p {
-        font:  11px 'saira';
+        font:  11px 'Poppins';
     }
     .donate_container{
         height: 40vh;

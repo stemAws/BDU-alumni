@@ -44,19 +44,19 @@ const sections = [
   {
     title: 'Support',
     links: [
-      { text: 'Donation', url: '#' },
+      { text: 'Donation', url: '/donations' },
       { text: 'Mentorship', url: '#' },
       { text: 'Scholarships', url: '#' },
       { text: 'Support Services', url: '#' }
     ]
   }
 ];
-const FooterSection = ({ title, links ,setdonationPopUp }) => (
+const FooterSection = ({ title, links  }) => (
   <div className="each">
     <h4>{title}</h4>
     <ul>
       {links.map((link, index) => (
-        <li key={index} onClick={ ()=>setdonationPopUp(true)}>
+        <li key={index}>
           <a href={link.url}>{link.text}</a>
         </li>
       ))}
@@ -65,7 +65,6 @@ const FooterSection = ({ title, links ,setdonationPopUp }) => (
 );
 
 const Footer = () => {
-  const [donationPopUp, setdonationPopUp] = useState(false)
   const [emailSuccess, setemailSuccess] = useState(false)
   const [emailInput, setemailInput] = useState()
   const handleEmailSent=(e)=>{
@@ -111,7 +110,7 @@ const Footer = () => {
         </div>
         <div className="middle___right">
           {sections.map((section, index) => (
-            <FooterSection setdonationPopUp={setdonationPopUp} key={index} title={section.title} links={section.links} />
+            <FooterSection  key={index} title={section.title} links={section.links} />
           ))}
         </div>
       </div>
@@ -126,10 +125,6 @@ const Footer = () => {
           <a href="#">Cookies</a>
         </div>
       </div>
-      {
-        donationPopUp&&
-          <Donation close={()=>setdonationPopUp(false)}/>
-      }
     </footer>
   )
 }

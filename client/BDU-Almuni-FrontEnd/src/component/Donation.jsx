@@ -3,7 +3,7 @@ import { FaBook, FaHeart, FaRoad, FaSchool, FaTimes } from "react-icons/fa";
 import Button from "./Button";
 import logo from "../assets/images/logo.svg";
 import '../styles/donation.css'
-const Donation = ({close}) => {
+const Donation = () => {
     let lastSelectedIcon = -1;
 const handleDonateClick = (donationLink) => {
       const width = 600;
@@ -32,7 +32,6 @@ const handleDonateClick = (donationLink) => {
   return (
     <div className='donation_overlay'>
     <div className='donate_container'>
-      <FaTimes onClick={close} className='close' />
       <div className="each_donation_section stem">
             <img src={logo} alt="" />
             <p className='donate_title'> Support Bahir Dar University</p>
