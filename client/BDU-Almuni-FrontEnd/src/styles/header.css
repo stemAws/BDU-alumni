@@ -115,6 +115,7 @@ display: flex;
 }
 .white-bg{
     background-color:#fff;
+    color: #000;
 }
 .white-bg .each-nav-list a{
     color: #000;
