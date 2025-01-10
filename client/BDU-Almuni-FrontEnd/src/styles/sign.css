@@ -227,6 +227,7 @@ transition: all 0.5s ease-in-out;
 } */
  .first-time{
     gap: 30px;
+    padding-left: 30px;
  }
  .authentication_Failed{
     color: red;

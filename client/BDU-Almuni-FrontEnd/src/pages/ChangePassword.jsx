@@ -61,7 +61,7 @@ const ChangePassword = () => {
             const match = cookies.match(/authToken=([^;]*)/);
             const token = match ? match[1] : null;
             setloading(true)
-          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/check-password/${token}`, {
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/check-password/${token}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const ChangePassword = () => {
           }
           else {
             try {
-              const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/change-password/${token}`, {
+              const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/change-password/${token}`, {
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',
