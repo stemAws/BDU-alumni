@@ -8,8 +8,8 @@ const AboutDevs = () => {
         detail:"UI/UX Designer & Frontend Developer Hailemichael is a skilled UI/UX designer and frontend developer, specializing in translating design concepts into interactive and responsive web experiences. Hailemichael's commitment to quality and usability ensures that your website not only looks great but also performs flawlessly across devices and browsers.",
         socialLinks:{
             gitHub:"https://github.com/hailemichael-ayana",
-            linkedin:"",
-            telegram:"https://t.me/shady10001"
+            linkedin:"https://www.linkedin.com/in/hailemichael-ayana-182629249",
+            telegram:"https://t.me/hailemichaelMulugeta"
         }
     },
     {
