@@ -11,7 +11,8 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
         className:"story-popup-input",
         label:'Company Name',
         placeholder:'Add company name',
-        type:"text" 
+        type:"text", 
+        required:true
       },
       {
         id:'jobTitle',
@@ -19,15 +20,14 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
         label:'Job Title',
         placeholder:'Add job title',
         type:"text",
-      
+        required:true
       },
       {
         id:'jobLink',
         className:"story-popup-input",
-        label:'Job Link',
+        label:'Job Link (optional)',
         placeholder:'Add job link',
         type:"text",
-      
       },
       // {
       //   id:'peopleNeeded',
@@ -62,7 +62,8 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
         id:'deadline',
         className:"story-popup-input",
         label:'Deadline',
-        type:"date"
+        type:"date",
+        required:true
       },
       // {
       //   id:'email',
@@ -205,6 +206,7 @@ const addJob = async (e) => {
                   placeholder={jobInput.placeholder} 
                   type={jobInput.type} 
                   value={jobInput.value}
+                  required={jobInput.required}
                   onChange={(e) => handleInputChange(jobInput.id, e.target.value)}
                   />
               )
