@@ -40,7 +40,7 @@ const ContactInfo = ({display,personalInfo,close,forsocials,edit,handlePlacehold
   
 
   return (
-    <div>
+    <div className='overlay_pop'>
     <div className='contactInfo_container' >
         <div className="contact_top"> 
         <p className="full_name">{personalInfo[0].fullName}</p>

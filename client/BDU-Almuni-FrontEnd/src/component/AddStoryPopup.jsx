@@ -6,6 +6,14 @@ import FormInput from './FormInput'
 const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
   const ref = useRef()
   const ref1 = useRef()
+  const [success, setsuccess] = useState(false)
+  const [imageFile, setImageFile] = useState(null);
+  const [description, setDescription] = useState('');
+  const [isToggled, setToggled] = useState(false);
+  const [descriptionError, setDescriptionError] = useState('');
+  const [waiting, setwaiting] = useState(false)
+  const [jobDescription, setjobDescription] = useState('');
+  const [deadline, setDeadline] = useState()
   const [jobInputs, setjobInputs] = useState([{
         id:'companyName',
         className:"story-popup-input",
@@ -57,14 +65,8 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
       //   placeholder:'where is it located',
       //   type:"text"
       // }
-      ,
-      {
-        id:'deadline',
-        className:"story-popup-input",
-        label:'Deadline',
-        type:"date",
-        required:true
-      },
+      // ,
+      
       // {
       //   id:'email',
       //   className:"story-popup-input",
@@ -78,13 +80,6 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
       //   type:"tel"
       // }  
 ])
-  const [success, setsuccess] = useState(false)
-  const [imageFile, setImageFile] = useState(null);
-  const [description, setDescription] = useState('');
-  const [isToggled, setToggled] = useState(false);
-  const [descriptionError, setDescriptionError] = useState('');
-  const [waiting, setwaiting] = useState(false)
-  const [jobDescription, setjobDescription] = useState('');
   const handleToggle = () => {
     setToggled(!isToggled);
   };
@@ -104,7 +99,6 @@ const AddStoryPopup = ({handleClose, onAddStory,loading}) => {
 const slideToJob=(towhere)=>{
   if (ref.current||ref1.current) {
     if (towhere==='toStories') {
-    console.log(towhere)
     ref.current.style.right='0px'
   ref1.current.style.right='-370px'
   }
@@ -125,13 +119,17 @@ const handleInputChange = (id, newValue) => {
 
 const addJob = async (e) => {
       e.preventDefault()
-      setwaiting(true)
       const jobData = jobInputs.reduce((eachJob, input) => {
         eachJob[input.id] = input.value;
         return eachJob;
       }, {});
+      if (new Date(deadline) < new Date().setHours(0, 0, 0, 0)) {
+        return
+      }
       jobData.jobDescription = jobDescription;
+      jobData.deadline = deadline;
       try {
+        setwaiting(true)
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/add-job`, {
           method: 'POST',
           headers: {
@@ -147,11 +145,11 @@ const addJob = async (e) => {
 
         } else {
           console.error('Error:', response.statusText);
-          setwaiting(true)
+          setwaiting(false)
         }
       } catch (error) {
         console.error('Error:', error);
-        setwaiting(true)
+        setwaiting(false)
       }
     };
 
@@ -198,7 +196,7 @@ const addJob = async (e) => {
           <FaTimes />
         </div>
         <form onSubmit={addJob}>
-            <div className="each-job-input">
+        <div className="each-job-input">
               {jobInputs.map((jobInput,index)=>
               <FormInput 
                   key={index} 
@@ -209,8 +207,23 @@ const addJob = async (e) => {
                   required={jobInput.required}
                   onChange={(e) => handleInputChange(jobInput.id, e.target.value)}
                   />
-              )
+                )
               }
+            </div>
+          
+            <div className="each-job-input ">
+              <div>
+              <label htmlFor="deadline">Deadline</label>
+              <input
+              className="story-popup-input"
+              id='deadline'  
+              type='date'
+              value={deadline}
+              required={true}
+              onChange={(e) => setDeadline(e.target.value)}
+                  />
+              </div>
+              {new Date(deadline) < new Date().setHours(0, 0, 0, 0)&&<span className='error'>Deadline must be in the future</span>}
             </div>
           <div>
           <div className="each-job-input">
