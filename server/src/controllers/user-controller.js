@@ -1,7 +1,9 @@
 const alumniService = require("../services/user-services");
+const adminService = require("../services/admin-services");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const sharp = require("sharp");
+const bcrypt = require("bcrypt");
 const firebaseConfig = require("../config/firebaseConfig");
 require("dotenv").config();
 
@@ -18,6 +20,209 @@ firebase.initializeApp(firebaseConfig);
 
 const storage = getStorage();
 
+exports.signIn = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    // Check if user exists
+    const userExists = await alumniService.isUserExists(username);
+    if (!userExists) {
+      return res.status(400).json({ message: "User doesn't exist" });
+    }
+
+    // Check if the account is active
+    const userActive = await alumniService.isUserActive(username);
+    if (!userActive) {
+      return res.status(400).json({ message: "Account is not activated." });
+    }
+
+    // Get the user's details
+    const user = await alumniService.getUser(username);
+    if (!user || user.length === 0) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    const userData = user[0];
+
+    // Verify the hashed password
+    const isPasswordValid = await bcrypt.compare(password, userData.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: "Invalid username or password" });
+    }
+
+    // Determine user role
+    const adminDetails =
+      userData.isAdmin == 1 &&
+      (await adminService.fetchAdminDetailsByPersonId(userData.personId));
+    const alumniDetails =
+      userData.isAdmin == 0 &&
+      (await alumniService.fetchAlumniDetailsByPersonId(userData.personId));
+
+    const role = userData.isAdmin ? adminDetails.role : "alumni";
+    const id = role == "alumni" ? alumniDetails.alumniId : adminDetails.adminId;
+
+    // Generate access and refresh tokens
+    const accessToken = jwt.sign({ id, role }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_ACCESS_EXPIRES, // Short-lived access token
+    });
+
+    const refreshToken = jwt.sign(
+      { id, role },
+      process.env.JWT_REFRESH_SECRET,
+      {
+        expiresIn: process.env.JWT_REFRESH_EXPIRES, // Longer-lived refresh token
+      }
+    );
+
+    // Set tokens in cookies
+    res.cookie("token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
+    return res
+      .status(200)
+      .json({ success: true, message: "User logged in successfully" });
+  } catch (err) {
+    console.error("Error logging in user:", err);
+    return res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
+  }
+};
+
+exports.checkAuth = async (req, res) => {
+  try {
+    const token = req.cookies.token; // Access the token from the cookie
+
+    if (!token) {
+      return res
+        .status(401)
+        .json({ success: false, message: "No token provided" });
+    }
+
+    // Verify the token (e.g., using jwt.verify)
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res
+          .status(401)
+          .json({ success: false, message: "Invalid token" });
+      }
+
+      // Return successful authentication with role information
+      res.status(200).json({ success: true, role: decoded.role });
+    });
+  } catch (err) {
+    console.error("Error verifying authentication:", err);
+    return res.status(500).json({
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    // Clear both access and refresh tokens
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 0, // Set maxAge to 0 to expire the cookie immediately
+    });
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 0, // Set maxAge to 0 to expire the cookie immediately
+    });
+
+    res.status(200).json({ success: true, message: "Logged out successfully" });
+  } catch (err) {
+    console.error("Error during logout:", err);
+    return res.status(500).json({
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
+
+exports.checkUser = async (req, res) => {
+  try {
+    const { oldUsername, oldPassword } = req.body;
+    // Check if user exists
+    const userExists = await alumniService.isUserExists(oldUsername);
+    if (!userExists) {
+      return res.status(400).json({ message: "User doesn't exist" });
+    }
+    // gets user by old username and password
+    const user = await alumniService.getUser(oldUsername);
+    if (!user || user.length === 0) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    const userData = user[0]; // Assuming the query returns an array of rows
+
+    // Verify the hashed password
+    const isPasswordValid = await bcrypt.compare(
+      oldPassword,
+      userData.password
+    );
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: "Invalid username or password" });
+    }
+
+    res.status(200).json({
+      message: "User checked successfully",
+      userId: userData.personId,
+    });
+  } catch (err) {
+    console.error("Error checking user:", err);
+    return res.status(500).json({
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
+exports.activateAccount = async (req, res) => {
+  try {
+    const { newUsername, newPassword } = req.body;
+    const { userId } = req.params;
+
+    const userExists = await alumniService.isUserExists(newUsername);
+    if (userExists) {
+      return res.status(400).json({ message: "Username already exist" });
+    }
+
+    const activate = await alumniService.activateUser(
+      userId,
+      newUsername,
+      newPassword
+    );
+
+    res.status(200).json({
+      message: "User activated successfully",
+      userId: activate.insertId,
+    });
+  } catch (err) {
+    console.error("Error activating user:", err);
+    return res.status(500).json({
+      message: "Internal server error",
+      error: err.message,
+    });
+  }
+};
+
 exports.addUser = async function (req, res) {
   try {
     const affectedRows = await alumniService.addUser(req.body);
@@ -25,69 +230,8 @@ exports.addUser = async function (req, res) {
       .status(201)
       .json({ message: "Alumni added successfully", affectedRows });
   } catch (error) {
-    console.error("Error adding alumni:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
-exports.signIn = async function (req, res) {
-  try {
-    const { username, password, isAdmin } = req.body;
-    const authenticationResult = await alumniService.authenticateUser(
-      username,
-      password,
-      isAdmin
-    );
-
-    if (authenticationResult.success) {
-
-      const [token] = isAdmin
-        ? await alumniService.getAdminProfile(username)
-        :  await alumniService.getAlumniProfile(username);
-      const id2 = isAdmin ? token.adminId : token.alumniId;
-      const id = token.personId;
-
-      const realToken = jwt.sign({ token }, process.env.secretKey, {
-        expiresIn: "7d",
-      });
-
-      if (isAdmin) {
-        const adminToken = jwt.sign(
-          { token, isAdmin: true },
-          process.env.secretKey,
-          {
-            expiresIn: "7d",
-          }
-        );
-
-        if (process.env.NODE_ENV === "dev") {
-          res.cookie("adminToken", adminToken);
-        } else if (process.env.NODE_ENV === "prod") {
-          res.cookie("adminToken", adminToken, { secure: true });
-        }
-      } else {
-        if (process.env.NODE_ENV === "dev") {
-          res
-            .cookie("token", realToken, { httpOnly: true })
-            .cookie("id2", id2)
-            .cookie("id", id, { httpOnly: false });
-        } else if (process.env.NODE_ENV === "prod") {
-          res.cookie("token", realToken, { httpOnly: true, secure: true });
-        }
-      }
-
-      res.status(200).json({
-        success: true,
-        message: "Authentication successful",
-      });
-    } else {
-      res
-        .status(401)
-        .json({ success: false, message: "Authentication failed" });
-    }
-  } catch (error) {
-    console.error("Error during authentication:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error adding alumni:", error.message);
+    res.status(400).json({ error: error.message }); // Send error message in response
   }
 };
 
@@ -466,26 +610,24 @@ exports.searchAlumni = async function (req, res) {
   }
 };
 
-
-exports.reserveTranscriptPlace = async function(req, res) {
+exports.reserveTranscriptPlace = async function (req, res) {
   try {
     const alumniId = req.alumni.alumniId;
 
     const result = await alumniService.reserveTranscriptPlace(alumniId);
 
     if (result) {
-      res.status(200).json({ success: true});
+      res.status(200).json({ success: true });
     } else {
-      res.status(500).json({ error: 'Failed to reserve place' });
+      res.status(500).json({ error: "Failed to reserve place" });
     }
   } catch (error) {
-    console.error('Error reserving place:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error reserving place:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
-
 exports.fakeresetpass = async function (req, res) {
- await alumniService.fakereset(req.body) 
- res.json("done")
-}
+  await alumniService.fakereset(req.body);
+  res.json("done");
+};
