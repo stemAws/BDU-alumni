@@ -3,29 +3,116 @@ const bcrypt = require("bcrypt");
 const transporter = require("../config/mailerConfig");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const hashPassword = async (password) => {
+  const saltRounds = 10;
+  return await bcrypt.hash(password, saltRounds); // Return the hashed password
+};
 
-exports.fakereset = async ({newpass, personId}) => {
+// Check if username is already taken
+exports.isUserExists = async (username) => {
+  try {
+    const [rows] = await db.query("SELECT * FROM person WHERE username = ?", [
+      username,
+    ]);
+
+    return rows.length > 0;
+  } catch (err) {
+    console.error("Error checking username:", err);
+    throw new Error("Database error");
+  }
+};
+
+exports.getUser = async (username) => {
+  try {
+    const [rows] = await db.query(`SELECT * FROM person WHERE username = ?`, [
+      username,
+    ]);
+    return rows;
+  } catch (err) {
+    console.error("Error getting user:", err);
+    throw new Error("Database error");
+  }
+};
+
+exports.isUserActive = async (username) => {
+  try {
+    const [rows] = await db.query(
+      "SELECT * FROM person WHERE status = ? AND username = ?",
+      ["Active", username]
+    );
+
+    return rows.length > 0;
+  } catch (err) {
+    console.error("Error checking status:", err);
+    throw new Error("Database error");
+  }
+};
+
+exports.activateUser = async (userId, username, password) => {
+  try {
+    const hashedPassword = await hashPassword(password);
+
+    const [rows] = await db.query(
+      "UPDATE person SET status = ?, username = ?, password = ? WHERE personId = ?",
+      ["Active", username, hashedPassword, userId]
+    );
+
+    return rows.length > 0;
+  } catch (err) {
+    console.error("Error activating user:", err);
+    throw new Error("Database error");
+  }
+};
+
+exports.fetchAlumniDetailsByPersonId = async (personId) => {
+  try {
+    const [result] = await db.query(
+      `SELECT 
+         alumniId
+       FROM 
+         Alumni 
+       WHERE 
+         personId = ?`,
+      [personId]
+    );
+
+    if (result.length === 0) {
+      throw new Error(`Alumni with personId ${personId} not found`);
+    }
+    return result[0];
+  } catch (error) {
+    throw new Error("Error fetching alumni details: " + error.message);
+  }
+};
+
+exports.fakereset = async ({ newpass, personId }) => {
   const hashedPassword = await bcrypt.hash(newpass, 10);
 
-  await db.query('UPDATE Person SET password = ? WHERE personId = ?', [hashedPassword, personId])
-}
+  await db.query("UPDATE Person SET password = ? WHERE personId = ?", [
+    hashedPassword,
+    personId,
+  ]);
+};
 
 exports.addUser = async (alumniData) => {
+  if (alumniData.role === "admin" && !alumniData.adminRole) {
+    throw new Error("adminRole not provided for admin user");
+  }
+
   const hashedPassword = await bcrypt.hash(alumniData.password, 10);
   const isAdmin = alumniData.role === "admin" ? 1 : 0;
-  console.log("Alumnidata", alumniData);
+
+  console.log("Alumni data", alumniData);
 
   await db.query(
     `
-    INSERT INTO Person (fullName, gender,  email,username, password, verified, isAdmin)
-    VALUES (?, ?, ?, ?, ?,?, ?);`,
+    INSERT INTO Person (fullName, gender, email, username, password, verified, isAdmin)
+    VALUES (?, ?, ?, ?, ?, ?, ?);`,
     [
       alumniData.fullName,
       alumniData.gender,
       alumniData.email,
-
       alumniData.username,
-
       hashedPassword,
       1,
       isAdmin,
@@ -35,16 +122,19 @@ exports.addUser = async (alumniData) => {
   if (alumniData.role === "alumni") {
     await db.query(
       `INSERT INTO Alumni (personId, isNotable)
-    VALUES (LAST_INSERT_ID(), ?)`,
+      VALUES (LAST_INSERT_ID(), ?);`,
       [0]
     );
-    await db.query(`INSERT INTO Custom (alumniId)
-    VALUES (LAST_INSERT_ID());`);
+
+    await db.query(
+      `INSERT INTO Custom (alumniId)
+      VALUES (LAST_INSERT_ID());`
+    );
   } else if (alumniData.role === "admin") {
     await db.query(
       `
-    INSERT INTO Websiteadmin (personId, role)
-    VALUES (LAST_INSERT_ID(), ?)`,
+      INSERT INTO Websiteadmin (personId, role)
+      VALUES (LAST_INSERT_ID(), ?);`,
       [alumniData.adminRole]
     );
   } else {
