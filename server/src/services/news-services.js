@@ -30,13 +30,13 @@ exports.getNews = async () => {
   return news;
 };
 
-exports.NewsList = async () => {
-  const [news] = await db.query(
-    `SELECT title, category, fullName FROM News n JOIN websiteadmin w JOIN person p WHERE n.adminId = w.adminId AND p.personId = w.personId`
-  );
+// exports.NewsList = async () => {
+//   const [news] = await db.query(
+//     `SELECT title, category, fullName FROM News n JOIN websiteadmin w JOIN person p WHERE n.adminId = w.adminId AND p.personId = w.personId`
+//   );
 
-  return news;
-};
+//   return news;
+// };
 
 exports.getANews = async (newsId) => {
   const [news] = await db.query(
