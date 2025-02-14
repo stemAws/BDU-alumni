@@ -6,12 +6,45 @@ const router = express.Router();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/posts", upload.single("image"), postController.createPost);
+const { verifyToken, authRoles } = require("../middleware/auth-middleware");
+const { admin, alumni, all } = require("../utils/roles");
+
+router.post(
+  "/posts",
+  upload.single("image"),
+  verifyToken,
+  authRoles(alumni),
+  postController.createPost
+);
 router.get("/posts", postController.getAllPosts);
-router.get("/addedPosts", postController.getAddedStories);
-router.put("/addedPosts/:postId", postController.updateSuggestedByAdmin);
-router.get("/posts/:alumniIdOrUsername", postController.getPostsByUsernameOrId);
-router.delete("/posts/:postId", postController.deletePost);
-router.put("/posts/:postId", postController.updatePost);
+router.get(
+  "/addedPosts",
+
+  postController.getAddedStories
+);
+router.put(
+  "/addedPosts/:postId",
+  verifyToken,
+  authRoles(alumni),
+  postController.updateSuggestedByAdmin
+);
+router.get(
+  "/posts/:alumniIdOrUsername",
+  verifyToken,
+  authRoles(alumni),
+  postController.getPostsByUsernameOrId
+);
+router.delete(
+  "/posts/:postId",
+  verifyToken,
+  authRoles(alumni),
+  postController.deletePost
+);
+router.put(
+  "/posts/:postId",
+  verifyToken,
+  authRoles(alumni),
+  postController.updatePost
+);
 
 module.exports = router;

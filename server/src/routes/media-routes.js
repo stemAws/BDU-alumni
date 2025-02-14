@@ -6,10 +6,29 @@ const router = express.Router();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/upload", upload.array("images"), galleryController.uploadGallery);
+const { verifyToken, authRoles } = require("../middleware/auth-middleware");
+const { admin } = require("../utils/roles");
+
+router.post(
+  "/upload",
+  upload.array("images"),
+  verifyToken,
+  authRoles(admin),
+  galleryController.uploadGallery
+);
 router.get("/gallery", galleryController.getAllGalleries);
 router.get("/gallery/:id", galleryController.getGalleryById);
-router.delete("/gallery/:id", galleryController.deleteGalleryById);
-router.put("/gallery/:id", galleryController.updateGalleryById);
+router.delete(
+  "/gallery/:id",
+  verifyToken,
+  authRoles(admin),
+  galleryController.deleteGalleryById
+);
+router.put(
+  "/gallery/:id",
+  verifyToken,
+  authRoles(admin),
+  galleryController.updateGalleryById
+);
 
 module.exports = router;

@@ -1,11 +1,32 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const educationController = require('../controllers/education-controller');
-const { verifyToken } = require("../middleware/auth-middleware");
+const educationController = require("../controllers/education-controller");
+const { verifyToken, authRoles } = require("../middleware/auth-middleware");
+const { alumni } = require("../utils/roles");
 
-router.post('/education', verifyToken, educationController.addEducation);
-router.put('/education', verifyToken, educationController.updateEducation);
-router.delete('/education/:id', verifyToken, educationController.deleteEducationById);
-router.get('/education/:idorusername', educationController.getEducation);
+router.post(
+  "/education",
+  verifyToken,
+  authRoles(alumni),
+  educationController.addEducation
+);
+router.put(
+  "/education",
+  verifyToken,
+  authRoles(alumni),
+  educationController.updateEducation
+);
+router.delete(
+  "/education/:id",
+  verifyToken,
+  authRoles(alumni),
+  educationController.deleteEducationById
+);
+router.get(
+  "/education/:idorusername",
+  verifyToken,
+  authRoles(alumni),
+  educationController.getEducation
+);
 
 module.exports = router;
