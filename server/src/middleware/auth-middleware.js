@@ -1,48 +1,91 @@
-const jwt = require('jsonwebtoken');
-const adminservice = require('../services/admin-services');
+const jwt = require("jsonwebtoken");
 
-async function verifyToken(req, res, next) {
-    try {
-        const { token } = req.cookies;
+exports.verifyToken = (req, res, next) => {
+  const token = req.cookies.token;
 
-        if (!token) {
-            res.clearCookie('id')
-        }
-        else{
+  // Check if token exists
+  if (!token) {
+    return res
+      .status(403)
+      .json({ message: "Access denied. No token provided." });
+  }
 
-        const decoded = jwt.verify(token, process.env.secretKey);
+  try {
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded; // Attach decoded user to the request object
+    next(); // Proceed to the next middleware
+  } catch (err) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
 
-        if (decoded.token.isAdmin) {
-            const adminData = await adminservice.fetchAdminDetailsByPersonId(decoded.token.personId);
-            req.admin = adminData;
-        }
-
-        req.alumni = decoded.token;
-
-        next();}
-    } catch (error) {
-         res.clearCookie('token');
-         res.clearCookie('id');
-         res.redirect('http://localhost:5173/');
-    }   
-}
-
-async function verifyAdmin(req, res, next) {
-    try {
-        const { adminToken } = req.cookies;
-
-        if (!adminToken) {
-            return res.status(403).json({ error: 'Token not provided' });
-        }
-
-        const decoded = jwt.verify(adminToken, process.env.secretKey);
-        console.log(decoded)
-        req.admin = decoded.token
-
-        next();
-    } catch (error) {
-        console.error('Failed to authenticate token:', error);
-        return res.status(401).json({ error: 'Failed to authenticate token' });
+exports.authRoles = (roles) => {
+  return (req, res, next) => {
+    // Ensure the user is already authenticated (req.user exists)
+    if (!req.user) {
+      return res
+        .status(403)
+        .json({ message: "Access denied. Authentication required." });
     }
-}
-module.exports = { verifyToken, verifyAdmin };
+
+    // Ensure roles is an array and check if the user has the required role
+    if (!Array.isArray(roles) || !roles.includes(req.user.role)) {
+      return res
+        .status(403)
+        .json({ message: "Access denied. Insufficient permissions." });
+    }
+
+    next(); // User is authorized, proceed to the next middleware
+  };
+};
+
+exports.verifyRefreshToken = (req, res, next) => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(403).json({ message: "Refresh token missing." });
+  }
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    req.user = decoded; // Attach the decoded user data for refreshing the token
+    next();
+  } catch (err) {
+    return res
+      .status(403)
+      .json({ message: "Invalid or expired refresh token." });
+  }
+};
+
+// Route handler to refresh the access token
+exports.refreshToken = (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) {
+    return res.status(403).json({ message: "Refresh token missing." });
+  }
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+
+    // Generate a new access token
+    const newAccessToken = jwt.sign(
+      { id: decoded.id, role: decoded.role },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_ACCESS_EXPIRES }
+    );
+
+    res.cookie("token", newAccessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    });
+
+    res.status(200).json({ success: true, message: "Token refreshed." });
+  } catch (err) {
+    return res
+      .status(403)
+      .json({ message: "Invalid or expired refresh token." });
+  }
+};
