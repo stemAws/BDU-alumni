@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Batches from "./Batches";
 import "../styles/AdminGallery.css";
 
 const GalleryList = () => {
   const [years, setYears] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedYear, setSelectedYear] = useState(""); // Store the selected year
   const [filteredBatches, setFilteredBatches] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Dropdown visibility
+  const dropdownRef = useRef(null);
 
   const updateCategories = async () => {
     try {
@@ -14,7 +16,6 @@ const GalleryList = () => {
       );
       const data = await response.json();
 
-      // Sort the data by year in descending order
       const sortedData = data.sort((a, b) => b.year - a.year);
 
       setYears(sortedData.map((item) => item.year));
@@ -46,26 +47,67 @@ const GalleryList = () => {
     };
 
     fetchYears();
+
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
-  const handleSearch = (event) => {
-    const term = event.target.value;
-    setSearchTerm(term);
-    const filtered = years.filter((year) => year.toString().includes(term));
-    setFilteredBatches(filtered.map((year) => ({ id: year, year })));
+  const handleSearchClick = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleYearSelect = (year) => {
+    setSelectedYear(year);
+    setFilteredBatches(
+      years
+        .filter((yearItem) => yearItem.toString().includes(year))
+        .map((year) => ({ id: year, year }))
+    );
+    setIsDropdownOpen(false);
   };
 
   return (
     <div className="admin-gallery">
-      <div className="admin-galleryContainers galleryContainer">
-        <h3> Bahir Dar University Alumni Gallery </h3>
-        <input
-          className="search Search"
-          type="text"
-          placeholder="Search by year"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
+      <div
+        className="admin-galleryContainers galleryContainer"
+        style={{ position: "fixed", top: "50px" }}
+      >
+        <h3 style={{ marginLeft: "400px" }}>
+          Bahir Dar University Alumni Gallery
+        </h3>
+
+        <div className="dropdown-container" ref={dropdownRef}>
+          <input
+            type="text"
+            className="search Search"
+            placeholder="Select Year"
+            value={selectedYear}
+            onFocus={handleSearchClick}
+            readOnly
+            style={{ margin: "20px 0 0 9rem" }}
+          />
+          {isDropdownOpen && (
+            <div className="dropdown">
+              {years.map((year) => (
+                <div
+                  key={year}
+                  className="dropdown-item"
+                  onClick={() => handleYearSelect(year)}
+                >
+                  {year}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <Batches

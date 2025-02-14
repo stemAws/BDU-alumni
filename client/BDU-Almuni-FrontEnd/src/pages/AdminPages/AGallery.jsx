@@ -128,9 +128,11 @@ const Gallery = ({
   };
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    setCategoryDescription(category.description);
-    setCategoryTitle(category.event);
+    if (category && category.images && category.images.length > 0) {
+      setSelectedCategory(category); // Ensure the category state is set
+      setCategoryDescription(category.description);
+      setCategoryTitle(category.event);
+    }
   };
 
   const handleImageClick = (image, index) => {
@@ -190,6 +192,10 @@ const Gallery = ({
           {categories &&
             categories.map((category) => (
               <div className="edit-cont" key={category.galleryID}>
+                <div className="stack-container">
+                  <div className="collections-stack-wiz__collection-stack3"></div>
+                  <div className="collections-stack-wiz__collection-stack2"></div>
+                </div>
                 <div
                   className="Admin-gallery"
                   key={category.galleryID}
@@ -231,7 +237,7 @@ const Gallery = ({
       <div className="line"></div>
       {selectedCategory && (
         <div className="admin-selected-category">
-          <div className="close-icon" onClick={handleCloseCategory}>
+          <div className="Gclose-icon" onClick={handleCloseCategory}>
             <FontAwesomeIcon
               icon={faTimes}
               size="1x"
@@ -245,15 +251,22 @@ const Gallery = ({
             <h2>{categoryDescription}</h2>
           </div>
           <div className="image-grid">
-            {selectedCategory.images.map((image, index) => (
-              <div
-                className="image-wrapper"
-                key={index}
-                onClick={() => handleImageClick(image, index)}
-              >
-                <img src={image} alt={`Image ${index}`} />
-              </div>
-            ))}
+            <div className="image-grid">
+              {selectedCategory.images &&
+              Array.isArray(selectedCategory.images) ? (
+                selectedCategory.images.map((image, index) => (
+                  <div
+                    className="image-wrapper"
+                    key={index}
+                    onClick={() => handleImageClick(image, index)}
+                  >
+                    <img src={image} alt={`Image ${index}`} />
+                  </div>
+                ))
+              ) : (
+                <p>No images available for this category.</p>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -290,7 +303,7 @@ const Gallery = ({
           <FontAwesomeIcon
             icon={faTimes}
             size="2x"
-            className="close-icon"
+            className="Gclose-icon"
             onClick={handleCloseImageOverlay}
           />
         </div>

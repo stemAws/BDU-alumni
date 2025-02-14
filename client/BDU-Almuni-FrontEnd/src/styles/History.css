@@ -1,215 +1,120 @@
-.historyContainer {
-  height: 100%;
-  font-size: 16px;
-  font-family: "lato", "sans-serif";
-  font-weight: 400;
-  line-height: 1.8em;
-  color: #666;
-  /* margin-top: 60px; */
-  background-color: #ffffff;
-}
-
-.historyContainer .pimg1,
-.pimg2,
-.pimg3 {
+.about-container {
   position: relative;
-  opacity: 0.7;
-  background-position: center;
+  width: 100%;
+  height: 100vh;
+  color: #0c8ce9;
+  overflow-y: auto;
+  overflow-x: hidden;
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-.sectionflex {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 20px;
-  overflow-y: auto;
-}
-.sectionflex img {
-  width: 400px;
-  height: 300px;
-  padding-left: 10px;
-}
-.sectionflex p {
-  padding: 20px;
+  animation: slide-background 45s infinite;
 }
 
-.pimg1 {
-  background-image: url(../assets/poly.png);
-  background-color: #ddd;
-  min-height: 100%;
+@keyframes slide-background {
+  0% {
+    background-image: url("C:\Users\me\Desktop\BDU-alumni-main_5\BDU-alumni-main\client\BDU-Almuni-FrontEnd\src\assets\images\photo_2024-02-25_23-38-22.jpg");
+  }
+  33% {
+    background-image: url("C:\Users\me\Desktop\BDU-alumni-main_5\BDU-alumni-main\client\BDU-Almuni-FrontEnd\src\assets\images\photo_2024-02-27_14-20-52.jpg");
+  }
+  66% {
+    background-image: url("C:\Users\me\Desktop\BDU-alumni-main_5\BDU-alumni-main\client\BDU-Almuni-FrontEnd\src\assets\images\photo_2024-02-25_15-58-46 copy.jpg");
+  }
+  100% {
+    background-image: url("C:\Users\me\Desktop\BDU-alumni-main_5\BDU-alumni-main\client\BDU-Almuni-FrontEnd\src\assets\images\photo_2024-02-25_23-41-53.jpg");
+  }
+}
+
+.Alumin-blue-text {
+  color: #0c8ce9;
+  font: 600 25px "Poppins";
+}
+.about-container > img {
+  position: fixed;
+  width: 100%;
   height: 100vh;
+  object-fit: cover;
 }
 
-.pimg2 {
-  background-image: url(../assets/peda.jpg);
-  min-height: 400px;
-  /* height: 100vh; */
+.alumni-office {
+  position: relative;
+  top: 60%;
+  left: 10%;
+  font: 700 35px "arial";
 }
 
-.pimg3 {
-  background-image: url(../assets/bdu1.jpg);
-  min-height: 600px;
+span {
+  color: #f17318;
 }
-
-.section {
-  text-align: center;
-  /* padding: 20px; */
-}
-
-.section-light {
-  /* background: radiargb(255, 255, 255), 255, 255), 255, 255)ent(75.49% 117.11% at 50% 80.92%, #0c8ce9 0%, #0A0A0A 100%); */
-  background-color: #b2e3f03c;
-  color: #000000;
-  height: 500px;
-  align-items: center;
-  display: flex;
-  /* overflow-y: auto; */
-}
-.sectiondarkHeader {
-  width: 40%;
-  align-self: center;
-  line-height: normal;
-  font-size: 30px;
-  color: #070707;
-  font-weight: normal;
-}
-.start {
-  color: #00b7ff;
-}
-.section-dark {
-  background-color: #b2e3f03c;
-  color: #292727;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 20px 20px 40px 20px;
-  width: 100%;
-  height: 500px;
-  align-items: center;
-}
-.section-discription {
-  width: 60%;
-  align-self: center;
-}
-.section-dark img {
-  width: 300px;
-  margin-left: 20px;
-}
-.section-one {
-  padding: 20px;
-  color: orange;
-}
-.ptext {
+.about-container section {
   position: absolute;
-  top: 50%;
-  width: 100%;
-  text-align: center;
-  color: black;
-  font-size: 27px;
-  /* text-transform: capitalize; */
-}
-.ptext p {
-  font-size: 20px;
-  padding: 0 40px;
-}
-.ptext .border {
-  background-color: #2a657d;
-  color: rgb(19, 18, 18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 15%;
+  left: 40%;
+  width: 716px;
+  height: fit-content;
+  background-color: rgba(61, 62, 62, 0.543);
+  backdrop-filter: blur(40px);
+  gap: 10px;
   padding: 20px;
+  border-radius: 20px 20px 20px 20px;
 }
 
-.ptext .border.trans {
-  background-color: transparent;
+.about-title {
+  font: 600 30px "Poppins";
 }
-@media (min-width: 768px) {
-  .section-light {
-    background-color: #b2e3f03c;
-    color: #000000;
-    height: fit-content;
-    align-items: center;
-    display: flex;
-    overflow-y: auto;
-  }
 
-  .sectionflex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    overflow-y: auto;
-  }
+.about-sub-title {
+  margin: 10px 0;
+  font: 500 18px "Poppins";
+}
 
-  .section-dark {
-    height: fit-content;
-    justify-content: center;
-  }
-  .section-discription {
-    width: 100%;
-    align-self: center;
-  }
+.about-description {
+  font: 300 16px "Poppins";
+  line-height: 140%;
+  color: #ffffff;
+}
+.about-moto {
+  margin-top: 20px;
+  text-align: center;
+  color: white;
+}
 
-  .sectiondarkHeader {
-    display: none;
+@media (max-width: 1016px) and (min-width: 568px) {
+  .alumni-office {
+    font: 300 25px "poppins";
+  }
+  .about-detail {
+    width: 580px;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 849px) {
+  .about-detail {
+    width: 480px;
   }
 }
 
 @media (max-width: 650px) {
-  .historyContainer .pimg1,
-  .pimg2,
-  .pimg3 {
-    background-attachment: scroll;
-  }
-
-  .section-light {
-    background-color: #b2e3f03c;
-    color: #000000;
-    height: fit-content;
-    align-items: center;
-    display: flex;
-    overflow-y: auto;
-    width: 100%;
-  }
-
-  .sectionflex {
+  .about-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    overflow-y: auto;
   }
-
-  .section-dark {
-    background-color: #b2e3f03c;
-    color: #292727;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px 20px 40px 20px;
-    width: 100%;
-    height: fit-content;
-    align-items: center;
+  .about-detail {
+    position: relative;
+    width: fit-content;
+    margin: 0px 10px 10px 10px;
+    left: 0;
+    top: 0;
   }
-
-  .section-discription {
-    width: 100%;
+  .alumni-office {
+    position: relative;
+    top: 0;
+    left: 0;
+    font: 400 25px "poppins";
+    margin-top: 50px;
     align-self: center;
-  }
-
-  .sectiondarkHeader {
-    display: none;
-  }
-
-  .sectionflex img {
-    width: 100%;
-    height: 300px;
-    padding-left: 10px;
-  }
-
-  .section-one {
-    padding: 20px;
-    color: orange;
-    font-size: 30px;
   }
 }

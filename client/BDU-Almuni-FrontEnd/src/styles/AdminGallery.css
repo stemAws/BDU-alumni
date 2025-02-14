@@ -2,19 +2,42 @@
   margin-top: 80px;
 }
 
+.collections-stack-wiz__collection-stack2 {
+  background-color: #9e9ea1;
+  position: absolute;
+  top: 6px;
+  width: calc(100% - 8px);
+  height: 250px;
+  left: 14px;
+  right: 0;
+  border-radius: 12px;
+}
+
+.collections-stack-wiz__collection-stack3 {
+  background-color: #767679;
+  position: absolute;
+  top: 3px;
+  width: calc(100% - 25px);
+  height: 250px;
+  left: 23px;
+  right: 12px;
+  border-radius: 12px;
+}
+.stack-container {
+  z-index: 0;
+}
+
 .admin-galleryContainers {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   height: 70px;
   position: fixed;
-  top: 50px;
-  width: 100%;
+  top: 0;
+  width: (100% - 300px);
   background-color: white;
   z-index: 10;
-  padding: 0 20px; /* Added padding for spacing */
-  width: 100%;
+  padding: 0 20px;
 }
 
 .admin-galleryContainers .addGallery {
@@ -33,7 +56,7 @@
 }
 
 .admin-galleryContainers h3 {
-  margin-left: 0;
+  margin-left: -180px;
   font-size: 30px;
 }
 
@@ -43,11 +66,11 @@
 
 .admin-gallery {
   flex: 4;
-  height: calc(100vh - 70px); /* Adjust height to fit below fixed header */
+  height: calc(100vh - 70px);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  margin-top: 70px; /* Added margin to account for fixed header */
+  margin-top: 70px;
 }
 .gallery-title {
   align-self: center;
@@ -90,6 +113,62 @@
   width: 150px;
 }
 
+.dropdown-container {
+  position: relative;
+  width: 300px;
+}
+
+.search {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 60px;
+  right: -10px;
+  width: 200px;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown::-webkit-scrollbar {
+  width: 3px;
+}
+
+.dropdown::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.dropdown::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.dropdown::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
 .gal-header-txt {
   display: inline-block;
   color: black;
@@ -127,7 +206,7 @@
   padding: 1rem 0 3rem 0;
   overflow-x: auto;
   width: 100%;
-  margin-top: 70px; /* Added margin to stay below the fixed header */
+  margin-top: 70px;
 }
 
 .admin-cat-container::-webkit-scrollbar {
