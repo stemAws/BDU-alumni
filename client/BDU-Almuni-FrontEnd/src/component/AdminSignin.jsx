@@ -1,72 +1,52 @@
 import { useState } from "react";
-import { FaEye, FaEyeSlash, FaTimes, FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+// import { useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 import Button from "./Button";
-import AuthService from "./AuthService";
 
-const Signin = () => {
+const AdminSignin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [loading, setloading] = useState(false);
-  const navigate = useNavigate();
-  const handleSignIn = (e) => {
+
+  // const navigate = useNavigate();
+  const handleSignIn = async (e) => {
     e.preventDefault();
     setloading(true);
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/signin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-        isAdmin: 1,
-      }),
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          window.location.reload();
-        } else {
-          setErrorPopup(true);
-          setloading(false);
-        }
-      })
-      .catch((error) => {
-        console.error("Error during authentication:", error);
-        setloading(false);
-      });
 
-    navigate("/admin/home");
-  };
-  // const handleSignInfake =()=>{
-  //   setsignin(false);
-  //   setloginState(true);
-  // }
-
-  const handleGoogleSignin = async (e) => {
-    e.preventDefault();
     try {
-      window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/signin`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+          credentials: "include",
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        console.log("User signed in successfully");
+      } else {
+        setErrorPopup(true);
+      }
     } catch (error) {
-      console.error("Error during Google sign-in:", error);
+      console.error("Error during authentication:", error);
+      setErrorPopup(true);
+    } finally {
+      setloading(false);
     }
   };
+
   return (
     <div className="signin_overlay">
       <div id="Admin-pop_container" className="Admin-pop_container">
-        {/* <div className="overlay_container">
-          <div className="overlaySign">
-            <div className="overlay_panel overlay_right">
-              <h1 className="hello_wellcome">Hello and Welcome</h1>
-              <p className='question'>We're thrilled to have you back and reconnecting with fellow BDU STEM graduates</p>
-            </div>
-          </div>
-        </div> */}
         <div className="Admin-sign_Container signin_container">
           {/* <div onClick={()=>setsignin(false)} className='Admin-icon'><FaTimes/></div> */}
           <form className="Admin-sign_in">
@@ -78,15 +58,7 @@ const Signin = () => {
             ) : (
               ""
             )}
-            <div
-              className="Admin-sign_with_google"
-              onClick={handleGoogleSignin}
-            >
-              <div className="google_icon">
-                <FaGoogle color="#fff" />
-              </div>
-              <p>Sign in with Google</p>
-            </div>
+
             <FormInput
               type="text"
               placeholder="Username"
@@ -111,7 +83,6 @@ const Signin = () => {
                 )}
               </div>
             </div>
-            {/* <Link to ='/forgetPassword' onClick={()=>setsignin(false)}>Forget password?</Link> */}
             <Button
               disabled={loading}
               text={loading ? "Loging..." : "LOGIN"}
@@ -124,4 +95,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default AdminSignin;
