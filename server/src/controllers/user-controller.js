@@ -33,7 +33,12 @@ exports.signIn = async (req, res) => {
     // Check if the account is active
     const userActive = await alumniService.isUserActive(username);
     if (!userActive) {
-      return res.status(400).json({ message: "Account is not activated." });
+      const Inactive = await alumniService.getUser(username);
+
+      return res.status(400).json({
+        message: "Account is not activated.",
+        userId: Inactive[0].personId,
+      });
     }
 
     // Get the user's details
@@ -89,13 +94,11 @@ exports.signIn = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    return res
-      .status(200)
-      .json({
-        success: true,
-        message: "User logged in successfully",
-        userId: user[0].personId,
-      });
+    return res.status(200).json({
+      success: true,
+      message: "User logged in successfully",
+      userId: user[0].personId,
+    });
   } catch (err) {
     console.error("Error logging in user:", err);
     return res
