@@ -17,7 +17,7 @@ const SideBar = () => {
   };
 
   const handleLogoutConfirm = () => {
-    AuthService.logout("admin");
+    AuthService.logout();
     window.location.reload();
     setShowLogoutPopup(false);
   };
@@ -30,18 +30,22 @@ const SideBar = () => {
     e.stopPropagation();
   };
 
+  const { role } = AuthService.useAuth(); // Use the method from AuthService
+
   return (
     <div className="sidebar-container">
       <div className="sidebarMenu">
         <ul className="sidebarList">
           <li className="logo-name">BDU Alumni</li>
           <li className="sidebarListItem">
-            <Link to="/admin/home">User Analytics</Link>
+            <Link to="/admin/home">Dashboard</Link>
           </li>
 
-          <li className="sidebarListItem">
-            <Link to="/admin/users">Users</Link>
-          </li>
+          {role === "systemAdmin" && (
+            <li className="sidebarListItem">
+              <Link to="/admin/users">Users</Link>
+            </li>
+          )}
 
           <li className="sidebarListItem">
             <Link to="/admin/News">News and updates</Link>
@@ -63,12 +67,6 @@ const SideBar = () => {
             <Link to="/admin/jobOffer">Job Offer</Link>
           </li>
 
-          {/* <li className="sidebarListItem">
-                <Link to='/admin/VoluntaryWork'>
-                  Voluntary Work
-                </Link>
-                </li> */}
-
           <li className="sidebarListItem">
             <Link to="/admin/chapters">Clubs</Link>
           </li>
@@ -80,9 +78,11 @@ const SideBar = () => {
           <li className="sidebarListItem notifications">
             <Link to="/admin/donation">Donation</Link>
           </li>
+
           <li className="sidebarListItem notifications">
             <Link to="/admin/transcript">Document requests</Link>
           </li>
+
           <div className="topavatar" onClick={handleLogoutClick}>
             <button className="admin-logout-btn">log out</button>
             {showLogoutPopup && (
