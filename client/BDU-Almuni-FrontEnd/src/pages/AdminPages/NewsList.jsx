@@ -30,7 +30,8 @@ const NewsList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/all-news`
+        `${import.meta.env.VITE_BACKEND_URL}/all-news`,
+        { credentials: "include" }
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch news. Status: ${response.status}`);
@@ -77,6 +78,8 @@ const NewsList = () => {
         }/delete-news/${deleteConfirmationNewsId}`,
         {
           method: "DELETE",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },

@@ -11,7 +11,8 @@ const GalleryList = () => {
   const updateCategories = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/gallery`
+        `${import.meta.env.VITE_BACKEND_URL}/gallery`,
+        { credentials: "include" }
       );
       const data = await response.json();
 
@@ -31,7 +32,8 @@ const GalleryList = () => {
     const fetchYears = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/gallery`
+          `${import.meta.env.VITE_BACKEND_URL}/gallery`,
+          { credentials: "include" }
         );
         const data = await response.json();
 

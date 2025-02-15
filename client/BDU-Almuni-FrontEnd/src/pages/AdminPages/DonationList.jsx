@@ -5,14 +5,13 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import DeleteConfirmation from '../../component/DeleteConfirmation'
+import DeleteConfirmation from "../../component/DeleteConfirmation";
 const DonationList = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-
 
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deleteConfirmationId, setDeleteConfirmationId] = useState(null);
@@ -29,7 +28,8 @@ const DonationList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/donation`
+        `${import.meta.env.VITE_BACKEND_URL}/donation`,
+        { credentials: "include" }
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch events. Status: ${response.status}`);
@@ -38,7 +38,9 @@ const DonationList = () => {
       const donationData = await response.json();
 
       // Sort the data by the createdAt timestamp in descending order
-      donationData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      donationData.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
 
       setData(donationData);
     } catch (error) {
@@ -73,6 +75,8 @@ const DonationList = () => {
         `${import.meta.env.VITE_BACKEND_URL}/donation/${deleteConfirmationId}`,
         {
           method: "DELETE",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -98,7 +102,7 @@ const DonationList = () => {
   };
 
   const handleEdit = (id) => {
-    console.log('clicked')
+    console.log("clicked");
     // Render the EditEvent component with the onUpdate callback
     navigate(`/admin/donation/${id}`);
   };
@@ -137,37 +141,41 @@ const DonationList = () => {
 
   return (
     <ThemeProvider theme={customTheme}>
-    <div className="eventlist">
-      <div className="addEventheader">
-        <input
-          className="search"
-          type="text"
-          placeholder="Search by donation title"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <h3> Bahir Dar University Alumni Donation </h3>
-        <Link to="/admin/AddDonation">
-          <button className="addEvent">+ Add Donation</button>
-        </Link>
-      </div>
-      <div className="listCOntainer">
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-              <DataGrid rows={filteredData} columns={columns} getRowId={getRowId} />
+      <div className="eventlist">
+        <div className="addEventheader">
+          <input
+            className="search"
+            type="text"
+            placeholder="Search by donation title"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <h3> Bahir Dar University Alumni Donation </h3>
+          <Link to="/admin/AddDonation">
+            <button className="addEvent">+ Add Donation</button>
+          </Link>
+        </div>
+        <div className="listCOntainer">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <>
+              <DataGrid
+                rows={filteredData}
+                columns={columns}
+                getRowId={getRowId}
+              />
               {isDeleteConfirmationOpen && (
                 <DeleteConfirmation
                   close={handleCancelDelete}
-                  text="event"  // You can customize this text based on your needs
+                  text="event" // You can customize this text based on your needs
                   onDelete={handleConfirmDelete}
                 />
               )}
             </>
-      )}
+          )}
+        </div>
       </div>
-    </div>
     </ThemeProvider>
   );
 };

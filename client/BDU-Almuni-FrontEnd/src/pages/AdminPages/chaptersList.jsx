@@ -30,7 +30,8 @@ const ChapterList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/list-chapters`
+        `${import.meta.env.VITE_BACKEND_URL}/list-chapters`,
+        { credentials: "include" }
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch chapters. Status: ${response.status}`);
@@ -87,6 +88,8 @@ const ChapterList = () => {
           import.meta.env.VITE_BACKEND_URL
         }/delete-chapter/${deleteConfirmationChapterId}`,
         {
+          credentials: "include",
+
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

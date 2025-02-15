@@ -31,7 +31,6 @@ const JobOffer = () => {
   const [peopleNeededError, setPeopleNeededError] = useState("");
   const [salaryError, setSalaryError] = useState("");
 
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -39,50 +38,50 @@ const JobOffer = () => {
     //   const file = files && files.length > 0 ? files[0] : null;
     //   setImage(file);
     // } else {
-      switch (name) {
-        case "title":
-          setTitle(value);
-          setTitleError("");
-          break;
-        case "description":
-          setDescription(value);
-          setDescriptionError("");
-          break;
-        case "deadline":
-          setDeadline(value);
-          setDeadlineError("");
-          break;
-        case "organization":
-          setOrganization(value);
-          setOrganizationError("");
-          break;
-        case "employmentType":
-          setEmploymentType(value);
-          setEmploymentTypeError("");
-          break;
-        case "email":
-          setEmail(value);
-          setEmailError("");
-          break;
-        case "phoneNumber":
-          setPhoneNumber(value);
-          setPhoneNumberError("");
-          break;
-        case "address":
-          setAddress(value);
-          setAddressError("");
-          break;
-        case "peopleNeeded":
-          setPeopleNeeded(value);
-          setPeopleNeededError("");
-          break;
-        case "salary":
-          setSalary(value);
-          setSalaryError("");
-          break;
-        default:
-          break;
-      }
+    switch (name) {
+      case "title":
+        setTitle(value);
+        setTitleError("");
+        break;
+      case "description":
+        setDescription(value);
+        setDescriptionError("");
+        break;
+      case "deadline":
+        setDeadline(value);
+        setDeadlineError("");
+        break;
+      case "organization":
+        setOrganization(value);
+        setOrganizationError("");
+        break;
+      case "employmentType":
+        setEmploymentType(value);
+        setEmploymentTypeError("");
+        break;
+      case "email":
+        setEmail(value);
+        setEmailError("");
+        break;
+      case "phoneNumber":
+        setPhoneNumber(value);
+        setPhoneNumberError("");
+        break;
+      case "address":
+        setAddress(value);
+        setAddressError("");
+        break;
+      case "peopleNeeded":
+        setPeopleNeeded(value);
+        setPeopleNeededError("");
+        break;
+      case "salary":
+        setSalary(value);
+        setSalaryError("");
+        break;
+      default:
+        break;
+    }
     // }
   };
 
@@ -96,7 +95,9 @@ const JobOffer = () => {
       setTitleError("Title field cannot be empty!");
       valid = false;
     } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
-      setTitleError("Title must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      setTitleError(
+        "Title must contain only letters and spaces, with numbers allowed anywhere after letters!"
+      );
       valid = false;
     }
 
@@ -104,7 +105,9 @@ const JobOffer = () => {
       setDescriptionError("Description field cannot be empty!");
       valid = false;
     } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-      setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      setDescriptionError(
+        "Description must contain only letters and spaces, with numbers allowed anywhere after letters!"
+      );
       valid = false;
     }
 
@@ -123,7 +126,9 @@ const JobOffer = () => {
       setOrganizationError("Organization field cannot be empty!");
       valid = false;
     } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(organization)) {
-      setOrganizationError("Organization must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      setOrganizationError(
+        "Organization must contain only letters and spaces, with numbers allowed anywhere after letters!"
+      );
       valid = false;
     }
 
@@ -147,7 +152,9 @@ const JobOffer = () => {
       setEmploymentTypeError("Employment Type field cannot be empty!");
       valid = false;
     } else if (employmentType.length > 20) {
-      setEmploymentTypeError("Employment Type should be less than 20 characters!");
+      setEmploymentTypeError(
+        "Employment Type should be less than 20 characters!"
+      );
       valid = false;
     }
 
@@ -177,7 +184,6 @@ const JobOffer = () => {
 
     if (valid) {
       try {
-
         setLoading(true);
 
         const formDataToSend = new FormData();
@@ -197,6 +203,8 @@ const JobOffer = () => {
           `${import.meta.env.VITE_BACKEND_URL}/add-job`,
           {
             method: "POST",
+            credentials: "include",
+
             body: formDataToSend,
           }
         );
@@ -211,7 +219,7 @@ const JobOffer = () => {
         }
       } catch (error) {
         console.error("Error:", error);
-      }finally {
+      } finally {
         setLoading(false);
       }
     }
@@ -261,7 +269,9 @@ const JobOffer = () => {
               value={description}
               onChange={handleInputChange}
             />
-            {descriptionError && <p className="errorMessage">{descriptionError}</p>}
+            {descriptionError && (
+              <p className="errorMessage">{descriptionError}</p>
+            )}
           </div>
           <div className="Jobform">
             <label className="label">company Name:</label>
@@ -271,7 +281,9 @@ const JobOffer = () => {
               value={organization}
               onChange={handleInputChange}
             />
-            {organizationError && <p className="errorMessage">{organizationError}</p>}
+            {organizationError && (
+              <p className="errorMessage">{organizationError}</p>
+            )}
           </div>
           <div className="Jobform">
             <label className="label">Phone Number:</label>
@@ -281,7 +293,9 @@ const JobOffer = () => {
               value={phoneNumber}
               onChange={handleInputChange}
             />
-            {phoneNumberError && <p className="errorMessage">{phoneNumberError}</p>}
+            {phoneNumberError && (
+              <p className="errorMessage">{phoneNumberError}</p>
+            )}
           </div>
           <div className="Jobform">
             <label className="label">Employment Type:</label>
@@ -291,7 +305,9 @@ const JobOffer = () => {
               value={employmentType}
               onChange={handleInputChange}
             />
-            {employmentTypeError && <p className="errorMessage">{employmentTypeError}</p>}
+            {employmentTypeError && (
+              <p className="errorMessage">{employmentTypeError}</p>
+            )}
           </div>
           <div className="Jobform">
             <label className="label">Email:</label>
@@ -331,7 +347,9 @@ const JobOffer = () => {
               value={peopleNeeded}
               onChange={handleInputChange}
             />
-            {peopleNeededError && <p className="errorMessage">{peopleNeededError}</p>}
+            {peopleNeededError && (
+              <p className="errorMessage">{peopleNeededError}</p>
+            )}
           </div>
           <div className="Jobform">
             <label className="label">Salary:</label>
@@ -343,9 +361,9 @@ const JobOffer = () => {
             />
             {salaryError && <p className="errorMessage">{salaryError}</p>}
           </div>
-          <div className='buttonss'>
+          <div className="buttonss">
             <button type="submit" disabled={loading}>
-              {loading ? 'Uploading...' : 'Upload'}
+              {loading ? "Uploading..." : "Upload"}
             </button>
           </div>
         </form>

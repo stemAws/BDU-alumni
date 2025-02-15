@@ -20,6 +20,8 @@ const FeaturedStories = () => {
         `${import.meta.env.VITE_BACKEND_URL}/update-post/${postId}`,
         {
           method: "PUT",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -49,6 +51,8 @@ const FeaturedStories = () => {
         `${import.meta.env.VITE_BACKEND_URL}/update-post/${postId}`,
         {
           method: "PUT",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -74,7 +78,8 @@ const FeaturedStories = () => {
     const fetchStories = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/suggested-to-admin`
+          `${import.meta.env.VITE_BACKEND_URL}/suggested-to-admin`,
+          { credentials: "include" }
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -112,7 +117,6 @@ const FeaturedStories = () => {
           stories.map((story, index) => (
             <div className="FeaturedStories-container" key={index}>
               <div className="story-image">
-         
                 <img src={story.mediaPath} alt="" />
                 <p className="story_p_admin">{story.content}</p>
               </div>

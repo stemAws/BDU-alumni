@@ -54,7 +54,8 @@ const Gallery = ({
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/gallery`
+          `${import.meta.env.VITE_BACKEND_URL}/gallery`,
+          { credentials: "include" }
         );
         const data = await response.json();
         const filteredCategories = data.filter(
@@ -75,6 +76,8 @@ const Gallery = ({
         `${import.meta.env.VITE_BACKEND_URL}/gallery/${categoryToDelete}`,
         {
           method: "DELETE",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -107,6 +110,8 @@ const Gallery = ({
             }/gallery/galleryID?year=${deletedYear}`,
             {
               method: "DELETE",
+              credentials: "include",
+
               headers: {
                 "Content-Type": "application/json",
               },

@@ -36,12 +36,15 @@ const FeedBack = () => {
 
   const fetchFeedbackData = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/feedback`);
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/feedback`,
+        { credentials: "include" }
+      );
       if (response.ok) {
         const data = await response.json();
 
         // Sort the data by the  submittedAt timestamp in descending order
-        data.sort((a, b) => new Date(b. submittedAt) - new Date(a. submittedAt));
+        data.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
 
         setFeedbackData(data);
       } else {
@@ -64,12 +67,15 @@ const FeedBack = () => {
         `${import.meta.env.VITE_BACKEND_URL}/feedback/${deleteConfirmationId}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
 
       if (response.ok) {
         setFeedbackData((prevData) =>
-          prevData.filter((feedback) => feedback.feedbackId !== deleteConfirmationId)
+          prevData.filter(
+            (feedback) => feedback.feedbackId !== deleteConfirmationId
+          )
         );
       } else {
         console.error(`Failed to delete row with ID: ${deleteConfirmationId}`);
@@ -103,7 +109,10 @@ const FeedBack = () => {
       headerName: "Email",
       width: 200,
       renderCell: (params) => (
-        <div style={{ cursor: "pointer" }} onClick={() => handleEmailClick(params.value)}>
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={() => handleEmailClick(params.value)}
+        >
           {params.value}
         </div>
       ),
@@ -114,7 +123,10 @@ const FeedBack = () => {
       headerName: "Message",
       width: 300,
       renderCell: (params) => (
-        <div style={{ cursor: "pointer" }} onClick={() => handleMessageClick(params.value)}>
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={() => handleMessageClick(params.value)}
+        >
           {params.value}
         </div>
       ),
@@ -141,21 +153,21 @@ const FeedBack = () => {
         <h3> Feedbacks </h3>
       </div>
       <div className="listContainer">
-      <ThemeProvider theme={customTheme}>
-        <DataGrid rows={rows} columns={columns} autoHeight />
-        <Message
-          open={Boolean(selectedMessage)}
-          handleClose={handleCloseMessageDialog}
-          message={selectedMessage}
-        />
-        {isDeleteConfirmationOpen && (
-          <DeleteConfirmation
-            close={handleCancelDelete}
-            text="feedback"
-            onDelete={handleConfirmDelete}
+        <ThemeProvider theme={customTheme}>
+          <DataGrid rows={rows} columns={columns} autoHeight />
+          <Message
+            open={Boolean(selectedMessage)}
+            handleClose={handleCloseMessageDialog}
+            message={selectedMessage}
           />
-        )}
-      </ThemeProvider>
+          {isDeleteConfirmationOpen && (
+            <DeleteConfirmation
+              close={handleCancelDelete}
+              text="feedback"
+              onDelete={handleConfirmDelete}
+            />
+          )}
+        </ThemeProvider>
       </div>
     </div>
   );

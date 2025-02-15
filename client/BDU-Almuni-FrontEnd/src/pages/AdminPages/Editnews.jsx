@@ -20,7 +20,8 @@ const EditNews = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/get-news/${newsId}`
+          `${import.meta.env.VITE_BACKEND_URL}/get-news/${newsId}`,
+          { credentials: "include" }
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

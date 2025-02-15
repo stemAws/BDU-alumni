@@ -174,6 +174,8 @@ const AddUser = () => {
           `${import.meta.env.VITE_BACKEND_URL}/addUser`,
           {
             method: "POST",
+            credentials: "include",
+
             headers: {
               "Content-Type": "application/json",
             },
@@ -230,6 +232,8 @@ const AddUser = () => {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/upload-alumni-data`,
         {
+          credentials: "include",
+
           method: "POST",
           body: formData,
         }

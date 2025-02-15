@@ -17,7 +17,8 @@ const UserList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/get-alumni`
+        `${import.meta.env.VITE_BACKEND_URL}/get-alumni`,
+        { credentials: "include" }
       );
 
       if (!response.ok) {
@@ -30,8 +31,7 @@ const UserList = () => {
       userData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       setData(userData);
       setFilteredData(userData); // Update filteredData with the fetched and sorted data
-      console.log(data)
-
+      console.log(data);
     } catch (error) {
       console.error("Error fetching data:", error.message);
     } finally {
@@ -74,6 +74,8 @@ const UserList = () => {
         `${import.meta.env.VITE_BACKEND_URL}/verify-alumni/${alumniID}`,
         {
           method: "PUT",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -100,6 +102,8 @@ const UserList = () => {
         `${import.meta.env.VITE_BACKEND_URL}/notable/${alumniID}`,
         {
           method: "PUT",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -127,6 +131,9 @@ const UserList = () => {
         `${import.meta.env.VITE_BACKEND_URL}/verify-alumni/${alumniID}`,
         {
           method: "PUT",
+
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -152,6 +159,8 @@ const UserList = () => {
         `${import.meta.env.VITE_BACKEND_URL}/notable/${alumniID}`,
         {
           method: "PUT",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },

@@ -28,7 +28,8 @@ const EditEvent = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/adminEvents/${id}`
+          `${import.meta.env.VITE_BACKEND_URL}/adminEvents/${id}`,
+          { credentials: "include" }
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -46,17 +47,14 @@ const EditEvent = () => {
   }, [id]);
 
   const handleInputChange = (e) => {
-    const { name, value} = e.target;
+    const { name, value } = e.target;
 
     setEventData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-      
+      ...prevData,
+      [name]: value,
+    }));
   };
-  useEffect(() => {
-  }, [eventData]);
-
+  useEffect(() => {}, [eventData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,11 +65,13 @@ const EditEvent = () => {
       setTitleError("Title field cannot be empty!");
       valid = false;
     } else if (!/^[a-zA-Z0-9\s]+$/.test(eventData.title)) {
-      setTitleError("Title field must contain only letters, numbers, and spaces!");
+      setTitleError(
+        "Title field must contain only letters, numbers, and spaces!"
+      );
       valid = false;
     } else {
       setTitleError("");
-    }    
+    }
 
     if (!eventData.content) {
       setDescriptionError(
@@ -140,31 +140,37 @@ const EditEvent = () => {
       setOrganizerError("");
     }
 
-     if (valid) {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/adminEvents/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(eventData),
-        }
-      );
+    if (valid) {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/adminEvents/${id}`,
+          {
+            method: "PUT",
+            credentials: "include",
 
-      if (response.ok) {
-        navigate("/admin/Events");
-      } else {
-        const errorResponse = await response.json();
-        console.error("Error updating event data:", response.status, errorResponse);
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(eventData),
+          }
+        );
+
+        if (response.ok) {
+          navigate("/admin/Events");
+        } else {
+          const errorResponse = await response.json();
+          console.error(
+            "Error updating event data:",
+            response.status,
+            errorResponse
+          );
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
     }
-  }
-};
-    
+  };
+
   const handleClick = () => {
     navigate("/admin/Events");
   };

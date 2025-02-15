@@ -84,6 +84,8 @@ const DonationPost = () => {
           `${import.meta.env.VITE_BACKEND_URL}/donation`,
           {
             method: "POST",
+            credentials: "include",
+
             headers: {
               "Content-Type": "application/json",
             },

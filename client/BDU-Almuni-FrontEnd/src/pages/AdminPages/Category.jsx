@@ -6,14 +6,15 @@ const Category = ({ galleryID }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log('galleryID from URL:', galleryID);
+      console.log("galleryID from URL:", galleryID);
       try {
         if (galleryID) {
           const response = await fetch(
-            `${import.meta.env.VITE_BACKEND_URL}/gallery/${galleryID}`
+            `${import.meta.env.VITE_BACKEND_URL}/gallery/${galleryID}`,
+            { credentials: "include" }
           );
           const data = await response.json();
-          console.log('Fetched category data:', data);
+          console.log("Fetched category data:", data);
           setCategory(data);
         }
       } catch (error) {

@@ -93,16 +93,16 @@ const EventPost = () => {
     if (!title) {
       setTitleError("Title field cannot be empty!");
       valid = false;
-    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
-    //   setTitleError("Title must contain only letters and spaces, with numbers allowed anywhere after letters!");
-    //   valid = false;
+      // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
+      //   setTitleError("Title must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      //   valid = false;
     }
     if (!description) {
       setDescriptionError("Description field cannot be empty!");
       valid = false;
-    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-    //   setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
-    //   valid = false;
+      // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
+      //   setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      //   valid = false;
     }
     if (!startDate) {
       setStartDateError("StartDate field cannot be empty!");
@@ -132,7 +132,9 @@ const EventPost = () => {
       setOrganizerError("Organizer field cannot be empty!");
       valid = false;
     } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(organizer)) {
-      setOrganizerError("Organizer must contain only letters and spaces, with numbers allowed anywhere after letters!");
+      setOrganizerError(
+        "Organizer must contain only letters and spaces, with numbers allowed anywhere after letters!"
+      );
       valid = false;
     }
     if (!isValidUrl(eventLink) && eventLink.trim() !== "") {
@@ -152,7 +154,6 @@ const EventPost = () => {
 
     if (valid) {
       try {
-
         setLoading(true);
 
         const formDataToSend = new FormData();
@@ -171,7 +172,7 @@ const EventPost = () => {
           {
             method: "POST",
             body: formDataToSend,
-            credentials: "include"
+            credentials: "include",
           }
         );
 
@@ -279,7 +280,9 @@ const EventPost = () => {
               value={eventLocation}
               onChange={handleInputChange}
             />
-            {eventLocationError && <p className="errorMessage">{eventLocationError}</p>}
+            {eventLocationError && (
+              <p className="errorMessage">{eventLocationError}</p>
+            )}
           </div>
           <div className="form">
             <label className="label">Start Date:</label>
@@ -301,9 +304,9 @@ const EventPost = () => {
             />
             {endDateError && <p className="errorMessage">{endDateError}</p>}
           </div>
-          <div className='buttonss'>
+          <div className="buttonss">
             <button type="submit" disabled={loading} onClick={handleSubmit}>
-              {loading ? 'Uploading...' : 'Upload'}
+              {loading ? "Uploading..." : "Upload"}
             </button>
           </div>
         </form>

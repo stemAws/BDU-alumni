@@ -63,7 +63,8 @@ const EventPost = () => {
       setDescriptionError(
         description ? "" : "Description field cannot be empty!"
       );
-      valid = false;}
+      valid = false;
+    }
     // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
     //   setDescriptionError(
     //     "Description must contain only letters and spaces, with numbers allowed anywhere after letters!"
@@ -79,13 +80,14 @@ const EventPost = () => {
 
     if (valid) {
       try {
-
         setLoading(true);
 
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/add-chapter`,
           {
             method: "POST",
+            credentials: "include",
+
             headers: {
               "Content-Type": "application/json",
             },
@@ -157,9 +159,9 @@ const EventPost = () => {
             />
             {LinkError && <p className="errorMessage">{LinkError}</p>}
           </div>
-          <div className='buttonss'>
+          <div className="buttonss">
             <button type="submit" disabled={loading}>
-              {loading ? 'Uploading...' : 'Upload'}
+              {loading ? "Uploading..." : "Upload"}
             </button>
           </div>
         </form>

@@ -19,6 +19,8 @@ const Stories = () => {
         `${import.meta.env.VITE_BACKEND_URL}/update-post/${postId}`,
         {
           method: "PUT",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -62,7 +64,8 @@ const Stories = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/suggested-by-admin`
+          `${import.meta.env.VITE_BACKEND_URL}/suggested-by-admin`,
+          { credentials: "include" }
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

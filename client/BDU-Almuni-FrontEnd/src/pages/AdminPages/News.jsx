@@ -107,6 +107,8 @@ const EventPost = () => {
           `${import.meta.env.VITE_BACKEND_URL}/add-news`,
           {
             method: "POST",
+            credentials: "include",
+
             headers: {
               "Content-Type": "application/json",
             },

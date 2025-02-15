@@ -16,7 +16,11 @@ const Chapters = () => {
     const fetchChapters = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/list-chapters`
+          `${import.meta.env.VITE_BACKEND_URL}/list-chapters`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

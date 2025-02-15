@@ -73,6 +73,7 @@ const Gallery = ({
         `${import.meta.env.VITE_BACKEND_URL}/gallery/${categoryToDelete}`,
         {
           method: "DELETE",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -105,6 +106,7 @@ const Gallery = ({
             }/gallery/galleryID?year=${deletedYear}`,
             {
               method: "DELETE",
+              credentials: "include",
               headers: {
                 "Content-Type": "application/json",
               },

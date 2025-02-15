@@ -22,6 +22,8 @@ const RequestedTranscript = () => {
         `${import.meta.env.VITE_BACKEND_URL}/update-status/${id}`,
         {
           method: "PUT",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -54,7 +56,8 @@ const RequestedTranscript = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/doc-requests`
+        `${import.meta.env.VITE_BACKEND_URL}/doc-requests`,
+        { credentials: "include" }
       );
       if (!response.ok) {
         throw new Error(
@@ -81,6 +84,8 @@ const RequestedTranscript = () => {
         }/delete-request/${deleteConfirmationId}`,
         {
           method: "DELETE",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },
@@ -106,6 +111,8 @@ const RequestedTranscript = () => {
         `${import.meta.env.VITE_BACKEND_URL}/update-status/${id}`,
         {
           method: "PUT",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },

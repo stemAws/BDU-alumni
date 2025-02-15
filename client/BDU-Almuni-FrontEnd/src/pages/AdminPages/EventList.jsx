@@ -29,7 +29,8 @@ const EventList = () => {
   const fetchData = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/adminEvents`
+        `${import.meta.env.VITE_BACKEND_URL}/adminEvents`,
+        { credentials: "include" }
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch events. Status: ${response.status}`);
@@ -75,6 +76,8 @@ const EventList = () => {
         }/adminEvents/${deleteConfirmationEventId}`,
         {
           method: "DELETE",
+          credentials: "include",
+
           headers: {
             "Content-Type": "application/json",
           },

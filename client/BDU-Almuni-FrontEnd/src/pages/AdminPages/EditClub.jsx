@@ -20,7 +20,8 @@ const EditClub = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/get-chapter/${chapterId}`
+          `${import.meta.env.VITE_BACKEND_URL}/get-chapter/${chapterId}`,
+          { credentials: "include" }
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -79,6 +80,8 @@ const EditClub = () => {
           `${import.meta.env.VITE_BACKEND_URL}/edit-chapter/${chapterId}`,
           {
             method: "PUT",
+            credentials: "include",
+
             headers: {
               "Content-Type": "application/json",
             },

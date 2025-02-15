@@ -13,7 +13,6 @@ const EditGallery = () => {
   const [yearError, setYearError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
 
-
   const handleClick = () => {
     navigate("/gallery");
   };
@@ -27,7 +26,8 @@ const EditGallery = () => {
     const fetchGalleryData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/gallery/${galleryID}`
+          `${import.meta.env.VITE_BACKEND_URL}/gallery/${galleryID}`,
+          { credentials: "include" }
         );
         const galleryData = await response.json();
 
@@ -84,7 +84,9 @@ const EditGallery = () => {
       setYearError("");
     }
     if (!formData.description) {
-      setDescriptionError(formData.description ? "" : "Description field cannot be empty!");
+      setDescriptionError(
+        formData.description ? "" : "Description field cannot be empty!"
+      );
       valid = false;
     }
     if (valid) {
@@ -93,6 +95,8 @@ const EditGallery = () => {
           `${import.meta.env.VITE_BACKEND_URL}/gallery/${galleryID}`,
           {
             method: "PUT",
+            credentials: "include",
+
             headers: {
               "Content-Type": "application/json",
             },
@@ -157,7 +161,9 @@ const EditGallery = () => {
               value={formData.description}
               onChange={handleInputChange}
             />
-            {descriptionError && <p className="errorMessage">{descriptionError}</p>}
+            {descriptionError && (
+              <p className="errorMessage">{descriptionError}</p>
+            )}
           </div>
           <button type="submit">Save Change</button>
         </form>
