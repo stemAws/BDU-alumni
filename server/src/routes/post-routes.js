@@ -7,7 +7,7 @@ const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 const { verifyToken, authRoles } = require("../middleware/auth-middleware");
-const { admin, alumni, all } = require("../utils/roles");
+const { alumni } = require("../utils/roles");
 
 router.post(
   "/posts",
