@@ -3,7 +3,6 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 import Button from "./Button";
-
 const AdminSignin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -33,6 +32,7 @@ const AdminSignin = () => {
 
       if (response.ok && data.success) {
         console.log("User signed in successfully");
+        window.location.href = "/admin/home";
       } else {
         setErrorPopup(true);
       }
@@ -48,7 +48,6 @@ const AdminSignin = () => {
     <div className="signin_overlay">
       <div id="Admin-pop_container" className="Admin-pop_container">
         <div className="Admin-sign_Container signin_container">
-          {/* <div onClick={()=>setsignin(false)} className='Admin-icon'><FaTimes/></div> */}
           <form className="Admin-sign_in">
             <h1>LOGIN</h1>
             {errorPopup ? (
