@@ -91,7 +91,11 @@ exports.signIn = async (req, res) => {
 
     return res
       .status(200)
-      .json({ success: true, message: "User logged in successfully" });
+      .json({
+        success: true,
+        message: "User logged in successfully",
+        userId: user[0].personId,
+      });
   } catch (err) {
     console.error("Error logging in user:", err);
     return res
@@ -589,20 +593,26 @@ exports.updateCustomSetting = async function (req, res) {
 
 exports.searchAlumni = async function (req, res) {
   try {
-    let { searchBy, searchByValue } = req.body;
-    if (
-      searchBy === "name" ||
-      searchBy === "department" ||
-      searchBy === "degree" ||
-      searchBy === "industry" ||
-      searchBy === "location"
-    ) {
+    let { name, searchBy, searchByValue } = req.body;
+
+    // Ensure name is always provided
+    if (!name) {
+      return res.status(400).json({ error: "Name is required" });
+    }
+
+    // Add wildcard for partial matching
+    name = `%${name}%`;
+    if (searchBy && searchByValue) {
       searchByValue = `%${searchByValue}%`;
     }
+
+    // Call service function with the provided values
     const alumni = await alumniService.getAlumniDirectory(
+      name,
       searchBy,
       searchByValue
     );
+
     res.json(alumni);
   } catch (error) {
     console.error("Error fetching alumni:", error);
