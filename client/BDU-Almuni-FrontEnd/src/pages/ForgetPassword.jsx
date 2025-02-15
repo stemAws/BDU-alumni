@@ -3,6 +3,7 @@ import Button from '../component/Button'
 import { FaCheck } from 'react-icons/fa';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../styles/forgetPassword.css'
 const ForgetPassword = () => {
     const [loading, setloading] = useState(false);
     const [email, setemail] = useState('');

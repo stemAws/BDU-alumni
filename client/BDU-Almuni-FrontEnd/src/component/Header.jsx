@@ -14,12 +14,12 @@ const Header = ({logout}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [imageUrl, setimageUrl] = useState()
+  const cookies = document.cookie;
+        const match = cookies.match(/id=([^;]*)/);
+        const token = match ? match[1] : null;
   useEffect(()=>{
     const fetchProfilePictureUrl = async () => {
       try {
-        const cookies = document.cookie;
-        const match = cookies.match(/id=([^;]*)/);
-        const token = match ? match[1] : null;
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getProfilePicture/${token}`,{
           credentials: 'include',
         });
@@ -36,9 +36,7 @@ const Header = ({logout}) => {
     };
     const fetchUserDetails = async () => {
       try {
-        const cookies = document.cookie;
-        const match = cookies.match(/id=([^;]*)/);
-        const token = match ? match[1] : null;
+        
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alumni/${token}`, {
           method: 'GET',
           credentials: 'include',
@@ -69,7 +67,7 @@ const Header = ({logout}) => {
   return (
     <div>
       {/* <div className="overlay"> */}
-        <NavBar 
+      {location.pathname !== `/activateAccount/${token}` && <NavBar 
         logout={logout}
         loginState={loginState} 
         userDetails={userDetails}
@@ -77,7 +75,7 @@ const Header = ({logout}) => {
         error={error}
         imgUrl={imageUrl}
         />
-
+}
         {location.pathname === '/' && (
       <div className='header-container'>
         <div className="overlay"/><img className='background-img'src={background} alt="" />

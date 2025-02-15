@@ -336,7 +336,7 @@ color: #e0e0e0;
 .personal_info{
     box-sizing: border-box;
     display: flex;
-    background-color:#f0f0f0;
+    background-color:#fafafa;
     color: #000000;
     flex-direction: column;
     height:fit-content ;
@@ -435,7 +435,7 @@ position: fixed;
 width: 100%;
 padding: 10px 10px 10px 22%;
 height: 45px;
-background-color: #e7e7e7;
+background-color: #fafafa;
 z-index: 2;
 transition: transform 0.5s ease ;
 transform: translateY(-70%)
