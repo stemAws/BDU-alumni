@@ -28,7 +28,11 @@ const AdmissionAnalytics = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/grad-year`
+        `${import.meta.env.VITE_BACKEND_URL}/grad-year`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       const result = await response.json();
 
@@ -52,7 +56,11 @@ const AdmissionAnalytics = () => {
       const response = await fetch(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/admission-count?graduatingYear=${year}`
+        }/admission-count?graduatingYear=${year}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       const data = await response.json();
       const admissionData = transformDegreeCountToPiedata(data);

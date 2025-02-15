@@ -31,7 +31,11 @@ const MajorAnalytics = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/grad-year`
+        `${import.meta.env.VITE_BACKEND_URL}/grad-year`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       const result = await response.json();
 
@@ -57,7 +61,11 @@ const MajorAnalytics = () => {
       const response = await fetch(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/majors-count?graduatingYear=${year}`
+        }/majors-count?graduatingYear=${year}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       const data = await response.json();
 

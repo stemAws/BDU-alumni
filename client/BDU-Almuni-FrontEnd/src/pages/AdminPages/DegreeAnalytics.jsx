@@ -28,7 +28,11 @@ const DegreeAnalytics = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/grad-year`
+        `${import.meta.env.VITE_BACKEND_URL}/grad-year`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       const result = await response.json();
 
@@ -62,7 +66,11 @@ const DegreeAnalytics = () => {
       const response = await fetch(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/degree-count?graduatingYear=${year}`
+        }/degree-count?graduatingYear=${year}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

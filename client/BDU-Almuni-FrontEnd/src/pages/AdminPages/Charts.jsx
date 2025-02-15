@@ -14,6 +14,8 @@ import AdmissionAnalytics from "../AdminPages/AdmissionAnalytics";
 import MajorAnalaytics from "../AdminPages/MajorAnalaytics";
 import { SigninContext } from "../../pages/MainPage";
 export default function Chart() {
+  console.log("Charts component rendered");
+
   // State variables
 
   const [jobCount, setJobCount] = useState([]);
@@ -23,11 +25,17 @@ export default function Chart() {
   const formatName = (name) => name.split(" ").join("\n");
 
   useEffect(() => {
+    console.log("Fetching job count data...");
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/job-count`
+          `${import.meta.env.VITE_BACKEND_URL}/job-count`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
         );
+
         const data = await response.json();
 
         const transformedData = data.map(({ jobTitle, count }) => ({
@@ -50,7 +58,11 @@ export default function Chart() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/industry-count`
+          `${import.meta.env.VITE_BACKEND_URL}/industry-count`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
         );
         const data = await response.json();
         const transformedData = data.map(({ industry, count }) => ({
@@ -71,7 +83,11 @@ export default function Chart() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/company-count`
+          `${import.meta.env.VITE_BACKEND_URL}/company-count`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
         );
         const data = await response.json();
 
@@ -136,18 +152,20 @@ export default function Chart() {
         {loading && <p>Loading...</p>}
       </div> */}
 
-      {loginState&&<div className="chart2">
-        <h3 className="chartTitle">
-          {" "}
-          BDU Alumni based on geographical location
-        </h3>
+      {loginState && (
+        <div className="chart2">
+          <h3 className="chartTitle">
+            {" "}
+            BDU Alumni based on geographical location
+          </h3>
 
-        <iframe
-          className="geo_chart"
-          title="Geographical Representation"
-          src={"https://geo-marked-users.netlify.app"}
-        ></iframe>
-      </div>}
+          <iframe
+            className="geo_chart"
+            title="Geographical Representation"
+            src={"https://geo-marked-users.netlify.app"}
+          ></iframe>
+        </div>
+      )}
 
       <MajorAnalaytics />
       <AdmissionAnalytics />
