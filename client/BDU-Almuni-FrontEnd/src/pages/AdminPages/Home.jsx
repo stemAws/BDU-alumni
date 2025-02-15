@@ -1,15 +1,15 @@
-import React from 'react'
-
-import'../../styles/home.css'
+import "../../styles/home.css";
 // import Users from './Users'
-import Charts from './Charts'
+import Charts from "./Charts";
 const home = () => {
+  console.log("Home component rendered");
+
   return (
-    <div className='home'>
-      <Charts/>
+    <div className="home">
+      <Charts />
       {/* <Users/> */}
     </div>
-  )
-}
+  );
+};
 
-export default home
+export default home;
