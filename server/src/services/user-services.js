@@ -557,36 +557,40 @@ exports.updateCustom = async (alumniId, privacyData) => {
   }
 };
 
-exports.getAlumniDirectory = async (searchBy, searchByValue) => {
+exports.getAlumniDirectory = async (name, searchBy, searchByValue) => {
   try {
-    let q = `SELECT fullName, username FROM `;
+    let q = `SELECT fullName, username FROM Person p JOIN Alumni a ON p.personId = a.personId `;
 
-    if (
-      searchBy === "department" ||
-      searchBy === "degree" ||
-      searchBy === "graduatingYear"
-    ) {
-      q += `Education ed JOIN Alumni a JOIN Person p ON ed.alumniId = a.alumniId AND a.personId = p.personId `;
-      q += `WHERE `;
-      if (searchBy === "department") {
-        q += ` LOWER(ed.major) LIKE LOWER(?)`;
-      } else if (searchBy === "degree") {
-        q += ` LOWER(ed.degree) LIKE LOWER(?)`;
-      } else if (searchBy === "graduatingYear") {
-        q += ` ed.graduatingYear = ?`;
+    let conditions = [`LOWER(p.fullName) LIKE LOWER(?)`]; // Always search by name
+    let params = [name];
+
+    if (searchBy && searchByValue) {
+      if (
+        searchBy === "department" ||
+        searchBy === "degree" ||
+        searchBy === "graduatingYear"
+      ) {
+        q += `JOIN Education ed ON ed.alumniId = a.alumniId `;
+
+        if (searchBy === "department") {
+          conditions.push(`LOWER(ed.major) LIKE LOWER(?)`);
+        } else if (searchBy === "degree") {
+          conditions.push(`LOWER(ed.degree) LIKE LOWER(?)`);
+        } else if (searchBy === "graduatingYear") {
+          conditions.push(`ed.graduatingYear = ?`);
+        }
+      } else if (searchBy === "industry") {
+        q += `JOIN Experience ex ON ex.alumniId = a.alumniId `;
+        conditions.push(`LOWER(ex.industry) LIKE LOWER(?)`);
+      } else if (searchBy === "location") {
+        conditions.push(`LOWER(a.currentLocation) LIKE LOWER(?)`);
       }
-    } else if (searchBy === "name") {
-      q += `Person p JOIN Alumni a ON p.personId = a.personId `;
-      q += `WHERE LOWER(p.fullName) LIKE LOWER(?) `;
-    } else if (searchBy === "industry") {
-      q += `Experience ex JOIN Alumni a JOIN Person p ON ex.alumniId = a.alumniId AND a.personId = p.personId `;
-      q += `WHERE LOWER(ex.industry) LIKE LOWER(?) `;
-    } else if (searchBy === "location") {
-      q += `Alumni a JOIN Person p ON a.personId = p.personId `;
-      q += `WHERE LOWER(a.currentLocation) LIKE LOWER(?)`;
+      params.push(searchByValue);
     }
 
-    const queryResult = await db.query(q, [searchByValue]);
+    q += ` WHERE ` + conditions.join(" AND ");
+
+    const queryResult = await db.query(q, params);
 
     return queryResult[0];
   } catch (error) {
