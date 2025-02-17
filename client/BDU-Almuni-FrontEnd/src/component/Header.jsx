@@ -77,15 +77,16 @@ const Header = ({ logout }) => {
   return (
     <div>
       {/* <div className="overlay"> */}
-      <NavBar
-        logout={logout}
-        loginState={loginState}
-        userDetails={userDetails}
-        loading={loading}
-        error={error}
-        imgUrl={imageUrl}
-      />
-
+      {location.pathname !== `/activateAccount/${userId}` && (
+        <NavBar
+          logout={logout}
+          loginState={loginState}
+          userDetails={userDetails}
+          loading={loading}
+          error={error}
+          imgUrl={imageUrl}
+        />
+      )}
       {location.pathname === "/" && (
         <div className="header-container">
           <div className="overlay" />

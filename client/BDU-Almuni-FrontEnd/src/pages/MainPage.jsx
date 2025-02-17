@@ -26,6 +26,7 @@ import StoriesDetail from "./StoriesDetail";
 import Explore from "./Explore";
 import Donations from "./Donations";
 import useAuth from "../component/useAuth";
+import ActivateAccount from "./ActivateAccount";
 
 export const SigninContext = createContext();
 
@@ -99,6 +100,7 @@ const MainPage = () => {
           <Route path="/donations" element={<Donations />} />
           <Route path="/search/:name" element={<SearchAndFilter />} />
           <Route path="/stories/:id" element={<StoriesDetail />} />
+          <Route path="/activateAccount/:id" element={<ActivateAccount />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </SigninContext.Provider>

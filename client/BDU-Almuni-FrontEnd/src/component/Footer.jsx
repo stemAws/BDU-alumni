@@ -81,51 +81,58 @@ const Footer = () => {
     }
       // setemailSuccess(true)
   }
+  const cookies = document.cookie;
+        const match = cookies.match(/id=([^;]*)/);
+        const token = match ? match[1] : null;
   return (
-    <footer className='footer___container'>
-      <div className="footer___top">
-        <h2>Join our newsletter to <br /> keep up to date with us!</h2>
-        <form onSubmit={handleEmailSent} >
-          <div className="subscribe">
-            <Person2OutlinedIcon />
-            <input 
-              onChange={(e)=>setemailInput(e.target.value)}  
-              value={emailInput}
-              type="email"
-              required
-              placeholder='Enter your email' />
-          </div>
-         <input className='submit-btn' type="submit" value="Subscribe" />
-        </form>
-        {emailSuccess&&
-          <Confirmation close={()=>{setemailSuccess(false)}} text={'Thanks For Registering We Will Keep In Touch'} />
-        }
-      </div>
-      <hr />
-      <div className="footer___middle">
-        <div className="middle___left">
-          <img src={logo} alt="BDU Logo" />
-          <h3 className='webname'>BDU Alumni Website</h3>
-          <p>We are connecting Bahir Dar University Graduates</p>
-        </div>
-        <div className="middle___right">
-          {sections.map((section, index) => (
-            <FooterSection  key={index} title={section.title} links={section.links} />
-          ))}
-        </div>
-      </div>
-      <hr />
-      <div className="footer___bottom">
-        <div className="bottom___left">
-          <p>&copy; {new Date().getFullYear()} Bahir Dar University</p>
-        </div>
-        <div className="bottom___right">
-          <a href="#">Terms of Service</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Cookies</a>
-        </div>
-      </div>
-    </footer>
+    <>
+      {location.pathname!==`/activateAccount/${token}`&&
+        <footer className='footer___container'>
+            <div className="footer___top">
+              <h2>Join our newsletter to <br /> keep up to date with us!</h2>
+              <form onSubmit={handleEmailSent} >
+                <div className="subscribe">
+                  <Person2OutlinedIcon />
+                  <input 
+                    onChange={(e)=>setemailInput(e.target.value)}  
+                    value={emailInput}
+                    type="email"
+                    required
+                    placeholder='Enter your email' />
+                </div>
+              <input className='submit-btn' type="submit" value="Subscribe" />
+              </form>
+              {emailSuccess&&
+                <Confirmation close={()=>{setemailSuccess(false)}} text={'Thanks For Registering We Will Keep In Touch'} />
+              }
+            </div>
+            <hr />
+            <div className="footer___middle">
+              <div className="middle___left">
+                <img src={logo} alt="BDU Logo" />
+                <h3 className='webname'>BDU Alumni Website</h3>
+                <p>We are connecting Bahir Dar University Graduates</p>
+              </div>
+              <div className="middle___right">
+                {sections.map((section, index) => (
+                  <FooterSection  key={index} title={section.title} links={section.links} />
+                ))}
+              </div>
+            </div>
+            <hr />
+            <div className="footer___bottom">
+              <div className="bottom___left">
+                <p>&copy; {new Date().getFullYear()} Bahir Dar University</p>
+              </div>
+              <div className="bottom___right">
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookies</a>
+              </div>
+            </div>
+          </footer>}
+    </>
+    
   )
 }
 

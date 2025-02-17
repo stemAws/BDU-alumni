@@ -15,6 +15,7 @@ const Signin = () => {
   const [visible, setVisible] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [loading, setloading] = useState(false);
+  const [message, setMessage] = useState()
   const handleSignIn = (e) => {
     e.preventDefault();
     setloading(true);
@@ -34,6 +35,9 @@ const Signin = () => {
         if (data.success) {
           // AuthService.login(data.token,data.realToken);
           setsignin(false);
+          if (data.message==='Account is not activated.') {
+            return navigate(`/activateAccount${data.userId}`)
+          }
           window.location.reload();
           if (data.firstTime) {
             setStep("changePassword");
