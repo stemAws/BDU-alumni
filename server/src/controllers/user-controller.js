@@ -126,7 +126,9 @@ exports.checkAuth = async (req, res) => {
       }
 
       // Return successful authentication with role information
-      res.status(200).json({ success: true, role: decoded.role });
+      res
+        .status(200)
+        .json({ success: true, role: decoded.role, id: decoded.id });
     });
   } catch (err) {
     console.error("Error verifying authentication:", err);
@@ -203,17 +205,17 @@ exports.checkUser = async (req, res) => {
 };
 exports.activateAccount = async (req, res) => {
   try {
-    const { newUsername, newPassword } = req.body;
+    const { newPassword } = req.body;
     const { userId } = req.params;
 
-    const userExists = await alumniService.isUserExists(newUsername);
-    if (userExists) {
-      return res.status(400).json({ message: "Username already exist" });
-    }
+    // const userExists = await alumniService.isUserExists(newUsername);
+    // if (userExists) {
+    //   return res.status(400).json({ message: "Username already exist" });
+    // }
 
     const activate = await alumniService.activateUser(
       userId,
-      newUsername,
+      // newUsername,
       newPassword
     );
 
@@ -386,9 +388,10 @@ exports.uploadCoverPicture = async function (req, res) {
 
 exports.getProfilePicture = async function (req, res) {
   try {
-    const alumni = await alumniService.getAlumniProfile(
-      req.params.idOrUsername
-    );
+    console.log("id from controller", req.params.userId);
+    const alumni = await alumniService.getAlumniProfile(req.params.userId);
+
+    console.log("profile picture from controller: ", alumni);
 
     const profilePhotoPath = alumni[0].profilePicture;
 

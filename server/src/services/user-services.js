@@ -48,13 +48,13 @@ exports.isUserActive = async (username) => {
   }
 };
 
-exports.activateUser = async (userId, username, password) => {
+exports.activateUser = async (userId, password) => {
   try {
     const hashedPassword = await hashPassword(password);
 
     const [rows] = await db.query(
-      "UPDATE person SET status = ?, username = ?, password = ? WHERE personId = ?",
-      ["Active", username, hashedPassword, userId]
+      "UPDATE person SET status = ?, password = ? WHERE personId = ?",
+      ["Active", hashedPassword, userId]
     );
 
     return rows.length > 0;
