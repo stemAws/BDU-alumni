@@ -25,14 +25,15 @@ import AboutDevs from "./AboutDevs";
 import StoriesDetail from "./StoriesDetail";
 import Explore from "./Explore";
 import Donations from "./Donations";
+import useAuth from "../component/useAuth";
 
 export const SigninContext = createContext();
 
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
   const [loginState, setloginState] = useState(false);
-  const { isAuthenticated, role } = AuthService.useAuth(); // Use the method from AuthService
-  console.log("isAuth: ", isAuthenticated, "role: ", role);
+  const { isAuthenticated, role, userId } = useAuth(); // Use the method from AuthService
+
   // Check authentication and role
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -49,7 +50,7 @@ const MainPage = () => {
     };
 
     checkLoginStatus(); // Run on mount
-  }, [isAuthenticated, role]);
+  }, [isAuthenticated, role, userId]);
 
   // Handle logout
   const handleLogout = () => {
