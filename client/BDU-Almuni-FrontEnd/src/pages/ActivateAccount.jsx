@@ -8,7 +8,6 @@ import { FaFingerprint} from 'react-icons/fa';
 
 const ActivateAccount = () => {
 const [notauth, setnotauth] = useState(false)
-// const { isSigninOpen, setSigninOpen } = useContext(SigninContext);
   const [values, setValues] = useState({
   });
   const navigate = useNavigate()
@@ -35,10 +34,6 @@ const [notauth, setnotauth] = useState(false)
           required:true
         },
   ]
-//   const closeSignin =() =>{ 
-//     setSigninOpen(false);
-//     window.location.reload()
-// };
   const handleSubmit = async (e) => {
       e.preventDefault();
     
@@ -101,7 +96,6 @@ const [notauth, setnotauth] = useState(false)
             text={loading?'Changing...':'Change'}/></div>
             </form>
             </div>   
-            {/* {notauth&&<SigninWrapper setSigninOpen={setSigninOpen} isSigninOpen={isSigninOpen} closeSignin={closeSignin} />} */}
         </div>
   )
 }
