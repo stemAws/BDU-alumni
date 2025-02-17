@@ -3,43 +3,53 @@ const router = express.Router();
 const jobController = require("../controllers/job-controller");
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
-const { verifyToken, authRoles } = require("../middleware/auth-middleware");
+const {
+  verifyToken,
+  authRoles,
+  verifyRefreshToken,
+} = require("../middleware/auth-middleware");
 const { admin, all, alumni } = require("../utils/roles");
 
 router.post(
   "/add-job",
   upload.single("image"),
   verifyToken,
+  verifyRefreshToken,
   authRoles(all),
   jobController.createJob
 );
 router.get(
   "/job-list",
   verifyToken,
+  verifyRefreshToken,
   authRoles(admin),
   jobController.getAdminJobs
 );
 router.get(
   "/job/:jobId",
   verifyToken,
+  verifyRefreshToken,
   authRoles(all),
   jobController.getJobById
 );
 router.put(
   "/update-job/:jobId",
   verifyToken,
+  verifyRefreshToken,
   authRoles(all),
   jobController.updateJobById
 );
 router.delete(
   "/delete-job/:jobId",
   verifyToken,
+  verifyRefreshToken,
   authRoles(all),
   jobController.deleteJobById
 );
 router.get(
   "/all-jobs",
   verifyToken,
+  verifyRefreshToken,
   authRoles(admin),
   jobController.getAllJobData
 );

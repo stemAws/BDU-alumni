@@ -8,7 +8,7 @@ const {
   refreshToken,
   verifyRefreshToken,
 } = require("../middleware/auth-middleware");
-const { alumni } = require("../utils/roles");
+const { alumni, sysAdmin } = require("../utils/roles");
 
 const storageEngine = multer.memoryStorage();
 const upload = multer({ storage: storageEngine });
@@ -21,7 +21,13 @@ router.get("/check-auth", UserController.checkAuth);
 router.post("/logout", UserController.logout);
 router.post("/refresh-token", refreshToken);
 
-router.post("/addUser", UserController.addUser);
+router.post(
+  "/addUser",
+  verifyToken,
+  verifyRefreshToken,
+  authRoles(sysAdmin),
+  UserController.addUser
+);
 router.get(
   "/alumni/:id",
   verifyToken,
@@ -106,7 +112,13 @@ router.put(
   UserController.changePassword
 );
 router.get("/notable", UserController.getNotableAlumni);
-router.put("/notable/:alumniId", UserController.updateNotable);
+router.put(
+  "/notable/:alumniId",
+  verifyRefreshToken,
+  verifyToken,
+  authRoles(sysAdmin),
+  UserController.updateNotable
+);
 router.post("/reset-password", UserController.resetPassword);
 router.post(
   "/confirm-password-change",
