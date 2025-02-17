@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import AuthService from "../services/AuthService"; // Import AuthService for refreshing tokens
+import AuthService from "./AuthService"; // Import AuthService for refreshing tokens
 
 const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -9,7 +9,7 @@ const useAuth = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch(
+        let response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/check-auth`,
           {
             method: "GET",
@@ -17,7 +17,7 @@ const useAuth = () => {
           }
         );
 
-        const data = await response.json();
+        let data = await response.json();
 
         if (response.ok && data.success) {
           setIsAuthenticated(true);
@@ -25,7 +25,34 @@ const useAuth = () => {
           setUserId(data.id || null);
         } else {
           // Try refreshing the token if expired
-          await AuthService.refreshAccessToken();
+          const refreshed = await AuthService.refreshAccessToken();
+
+          if (refreshed) {
+            // Recheck authentication after refreshing the token
+            response = await fetch(
+              `${import.meta.env.VITE_BACKEND_URL}/check-auth`,
+              {
+                method: "GET",
+                credentials: "include",
+              }
+            );
+
+            data = await response.json();
+
+            if (response.ok && data.success && data.id) {
+              setIsAuthenticated(true);
+              setRole(data.role || null);
+              setUserId(data.id); // Only set if `data.id` is not null
+            } else {
+              setIsAuthenticated(false);
+              setRole(null);
+              setUserId(null);
+            }
+          } else {
+            setIsAuthenticated(false);
+            setRole(null);
+            setUserId(null);
+          }
         }
       } catch (error) {
         console.error("Error during authentication check:", error);
@@ -34,6 +61,7 @@ const useAuth = () => {
         setUserId(null);
       }
     };
+
     checkAuth();
   }, []);
 
