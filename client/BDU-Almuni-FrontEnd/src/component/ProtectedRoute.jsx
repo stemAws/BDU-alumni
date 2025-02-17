@@ -1,8 +1,7 @@
 import { Navigate } from "react-router-dom";
-import AuthService from "./AuthService";
-
+import useAuth from "./useAuth";
 const ProtectedRoute = ({ allowedRoles, children }) => {
-  const { role } = AuthService.useAuth();
+  const { role } = useAuth();
 
   if (!role) {
     // Redirect to login if not authenticated

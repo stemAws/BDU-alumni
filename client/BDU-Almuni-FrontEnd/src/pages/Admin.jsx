@@ -29,9 +29,10 @@ import EditEvent from "./AdminPages/EditEvent";
 import EditClub from "./AdminPages/EditClub";
 import AGallery from "./AdminPages/AGallery";
 import RequestedTranscript from "./AdminPages/TranscriptList";
+import useAuth from "../component/useAuth";
 
 const Admin = () => {
-  const { isAuthenticated, role } = AuthService.useAuth(); // Use the method from AuthService
+  const { isAuthenticated, role } = useAuth(); // Use the method from AuthService
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(null); // Start with null
 
   useEffect(() => {

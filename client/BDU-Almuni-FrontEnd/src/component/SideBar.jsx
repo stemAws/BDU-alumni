@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 // import Button from '../components/Button'
 // import icon  from "../assets/icon.jpg";
 import { useState } from "react";
-import AuthService from "./AuthService";
+import useAuth from "./useAuth";
 
 const SideBar = () => {
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+  const { role } = useAuth(); // Use the method from AuthService
 
   //  const handleClick = () => {
   //    window.open('/', '_blank');
@@ -29,8 +30,6 @@ const SideBar = () => {
   const stopPropagation = (e) => {
     e.stopPropagation();
   };
-
-  const { role } = AuthService.useAuth(); // Use the method from AuthService
 
   return (
     <div className="sidebar-container">
