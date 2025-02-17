@@ -1,71 +1,59 @@
 import { useState, useEffect } from "react";
-import AuthService from "./AuthService"; // Import AuthService for refreshing tokens
+import AuthService from "./AuthService"; // For refreshing tokens
 
+// Function to fetch and store authentication data
+export const fetchAndStoreAuthData = async () => {
+  try {
+    let response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/check-auth`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+
+    let data = await response.json();
+
+    if (response.ok && data.success && data.id) {
+      const authData = {
+        isAuthenticated: true,
+        role: data.role || null,
+        userId: data.id,
+      };
+      localStorage.setItem("authData", JSON.stringify(authData));
+      return authData;
+    } else {
+      // Try refreshing the token if expired
+      const refreshed = await AuthService.refreshAccessToken();
+      if (refreshed) {
+        return await fetchAndStoreAuthData(); // Retry authentication after refresh
+      }
+      localStorage.removeItem("authData"); // Clear auth data if unsuccessful
+      return { isAuthenticated: false, role: null, userId: null };
+    }
+  } catch (error) {
+    console.error("Error during authentication check:", error);
+    localStorage.removeItem("authData");
+    return { isAuthenticated: false, role: null, userId: null };
+  }
+};
+
+// Hook to read authentication data from localStorage
 const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [role, setRole] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [authState, setAuthState] = useState({
+    isAuthenticated: false,
+    role: null,
+    userId: null,
+  });
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        let response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/check-auth`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-
-        let data = await response.json();
-
-        if (response.ok && data.success) {
-          setIsAuthenticated(true);
-          setRole(data.role || null);
-          setUserId(data.id || null);
-        } else {
-          // Try refreshing the token if expired
-          const refreshed = await AuthService.refreshAccessToken();
-
-          if (refreshed) {
-            // Recheck authentication after refreshing the token
-            response = await fetch(
-              `${import.meta.env.VITE_BACKEND_URL}/check-auth`,
-              {
-                method: "GET",
-                credentials: "include",
-              }
-            );
-
-            data = await response.json();
-
-            if (response.ok && data.success && data.id) {
-              setIsAuthenticated(true);
-              setRole(data.role || null);
-              setUserId(data.id); // Only set if `data.id` is not null
-            } else {
-              setIsAuthenticated(false);
-              setRole(null);
-              setUserId(null);
-            }
-          } else {
-            setIsAuthenticated(false);
-            setRole(null);
-            setUserId(null);
-          }
-        }
-      } catch (error) {
-        console.error("Error during authentication check:", error);
-        setIsAuthenticated(false);
-        setRole(null);
-        setUserId(null);
-      }
-    };
-
-    checkAuth();
+    const storedAuthData = localStorage.getItem("authData");
+    if (storedAuthData) {
+      setAuthState(JSON.parse(storedAuthData));
+    }
   }, []);
 
-  return { isAuthenticated, role, userId };
+  return authState; // Returns { isAuthenticated, role, userId }
 };
 
 export default useAuth;
