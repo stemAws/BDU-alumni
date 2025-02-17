@@ -12,16 +12,16 @@
 
 @keyframes slide-background {
   0% {
-    background-image: url("C:\Users\me\Desktop\BDU-alumni-main_5\BDU-alumni-main\client\BDU-Almuni-FrontEnd\src\assets\images\photo_2024-02-25_23-38-22.jpg");
+    background-image: url("C:\\Users\\Netsanet\\Desktop\\AWS\\BDU-alumni\\client\\BDU-Almuni-FrontEnd\\src\\assets\\images\\photo_2024-02-25_23-38-22.jpg");
   }
   33% {
-    background-image: url("C:\Users\me\Desktop\BDU-alumni-main_5\BDU-alumni-main\client\BDU-Almuni-FrontEnd\src\assets\images\photo_2024-02-27_14-20-52.jpg");
+    background-image: url("C:\\Users\\Netsanet\\Desktop\\AWS\\BDU-alumni\\client\\BDU-Almuni-FrontEnd\\src\\assets\\images\\photo_2024-02-27_14-20-52.jpg");
   }
   66% {
-    background-image: url("C:\Users\me\Desktop\BDU-alumni-main_5\BDU-alumni-main\client\BDU-Almuni-FrontEnd\src\assets\images\photo_2024-02-25_15-58-46 copy.jpg");
+    background-image: url("C:\\Users\\Netsanet\\Desktop\\AWS\\BDU-alumni\\client\\BDU-Almuni-FrontEnd\\src\\assets\\images\\photo_2024-02-27_14-20-33.jpg");
   }
   100% {
-    background-image: url("C:\Users\me\Desktop\BDU-alumni-main_5\BDU-alumni-main\client\BDU-Almuni-FrontEnd\src\assets\images\photo_2024-02-25_23-41-53.jpg");
+    background-image: url("C:\\\Users\\Netsanet\\Desktop\\AWS\\BDU-alumni\\client\\BDU-Almuni-FrontEnd\\src\\assets\\images\\photo_2024-02-25_23-41-53.jpg");
   }
 }
 
