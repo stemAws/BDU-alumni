@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
+import useAuth from "./useAuth";
+import { fetchAndStoreAuthData } from "./useAuth";
 import FormInput from "./FormInput";
 import Button from "./Button";
 const AdminSignin = () => {
@@ -32,8 +34,15 @@ const AdminSignin = () => {
 
       if (response.ok && data.success) {
         console.log("User signed in successfully");
-        window.location.href = "/admin/home";
+
+        // Fetch and store authentication data
+        const authData = await fetchAndStoreAuthData();
+
+        if (authData.isAuthenticated) {
+          window.location.href = "/admin/home";
+        }
       } else {
+        console.error("Login Failed:", data.message);
         setErrorPopup(true);
       }
     } catch (error) {
