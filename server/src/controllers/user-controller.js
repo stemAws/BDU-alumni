@@ -27,58 +27,62 @@ exports.signIn = async (req, res) => {
     // Check if user exists
     const userExists = await alumniService.isUserExists(username);
     if (!userExists) {
-      return res.status(400).json({ message: "User doesn't exist" });
+      return res
+        .status(400)
+        .json({ ok: false, success: false, message: "User doesn't exist" });
     }
 
     // Check if the account is active
     const userActive = await alumniService.isUserActive(username);
     if (!userActive) {
-      const Inactive = await alumniService.getUser(username);
+      const inactiveUser = await alumniService.getUser(username);
 
       return res.status(400).json({
+        ok: false,
+        success: false,
         message: "Account is not activated.",
-        userId: Inactive[0].personId,
+        userId: inactiveUser[0].personId,
       });
     }
 
     // Get the user's details
     const user = await alumniService.getUser(username);
-    if (!user || user.length === 0) {
-      return res.status(400).json({ message: "User not found" });
-    }
 
     const userData = user[0];
 
     // Verify the hashed password
     const isPasswordValid = await bcrypt.compare(password, userData.password);
     if (!isPasswordValid) {
-      return res.status(400).json({ message: "Invalid username or password" });
+      return res.status(400).json({
+        ok: false,
+        success: false,
+        message: "Invalid password",
+      });
     }
 
     // Determine user role
     const adminDetails =
-      userData.isAdmin == 1 &&
+      userData.isAdmin === 1 &&
       (await adminService.fetchAdminDetailsByPersonId(userData.personId));
-    const alumniDetails =
-      userData.isAdmin == 0 &&
-      (await alumniService.fetchAlumniDetailsByPersonId(userData.personId));
 
     const role = userData.isAdmin ? adminDetails.role : "alumni";
-    const id = role == "alumni" ? alumniDetails.alumniId : adminDetails.adminId;
+    const id = userData.personId;
 
     // Generate access and refresh tokens
-    const accessToken = jwt.sign({ id, role }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_ACCESS_EXPIRES, // Short-lived access token
-    });
-
+    const accessToken = jwt.sign(
+      { id: String(id), role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: process.env.JWT_ACCESS_EXPIRES, // Short-lived access token
+      }
+    );
     const refreshToken = jwt.sign(
-      { id, role },
+      { id: String(id), role },
       process.env.JWT_REFRESH_SECRET,
       {
         expiresIn: process.env.JWT_REFRESH_EXPIRES, // Longer-lived refresh token
       }
     );
-
     // Set tokens in cookies
     res.cookie("token", accessToken, {
       httpOnly: true,
@@ -95,15 +99,19 @@ exports.signIn = async (req, res) => {
     });
 
     return res.status(200).json({
+      ok: true,
       success: true,
       message: "User logged in successfully",
       userId: user[0].personId,
     });
   } catch (err) {
     console.error("Error logging in user:", err);
-    return res
-      .status(500)
-      .json({ message: "Internal server error", error: err.message });
+    return res.status(500).json({
+      ok: false,
+      success: false,
+      message: "Internal server error",
+      error: err.message,
+    });
   }
 };
 
@@ -116,7 +124,6 @@ exports.checkAuth = async (req, res) => {
         .status(401)
         .json({ success: false, message: "No token provided" });
     }
-
     // Verify the token (e.g., using jwt.verify)
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
@@ -124,7 +131,6 @@ exports.checkAuth = async (req, res) => {
           .status(401)
           .json({ success: false, message: "Invalid token" });
       }
-
       // Return successful authentication with role information
       res
         .status(200)

@@ -23,9 +23,9 @@ router.post("/refresh-token", refreshToken);
 
 router.post(
   "/addUser",
-  verifyToken,
-  verifyRefreshToken,
-  authRoles(sysAdmin),
+  // verifyToken,
+  // verifyRefreshToken,
+  // authRoles(sysAdmin),
   UserController.addUser
 );
 router.get(

@@ -12,12 +12,14 @@ import {
 import DegreeAnalytics from "../AdminPages/DegreeAnalytics";
 import AdmissionAnalytics from "../AdminPages/AdmissionAnalytics";
 import MajorAnalaytics from "../AdminPages/MajorAnalaytics";
+import useAuth from "../../component/useAuth";
 export default function Chart() {
   // State variables
 
   const [jobCount, setJobCount] = useState([]);
   const [industryCount, setIndustryCount] = useState([]);
   const [companyCount, setCompanyCount] = useState([]);
+  const { role } = useAuth();
   const formatName = (name) => name.split(" ").join("\n");
 
   useEffect(() => {
@@ -146,19 +148,20 @@ export default function Chart() {
         {renderChart()}
         {loading && <p>Loading...</p>}
       </div> */}
+      {role && (
+        <div className="chart2">
+          <h3 className="chartTitle">
+            {" "}
+            BDU Alumni based on geographical location
+          </h3>
 
-      <div className="chart2">
-        <h3 className="chartTitle">
-          {" "}
-          BDU Alumni based on geographical location
-        </h3>
-
-        <iframe
-          className="geo_chart"
-          title="Geographical Representation"
-          src={"https://geo-marked-users.netlify.app"}
-        ></iframe>
-      </div>
+          <iframe
+            className="geo_chart"
+            title="Geographical Representation"
+            src={"https://geo-marked-users.netlify.app"}
+          ></iframe>
+        </div>
+      )}
 
       <MajorAnalaytics />
       <AdmissionAnalytics />

@@ -27,6 +27,11 @@ const AuthService = {
         method: "POST",
         credentials: "include",
       });
+
+      // Remove auth data from localStorage
+      localStorage.removeItem("authData");
+
+      // // Redirect to login page after logout
     } catch (error) {
       console.error("Error during logout:", error);
     }

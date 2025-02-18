@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash, FaTimes, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 import Button from "./Button";
-import AuthService from "./AuthService";
+import { fetchAndStoreAuthData } from "./useAuth";
 import { SigninContext } from "../pages/MainPage";
 import ChangePassword from "./ChangePassword";
 const Signin = () => {
@@ -15,43 +15,50 @@ const Signin = () => {
   const [visible, setVisible] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [loading, setloading] = useState(false);
-  const [message, setMessage] = useState()
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     setloading(true);
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/signin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          // AuthService.login(data.token,data.realToken);
-          setsignin(false);
-          if (data.message==='Account is not activated.') {
-            return navigate(`/activateAccount${data.userId}`)
-          }
-          window.location.reload();
-          if (data.firstTime) {
-            setStep("changePassword");
-          }
-        } else {
-          setErrorPopup(true);
-          setloading(false);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/signin`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+          credentials: "include",
         }
-      })
-      .catch((error) => {
-        console.error("Error during authentication:", error);
-        setloading(false);
-      });
+      );
+
+      const data = await response.json();
+      setloading(false);
+
+      if (response.ok && data.success) {
+        console.log("Login Successful");
+
+        setsignin(false);
+
+        // Fetch and store authentication data
+        await fetchAndStoreAuthData();
+
+        window.location.reload();
+
+        // Handle first-time login
+        if (data.firstTime) {
+          setStep("changePassword");
+        }
+      } else {
+        console.error("Login Failed:", data.message);
+        setErrorPopup(true);
+      }
+    } catch (error) {
+      console.error("Error during authentication:", error);
+      setloading(false);
+    }
   };
+
   // const handleSignInfake =()=>{
   //   setsignin(false);
   //   setloginState(true);
@@ -89,58 +96,58 @@ const Signin = () => {
             <FaTimes />
           </div>
           <div className={`authentication ${step}`}>
-          
-          <form className="sign_in">
-            <h1>LOGIN</h1>
-            {errorPopup ? (
-              <p className="authentication_Failed">
-                Wrong username or password, please try again
-              </p>
-            ) : (
-              ""
-            )}
-            <div className="sign_with_google" onClick={handleGoogleSignin}>
-              <div className="google_icon">
-                <FaGoogle color="#fff" />
+            <form className="sign_in">
+              <h1>LOGIN</h1>
+              {errorPopup ? (
+                <p className="authentication_Failed">
+                  Wrong username or password, please try again
+                </p>
+              ) : (
+                ""
+              )}
+              <div className="sign_with_google" onClick={handleGoogleSignin}>
+                <div className="google_icon">
+                  <FaGoogle color="#fff" />
+                </div>
+                <p>Sign in with Google</p>
               </div>
-              <p>Sign in with Google</p>
-            </div>
-            <FormInput
-              type="text"
-              placeholder="Username"
-              className="inputs user_name"
-              onChange={(e) => setUsername(e.target.value)}
-              required={true}
-            />
-            <div className="pass">
               <FormInput
-                value={password}
-                type={visible ? "text" : "password"}
-                placeholder="Password"
-                className="inputs password"
-                onChange={(e) => setPassword(e.target.value)}
+                type="text"
+                placeholder="Username"
+                className="inputs user_name"
+                onChange={(e) => setUsername(e.target.value)}
                 required={true}
               />
-              <div className="input_img" onClick={() => setVisible(!visible)}>
-                {visible ? (
-                  <FaEye className="eye-icon" />
-                ) : (
-                  <FaEyeSlash className="eye-icon" />
-                )}
+              <div className="pass">
+                <FormInput
+                  value={password}
+                  type={visible ? "text" : "password"}
+                  placeholder="Password"
+                  className="inputs password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required={true}
+                />
+                <div className="input_img" onClick={() => setVisible(!visible)}>
+                  {visible ? (
+                    <FaEye className="eye-icon" />
+                  ) : (
+                    <FaEyeSlash className="eye-icon" />
+                  )}
+                </div>
               </div>
-            </div>
-            <Link to="/forgetPassword" onClick={() => setsignin(false)}>
-              Forget password?
-            </Link>
-            <Button
-              disabled={loading}
-              text={loading ? "Loging..." : "LOGIN"}
-              onClick={handleSignIn}
-            />
-          </form>:
-          <form className="sign_in first-time">
-            <ChangePassword/>
-          </form>
+              <Link to="/forgetPassword" onClick={() => setsignin(false)}>
+                Forget password?
+              </Link>
+              <Button
+                disabled={loading}
+                text={loading ? "Loging..." : "LOGIN"}
+                onClick={handleSignIn}
+              />
+            </form>
+            :
+            <form className="sign_in first-time">
+              <ChangePassword />
+            </form>
           </div>
         </div>
       </div>

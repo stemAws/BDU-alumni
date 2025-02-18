@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 // import icon  from "../assets/icon.jpg";
 import { useState } from "react";
 import useAuth from "./useAuth";
+import AuthService from "./AuthService";
 
 const SideBar = () => {
   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
