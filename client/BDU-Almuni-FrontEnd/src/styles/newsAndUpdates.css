@@ -38,7 +38,7 @@ background-color: #F17318;
     justify-content: space-around;
     margin-top: 50px;
 }
-.left-side{
+.news-and-updates-container .left-side{
     width: 60%;
 
 }
@@ -104,7 +104,7 @@ background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 113.03
      padding: 5px; 
      margin-right: 10px;
 }
-.right-side{
+.news-and-updates-container .right-side{
     width: 30%;
 }
 .news-timing-nav{

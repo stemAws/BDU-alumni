@@ -1,11 +1,11 @@
-.seachAndFilter-container{
+.searchAndFilter-container {
     display: flex;
     height: 100vh;
     background-color: #FBFBFB;
     gap: 240px;
     margin-top: 50px;
 }
-.seachAndFilter-container .left-side{
+.searchAndFilter-container .left-side{
     display: flex;
     flex-direction: column;
     width: 15%;
@@ -54,7 +54,7 @@
     border: 1px solid #c3c3c3;
     border-radius: 13px;
 }
-.seachAndFilter-container .right-side{
+.searchAndFilter-container .right-side{
     display: flex;
     flex-direction: column;
     margin-top: 50px;
