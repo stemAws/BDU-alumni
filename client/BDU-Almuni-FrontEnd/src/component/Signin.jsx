@@ -11,7 +11,6 @@ const Signin = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [step, setStep] = useState("login");
   const [visible, setVisible] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [loading, setloading] = useState(false);
@@ -40,14 +39,12 @@ const Signin = () => {
 
         setsignin(false);
 
-        // Fetch and store authentication data
         await fetchAndStoreAuthData();
 
         window.location.reload();
 
-        // Handle first-time login
-        if (data.firstTime) {
-          setStep("changePassword");
+        if (data.message==='Account is not activated.') {
+          return navigate(`/activateAccount/${data.userId}`)
         }
       } else {
         console.error("Login Failed:", data.message);
@@ -95,7 +92,7 @@ const Signin = () => {
           >
             <FaTimes />
           </div>
-          <div className={`authentication ${step}`}>
+          <div className={`authentication`}>
             <form className="sign_in">
               <h1>LOGIN</h1>
               {errorPopup ? (
