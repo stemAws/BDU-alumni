@@ -214,20 +214,15 @@ exports.activateAccount = async (req, res) => {
     const { newPassword } = req.body;
     const { userId } = req.params;
 
-    // const userExists = await alumniService.isUserExists(newUsername);
-    // if (userExists) {
-    //   return res.status(400).json({ message: "Username already exist" });
-    // }
+    const activate = await alumniService.activateUser(userId, newPassword);
 
-    const activate = await alumniService.activateUser(
-      userId,
-      // newUsername,
-      newPassword
-    );
+    if (!activate.success) {
+      return res.status(400).json({ message: activate.message });
+    }
 
     res.status(200).json({
       message: "User activated successfully",
-      userId: activate.insertId,
+      userId,
     });
   } catch (err) {
     console.error("Error activating user:", err);

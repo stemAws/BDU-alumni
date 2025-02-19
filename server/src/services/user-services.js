@@ -50,14 +50,33 @@ exports.isUserActive = async (username) => {
 
 exports.activateUser = async (userId, password) => {
   try {
+    // Check if the user is already active
+    const [user] = await db.query(
+      "SELECT status FROM person WHERE personId = ?",
+      [userId]
+    );
+
+    if (user.length === 0) {
+      throw new Error("User not found");
+    }
+
+    if (user[0].status === "Active") {
+      return { success: false, message: "User is already active" };
+    }
+
+    // Hash the new password
     const hashedPassword = await hashPassword(password);
 
+    // Update the user's status and password
     const [rows] = await db.query(
       "UPDATE person SET status = ?, password = ? WHERE personId = ?",
       ["Active", hashedPassword, userId]
     );
 
-    return rows.length > 0;
+    return {
+      success: rows.affectedRows > 0,
+      message: "User activated successfully",
+    };
   } catch (err) {
     console.error("Error activating user:", err);
     throw new Error("Database error");
