@@ -8,7 +8,7 @@ import { FaFingerprint } from "react-icons/fa";
 // import SigninWrapper from "../components/SigninWrapper";
 // import { SigninContext } from '../Pages/UsersPage'
 import "../styles/changePassword.css";
-import useAuth from "../component/useAuth";
+import { useAuth } from "../component/useAuth";
 
 const ChangePassword = () => {
   const [notauth, setnotauth] = useState(false);
