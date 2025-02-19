@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import SideBar from "../component/SideBar";
 import Home from "./AdminPages/Home";
 import "../styles/Admin.css";
@@ -29,7 +29,7 @@ import EditEvent from "./AdminPages/EditEvent";
 import EditClub from "./AdminPages/EditClub";
 import AGallery from "./AdminPages/AGallery";
 import RequestedTranscript from "./AdminPages/TranscriptList";
-import useAuth from "../component/useAuth";
+import { useAuth } from "../component/useAuth";
 
 const Admin = () => {
   const { isAuthenticated, role } = useAuth(); // Use the method from AuthService
@@ -43,10 +43,15 @@ const Admin = () => {
     return <div>Loading...</div>; // Prevents flicker
   }
 
+  // If not authenticated, redirect to login
+  if (!isAdminAuthenticated) {
+    return <Navigate to="/admin/signin" />;
+  }
+
   return (
     <>
-      {(isAdminAuthenticated && role === "contentManager") ||
-      role === "systemAdmin" ? (
+      {/* Only render this part if user is authenticated and has appropriate role */}
+      {role === "contentManager" || role === "systemAdmin" ? (
         <div className="admincontainer">
           <SideBar />
           <Routes>
@@ -78,9 +83,8 @@ const Admin = () => {
           </Routes>
         </div>
       ) : (
-        <Routes>
-          <Route path="*" element={<AdminSignin />} />
-        </Routes>
+        // If user is authenticated but not an admin, redirect to login page
+        <Navigate to="/admin/signin" />
       )}
     </>
   );
