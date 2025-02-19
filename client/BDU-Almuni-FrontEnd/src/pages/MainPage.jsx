@@ -100,7 +100,7 @@ const MainPage = () => {
           <Route path="/donations" element={<Donations />} />
           <Route path="/search/:name" element={<SearchAndFilter />} />
           <Route path="/stories/:id" element={<StoriesDetail />} />
-          <Route path="/activateAccount/:id" element={<ActivateAccount />} />
+          <Route path="/activateAccount/:id" element={loginState ? <ActivateAccount /> : <Signin />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </SigninContext.Provider>
