@@ -33,7 +33,11 @@ const Signin = () => {
 
       const data = await response.json();
       setloading(false);
+      if (data.message==='Account is not activated.') {
+         navigate(`/activateAccount/${data.userId}`)
+        setsignin(false);
 
+      }
       if (response.ok && data.success) {
         console.log("Login Successful");
 
@@ -42,10 +46,7 @@ const Signin = () => {
         await fetchAndStoreAuthData();
 
         window.location.reload();
-
-        if (data.message==='Account is not activated.') {
-          return navigate(`/activateAccount/${data.userId}`)
-        }
+        
       } else {
         console.error("Login Failed:", data.message);
         setErrorPopup(true);

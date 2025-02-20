@@ -11,6 +11,8 @@ const [notauth, setnotauth] = useState(false)
   const [values, setValues] = useState({
   });
   const navigate = useNavigate()
+  const id = useParams()
+  console.log(id.id)
   const [loading, setloading] = useState(false)
   const input_values=[
         {
@@ -43,7 +45,7 @@ const [notauth, setnotauth] = useState(false)
     
       
           try {
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/activate/${token}`, {
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/activate/${id.id}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
