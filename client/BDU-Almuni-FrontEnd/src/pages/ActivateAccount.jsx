@@ -11,6 +11,7 @@ const [notauth, setnotauth] = useState(false)
   const [values, setValues] = useState({
   });
   const navigate = useNavigate()
+  const id = useParams()
   const [loading, setloading] = useState(false)
   const input_values=[
         {
@@ -43,7 +44,7 @@ const [notauth, setnotauth] = useState(false)
     
       
           try {
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/activate/${token}`, {
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/activate/${id.id}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -59,6 +60,7 @@ const [notauth, setnotauth] = useState(false)
             } 
             else if (res.status===403) {
               setnotauth(true)
+              toast.error('Failed to change password please try again')
             }
             else {
               console.error('Failed to change password:', response.statusText);
