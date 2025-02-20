@@ -8,6 +8,57 @@ const hashPassword = async (password) => {
   return await bcrypt.hash(password, saltRounds); // Return the hashed password
 };
 
+const nodemailer = require("nodemailer");
+
+const transporterr = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465, // Use 465 if you set `secure: true`
+  secure: true, // true for port 465, false for 587
+  auth: {
+    user: process.env.G_MAIL_USER,
+    pass: process.env.G_MAIL_PASSWORD, // Use App Password here
+  },
+});
+
+/**
+ * Sends an activation email to the user.
+ * @param {string} username - The username (used to fetch email).
+ * @param {string} activationToken - The JWT activation token.
+ */
+exports.sendActivationEmail = async (username, activationToken) => {
+  try {
+    // Assume we fetch the email from the database using the username
+    const user = await this.getUser(username);
+
+    const email = user[0].email; // Extract user's email
+
+    // Construct activation link
+    const activationLink = `${process.env.FRONTEND_URL}/activate/${activationToken}`;
+
+    // Email content
+    const mailOptions = {
+      from: process.env.G_MAIL_USER,
+      to: email,
+      subject: "Activate Your Account",
+      html: `
+        <h2>Welcome to the Bahir Dar University Alumni Website</h2>
+        <p>Click the link below to activate your account:</p>
+        <a href="${activationLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Activate Account</a>
+        <p>If you didn't request this, please ignore this email.</p>
+      `,
+    };
+    console.log(activationLink);
+    console.log("Email content being sent:", mailOptions.html);
+
+    // Send email
+    await transporterr.sendMail(mailOptions);
+    console.log(`Activation email sent to ${email}`);
+  } catch (error) {
+    console.error("Error sending activation email:", error);
+    throw new Error("Failed to send activation email");
+  }
+};
+
 // Check if username is already taken
 exports.isUserExists = async (username) => {
   try {
@@ -50,9 +101,9 @@ exports.isUserActive = async (username) => {
 
 exports.activateUser = async (userId, password) => {
   try {
-    // Check if the user is already active
+    // Check if the user exists
     const [user] = await db.query(
-      "SELECT status FROM person WHERE personId = ?",
+      "SELECT status, password FROM person WHERE personId = ?",
       [userId]
     );
 
@@ -60,8 +111,16 @@ exports.activateUser = async (userId, password) => {
       throw new Error("User not found");
     }
 
+    // Check if the user is already active
     if (user[0].status === "Active") {
       return { success: false, message: "User is already active" };
+    }
+
+    // Compare the old password with the new password
+    const isPasswordSame = await bcrypt.compare(password, user[0].password);
+
+    if (isPasswordSame) {
+      return { success: false, message: "Password is the same" };
     }
 
     // Hash the new password
@@ -354,14 +413,13 @@ exports.updateAlumni = async (personId, alumniData) => {
       bio,
       currentLocation,
       socialMedia,
-      dob,
     } = alumniData;
 
     await db.query(
       `UPDATE Person
-       SET fullName = ?, gender = ?, email = ?, username = ?, dob = ?
+       SET fullName = ?, gender = ?, email = ?, username = ?
        WHERE personId = ?`,
-      [fullName, gender, email, username, dob, personId]
+      [fullName, gender, email, username, personId]
     );
 
     const socialMediaJson = JSON.stringify(socialMedia);
@@ -473,6 +531,23 @@ exports.getNotable = async () => {
     const [notableAlumni] = await db.query(query);
 
     return notableAlumni;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.getAlumniByEmail = async (email) => {
+  try {
+    const [result] = await db.query(
+      " SELECT * FROM Alumni JOIN Person ON Alumni.personId = Person.personId WHERE Person.email = ?",
+      email
+    );
+
+    if (result.length > 0) {
+      return result[0];
+    } else {
+      return null;
+    }
   } catch (error) {
     throw error;
   }
