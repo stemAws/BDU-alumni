@@ -3,20 +3,25 @@ import { FaEye, FaEyeSlash, FaTimes, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 import Button from "./Button";
-import { fetchAndStoreAuthData } from "./useAuth";
+import { useAuth } from "../component/useAuth"; // Updated import
 import { SigninContext } from "../pages/MainPage";
 import ChangePassword from "./ChangePassword";
+import AuthService from "./AuthService"; // Import AuthService
+import "../styles/sign.css";
+
 const Signin = () => {
   const { setsignin } = useContext(SigninContext);
+  const { setAuth } = useAuth(); // Use setAuth to update authentication state
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const handleSignIn = async (e) => {
     e.preventDefault();
-    setloading(true);
+    setLoading(true);
 
     try {
       const response = await fetch(
@@ -40,11 +45,18 @@ const Signin = () => {
       }
       if (response.ok && data.success) {
         console.log("Login Successful");
-
         setsignin(false);
 
-        await fetchAndStoreAuthData();
+        // Fetch authentication data and update the auth context
+        const authData = await AuthService.checkAuth();
+        setAuth(authData);
 
+        // Redirect based on activation status
+        if (data.message === "Account is not activated.") {
+          return navigate(`/activateAccount/${data.userId}`);
+        }
+
+        // Reload to reflect auth changes
         window.location.reload();
         
       } else {
@@ -53,14 +65,9 @@ const Signin = () => {
       }
     } catch (error) {
       console.error("Error during authentication:", error);
-      setloading(false);
+      setLoading(false);
     }
   };
-
-  // const handleSignInfake =()=>{
-  //   setsignin(false);
-  //   setloginState(true);
-  // }
 
   const handleGoogleSignin = async (e) => {
     e.preventDefault();
@@ -70,6 +77,7 @@ const Signin = () => {
       console.error("Error during Google sign-in:", error);
     }
   };
+
   return (
     <div className="signin_overlay">
       <div id="pop_container" className="pop_container">
@@ -93,15 +101,13 @@ const Signin = () => {
           >
             <FaTimes />
           </div>
-          <div className={`authentication`}>
+          <div className="authentication">
             <form className="sign_in">
               <h1>LOGIN</h1>
-              {errorPopup ? (
+              {errorPopup && (
                 <p className="authentication_Failed">
                   Wrong username or password, please try again
                 </p>
-              ) : (
-                ""
               )}
               <div className="sign_with_google" onClick={handleGoogleSignin}>
                 <div className="google_icon">
@@ -114,7 +120,7 @@ const Signin = () => {
                 placeholder="Username"
                 className="inputs user_name"
                 onChange={(e) => setUsername(e.target.value)}
-                required={true}
+                required
               />
               <div className="pass">
                 <FormInput
@@ -123,7 +129,7 @@ const Signin = () => {
                   placeholder="Password"
                   className="inputs password"
                   onChange={(e) => setPassword(e.target.value)}
-                  required={true}
+                  required
                 />
                 <div className="input_img" onClick={() => setVisible(!visible)}>
                   {visible ? (
@@ -138,7 +144,7 @@ const Signin = () => {
               </Link>
               <Button
                 disabled={loading}
-                text={loading ? "Loging..." : "LOGIN"}
+                text={loading ? "Logging in..." : "LOGIN"}
                 onClick={handleSignIn}
               />
             </form>

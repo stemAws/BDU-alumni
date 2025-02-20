@@ -12,7 +12,7 @@ import {
 import DegreeAnalytics from "../AdminPages/DegreeAnalytics";
 import AdmissionAnalytics from "../AdminPages/AdmissionAnalytics";
 import MajorAnalaytics from "../AdminPages/MajorAnalaytics";
-import useAuth from "../../component/useAuth";
+import { useAuth } from "../../component/useAuth";
 export default function Chart() {
   // State variables
 

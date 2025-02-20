@@ -21,7 +21,7 @@ import Cookies from "js-cookie";
 import Confirmation from "../../component/Confirmation";
 import Transcript from "../../component/Transcript";
 import AuthService from "../../component/AuthService";
-import useAuth from "../../component/useAuth";
+import { useAuth } from "../../component/useAuth";
 
 // import SigninWrapper from "../../component/SigninWrapper";
 // import { SigninContext } from '../../Pages/UsersPage'

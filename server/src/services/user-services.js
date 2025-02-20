@@ -50,14 +50,33 @@ exports.isUserActive = async (username) => {
 
 exports.activateUser = async (userId, password) => {
   try {
+    // Check if the user is already active
+    const [user] = await db.query(
+      "SELECT status FROM person WHERE personId = ?",
+      [userId]
+    );
+
+    if (user.length === 0) {
+      throw new Error("User not found");
+    }
+
+    if (user[0].status === "Active") {
+      return { success: false, message: "User is already active" };
+    }
+
+    // Hash the new password
     const hashedPassword = await hashPassword(password);
 
+    // Update the user's status and password
     const [rows] = await db.query(
       "UPDATE person SET status = ?, password = ? WHERE personId = ?",
       ["Active", hashedPassword, userId]
     );
 
-    return rows.length > 0;
+    return {
+      success: rows.affectedRows > 0,
+      message: "User activated successfully",
+    };
   } catch (err) {
     console.error("Error activating user:", err);
     throw new Error("Database error");
@@ -266,11 +285,11 @@ exports.getAllAlumni = async () => {
   }
 };
 
-exports.getAlumniProfilePhotoById = async function (alumniID) {
+exports.getAlumniProfilePhotoById = async function (personId) {
   try {
     const queryResult = await db.query(
-      "SELECT profilePicture FROM Alumni WHERE alumniID = ?",
-      [alumniID]
+      "SELECT profilePicture FROM Alumni WHERE personId = ?",
+      [personId]
     );
 
     if (queryResult.length > 0) {
@@ -282,11 +301,11 @@ exports.getAlumniProfilePhotoById = async function (alumniID) {
   }
 };
 
-exports.updateAlumniProfilePhoto = async (alumniID, profilePhoto) => {
+exports.updateAlumniProfilePhoto = async (personId, profilePhoto) => {
   try {
     const [{ affectedRows }] = await db.query(
-      "UPDATE Alumni SET profilePicture = ? WHERE alumniId = ?",
-      [profilePhoto, alumniID]
+      "UPDATE Alumni SET profilePicture = ? WHERE personId = ?",
+      [profilePhoto, personId]
     );
     return affectedRows;
   } catch (error) {
@@ -295,11 +314,11 @@ exports.updateAlumniProfilePhoto = async (alumniID, profilePhoto) => {
   }
 };
 
-exports.getAlumniCoverPhotoById = async function (alumniID) {
+exports.getAlumniCoverPhotoById = async function (personId) {
   try {
     const queryResult = await db.query(
-      "SELECT coverPicture FROM Alumni WHERE alumniID = ?",
-      [alumniID]
+      "SELECT coverPicture FROM Alumni WHERE personId = ?",
+      [personId]
     );
 
     if (queryResult.length > 0) {
@@ -311,11 +330,11 @@ exports.getAlumniCoverPhotoById = async function (alumniID) {
   }
 };
 
-exports.updateAlumniCoverPhoto = async (alumniID, coverPhoto) => {
+exports.updateAlumniCoverPhoto = async (personId, coverPhoto) => {
   try {
     const [{ affectedRows }] = await db.query(
-      "UPDATE Alumni SET coverPicture = ? WHERE alumniId = ?",
-      [coverPhoto, alumniID]
+      "UPDATE Alumni SET coverPicture = ? WHERE personId = ?",
+      [coverPhoto, personId]
     );
     return affectedRows;
   } catch (error) {
@@ -324,7 +343,7 @@ exports.updateAlumniCoverPhoto = async (alumniID, coverPhoto) => {
   }
 };
 
-exports.updateAlumni = async (id, alumniData) => {
+exports.updateAlumni = async (personId, alumniData) => {
   try {
     const {
       fullName,
@@ -335,15 +354,14 @@ exports.updateAlumni = async (id, alumniData) => {
       bio,
       currentLocation,
       socialMedia,
+      dob,
     } = alumniData;
-
-    const { alumniId, personId } = id;
 
     await db.query(
       `UPDATE Person
-       SET fullName = ?, gender = ?, email = ?, username = ?
+       SET fullName = ?, gender = ?, email = ?, username = ?, dob = ?
        WHERE personId = ?`,
-      [fullName, gender, email, username, personId]
+      [fullName, gender, email, username, dob, personId]
     );
 
     const socialMediaJson = JSON.stringify(socialMedia);
@@ -351,8 +369,8 @@ exports.updateAlumni = async (id, alumniData) => {
     await db.query(
       `UPDATE Alumni
        SET currentLocation = ?, socialMedia = ?, phoneNumber = ?, bio = ?
-       WHERE alumniId = ?`,
-      [currentLocation, socialMediaJson, phoneNumber, bio, alumniId]
+       WHERE personId = ?`,
+      [currentLocation, socialMediaJson, phoneNumber, bio, personId]
     );
 
     return { success: true };
@@ -362,15 +380,15 @@ exports.updateAlumni = async (id, alumniData) => {
   }
 };
 
-exports.isUsernameTaken = async (username, alumniID = null) => {
+exports.isUsernameTaken = async (username, personId = null) => {
   try {
     let query = "SELECT COUNT(*) as count FROM Person WHERE username = ?";
 
     const params = [username];
 
-    if (alumniID !== null) {
+    if (personId !== null) {
       query += " AND personId <> ?";
-      params.push(alumniID);
+      params.push(personId);
     }
 
     const [rows] = await db.query(query, params);
@@ -382,15 +400,15 @@ exports.isUsernameTaken = async (username, alumniID = null) => {
   }
 };
 
-exports.isEmailTaken = async (email, alumniID = null) => {
+exports.isEmailTaken = async (email, personId = null) => {
   try {
     let query = "SELECT COUNT(*) as count FROM Person WHERE email = ?";
 
     const params = [email];
 
-    if (alumniID !== null) {
+    if (personId !== null) {
       query += " AND personId <> ?";
-      params.push(alumniID);
+      params.push(personId);
     }
 
     const [rows] = await db.query(query, params);
@@ -599,7 +617,20 @@ exports.getAlumniDirectory = async (name, searchBy, searchByValue) => {
   }
 };
 
-exports.reserveTranscriptPlace = async (alumniId) => {
+exports.respondAlumniId = async (personId) => {
+  try {
+    let query = "SELECT alumniId FROM Alumni WHERE personId = ?";
+
+    const [result] = await db.query(query, personId);
+
+    return result[0].alumniId;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.reserveTranscriptPlace = async (personId) => {
+  const alumniId = await this.respondAlumniId(personId);
   const [result] = await db.query(
     "INSERT INTO TranscriptReservations (alumniId) VALUES (?)",
     [alumniId]

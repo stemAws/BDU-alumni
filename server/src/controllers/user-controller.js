@@ -214,20 +214,15 @@ exports.activateAccount = async (req, res) => {
     const { newPassword } = req.body;
     const { userId } = req.params;
 
-    // const userExists = await alumniService.isUserExists(newUsername);
-    // if (userExists) {
-    //   return res.status(400).json({ message: "Username already exist" });
-    // }
+    const activate = await alumniService.activateUser(userId, newPassword);
 
-    const activate = await alumniService.activateUser(
-      userId,
-      // newUsername,
-      newPassword
-    );
+    if (!activate.success) {
+      return res.status(400).json({ message: activate.message });
+    }
 
     res.status(200).json({
       message: "User activated successfully",
-      userId: activate.insertId,
+      userId,
     });
   } catch (err) {
     console.error("Error activating user:", err);
@@ -296,8 +291,8 @@ exports.uploadProfilePicture = async function (req, res) {
 
   const resizedFile = await sharp(file.buffer).jpeg({ quality: 20 }).toBuffer();
 
-  const alumniId = req.cookies.id2;
-  const filePath = `profilePictures/${alumniId}-${Date.now()}${path.extname(
+  const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
+  const filePath = `profilePictures/${personId}-${Date.now()}${path.extname(
     file.originalname
   )}`;
   const fileRef = ref(storage, filePath);
@@ -308,7 +303,7 @@ exports.uploadProfilePicture = async function (req, res) {
     const downloadURL = await getDownloadURL(fileRef);
 
     const currentProfilePhotoPath =
-      await alumniService.getAlumniProfilePhotoById(alumniId);
+      await alumniService.getAlumniProfilePhotoById(personId);
 
     if (currentProfilePhotoPath) {
       const currentProfilePhotoRef = ref(storage, currentProfilePhotoPath);
@@ -321,7 +316,7 @@ exports.uploadProfilePicture = async function (req, res) {
     }
 
     const updateResult = await alumniService.updateAlumniProfilePhoto(
-      alumniId,
+      personId,
       downloadURL
     );
 
@@ -347,8 +342,8 @@ exports.uploadCoverPicture = async function (req, res) {
 
   const resizedFile = await sharp(file.buffer).jpeg({ quality: 20 }).toBuffer();
 
-  const alumniId = req.cookies.id2;
-  const filePath = `coverPictures/${alumniId}-${Date.now()}${path.extname(
+  const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
+  const filePath = `coverPictures/${personId}-${Date.now()}${path.extname(
     file.originalname
   )}`;
   const fileRef = ref(storage, filePath);
@@ -359,7 +354,7 @@ exports.uploadCoverPicture = async function (req, res) {
     const downloadURL = await getDownloadURL(fileRef);
 
     const currentCoverPhotoPath = await alumniService.getAlumniCoverPhotoById(
-      alumniId
+      personId
     );
 
     console.log(currentCoverPhotoPath);
@@ -375,7 +370,7 @@ exports.uploadCoverPicture = async function (req, res) {
     }
 
     const updateResult = await alumniService.updateAlumniCoverPhoto(
-      alumniId,
+      personId,
       downloadURL
     );
 
@@ -394,10 +389,7 @@ exports.uploadCoverPicture = async function (req, res) {
 
 exports.getProfilePicture = async function (req, res) {
   try {
-    console.log("id from controller", req.params.userId);
     const alumni = await alumniService.getAlumniProfile(req.params.userId);
-
-    console.log("profile picture from controller: ", alumni);
 
     const profilePhotoPath = alumni[0].profilePicture;
 
@@ -436,28 +428,43 @@ exports.getCoverPicture = async function (req, res) {
 
 exports.updateAlumni = async function (req, res) {
   try {
-    const affectedRows = await alumniService.updateAlumni(req.alumni, req.body);
+    const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
 
-    if (affectedRows) {
-      res
-        .status(200)
-        .json({ message: "Alumni updated successfully", affectedRows });
+    const affectedRows = await alumniService.updateAlumni(personId, req.body);
+
+    if (affectedRows > 0) {
+      return res.status(200).json({
+        ok: true,
+        success: true,
+        message: "Alumni updated successfully",
+        affectedRows,
+      });
     } else {
-      res.status(500).json({ error: "Failed to update alumni" });
+      return res.status(400).json({
+        ok: false,
+        success: false,
+        message: "Failed to update alumni. No changes made.",
+      });
     }
   } catch (error) {
     console.error("Error updating alumni:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({
+      ok: false,
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
   }
 };
 
 exports.checkUsernameAvailability = async function (req, res) {
   try {
     const { username } = req.body;
+    const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
 
     const isUsernameTaken = await alumniService.isUsernameTaken(
       username,
-      req.alumni.personId
+      personId
     );
 
     res.json({ isUsernameTaken });
@@ -470,11 +477,9 @@ exports.checkUsernameAvailability = async function (req, res) {
 exports.checkEmailAvailability = async function (req, res) {
   try {
     const { email } = req.body;
+    const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
 
-    const isEmailTaken = await alumniService.isEmailTaken(
-      email,
-      req.alumni.personId
-    );
+    const isEmailTaken = await alumniService.isEmailTaken(email, personId);
 
     res.json({ isEmailTaken });
   } catch (error) {
@@ -634,9 +639,9 @@ exports.searchAlumni = async function (req, res) {
 
 exports.reserveTranscriptPlace = async function (req, res) {
   try {
-    const alumniId = req.alumni.alumniId;
+    const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
 
-    const result = await alumniService.reserveTranscriptPlace(alumniId);
+    const result = await alumniService.reserveTranscriptPlace(personId);
 
     if (result) {
       res.status(200).json({ success: true });

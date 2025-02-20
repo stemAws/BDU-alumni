@@ -25,44 +25,26 @@ import AboutDevs from "./AboutDevs";
 import StoriesDetail from "./StoriesDetail";
 import Explore from "./Explore";
 import Donations from "./Donations";
-import useAuth from "../component/useAuth";
+import { useAuth } from "../component/useAuth";
 import ActivateAccount from "./ActivateAccount";
 
 export const SigninContext = createContext();
 
 const MainPage = () => {
   const [signin, setsignin] = useState(false);
+  const { isAuthenticated, role, logout } = useAuth();
+
   const [loginState, setloginState] = useState(false);
-  const { isAuthenticated, role, userId } = useAuth(); // Use the method from AuthService
 
-  // Check authentication and role
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      if (isAuthenticated && role === "alumni") {
-        setloginState(true);
-      } else {
-        setloginState(false);
-      }
-
-      // Refresh token if expired
-      if (!isAuthenticated) {
-        await AuthService.refreshAccessToken(); // Try refreshing the token
-      }
-    };
-
-    checkLoginStatus(); // Run on mount
-  }, [isAuthenticated, role, userId]);
-
-  // Handle logout
-  const handleLogout = () => {
-    AuthService.logout();
-    setloginState(false); // Update the login state after logout
-  };
+    // Update login state based on authentication and role
+    setloginState(isAuthenticated && role === "alumni");
+  }, [isAuthenticated, role]);
 
   return (
     <div>
       <SigninContext.Provider value={{ loginState, setloginState, setsignin }}>
-        <Header logout={handleLogout} />
+        <Header logout={logout} />
 
         {signin && <Signin />}
 

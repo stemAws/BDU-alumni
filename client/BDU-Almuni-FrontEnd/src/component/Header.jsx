@@ -6,7 +6,7 @@ import { useEffect, useState, useContext } from "react";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 import { SigninContext } from "../pages/MainPage";
-import useAuth from "./useAuth";
+import { useAuth } from "./useAuth";
 const Header = ({ logout }) => {
   const { loginState, setsignin } = useContext(SigninContext);
   const location = useLocation();

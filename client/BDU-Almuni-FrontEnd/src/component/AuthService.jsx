@@ -1,23 +1,38 @@
 const AuthService = {
+  checkAuth: async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/check-auth`,
+        { method: "GET", credentials: "include" }
+      );
+
+      if (!response.ok) {
+        throw new Error("Not authenticated");
+      }
+
+      const data = await response.json();
+      return { isAuthenticated: true, role: data.role, userId: data.id };
+    } catch (error) {
+      console.warn("Auth check failed, attempting token refresh...");
+      const refreshed = await AuthService.refreshAccessToken();
+      return refreshed
+        ? await AuthService.checkAuth()
+        : { isAuthenticated: false, role: null, userId: null };
+    }
+  },
+
   refreshAccessToken: async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/refresh-token`,
-        {
-          method: "POST",
-          credentials: "include",
-        }
+        { method: "POST", credentials: "include" }
       );
 
       const data = await response.json();
-
-      if (response.ok && data.success) {
-        console.log("Access token refreshed.");
-      } else {
-        console.log("Failed to refresh access token.");
-      }
+      return response.ok && data.success;
     } catch (error) {
-      console.error("Error refreshing token:", error);
+      console.error("Token refresh failed:", error);
+      return false;
     }
   },
 
@@ -27,13 +42,8 @@ const AuthService = {
         method: "POST",
         credentials: "include",
       });
-
-      // Remove auth data from localStorage
-      localStorage.removeItem("authData");
-
-      // // Redirect to login page after logout
     } catch (error) {
-      console.error("Error during logout:", error);
+      console.error("Logout failed:", error);
     }
   },
 };

@@ -1,6 +1,8 @@
 const postService = require("../services/post-services");
 const path = require("path");
 const sharp = require("sharp");
+const jwt = require("jsonwebtoken");
+const userServices = require("../services/user-services");
 
 const {
   getStorage,
@@ -17,9 +19,9 @@ firebase.initializeApp(firebaseConfig);
 const storage = getStorage();
 
 exports.createPost = async (req, res) => {
-  const { content, suggestToAdmin} = req.body;
-  const alumniId = req.cookies.id2;
-
+  const { content, suggestToAdmin } = req.body;
+  const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
+  const alumniId = await userServices.respondAlumniId(personId);
   try {
     let downloadURL = null;
 
@@ -166,7 +168,9 @@ exports.deletePost = async (req, res) => {
     const affectedRows = await postService.deletePost(postId);
 
     if (affectedRows === 0) {
-      res.status(404).json({ message: `No record with the given id: ${postId}` });
+      res
+        .status(404)
+        .json({ message: `No record with the given id: ${postId}` });
     } else {
       res.json({ message: "Post deleted successfully" });
     }
@@ -175,7 +179,6 @@ exports.deletePost = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 
 exports.updatePost = async (req, res) => {
   try {
