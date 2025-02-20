@@ -37,7 +37,7 @@ const Signin = () => {
       );
 
       const data = await response.json();
-      setloading(false);
+      setLoading(false);
       if (data.message==='Account is not activated.') {
          navigate(`/activateAccount/${data.userId}`)
         setsignin(false);
