@@ -14,9 +14,10 @@ const storageEngine = multer.memoryStorage();
 const upload = multer({ storage: storageEngine });
 // all id are personIDs
 
+router.post("/request-activation", UserController.requestActivation);
+router.post("/activate", UserController.activateAccount);
 router.post("/signin", UserController.signIn);
 router.post("/check-user", UserController.checkUser);
-router.put("/activate/:userId", UserController.activateAccount);
 router.get("/check-auth", UserController.checkAuth);
 router.post("/logout", UserController.logout);
 router.post("/refresh-token", refreshToken);
