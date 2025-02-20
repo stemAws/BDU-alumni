@@ -3,16 +3,15 @@ import { FaEye, FaEyeSlash, FaTimes, FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 import Button from "./Button";
-import { useAuth } from "../component/useAuth"; // Updated import
+import { useAuth } from "../component/useAuth"; 
 import { SigninContext } from "../pages/MainPage";
 import ChangePassword from "./ChangePassword";
-import AuthService from "./AuthService"; // Import AuthService
+import AuthService from "./AuthService";
 import "../styles/sign.css";
 
 const Signin = () => {
   const { setsignin } = useContext(SigninContext);
-  const { setAuth } = useAuth(); // Use setAuth to update authentication state
-  const navigate = useNavigate();
+  const { setAuth } = useAuth(); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
@@ -44,19 +43,15 @@ const Signin = () => {
 
       }
       if (response.ok && data.success) {
-        console.log("Login Successful");
         setsignin(false);
 
-        // Fetch authentication data and update the auth context
         const authData = await AuthService.checkAuth();
         setAuth(authData);
 
-        // Redirect based on activation status
         if (data.message === "Account is not activated.") {
           return navigate(`/activateAccount/${data.userId}`);
         }
 
-        // Reload to reflect auth changes
         window.location.reload();
         
       } else {

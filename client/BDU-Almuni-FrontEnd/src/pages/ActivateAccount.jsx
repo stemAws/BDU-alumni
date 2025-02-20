@@ -12,7 +12,6 @@ const [notauth, setnotauth] = useState(false)
   });
   const navigate = useNavigate()
   const id = useParams()
-  console.log(id.id)
   const [loading, setloading] = useState(false)
   const input_values=[
         {
@@ -61,6 +60,7 @@ const [notauth, setnotauth] = useState(false)
             } 
             else if (res.status===403) {
               setnotauth(true)
+              toast.error('Failed to change password please try again')
             }
             else {
               console.error('Failed to change password:', response.statusText);
