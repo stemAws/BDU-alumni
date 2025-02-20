@@ -58,8 +58,7 @@ exports.profile = async (req, res) => {
     const { personId: id, status, isAdmin } = user;
 
     if (status != "Active") {
-      console.log("Account not activated.");
-      return res.redirect(`http://localhost:5173/activation_pending`);
+      return res.redirect(`http://localhost:5173/account_not_activated`);
     }
 
     // Determine user role (admin or alumni)
