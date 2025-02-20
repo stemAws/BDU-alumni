@@ -19,36 +19,82 @@ const {
 firebase.initializeApp(firebaseConfig);
 
 const storage = getStorage();
+exports.requestActivation = async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    // Check if user exists
+    const user = await alumniService.getUser(username);
+    if (!user || user.length === 0) {
+      return res.status(400).json({
+        message: "Invalid credential.",
+      });
+    }
+    // Generate activation token (valid for a limited time)
+    const activationToken = jwt.sign(
+      { userId: user[0].personId },
+      process.env.JWT_ACTIVATION_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    // Send activation email (pseudo-code)
+    await alumniService.sendActivationEmail(username, activationToken);
+
+    res.status(200).json({
+      message: "If the account exists, an activation link has been sent.",
+    });
+  } catch (err) {
+    console.error("Error requesting activation:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+exports.activateAccount = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+    console.log("token: ", token);
+    console.log("password: ", newPassword);
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_ACTIVATION_SECRET);
+    const userId = decoded.userId;
+    console.log("userId", userId);
+
+    // Activate user
+    const activate = await alumniService.activateUser(userId, newPassword);
+    if (!activate.success) {
+      return res.status(400).json({ message: activate.message });
+    }
+
+    res.status(200).json({ message: "User activated successfully" });
+  } catch (err) {
+    console.error("Error activating user:", err);
+    return res.status(400).json({ message: "Invalid or expired token" });
+  }
+};
 
 exports.signIn = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Check if user exists
-    const userExists = await alumniService.isUserExists(username);
-    if (!userExists) {
+    // Check if user exists and get user details
+    const user = await alumniService.getUser(username);
+    if (!user || user.length === 0) {
       return res
         .status(400)
-        .json({ ok: false, success: false, message: "User doesn't exist" });
+        .json({ ok: false, success: false, message: "Invalid credentials" });
     }
+    console.log("url: ", process.env.FRONTEND_URL);
+
+    const userData = user[0];
 
     // Check if the account is active
-    const userActive = await alumniService.isUserActive(username);
-    if (!userActive) {
-      const inactiveUser = await alumniService.getUser(username);
-
+    if (userData.status != "Active") {
       return res.status(400).json({
         ok: false,
         success: false,
-        message: "Account is not activated.",
-        userId: inactiveUser[0].personId,
+        message: "Invalid credentials", // Do not specify inactive status
       });
     }
-
-    // Get the user's details
-    const user = await alumniService.getUser(username);
-
-    const userData = user[0];
 
     // Verify the hashed password
     const isPasswordValid = await bcrypt.compare(password, userData.password);
@@ -56,7 +102,7 @@ exports.signIn = async (req, res) => {
       return res.status(400).json({
         ok: false,
         success: false,
-        message: "Invalid password",
+        message: "Invalid credentials",
       });
     }
 
@@ -83,6 +129,7 @@ exports.signIn = async (req, res) => {
         expiresIn: process.env.JWT_REFRESH_EXPIRES, // Longer-lived refresh token
       }
     );
+
     // Set tokens in cookies
     res.cookie("token", accessToken, {
       httpOnly: true,
@@ -102,7 +149,6 @@ exports.signIn = async (req, res) => {
       ok: true,
       success: true,
       message: "User logged in successfully",
-      userId: user[0].personId,
     });
   } catch (err) {
     console.error("Error logging in user:", err);
@@ -203,29 +249,6 @@ exports.checkUser = async (req, res) => {
     });
   } catch (err) {
     console.error("Error checking user:", err);
-    return res.status(500).json({
-      message: "Internal server error",
-      error: err.message,
-    });
-  }
-};
-exports.activateAccount = async (req, res) => {
-  try {
-    const { newPassword } = req.body;
-    const { userId } = req.params;
-
-    const activate = await alumniService.activateUser(userId, newPassword);
-
-    if (!activate.success) {
-      return res.status(400).json({ message: activate.message });
-    }
-
-    res.status(200).json({
-      message: "User activated successfully",
-      userId,
-    });
-  } catch (err) {
-    console.error("Error activating user:", err);
     return res.status(500).json({
       message: "Internal server error",
       error: err.message,
