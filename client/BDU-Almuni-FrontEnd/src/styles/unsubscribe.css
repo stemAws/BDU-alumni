@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+.unsubscribe-title {
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+}
+
+.unsub-title {
+  margin-top: 20px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+}
+
+.unsubscribe-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.unsub-content {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.unsubscribe-content {
+  margin-top: 20px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+}
+
+.unsub-input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Spacing between input and button */
+  margin-top: 20px;
+}
+
+.unsub-email-input {
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+.unsub-email-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.unsub-button {
+  background-color: #037cd3;
+  color: white;
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+.unsub-button:hover {
+  background-color: #278cd5;
+}
+
+.unsub-error-message {
+  color: #d9534f;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.unsub-error-border {
+  border-color: #d9534f !important;
+}
+
+.unsub-error-border:focus {
+  border-color: #d9534f !important;
+  box-shadow: none;
+}
+
+.unsubscribed {
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  margin: 20px;
+}
+/* ---------------- Responsive Design ---------------- */
+
+/* Medium screens (tablets) */
+@media (max-width: 768px) {
+  .unsubscribe-container {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .unsub-content {
+    width: 100%;
+  }
+
+  .unsub-input-container {
+    flex-direction: column; /* Stack input & button */
+    gap: 15px;
+  }
+
+  .unsub-email-input {
+    width: 100%;
+  }
+
+  .unsub-button {
+    width: 100%;
+    padding: 14px;
+  }
+}
+
+/* Small screens (mobile) */
+@media (max-width: 480px) {
+  .unsubscribe-title,
+  .unsub-title {
+    font-size: 20px;
+  }
+
+  .unsub-content {
+    padding: 10px;
+  }
+
+  .unsub-input-container {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .unsub-email-input {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .unsub-button {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px;
+  }
+}
