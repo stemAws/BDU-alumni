@@ -189,4 +189,9 @@ CREATE TABLE TranscriptReservations (
 --     fullName, email, phoneNumber, degree, admission, major, purpose, delivery{mail, email, in-person}, recipentEmail, noOfCopies, isPaid, requestAccepted, requestFulfilled 
 -- }
 
+CREATE TABLE subscription (
+    subscriptionId INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL
+    )
+
 
