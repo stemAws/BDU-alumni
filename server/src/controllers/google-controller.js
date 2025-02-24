@@ -13,7 +13,7 @@ exports.googleCallback = passport.authenticate("google", {
 });
 
 exports.failed = async (req, res) => {
-  res.redirect(`http://localhost:5173/`);
+  res.redirect(`${process.env.FRONTEND_URL}`);
 };
 
 // exports.profile = async (req, res) => {
@@ -51,14 +51,14 @@ exports.profile = async (req, res) => {
     // Handle non-existent users
     if (!user || user.length === 0) {
       return res.redirect(
-        `http://localhost:5173/email_not_registered_IN_OUR_DB`
+        `${process.env.FRONTEND_URL}/email_not_registered_IN_OUR_DB`
       );
     }
 
     const { personId: id, status, isAdmin } = user;
 
     if (status != "Active") {
-      return res.redirect(`http://localhost:5173/account_not_activated`);
+      return res.redirect(`${process.env.FRONTEND_URL}/account_not_activated`);
     }
 
     // Determine user role (admin or alumni)
@@ -94,10 +94,10 @@ exports.profile = async (req, res) => {
     });
 
     // Redirect to frontend home page
-    res.redirect(`http://localhost:5173/`);
+    res.redirect(`${process.env.FRONTEND_URL}`);
   } catch (error) {
     console.error("Error signing in with Google:", error);
-    res.redirect(`http://localhost:5173/error`);
+    res.redirect(`${process.env.FRONTEND_URL}/error`);
   }
 };
 

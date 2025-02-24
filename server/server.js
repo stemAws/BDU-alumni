@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://geo-marked-users.netlify.app"],
+    origin: [process.env.FRONTEND_URL, "https://geo-marked-users.netlify.app"],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
