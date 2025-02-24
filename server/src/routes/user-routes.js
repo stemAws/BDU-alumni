@@ -21,6 +21,8 @@ router.post("/check-user", UserController.checkUser);
 router.get("/check-auth", UserController.checkAuth);
 router.post("/logout", UserController.logout);
 router.post("/refresh-token", refreshToken);
+router.post("/subscribe", UserController.subscribe);
+router.delete("/unsubscribe/", UserController.unsubscribe);
 
 router.post(
   "/addUser",
