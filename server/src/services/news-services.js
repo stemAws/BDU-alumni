@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const alumniService = require("./user-services");
 
 exports.addNews = async (title, description, category, image_path) => {
   try {
@@ -12,8 +13,44 @@ exports.addNews = async (title, description, category, image_path) => {
       query = "INSERT INTO News (title, content,category) VALUES (?,?, ?)";
       params = [title, description, category];
     }
-
+    const subContent =
+      description.length > 180
+        ? description.substring(0, 180) + "..."
+        : description;
     const [result] = await db.query(query, params);
+    const emailContent = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4;">
+      <div style="max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h2 style="color: #037cd3; text-align: center;">${title}</h2>
+        <p style="font-size: 16px; color: #333;">Dear Subscriber,</p>
+        <p style="font-size: 14px; color: #555;">${subContent}</p>
+        <a href="${process.env.FRONTEND_URL}" style="display: block; width: 200px; margin: 20px auto; padding: 10px; background: #037cd3; color: white; text-align: center; text-decoration: none; border-radius: 5px;">Visit Alumni Portal</a>
+        <p style="text-align: center; font-size: 12px; color: #888;">
+          If you have any questions, contact us at 
+          <a href="${process.env.FRONTEND_URL}/contactus" style="color: #037cd3; text-decoration: none;">our contact page</a>.
+        </p>        
+      <p style="text-align: center; font-size: 12px; color: #888;"> If you don't want to receive updates, 
+        <a href="${process.env.FRONTEND_URL}/unsubscribe" style="color: #037cd3; text-decoration: none;">unsubscribe</a>.
+      </p>
+
+      </div>
+      </div>`;
+
+    if (result.insertId) {
+      const subscribers = await alumniService.getSubscribers();
+
+      if (subscribers.length > 0) {
+        const emailSubject = `News and Updates: ${title}`;
+        const emailBody = `Hello,\n\nA new news article "${title}" has been published.\n\nDetails:\n${description}\n\nStay updated with more news!\n\nBest,\nAlumni Association`;
+
+        await alumniService.sendEmail(
+          subscribers,
+          emailSubject,
+          emailBody,
+          emailContent
+        );
+      }
+    }
 
     return result.insertId;
   } catch (error) {
