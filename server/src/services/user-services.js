@@ -8,18 +8,6 @@ const hashPassword = async (password) => {
   return await bcrypt.hash(password, saltRounds); // Return the hashed password
 };
 
-const nodemailer = require("nodemailer");
-
-const transporterr = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465, // Use 465 if you set `secure: true`
-  secure: true, // true for port 465, false for 587
-  auth: {
-    user: process.env.G_MAIL_USER,
-    pass: process.env.G_MAIL_PASSWORD, // Use App Password here
-  },
-});
-
 /**
  * Sends an activation email to the user.
  * @param {string} username - The username (used to fetch email).
@@ -43,19 +31,83 @@ exports.sendActivationEmail = async (username, activationToken) => {
       html: `
         <h2>Welcome to the Bahir Dar University Alumni Website</h2>
         <p>Click the link below to activate your account:</p>
-        <a href="${activationLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Activate Account</a>
+        <a href="${activationLink}" style="display: inline-block; padding: 10px 20px; background-color: #037cd3; color: white; text-decoration: none; border-radius: 5px;">Activate Account</a>
         <p>If you didn't request this, please ignore this email.</p>
       `,
     };
-    console.log(activationLink);
-    console.log("Email content being sent:", mailOptions.html);
 
     // Send email
-    await transporterr.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
     console.log(`Activation email sent to ${email}`);
   } catch (error) {
     console.error("Error sending activation email:", error);
     throw new Error("Failed to send activation email");
+  }
+};
+exports.sendEmail = async (to, subject, text, htmlContent) => {
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to,
+      subject,
+      text,
+      html: htmlContent,
+    };
+
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+};
+exports.subscribeUser = async (email) => {
+  try {
+    // Check if email already exists
+    const [existing] = await db.query(
+      "SELECT subscriptionId FROM subscription WHERE email = ?",
+      [email]
+    );
+
+    if (existing.length > 0) {
+      return { message: "Email is already subscribed." };
+    }
+
+    // Insert new subscription
+    const [result] = await db.query(
+      "INSERT INTO subscription (email) VALUES (?)",
+      [email]
+    );
+
+    if (result.affectedRows > 0) {
+      return { message: "Subscription successful." };
+    } else {
+      return { message: "Subscription failed." };
+    }
+  } catch (err) {
+    console.error("Error adding subscription:", err);
+    return { message: "Database error." };
+  }
+};
+
+exports.unsubscribeUser = async (email) => {
+  try {
+    const [result] = await db.query(
+      "DELETE FROM subscription WHERE email = ?",
+      [email]
+    );
+
+    return result.affectedRows > 0;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.getSubscribers = async () => {
+  try {
+    const [subscribers] = await db.query("SELECT email FROM subscription");
+    return subscribers.map((sub) => sub.email);
+  } catch (error) {
+    console.error("Error fetching subscribers:", error);
+    return [];
   }
 };
 
