@@ -19,6 +19,58 @@ const {
 firebase.initializeApp(firebaseConfig);
 
 const storage = getStorage();
+
+exports.subscribe = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Call the subscribeUser function
+    const result = await alumniService.subscribeUser(email);
+
+    if (result.message === "Email is already subscribed.") {
+      return res.status(400).json({
+        ok: false,
+        success: false,
+        message: "Email is already subscribed.",
+      });
+    }
+
+    if (result.message === "Subscription successful.") {
+      return res
+        .status(200)
+        .json({ ok: true, success: true, message: "Subscribed successfully." });
+    }
+
+    return res
+      .status(400)
+      .json({ ok: false, success: false, message: "Subscription failed." });
+  } catch (err) {
+    console.error("Error subscribing:", err);
+    return res
+      .status(500)
+      .json({ ok: false, success: false, message: "Internal server error." });
+  }
+};
+
+exports.unsubscribe = async function (req, res) {
+  try {
+    const deleted = await alumniService.unsubscribeUser(req.body.email);
+
+    if (deleted) {
+      res.status(200).json({
+        ok: true,
+        success: true,
+        message: "Unsubscribed successfully",
+      });
+    } else {
+      res.status(404).json({ error: "Subscription not found" });
+    }
+  } catch (error) {
+    console.error("Error unsubscribing user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 exports.requestActivation = async (req, res) => {
   try {
     const { username } = req.body;
