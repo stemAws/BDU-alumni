@@ -42,9 +42,14 @@ const SideBar = () => {
           </li>
 
           {role === "systemAdmin" && (
-            <li className="sidebarListItem">
-              <Link to="/admin/users">Users</Link>
-            </li>
+            <>
+              <li className="sidebarListItem">
+                <Link to="/admin/users">Users</Link>
+              </li>
+              <li className="sidebarListItem notifications">
+                <Link to="/admin/adminlist">Admin</Link>
+              </li>
+            </>
           )}
 
           <li className="sidebarListItem">
