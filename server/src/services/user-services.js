@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const transporter = require("../config/mailerConfig");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const hashPassword = async (password) => {
+exports.hashPassword = async (password) => {
   const saltRounds = 10;
   return await bcrypt.hash(password, saltRounds); // Return the hashed password
 };
@@ -176,7 +176,7 @@ exports.activateUser = async (userId, password) => {
     }
 
     // Hash the new password
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await this.hashPassword(password);
 
     // Update the user's status and password
     const [rows] = await db.query(
@@ -231,13 +231,13 @@ exports.addUser = async (alumniData) => {
 
   const hashedPassword = await bcrypt.hash(alumniData.password, 10);
   const isAdmin = alumniData.role === "admin" ? 1 : 0;
-
-  console.log("Alumni data", alumniData);
+  const status = isAdmin ? "Active" : "Inactive";
 
   await db.query(
     `
-    INSERT INTO Person (fullName, gender, email, username, password, verified, isAdmin)
-    VALUES (?, ?, ?, ?, ?, ?, ?);`,
+    INSERT INTO Person (fullName, gender, email, username, password, verified, isAdmin, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `,
     [
       alumniData.fullName,
       alumniData.gender,
@@ -246,6 +246,7 @@ exports.addUser = async (alumniData) => {
       hashedPassword,
       1,
       isAdmin,
+      status,
     ]
   );
 
@@ -541,19 +542,17 @@ exports.deleteAlumni = async (id) => {
   }
 };
 
-exports.changePassword = async (personID, oldPassword, newPassword) => {
+exports.changePassword = async (personId, oldPassword, newPassword) => {
   // not working i am so confused
   try {
     const [result] = await db.query(
-      "SELECT password FROM Person WHERE personID = ?",
-      personID
+      "SELECT password FROM Person WHERE personId = ?",
+      personId
     );
     if (!result || !result.length) {
       throw new Error("Person not found");
     }
     const hashedPassword = result[0].password;
-    console.log(hashedPassword);
-    console.log(oldPassword);
     const passwordMatch = await bcrypt.compare(oldPassword, hashedPassword);
     console.log(passwordMatch);
 
@@ -564,8 +563,8 @@ exports.changePassword = async (personID, oldPassword, newPassword) => {
     const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
     const [{ affectedRows }] = await db.query(
-      "UPDATE Person SET password = ? WHERE personID = ?",
-      [newHashedPassword, personID]
+      "UPDATE Person SET password = ? WHERE personId = ?",
+      [newHashedPassword, personId]
     );
 
     return affectedRows;
