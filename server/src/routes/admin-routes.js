@@ -11,6 +11,30 @@ const {
 } = require("../middleware/auth-middleware");
 const { all, admin, alumni, sysAdmin } = require("../utils/roles");
 
+router.get(
+  "/admin-list",
+  verifyToken,
+  verifyRefreshToken,
+  authRoles(sysAdmin),
+  adminController.getAdminList
+);
+
+router.put(
+  "/verify-admin/:adminId",
+  verifyToken,
+  verifyRefreshToken,
+  authRoles(sysAdmin),
+  adminController.verifyAdmin
+);
+
+router.put(
+  "/admin/:adminId",
+  verifyToken,
+  verifyRefreshToken,
+  authRoles(sysAdmin),
+  adminController.updateAdmin
+);
+
 router.post(
   "/upload-alumni-data",
   upload.single("file"),
@@ -52,6 +76,14 @@ router.get(
   "/getDonations",
 
   adminController.getDonations
+);
+
+router.get(
+  "/get-admin/:adminId",
+  verifyToken,
+  verifyRefreshToken,
+  authRoles(sysAdmin),
+  adminController.getAdmin
 );
 router.get(
   "/get-alumni",
