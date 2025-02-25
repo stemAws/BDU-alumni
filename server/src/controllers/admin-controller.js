@@ -1,5 +1,36 @@
 const adminService = require("../services/admin-services");
 
+exports.getAdminList = async (req, res) => {
+  try {
+    const adminList = await adminService.fetchAdminList();
+    res.json(adminList);
+  } catch (error) {
+    console.error("Error fetching requested admin list:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.getAdmin = async (req, res) => {
+  try {
+    const adminInfo = await adminService.fetchAdminInfo(req.params.adminId);
+    res.json(adminInfo);
+  } catch (error) {
+    console.error("Error fetching requested admin info:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.updateAdmin = async (req, res) => {
+  try {
+    await adminService.updateAdminInfo(req.params.adminId, req.body);
+
+    res.status(200).json({ message: "Admin updated docusuccessfully" });
+  } catch (error) {
+    console.error("Error updating admin:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 exports.uploadAlumniData = async (req, res) => {
   try {
     const alumniData = adminService.parseExcelFile(req.file.buffer);
@@ -158,6 +189,26 @@ exports.veifyAlumni = async function (req, res) {
 
     if (affectedRows === 0) {
       return res.status(404).json({ error: "Alumni not found" });
+    }
+
+    res.json({ success: "Verified change successful" });
+  } catch (error) {
+    console.error("Error changing verified:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+exports.verifyAdmin = async function (req, res) {
+  try {
+    const { verified } = req.body;
+    const adminId = req.params.adminId;
+
+    const affectedRows = await adminService.verifyAdminStatus(
+      adminId,
+      verified
+    );
+
+    if (affectedRows === 0) {
+      return res.status(404).json({ error: "Admin not found" });
     }
 
     res.json({ success: "Verified change successful" });
