@@ -135,7 +135,6 @@ exports.signIn = async (req, res) => {
         .status(400)
         .json({ ok: false, success: false, message: "Invalid credentials" });
     }
-    console.log("url: ", process.env.FRONTEND_URL);
 
     const userData = user[0];
 
@@ -567,10 +566,10 @@ exports.changePassword = async function (req, res) {
   // : fix it
   try {
     const { newPassword, oldPassword } = req.body;
-    const alumniId = req.params.alumniId;
+    const personId = req.params.personId;
 
     const affectedRows = await alumniService.changePassword(
-      alumniId,
+      personId,
       newPassword,
       oldPassword
     );
