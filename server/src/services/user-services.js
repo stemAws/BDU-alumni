@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const transporter = require("../config/mailerConfig");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-exports.hashPassword = async (password) => {
+const hashPassword = async (password) => {
   const saltRounds = 10;
   return await bcrypt.hash(password, saltRounds); // Return the hashed password
 };
@@ -176,7 +176,7 @@ exports.activateUser = async (userId, password) => {
     }
 
     // Hash the new password
-    const hashedPassword = await this.hashPassword(password);
+    const hashedPassword = await hashPassword(password);
 
     // Update the user's status and password
     const [rows] = await db.query(
