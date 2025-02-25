@@ -2,6 +2,48 @@ const db = require("../config/db");
 const xlsx = require("xlsx");
 const bcrypt = require("bcrypt");
 
+exports.fetchAdminList = async () => {
+  try {
+    const [result] = await db.query(
+      "SELECT fullName, gender, createdAt, username, email, verified, role, adminId FROM websiteadmin a JOIN person p on a.personId = p.personId AND isAdmin = ?",
+      [1]
+    );
+    return result;
+  } catch (error) {
+    throw new Error(
+      "Error fetching suggested posts to admin: " + error.message
+    );
+  }
+};
+
+exports.fetchAdminInfo = async (adminId) => {
+  try {
+    const [result] = await db.query(
+      "SELECT fullName, gender, createdAt, username, password, email, verified, role FROM websiteadmin a JOIN person p on a.personId = p.personId AND isAdmin = ? AND adminId = ?",
+      [1, adminId]
+    );
+    return result;
+  } catch (error) {
+    throw new Error(
+      "Error fetching suggested posts to admin: " + error.message
+    );
+  }
+};
+
+exports.updateAdminInfo = async (adminId, adminInfo) => {
+  const { fullName, gender, email, role, username } = adminInfo;
+  const [result] = await db.query(
+    "UPDATE Person p JOIN websiteadmin a ON p.personId = a.personId SET role = ?, fullName = ?, gender=?, email=?, username=?, adminId = ?",
+    [role, fullName, gender, email, username, adminId]
+  );
+
+  if (result.affectedRows === 0) {
+    return { success: false, message: "No record by the given id" };
+  }
+
+  return { success: true, message: "Admin Info updated successfully" };
+};
+
 exports.parseExcelFile = (buffer) => {
   const workbook = xlsx.read(buffer, {
     cellDates: true,
@@ -227,6 +269,18 @@ exports.updateVerified = async (alumniID, verified) => {
     const [{ affectedRows }] = await db.query(
       "UPDATE Person p JOIN Alumni a ON p.personId = a.personId SET verified = ? WHERE alumniID = ?",
       [verified, alumniID]
+    );
+    return affectedRows;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.verifyAdminStatus = async (adminId, verified) => {
+  try {
+    const [{ affectedRows }] = await db.query(
+      "UPDATE Person p JOIN websiteadmin a ON p.personId = a.personId SET verified = ? WHERE adminId = ?",
+      [verified, adminId]
     );
     return affectedRows;
   } catch (error) {
