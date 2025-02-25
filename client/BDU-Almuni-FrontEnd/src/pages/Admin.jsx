@@ -19,8 +19,6 @@ import JobOffer from "./AdminPages/JobOffer";
 import SuggestedJob from "./AdminPages/SuggestedJob";
 import GalleryList from "./AdminPages/GalleryList";
 import AddGallery from "./AdminPages/AddGallery";
-import AdminSignin from "../component/AdminSignin";
-import AuthService from "../component/AuthService";
 import ChaptersList from "./AdminPages/chaptersList";
 import Editnews from "./AdminPages/Editnews";
 import EditDonation from "./AdminPages/EditDonation";
@@ -29,6 +27,8 @@ import EditEvent from "./AdminPages/EditEvent";
 import EditClub from "./AdminPages/EditClub";
 import AGallery from "./AdminPages/AGallery";
 import RequestedTranscript from "./AdminPages/TranscriptList";
+import AdminList from "./AdminPages/AdminList";
+import EditAdmin from "./AdminPages/EditAdmin";
 import { useAuth } from "../component/useAuth";
 
 const Admin = () => {
@@ -57,6 +57,14 @@ const Admin = () => {
           <Routes>
             <Route path="home" element={<Home />} />
             <Route path="users" element={role === "systemAdmin" && <Users />} />
+            <Route
+              path="adminlist"
+              element={role === "systemAdmin" && <AdminList />}
+            />
+            <Route
+              path="edit-admin/:adminId"
+              element={role === "systemAdmin" && <EditAdmin />}
+            />
             <Route path="News" element={<NewsList />} />
             <Route path="News/edit-news/:newsId" element={<Editnews />} />
             <Route path="AddNews" element={<News />} />
