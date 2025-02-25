@@ -26,9 +26,9 @@ router.delete("/unsubscribe/", UserController.unsubscribe);
 
 router.post(
   "/addUser",
-  // verifyToken,
-  // verifyRefreshToken,
-  // authRoles(sysAdmin),
+  verifyToken,
+  verifyRefreshToken,
+  authRoles(sysAdmin),
   UserController.addUser
 );
 router.get(
@@ -107,7 +107,7 @@ router.post(
   UserController.checkEmailAvailability
 );
 router.put(
-  "/change-password/:alumniID",
+  "/change-password/:personId",
   verifyRefreshToken,
 
   verifyToken,
