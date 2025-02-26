@@ -24,10 +24,13 @@ exports.updateAdmin = async (req, res) => {
   try {
     await adminService.updateAdminInfo(req.params.adminId, req.body);
 
-    res.status(200).json({ message: "Admin updated docusuccessfully" });
+    res.status(200).json({
+      ok: true,
+      message: "Admin updated doc successfully",
+    });
   } catch (error) {
     console.error("Error updating admin:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ ok: true, message: "Internal Server Error" });
   }
 };
 
