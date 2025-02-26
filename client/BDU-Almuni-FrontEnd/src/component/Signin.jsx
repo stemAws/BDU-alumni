@@ -64,8 +64,10 @@ const Signin = () => {
       setLoading(false);
     }
   };
-  const handleNewUsers=async()=>{
+  const handleNewUsers=async(e)=>{
+    e.preventDefault()
     try {
+      setLoading(true)
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/request-activation`,
         {
@@ -79,11 +81,12 @@ const Signin = () => {
       );
       if (response.ok) {
         setPage(2)
+        setLoading(false)
       }
       const data = await response.json();
-      console.log(data)
     } catch (error) {
       console.error('could not send activation to the user',error)
+      setLoading(false)
     }
   }
 
@@ -113,17 +116,18 @@ const Signin = () => {
               <Button onClick={()=>setPage(1)} text={'Activate Account'}/>
             </div>:
             page===1?
-            <div className="username_form">
+            <form onSubmit={handleNewUsers} className="username_form">
             <h1>please enter your username</h1>
             <p className="sub_title">Your username is your last name plus grauduating year e.g abebe2000 </p>
               <input
                 className="inputs change_pass_inputs"
                 value={newGuysUsername}
                 onChange={(e)=>setNewGuysUsername(e.target.value)}
+                disabled={loading}
                 required={true}
               />
-              <Button onClick={handleNewUsers} text={'Submit'}/>
-            </div>
+              <Button type={'submit'} disabled={loading} text={`${loading?'Submitting...':'Submit'}`}/>
+            </form>
             :
             <div className={`overlay_panel overlay_right full_width ${page!==0&&'full'}`}>
               <h1 className="hello_wellcome">Congratulations </h1>
