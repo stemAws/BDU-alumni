@@ -19,7 +19,7 @@ exports.fetchAdminList = async () => {
 exports.fetchAdminInfo = async (adminId) => {
   try {
     const [result] = await db.query(
-      "SELECT fullName, gender, createdAt, username, password, email, verified, role FROM websiteadmin a JOIN person p on a.personId = p.personId AND isAdmin = ? AND adminId = ?",
+      "SELECT fullName, gender, username, email,  role FROM websiteadmin a JOIN person p on a.personId = p.personId AND isAdmin = ? AND adminId = ?",
       [1, adminId]
     );
     return result;
