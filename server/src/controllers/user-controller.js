@@ -94,6 +94,7 @@ exports.requestActivation = async (req, res) => {
 
     res.status(200).json({
       message: "If the account exists, an activation link has been sent.",
+      email: user[0].email,
     });
   } catch (err) {
     console.error("Error requesting activation:", err);
