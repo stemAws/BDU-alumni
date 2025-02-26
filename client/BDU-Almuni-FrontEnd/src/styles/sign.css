@@ -71,6 +71,9 @@ transition: all 0.6s ease-in-out;
     transition: transform 0.6s ease-in-out;
     z-index: 100;
 }
+.overlay_container.full{
+    width: 100%;
+}
 .overlaySign{
     background-color:#0C8CE9;
     color: #fff;
@@ -80,6 +83,10 @@ transition: all 0.6s ease-in-out;
     width: 200%;
     transform: translateX(0);
     transition: transform 0.6s ease-in-out;
+}
+.overlaySign.full{
+    left: 0;
+    width: 100%;
 }
 .overlay_panel{
     position: absolute;
@@ -202,7 +209,7 @@ height: 550px;
     display: flex;
     transform: translateX(50%);
 }
-.authentication.changePassword{
+.authentication.invisible{
     transform: translateX(0%);
 }
 .sign_in{
@@ -222,9 +229,28 @@ margin:60px 0 0 0;
 transition: all 0.5s ease-in-out;
 }
 
-/* .sign_in.first-time{
-    left: -50%;
-} */
+.username_form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 20px;
+    font-family:'Poppins';
+    text-transform: capitalize;   
+}
+.username_form>input{
+    color: #fff;
+}
+.username_form>.btn{
+    background-color: transparent;
+    border: 1px solid white;
+    color: #fff;
+}
+.sub_title{
+font:300 16px 'Poppins';
+text-transform: none;
+}
  .first-time{
     gap: 30px;
     padding-left: 30px;
@@ -364,6 +390,13 @@ margin: 0 0 30px 0;
 .new_bies .btn{
     margin: 0;
     color: #fff;
+}
+.overlay_panel .btn{
+    color: white;
+    width: 125px;
+}
+.overlay_panel.full{
+    width: 100%;
 }
 @media(min-width:650px) and (max-width:800px){
 

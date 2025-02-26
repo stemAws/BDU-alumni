@@ -236,9 +236,9 @@ const Posts = (props) => {
               <p>{userDetails.fullName} </p>
             </div>
           )}
-          {socialValues.length>0 && (
+          {socialValues?.length>0 && (
             <div className="socialmedia">
-              {socialValues.map((value, index) => (
+              {socialValues?.map((value, index) => (
                 value.length!==0&&<a key={index} href={`http://${value}`} target="_blank" rel="noopener noreferrer">
                     {value.includes('facebook') ? (
                       <FaFacebookF className='each_icons'/>

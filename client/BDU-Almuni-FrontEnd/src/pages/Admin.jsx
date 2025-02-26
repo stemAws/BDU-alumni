@@ -27,8 +27,8 @@ import EditEvent from "./AdminPages/EditEvent";
 import EditClub from "./AdminPages/EditClub";
 import AGallery from "./AdminPages/AGallery";
 import RequestedTranscript from "./AdminPages/TranscriptList";
-import AdminList from "./AdminPages/AdminList";
-import EditAdmin from "./AdminPages/EditAdmin";
+// import AdminList from "./AdminPages/AdminList";
+// import EditAdmin from "./AdminPages/EditAdmin";
 import { useAuth } from "../component/useAuth";
 
 const Admin = () => {
