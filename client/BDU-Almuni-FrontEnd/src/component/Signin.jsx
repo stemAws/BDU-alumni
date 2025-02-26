@@ -17,7 +17,8 @@ const Signin = () => {
   const [visible, setVisible] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [page, setPage] = useState(0)
+  const [newGuysUsername, setNewGuysUsername] = useState('')
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -63,6 +64,28 @@ const Signin = () => {
       setLoading(false);
     }
   };
+  const handleNewUsers=async()=>{
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/request-activation`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username:newGuysUsername }),
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        setPage(2)
+      }
+      const data = await response.json();
+      console.log(data)
+    } catch (error) {
+      console.error('could not send activation to the user',error)
+    }
+  }
 
   const handleGoogleSignin = async (e) => {
     e.preventDefault();
@@ -76,18 +99,42 @@ const Signin = () => {
   return (
     <div className="signin_overlay">
       <div id="pop_container" className="pop_container">
-        <div className="overlay_container">
-          <div className="overlaySign">
+        <div className={`overlay_container ${page!==0&&'full'}`}>
+          <div className={`overlaySign ${page!==0&&'full'}`}>
+            {
+            page===0 ?
             <div className="overlay_panel overlay_right">
               <h1 className="hello_wellcome">Hello and Welcome</h1>
-              <p className="question">
+              {/* <p className="question">
                 We're thrilled to have you back and reconnecting with fellow BDU
                 graduates
-              </p>
+              </p> */}
+              <p >if you are new here please click below</p>
+              <Button onClick={()=>setPage(1)} text={'Activate Account'}/>
+            </div>:
+            page===1?
+            <div className="username_form">
+            <h1>please enter your username</h1>
+            <p className="sub_title">Your username is your last name plus grauduating year e.g abebe2000 </p>
+              <input
+                className="inputs change_pass_inputs"
+                value={newGuysUsername}
+                onChange={(e)=>setNewGuysUsername(e.target.value)}
+                required={true}
+              />
+              <Button onClick={handleNewUsers} text={'Submit'}/>
             </div>
+            :
+            <div className={`overlay_panel overlay_right full_width ${page!==0&&'full'}`}>
+              <h1 className="hello_wellcome">Congratulations </h1>
+              <p className="question">
+                We have sent you a link to reset your password to this email abc****sfr@gmail..com 
+              </p>
+              <Button onClick={()=>setsignin(false)} text={'Okay'}/>
+            </div>}
           </div>
         </div>
-        <div className="sign_Container signin_container">
+        <div className={`sign_Container signin_container `}>
           <div
             onClick={() => {
               navigate("/") || setsignin(false);
@@ -96,7 +143,7 @@ const Signin = () => {
           >
             <FaTimes />
           </div>
-          <div className="authentication">
+          <div className={`authentication ${page!==0&&'invisible'}`}>
             <form className="sign_in">
               <h1>LOGIN</h1>
               {errorPopup && (
