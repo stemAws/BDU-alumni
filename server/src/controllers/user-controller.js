@@ -564,25 +564,35 @@ exports.checkEmailAvailability = async function (req, res) {
 };
 
 exports.changePassword = async function (req, res) {
-  // : fix it
   try {
     const { newPassword, oldPassword } = req.body;
-    const personId = req.params.personId;
+    const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
 
     const affectedRows = await alumniService.changePassword(
       personId,
-      newPassword,
-      oldPassword
+      oldPassword,
+      newPassword
     );
 
     if (affectedRows === 0) {
-      return res.status(404).json({ error: "Alumni not found" });
+      return res.status(404).json({
+        ok: false,
+        success: false,
+        message: "Alumni not found",
+      });
     }
 
-    res.json({ success: "Password change successful" });
+    return res.status(200).json({
+      ok: true,
+      success: true,
+      message: "Password change successful",
+    });
   } catch (error) {
-    console.error("Error changing password:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({
+      ok: false,
+      success: false,
+      message: "An error occurred while changing the password",
+    });
   }
 };
 
