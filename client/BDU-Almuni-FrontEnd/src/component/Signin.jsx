@@ -78,33 +78,37 @@ const Signin = () => {
   
     setNewGuysEmail(`${name.slice(0, visibleChars)}${hiddenChars}@${domain}`)
   };
-  const handleNewUsers=async(e)=>{
-    e.preventDefault()
+  const handleNewUsers = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    
     try {
-      setLoading(true)
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/request-activation`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username:newGuysUsername }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: newGuysUsername }),
           credentials: "include",
         }
       );
-      if (response.ok) {
-        setPage(2)
-        setLoading(false)
-      }
+  
       const data = await response.json();
-      maskEmail(data.email)
+      console.log(data)
+      if (response.ok) {
+        setPage(2);
+        maskEmail(data.email);
+      } else {
+        toast.error("No account with that username found"); 
+      }
     } catch (error) {
-      console.error('could not send activation to the user',error)
-      setLoading(false)
-      toast.error('No account with that username found')
+      console.error("Could not send activation to the user", error);
+      toast.error("Something went wrong. Try again.");
+    } finally {
+      setLoading(false); 
     }
-  }
+  };
+  
 
   const handleGoogleSignin = async (e) => {
     e.preventDefault();
