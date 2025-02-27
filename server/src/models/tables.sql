@@ -112,24 +112,16 @@ CREATE TABLE Event (
 
 CREATE TABLE JobPosting (
     jobPostingId INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    adminId INT,
     personId INT,
     jobTitle VARCHAR(100),
     description Text,
     companyName VARCHAR(100),
-    companyAddress VARCHAR(255),
-    peopleNeeded INT,
     deadline Date,
-    email VARCHAR(100),
-    phoneNumber VARCHAR(20),
-    salary INT,
-    imagePath VARCHAR(255),
+    jobLink VARCHAR(100),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (personId) REFERENCES Person(personId),
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    employmentType VARCHAR(255),
-    isApproved BOOLEAN,
-    FOREIGN KEY (adminId) REFERENCES WebsiteAdmin(adminId)
+    isApproved BOOLEAN
 );
 
 CREATE TABLE Chapters (
