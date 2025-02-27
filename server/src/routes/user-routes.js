@@ -107,7 +107,7 @@ router.post(
   UserController.checkEmailAvailability
 );
 router.put(
-  "/change-password/:personId",
+  "/change-password",
   verifyRefreshToken,
 
   verifyToken,
