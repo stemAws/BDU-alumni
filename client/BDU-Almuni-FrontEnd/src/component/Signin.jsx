@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FaEye, FaEyeSlash, FaTimes, FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaTimes, FaGoogle, FaChevronLeft } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./FormInput";
 import Button from "./Button";
@@ -8,10 +8,12 @@ import { SigninContext } from "../pages/MainPage";
 import ChangePassword from "./ChangePassword";
 import AuthService from "./AuthService";
 import "../styles/sign.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const Signin = () => {
   const { setsignin } = useContext(SigninContext);
   const { setAuth } = useAuth(); 
+  const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
@@ -19,6 +21,7 @@ const Signin = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0)
   const [newGuysUsername, setNewGuysUsername] = useState('')
+  const [newGuysEmail,setNewGuysEmail] = useState()
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -64,31 +67,50 @@ const Signin = () => {
       setLoading(false);
     }
   };
-  const handleNewUsers=async(e)=>{
-    e.preventDefault()
+  const maskEmail = (email) => {
+    const [name, domain] = email.split("@");
+  
+    if (name.length <= 4) {
+      return `${name[0]}***@${domain}`;
+    }
+  
+    const visibleChars = Math.ceil(name.length * 0.3); 
+    const hiddenChars = "*".repeat(name.length - visibleChars);
+  
+    setNewGuysEmail(`${name.slice(0, visibleChars)}${hiddenChars}@${domain}`)
+  };
+  const handleNewUsers = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    
     try {
-      setLoading(true)
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/request-activation`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username:newGuysUsername }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: newGuysUsername }),
           credentials: "include",
         }
       );
-      if (response.ok) {
-        setPage(2)
-        setLoading(false)
+  
+      if (!response.ok) {
+        toast.error("No account with that username found"); 
+        return
+      } else {
+        const data = await response.json();
+        maskEmail(data.email);
+        setPage(2);
       }
-      const data = await response.json();
+     
     } catch (error) {
-      console.error('could not send activation to the user',error)
-      setLoading(false)
+      console.error("Could not send activation to the user", error);
+      toast.error("Something went wrong. Try again.");
+    } finally {
+      setLoading(false); 
     }
-  }
+  };
+  
 
   const handleGoogleSignin = async (e) => {
     e.preventDefault();
@@ -98,9 +120,11 @@ const Signin = () => {
       console.error("Error during Google sign-in:", error);
     }
   };
-
+  
+  
   return (
     <div className="signin_overlay">
+      <ToastContainer autoClose={4000}/>
       <div id="pop_container" className="pop_container">
         <div className={`overlay_container ${page!==0&&'full'}`}>
           <div className={`overlaySign ${page!==0&&'full'}`}>
@@ -108,31 +132,32 @@ const Signin = () => {
             page===0 ?
             <div className="overlay_panel overlay_right">
               <h1 className="hello_wellcome">Hello and Welcome</h1>
-              {/* <p className="question">
-                We're thrilled to have you back and reconnecting with fellow BDU
-                graduates
-              </p> */}
               <p >if you are new here please click below</p>
               <Button onClick={()=>setPage(1)} text={'Activate Account'}/>
             </div>:
             page===1?
-            <form onSubmit={handleNewUsers} className="username_form">
-            <h1>please enter your username</h1>
-            <p className="sub_title">Your username is your last name plus grauduating year e.g abebe2000 </p>
-              <input
-                className="inputs change_pass_inputs"
-                value={newGuysUsername}
-                onChange={(e)=>setNewGuysUsername(e.target.value)}
-                disabled={loading}
-                required={true}
-              />
-              <Button type={'submit'} disabled={loading} text={`${loading?'Submitting...':'Submit'}`}/>
-            </form>
+            <>
+            <FaChevronLeft className="back_arrow" onClick={()=>setPage(0)}/>
+                <form onSubmit={handleNewUsers} className="username_form">
+                  <div className="headers">
+                    <h1>please enter your username</h1>
+                            <p className="example" >If your full name is <span className="orange">Abebe Kebede Alemu</span> and you <span className="orange"> graduated in 2000</span> then your username will be  <span className="orange">abebekebedealemu2000</span> </p>
+                    </div>
+                            <input
+                              className="inputs change_pass_inputs"
+                              value={newGuysUsername}
+                              onChange={(e)=>setNewGuysUsername(e.target.value)}
+                              disabled={loading}
+                              required={true}
+                            />
+                            <Button type={'submit'} disabled={loading} text={`${loading?'Submitting...':'Submit'}`}/>
+                          </form>
+            </>
             :
             <div className={`overlay_panel overlay_right full_width ${page!==0&&'full'}`}>
               <h1 className="hello_wellcome">Congratulations </h1>
               <p className="question">
-                We have sent you a link to reset your password to this email abc****sfr@gmail..com 
+                We have sent you a link to reset your password to this email {newGuysEmail} 
               </p>
               <Button onClick={()=>setsignin(false)} text={'Okay'}/>
             </div>}
@@ -141,6 +166,7 @@ const Signin = () => {
         <div className={`sign_Container signin_container `}>
           <div
             onClick={() => {
+              console.log("first")
               navigate("/") || setsignin(false);
             }}
             className="icon"

@@ -232,12 +232,17 @@ transition: all 0.5s ease-in-out;
 .username_form{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding-left:15% ;
     justify-content: center;
     height: 100%;
-    gap: 20px;
+    gap: 25px;
     font-family:'Poppins';
     text-transform: capitalize;   
+}
+.headers{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 .username_form>input{
     color: #fff;
@@ -247,9 +252,24 @@ transition: all 0.5s ease-in-out;
     border: 1px solid white;
     color: #fff;
 }
-.sub_title{
-font:300 16px 'Poppins';
-text-transform: none;
+
+.example{
+    font:300 14px 'Poppins';
+    text-transform: none;
+    width: 80%;
+}
+.orange{
+color: #ffa500;
+}
+.back_arrow{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    background-color: transparent;
+    cursor: pointer;
+}
+.back_arrow:hover{
+    color: #90b9e7b5;
 }
  .first-time{
     gap: 30px;
