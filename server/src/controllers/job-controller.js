@@ -1,38 +1,42 @@
 const jobService = require("../services/job-services");
-const path = require("path");
-const sharp = require("sharp");
+// const path = require("path");
+// const sharp = require("sharp");
+const jwt = require("jsonwebtoken");
 
-const {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} = require("firebase/storage");
-const firebaseConfig = require("../config/firebaseConfig");
-const firebsae = require("firebase/app");
-firebsae.initializeApp(firebaseConfig);
-const storage = getStorage();
+// const {
+//   getStorage,
+//   ref,
+//   uploadBytes,
+//   getDownloadURL,
+//   deleteObject,
+// } = require("firebase/storage");
+// const firebaseConfig = require("../config/firebaseConfig");
+// const firebsae = require("firebase/app");
+// firebsae.initializeApp(firebaseConfig);
+// const storage = getStorage();
 exports.createJob = async (req, res) => {
   try {
-    const imagePath = req.file
-      ? `job/${Date.now()}${path.extname(req.file.originalname)}`
-      : null;
-    let downloadURL = null;
+    //   const imagePath = req.file
+    //     ? `job/${Date.now()}${path.extname(req.file.originalname)}`
+    //     : null;
+    //   let downloadURL = null;
 
-    // file part should be removed just for now let it stay... will be removed after decision
+    //   // file part should be removed just for now let it stay... will be removed after decision
 
-    if (req.file) {
-      const fileRef = ref(storage, imagePath);
-      resizedFile = await sharp(req.file.buffer)
-        .jpeg({ quality: 50 })
-        .toBuffer();
+    //   if (req.file) {
+    //     const fileRef = ref(storage, imagePath);
+    //     resizedFile = await sharp(req.file.buffer)
+    //       .jpeg({ quality: 50 })
+    //       .toBuffer();
 
-      await uploadBytes(fileRef, resizedFile);
-      downloadURL = await getDownloadURL(fileRef);
-    }
+    //     await uploadBytes(fileRef, resizedFile);
+    //     downloadURL = await getDownloadURL(fileRef);
+    //   }
 
-    const job = await jobService.addJob(downloadURL, req.body, req.alumni.personId);
+    // const job = await jobService.addJob(downloadURL, req.body, req.alumni.personId);
+    const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
+    const job = await jobService.addJob(req.body, personId);
+
     res.status(201).json({ message: "Job added successfully", job });
   } catch (error) {
     console.error("Error adding job:", error);

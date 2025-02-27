@@ -1,21 +1,18 @@
 const db = require("../config/db");
 
-exports.addJob = async (imagePath, jobDetails, alumniwhoposteditId) => {
+exports.addJob = async (jobDetails, personId) => {
   try {
-    const [result] = await db.query("INSERT INTO Jobposting (  jobTitle, description,companyName,companyAddress,peopleNeeded,salary,deadline,email,phoneNumber,personId, imagePath, employmentType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?, ?)", [
-      jobDetails.jobTitle,
-      jobDetails.jobDescription,
-      jobDetails.companyName,
-      jobDetails.address,
-      jobDetails.peopleNeeded,
-      jobDetails.salary,
-      jobDetails.deadline,
-      jobDetails.email,
-      jobDetails.phoneNumber,
-      alumniwhoposteditId,
-      imagePath,
-      jobDetails.employmentType
-    ]);
+    const [result] = await db.query(
+      "INSERT INTO Jobposting (jobTitle, description,companyName,deadline,jobLink,personId) VALUES (?, ?, ?, ?, ?, ?)",
+      [
+        jobDetails.jobTitle,
+        jobDetails.jobDescription,
+        jobDetails.companyName,
+        jobDetails.deadline,
+        jobDetails.jobLink || "",
+        personId,
+      ]
+    );
 
     return result.insertId;
   } catch (error) {
@@ -27,13 +24,17 @@ exports.addJob = async (imagePath, jobDetails, alumniwhoposteditId) => {
 exports.getJobs = async () => {
   const [result] = await db.query(`
     SELECT 
-        Jobposting.*, 
-        Person.fullName, 
-        Person.username, 
-        Alumni.profilePicture
-    FROM Jobposting
-    LEFT JOIN Person ON Jobposting.personId = Person.personId
-    LEFT JOIN Alumni ON Person.personId = Alumni.personId
+    Jobposting.*, 
+    DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline, 
+    DATE_FORMAT(Jobposting.createdAt, '%Y-%m-%d') AS createdAt, 
+    DATE_FORMAT(Jobposting.updatedAt, '%Y-%m-%d') AS updatedAt, 
+    Person.fullName, 
+    Person.username, 
+    Alumni.profilePicture
+FROM Jobposting
+LEFT JOIN Person ON Jobposting.personId = Person.personId
+LEFT JOIN Alumni ON Person.personId = Alumni.personId;
+
 `);
 
   return result;
@@ -41,25 +42,15 @@ exports.getJobs = async () => {
 
 exports.getJob = async (jobId) => {
   const [job] = await db.query(
-    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline,DATE_FORMAT(uploadDate, '%Y-%m-%d') AS uploadDate FROM Jobposting WHERE jobPostingId = ?`,
+    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline,DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM Jobposting WHERE jobPostingId = ?`,
     [jobId]
   );
   return job.length > 0 ? job[0] : null;
 };
 
 exports.updateJob = async (jobId, updatedJob) => {
-  const {
-    jobTitle,
-    jobDescription,
-    uploadDate,
-    companyName,
-    address,
-    peopleNeeded,
-    salary,
-    deadline,
-    email,
-    phoneNumber
-  } = updatedJob;
+  const { jobTitle, jobDescription, companyName, deadline, jobLink } =
+    updatedJob;
 
   const [result] = await db.query(
     `
@@ -67,30 +58,13 @@ exports.updateJob = async (jobId, updatedJob) => {
         SET
         jobTitle=?,
         description=?,
-        uploadDate=?,
         companyName=?,
-        companyAddress=?,
-        peopleNeeded=?,
-        salary=?,
         deadline=?,
-        email=?,
-        phoneNumber=?
+        jobLink=?
     WHERE
             jobpostingId = ?
     `,
-    [
-      jobTitle,
-      jobDescription,
-      uploadDate,
-      companyName,
-      address,
-      peopleNeeded,
-      salary,
-      deadline,
-      email,
-      phoneNumber,
-      jobId,
-    ]
+    [jobTitle, jobDescription, companyName, deadline, jobLink || "", jobId]
   );
 
   return result.affectedRows;
@@ -110,7 +84,7 @@ exports.deleteJob = async (jobId) => {
 
 exports.getAllJobs = async () => {
   const [jobs] = await db.query(
-    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline  FROM jobposting`
+    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt   FROM jobposting`
   );
   return jobs;
 };
