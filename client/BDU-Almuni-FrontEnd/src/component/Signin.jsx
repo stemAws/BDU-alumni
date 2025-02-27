@@ -13,6 +13,7 @@ import { toast, ToastContainer } from "react-toastify";
 const Signin = () => {
   const { setsignin } = useContext(SigninContext);
   const { setAuth } = useAuth(); 
+  const navigate = useNavigate()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
@@ -93,14 +94,15 @@ const Signin = () => {
         }
       );
   
-      const data = await response.json();
-      console.log(data)
-      if (response.ok) {
-        setPage(2);
-        maskEmail(data.email);
-      } else {
+      if (!response.ok) {
         toast.error("No account with that username found"); 
+        return
+      } else {
+        const data = await response.json();
+        maskEmail(data.email);
+        setPage(2);
       }
+     
     } catch (error) {
       console.error("Could not send activation to the user", error);
       toast.error("Something went wrong. Try again.");
@@ -164,6 +166,7 @@ const Signin = () => {
         <div className={`sign_Container signin_container `}>
           <div
             onClick={() => {
+              console.log("first")
               navigate("/") || setsignin(false);
             }}
             className="icon"
