@@ -554,8 +554,6 @@ exports.changePassword = async (personId, oldPassword, newPassword) => {
     }
     const hashedPassword = result[0].password;
     const passwordMatch = await bcrypt.compare(oldPassword, hashedPassword);
-    console.log(passwordMatch);
-
     if (!passwordMatch) {
       throw new Error("Current password is incorrect");
     }
