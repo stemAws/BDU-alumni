@@ -1,0 +1,143 @@
+/* Map Styling */
+.map-container {
+  width: 100%;
+  height: 500px;
+  border-radius: 10px;
+  z-index: 0;
+}
+
+/* Custom marker */
+.custom-marker img {
+  width: 30px;
+  height: 30px;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal Box */
+.modal {
+  background: white;
+  padding: 20px;
+  width: 90%;
+  min-width: 500px; /* Ensure long country names fit */
+  max-width: 600px; /* Keep it reasonable on large screens */
+  max-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  word-wrap: break-word; /* Prevent text overflow */
+  text-align: center; /* Center the country name */
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Close Button Hover Effect */
+.close-btn:hover {
+  transform: scale(1.2); /* Slightly enlarge the button on hover */
+}
+
+/* User List */
+.user-list {
+  max-height: 60vh;
+  overflow: hidden;
+  padding: 10px;
+}
+
+/* Scrollbar only when more than 3 users */
+.scrollable {
+  overflow-y: auto;
+}
+
+/* Custom Scrollbar */
+.scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* User Item - Flexbox for Proper Alignment */
+.user-item {
+  background: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Flexbox for Each Row */
+.user-field {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Ensures full width usage */
+}
+
+/* Label Styles (Fixed Width) */
+.user-field strong {
+  font-weight: bold;
+  color: #333;
+  min-width: 90px; /* Ensures all labels have the same width */
+  text-align: left;
+}
+
+/* Ensure Text Stays Left Aligned */
+.user-field span,
+.user-field a {
+  flex-grow: 1;
+  text-align: left;
+}
+
+/* Profile Link */
+.user-item a {
+  color: #f5ae7b; /* Set the link color */
+  text-decoration: none; /* Remove the underline */
+}
+
+/* Profile Link Hover Effect */
+.user-item a:hover {
+  color: #f88634; /* Darker shade when hovered */
+}
+
+/* Loading Text */
+.loading-text {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+  margin: 20px;
+}
