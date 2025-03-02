@@ -187,10 +187,10 @@ exports.fetchSuggestedPostsByAdmin = async () => {
 exports.fetchGeoData = async () => {
   try {
     const [rows, fields] = await db.query(
-      "SELECT address, COUNT(*) AS count FROM Alumni GROUP BY address"
+      "SELECT currentLocation, COUNT(*) AS count FROM Alumni GROUP BY currentLocation"
     );
     const data = rows.map((result) => ({
-      country: result.address,
+      country: result.currentLocation,
       count: result.count,
     }));
     return data;
@@ -199,17 +199,17 @@ exports.fetchGeoData = async () => {
   }
 };
 
-exports.fetchUserDataByCountry = async (req, res) => {
+exports.fetchUserDataByCountry = async (country) => {
   try {
-    const country = req.query.country; // Extract country from request query
-    if (!country) {
-      return res.status(400).json({ error: "Country parameter is missing" });
-    }
-    const userData = await adminService.fetchUserDataByCountry(country);
-    res.json(userData);
+    const [result] = await db.query(
+      "SELECT username, fullName, gender FROM Person p JOIN Alumni a ON p.personId = a.personId and currentLocation = ?",
+      [country]
+    );
+    return result;
   } catch (error) {
-    console.error("Error fetching user data by country:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    throw new Error(
+      "Error fetching suggested posts by admin: " + error.message
+    );
   }
 };
 
