@@ -107,7 +107,7 @@ const AdminList = () => {
     try {
       // Send a PUT request to activate the alumni
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/verify-alumni/${adminId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/verify-admin/${adminId}`,
         {
           method: "PUT",
 
@@ -222,7 +222,7 @@ const AdminList = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <h3> Bahir Dar University Alumni </h3>
+          <h3> Bahir Dar University Alumni Website Admin List </h3>
           <Link to="/admin/AddUser">
             <button className="addUser">+ Add User</button>
           </Link>
