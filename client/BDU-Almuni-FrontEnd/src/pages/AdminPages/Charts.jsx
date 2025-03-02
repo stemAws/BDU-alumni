@@ -1,5 +1,5 @@
 import "../../styles/charts.css";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import {
   XAxis,
   YAxis,
@@ -12,6 +12,7 @@ import {
 import DegreeAnalytics from "../AdminPages/DegreeAnalytics";
 import AdmissionAnalytics from "../AdminPages/AdmissionAnalytics";
 import MajorAnalaytics from "../AdminPages/MajorAnalaytics";
+import AlumniMap from "./AlumniMap";
 import { useAuth } from "../../component/useAuth";
 export default function Chart() {
   // State variables
@@ -68,7 +69,6 @@ export default function Chart() {
         }));
         transformedData.sort((a, b) => b.Count - a.Count);
         setIndustryCount(transformedData);
-        console.log(industryCount);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -127,39 +127,13 @@ export default function Chart() {
 
   return (
     <div className="chart">
-      {/* <div className="chart1">
-        <div className="selection-header">
-          <h3 className="chartTitle">User Analytics</h3>
-          <div className="selection">
-            <label>Year:</label>
-            <select
-              value={selectedYear}
-              onChange={handleYearChange}
-              className="selections"
-            >
-              {availableYears.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        {renderChart()}
-        {loading && <p>Loading...</p>}
-      </div> */}
       {role && (
         <div className="chart2">
           <h3 className="chartTitle">
             {" "}
             BDU Alumni based on geographical location
           </h3>
-
-          <iframe
-            className="geo_chart"
-            title="Geographical Representation"
-            src={"https://geo-marked-users.netlify.app"}
-          ></iframe>
+          <AlumniMap />
         </div>
       )}
 
