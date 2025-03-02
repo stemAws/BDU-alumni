@@ -10,24 +10,25 @@ export const AuthProvider = ({ children }) => {
     userId: null,
   });
 
-  // Check authentication on page load
+  const [loading, setLoading] = useState(true); // Track auth loading
+
   useEffect(() => {
     const initializeAuth = async () => {
       const result = await AuthService.checkAuth();
       setAuth(result);
+      setLoading(false); // Mark authentication check as complete
     };
 
     initializeAuth();
   }, []);
 
-  // Logout handler
   const logout = async () => {
     await AuthService.logout();
     setAuth({ isAuthenticated: false, role: null, userId: null });
   };
 
   return (
-    <AuthContext.Provider value={{ ...auth, setAuth, logout }}>
+    <AuthContext.Provider value={{ ...auth, setAuth, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

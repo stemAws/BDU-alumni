@@ -32,19 +32,13 @@ import EditAdmin from "./AdminPages/EditAdmin";
 import { useAuth } from "../component/useAuth";
 
 const Admin = () => {
-  const { isAuthenticated, role } = useAuth(); // Use the method from AuthService
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(null); // Start with null
+  const { isAuthenticated, role, loading } = useAuth(); // Add `loading` state
 
-  useEffect(() => {
-    setIsAdminAuthenticated(isAuthenticated);
-  }, [isAuthenticated]);
-
-  if (isAdminAuthenticated === null) {
-    return <div>Loading...</div>; // Prevents flicker
+  if (loading) {
+    return <div>Loading...</div>; // Prevent premature redirection
   }
 
-  // If not authenticated, redirect to login
-  if (!isAdminAuthenticated) {
+  if (!isAuthenticated) {
     return <Navigate to="/admin/signin" />;
   }
 
