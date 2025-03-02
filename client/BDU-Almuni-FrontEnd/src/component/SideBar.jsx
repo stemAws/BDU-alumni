@@ -44,10 +44,10 @@ const SideBar = () => {
           {role === "systemAdmin" && (
             <>
               <li className="sidebarListItem">
-                <Link to="/admin/users">Users</Link>
+                <Link to="/admin/users">Alumni List</Link>
               </li>
               <li className="sidebarListItem notifications">
-                <Link to="/admin/adminlist">Admin</Link>
+                <Link to="/admin/adminlist">Admin List</Link>
               </li>
             </>
           )}
