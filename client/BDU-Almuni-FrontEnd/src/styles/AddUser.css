@@ -164,3 +164,28 @@
   border-radius: 5px;
   margin-right: 20px;
 }
+
+/* Style the select element */
+select {
+  width: 100%; /* Make the select fill the container */
+  padding: 7px 15px; /* Add padding for better appearance */
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #ccc; /* Light border */
+  font-size: 16px; /* Increase font size */
+  background-color: #f9f9f9; /* Light background color */
+  color: #333; /* Text color */
+  cursor: pointer; /* Change cursor on hover */
+  transition: border-color 0.3s ease; /* Smooth border color transition */
+}
+
+/* Add focus effect */
+select:focus {
+  border-color: #333; /* Change border color when focused */
+  outline: none; /* Remove default outline */
+}
+
+/* Style for options */
+select option {
+  padding: 10px; /* Add padding for the options */
+  font-size: 16px; /* Option text size */
+}
