@@ -39,7 +39,7 @@ const AddUser = () => {
     confirmPassword: "",
     gender: "",
     role: "",
-    staffRole: "",
+    staffRole: "contentManager",
     email: "",
   });
   const handleChangeSingleUser = (e) => {
@@ -185,6 +185,12 @@ const AddUser = () => {
 
         await response.json();
 
+        if (formData.role == "Student") {
+          navigate("/admin/users");
+        } else {
+          navigate("/admin/adminlist");
+        }
+
         setFormData({
           username: "",
           firstName: "",
@@ -195,8 +201,6 @@ const AddUser = () => {
           staffRole: "",
           email: "",
         });
-
-        navigate("/admin/users");
       } catch (error) {
         // Handle errors from the server
         console.error("Error sending data to the server:", error.message);
@@ -396,13 +400,15 @@ const AddUser = () => {
           {formData.role === "Staff" && (
             <div className="newUseritem">
               <label>Admin Role</label>
-              <input
-                type="text"
-                placeholder="Website admin"
+              <select
                 name="staffRole"
-                value={formData.staffRole}
-                onChange={handleChangeSingleUser}
-              />
+                value={formData.staffRole} // Value controlled by state
+                onChange={handleChangeSingleUser} // Handler for user input
+                className="custom-select" // Apply a custom class if needed
+              >
+                <option value="contentManager">Content Manager</option>
+                <option value="systemAdmin">System Admin</option>
+              </select>
               {staffRoleError && (
                 <p className="errorMessage">{staffRoleError}</p>
               )}
@@ -415,7 +421,7 @@ const AddUser = () => {
         </form>
       </div>
       <div className="newMultipleUseritem multipleUsers">
-        <h1 className="newUserTitle"> Add Multitple Users</h1>
+        <h1 className="newUserTitle">Add Multiple Users</h1>
         <ToastContainer autoClose={1500} />
         <label htmlFor="file">Choose File</label>
         <div className="newUserflex">
@@ -423,7 +429,7 @@ const AddUser = () => {
           {errorUsers && <p className="errorMessage">{errorUsers}</p>}
         </div>
         <div className="newUseritem">
-          <label> Graduation Year </label>
+          <label>Graduation Year</label>
           <input
             type="text"
             placeholder="Graduation Year"
