@@ -7,11 +7,11 @@ import { useNavigate, useParams } from "react-router-dom";
 const EditGallery = () => {
   const navigate = useNavigate();
   const { galleryID } = useParams();
-  console.log(galleryID);
   // const [imageError, setImageError] = useState('');
   const [titleError, setTitleError] = useState("");
   const [yearError, setYearError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
+  const [originalYear, setOriginalYear] = useState(""); // To track the original year
 
   const handleClick = () => {
     navigate("/gallery");
@@ -20,6 +20,7 @@ const EditGallery = () => {
   const [formData, setFormData] = useState({
     event: "",
     year: "",
+    description: "",
   });
 
   useEffect(() => {
@@ -37,6 +38,7 @@ const EditGallery = () => {
             year: galleryData.year || "",
             description: galleryData.description || "",
           });
+          setOriginalYear(galleryData.year || ""); // Set the original year
         }
       } catch (error) {
         console.error("Error fetching gallery data:", error);
@@ -58,37 +60,41 @@ const EditGallery = () => {
 
     let valid = true;
 
+    // Validate event (if empty)
     if (!formData.event) {
-      setTitleError(formData.event ? "" : "Title field cannot be empty!");
-      valid = false;
-    } else if (!/^[a-zA-Z\s]+$/.test(formData.event)) {
-      setTitleError("Title field must contain only letters and spaces!");
+      setTitleError("Title field cannot be empty!");
       valid = false;
     } else {
       setTitleError("");
     }
 
-    if (!formData.year) {
-      setYearError("Year field cannot be empty!");
-      valid = false;
-    } else if (isNaN(formData.year)) {
-      setYearError("Year must be a number!");
-      valid = false;
-    } else if (formData.year.length !== 4) {
-      setYearError("Year must be a 4-digit number!");
-      valid = false;
-    } else if (formData.year < 2019) {
-      setYearError("Year must not be before 2019!!");
+    // Only validate year if it has changed
+    if (formData.year !== originalYear) {
+      if (!formData.year) {
+        setYearError("Year field cannot be empty!");
+        valid = false;
+      } else if (isNaN(formData.year)) {
+        setYearError("Year must be a number!");
+        valid = false;
+      } else if (formData.year.length !== 4) {
+        setYearError("Year must be a 4-digit number!");
+        valid = false;
+      } else if (formData.year < 1967) {
+        setYearError("Year must not be before 1967!!");
+        valid = false;
+      } else {
+        setYearError("");
+      }
+    }
+
+    // Validate description (if empty)
+    if (!formData.description) {
+      setDescriptionError("Description field cannot be empty!");
       valid = false;
     } else {
-      setYearError("");
+      setDescriptionError("");
     }
-    if (!formData.description) {
-      setDescriptionError(
-        formData.description ? "" : "Description field cannot be empty!"
-      );
-      valid = false;
-    }
+
     if (valid) {
       try {
         const response = await fetch(
@@ -96,7 +102,6 @@ const EditGallery = () => {
           {
             method: "PUT",
             credentials: "include",
-
             headers: {
               "Content-Type": "application/json",
             },
