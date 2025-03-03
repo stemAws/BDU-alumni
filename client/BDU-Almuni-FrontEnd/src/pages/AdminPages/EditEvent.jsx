@@ -75,7 +75,7 @@ const EditEvent = () => {
 
     if (!eventData.content) {
       setDescriptionError(
-        eventData.description ? "" : "Description field cannot be empty!"
+        eventData.content ? "" : "Description field cannot be empty!"
       );
       valid = false;
     } else if (/^[0-9\s]+$/.test(eventData.content)) {
