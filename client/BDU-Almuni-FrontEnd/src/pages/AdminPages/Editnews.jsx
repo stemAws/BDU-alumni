@@ -88,6 +88,8 @@ const EditNews = () => {
           `${import.meta.env.VITE_BACKEND_URL}/edit-news/${newsId}`,
           {
             method: "PUT",
+            credentials: "include",
+
             headers: {
               "Content-Type": "application/json",
             },
