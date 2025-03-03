@@ -125,7 +125,7 @@ exports.getEventById = async (eventID) => {
 };
 
 exports.updateEvent = async (eventId, updatedEvent) => {
-  const { title, description, startDate, endDate, organizer, eventLink } =
+  const { title, content, startDate, endDate, organizer, eventLink } =
     updatedEvent;
 
   const [result] = await db.query(
@@ -141,7 +141,7 @@ exports.updateEvent = async (eventId, updatedEvent) => {
         WHERE
             eventId = ?
     `,
-    [title, description, startDate, endDate, organizer, eventLink, eventId]
+    [title, content, startDate, endDate, organizer, eventLink, eventId]
   );
 
   return result.affectedRows;
