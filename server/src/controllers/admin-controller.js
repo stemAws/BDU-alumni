@@ -26,7 +26,7 @@ exports.updateAdmin = async (req, res) => {
 
     res.status(200).json({
       ok: true,
-      message: "Admin updated doc successfully",
+      message: "Admin info updated successfully",
     });
   } catch (error) {
     console.error("Error updating admin:", error);
