@@ -211,6 +211,7 @@ const EditAdmin = () => {
               />
               <label htmlFor="contentManager">Content Manager</label>{" "}
             </div>
+            {roleError && <p className="errorMessage">{roleError}</p>}
           </div>
 
           <button className="newUserButton" onClick={handleSubmit}>
