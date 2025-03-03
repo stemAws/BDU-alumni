@@ -128,7 +128,12 @@ const RequestedTranscript = () => {
         );
       }
 
-      setData(data.filter((item) => item.id !== deleteConfirmationId));
+      // setData(data.filter((item) => item.id !== deleteConfirmationId));
+      setData((prevData) =>
+        prevData.map((item) =>
+          item.id === id ? { ...item, status: "Canceled" } : item
+        )
+      );
     } catch (error) {
       console.error("Error canceling request:", error.message);
     }
