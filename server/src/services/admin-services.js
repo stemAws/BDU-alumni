@@ -32,8 +32,9 @@ exports.fetchAdminInfo = async (adminId) => {
 
 exports.updateAdminInfo = async (adminId, adminInfo) => {
   const { fullName, gender, email, role, username } = adminInfo;
+
   const [result] = await db.query(
-    "UPDATE Person p JOIN websiteadmin a ON p.personId = a.personId SET role = ?, fullName = ?, gender=?, email=?, username=?, adminId = ?",
+    "UPDATE Person p JOIN websiteadmin a ON p.personId = a.personId SET role = ?, fullName = ?, gender=?, email=?, username=? WHERE adminId = ?",
     [role, fullName, gender, email, username, adminId]
   );
 
@@ -127,7 +128,7 @@ exports.deleteRequest = async (id) => {
 exports.fetchDocRequestList = async () => {
   try {
     const [result] = await db.query(
-      "SELECT reservationId as id, status, email, fullName, DATE_FORMAT(reservationDate, '%Y-%m-%d') AS reservationDate FROM TranscriptReservations t JOIN Alumni a JOIN Person p WHERE a.alumniId = t.alumniId AND a.personId = p.personId"
+      "SELECT reservationId as id, t.status, email, fullName, DATE_FORMAT(reservationDate, '%Y-%m-%d') AS reservationDate FROM TranscriptReservations t JOIN Alumni a JOIN Person p WHERE a.alumniId = t.alumniId AND a.personId = p.personId"
     );
     return result;
   } catch (error) {
