@@ -17,9 +17,9 @@ const AdminList = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  const handleEdit = (adminId) => {
+  const handleEdit = (personId) => {
     // Render the EditEvent component with the onUpdate callback
-    navigate(`/admin/edit-admin/${adminId}`);
+    navigate(`/admin/edit-admin/${personId}`);
   };
 
   const fetchData = async () => {
@@ -74,11 +74,11 @@ const AdminList = () => {
     filterData();
   }, [searchQuery, data, filterData]);
 
-  const handleDeactivate = async (adminId) => {
+  const handleDeactivate = async (personId) => {
     try {
       // Send a PUT request to deactivate the alumni
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/verify-admin/${adminId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/verify-admin/${personId}`,
         {
           method: "PUT",
           credentials: "include",
@@ -103,11 +103,11 @@ const AdminList = () => {
     }
   };
 
-  const handleActivate = async (adminId) => {
+  const handleActivate = async (personId) => {
     try {
       // Send a PUT request to activate the alumni
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/verify-admin/${adminId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/verify-admin/${personId}`,
         {
           method: "PUT",
 
@@ -146,7 +146,7 @@ const AdminList = () => {
   };
 
   const columns = [
-    { field: "adminId", headerName: "ID", width: 30 },
+    { field: "personId", headerName: "ID", width: 30 },
     { field: "fullName", headerName: "Full Name", width: 200 },
     { field: "gender", headerName: "Gender", width: 100 },
     { field: "email", headerName: "Email", width: 250 },
@@ -162,13 +162,13 @@ const AdminList = () => {
             <>
               <button
                 className="userListEdit"
-                onClick={() => handleActivate(params.row.adminId)}
+                onClick={() => handleActivate(params.row.personId)}
               >
                 Activate
               </button>
               <button
                 className="decline"
-                onClick={() => handleDeactivate(params.row.adminId)}
+                onClick={() => handleDeactivate(params.row.personId)}
               >
                 Deactivate
               </button>
@@ -177,7 +177,7 @@ const AdminList = () => {
           {params.row.verified === 1 && (
             <button
               className="decline"
-              onClick={() => handleDeactivate(params.row.adminId)}
+              onClick={() => handleDeactivate(params.row.personId)}
             >
               Deactivate
             </button>
@@ -185,15 +185,15 @@ const AdminList = () => {
           {params.row.verified === 0 && (
             <button
               className="userListEdit"
-              onClick={() => handleActivate(params.row.adminId)}
+              onClick={() => handleActivate(params.row.personId)}
             >
               Activate
             </button>
           )}
           <Edit
-            key={`edit-${params.row.adminId}`}
+            key={`edit-${params.row.personId}`}
             className="eventListEdit"
-            onClick={() => handleEdit(params.row.adminId)}
+            onClick={() => handleEdit(params.row.personId)}
           />
         </>
       ),
@@ -201,8 +201,8 @@ const AdminList = () => {
   ];
 
   const rows = filteredData.map((item) => ({
-    id: item.adminId,
-    adminId: item.adminId,
+    id: item.personId,
+    personId: item.personId,
     fullName: item.fullName, // Change here to match your data's key
     gender: item.gender,
     email: item.email,
@@ -236,7 +236,7 @@ const AdminList = () => {
               rows={rows}
               columns={columns}
               autoHeight
-              getRowId={(row) => row.adminId}
+              getRowId={(row) => row.personId}
             />
           )}
         </div>

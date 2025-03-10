@@ -6,7 +6,7 @@ import "../../styles/AddUser.css";
 
 const EditAdmin = () => {
   const navigate = useNavigate();
-  const { adminId } = useParams();
+  const { personId } = useParams();
 
   const [fullNameError, setFullNameError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -26,7 +26,7 @@ const EditAdmin = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/get-admin/${adminId}`,
+          `${import.meta.env.VITE_BACKEND_URL}/get-admin/${personId}`,
           { credentials: "include" }
         );
         if (!response.ok) {
@@ -41,7 +41,7 @@ const EditAdmin = () => {
     };
 
     fetchData();
-  }, [adminId]);
+  }, [personId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -90,7 +90,7 @@ const EditAdmin = () => {
     if (valid) {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/admin/${adminId}`,
+          `${import.meta.env.VITE_BACKEND_URL}/admin/${personId}`,
           {
             method: "PUT",
             credentials: "include",
@@ -227,7 +227,7 @@ const EditAdmin = () => {
           </p>
           <a
             className="change-link"
-            href={`/changePassword/${adminData.username}`}
+            href={`/admin/change-password/${personId}`}
           >
             Change Password
           </a>
