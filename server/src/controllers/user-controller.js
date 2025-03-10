@@ -567,30 +567,22 @@ exports.checkPassword = async function (req, res) {
   try {
     const { oldPassword } = req.body;
 
-    const token = req.cookies.token;
-    if (!token) {
-      return res
-        .status(403)
-        .json({ ok: false, success: false, message: "Unauthorized" });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const personId = decoded.id;
-
     const isValidPassword = await alumniService.checkUserPassword(
-      personId,
+      req.params.userId,
       oldPassword
     );
 
     if (!isValidPassword) {
-      return res
-        .status(400)
-        .json({ ok: false, success: false, message: "Invalid credentials" });
+      return res.status(400).json({
+        ok: false,
+        passwordExists: false,
+        message: "Invalid credentials",
+      });
     }
 
     return res
       .status(200)
-      .json({ ok: true, success: true, message: "Password verified" });
+      .json({ ok: true, passwordExists: true, message: "Password verified" });
   } catch (error) {
     console.error("Error checking password:", error);
     return res
@@ -602,18 +594,9 @@ exports.checkPassword = async function (req, res) {
 exports.changePassword = async function (req, res) {
   try {
     const { newPassword } = req.body;
-    const token = req.cookies.token;
-    if (!token) {
-      return res
-        .status(403)
-        .json({ ok: false, success: false, message: "Unauthorized" });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const personId = decoded.id;
 
     const isUpdated = await alumniService.changeUserPassword(
-      personId,
+      req.params.userId,
       newPassword
     );
     if (!isUpdated) {

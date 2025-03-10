@@ -107,15 +107,15 @@ router.post(
   UserController.checkEmailAvailability
 );
 
-router.put(
-  "/check-password",
+router.post(
+  "/check-password/:userId",
   verifyRefreshToken,
   verifyToken,
   authRoles(all),
   UserController.checkPassword
 );
 router.put(
-  "/change-password",
+  "/change-password/:userId",
   verifyRefreshToken,
   verifyToken,
   authRoles(all),
