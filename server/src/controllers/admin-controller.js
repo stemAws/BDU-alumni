@@ -12,7 +12,8 @@ exports.getAdminList = async (req, res) => {
 
 exports.getAdmin = async (req, res) => {
   try {
-    const adminInfo = await adminService.fetchAdminInfo(req.params.adminId);
+    const adminId = await adminService.getAdminId(req.params.personId);
+    const adminInfo = await adminService.fetchAdminInfo(adminId);
     res.json(adminInfo);
   } catch (error) {
     console.error("Error fetching requested admin info:", error);
@@ -22,7 +23,9 @@ exports.getAdmin = async (req, res) => {
 
 exports.updateAdmin = async (req, res) => {
   try {
-    await adminService.updateAdminInfo(req.params.adminId, req.body);
+    const adminId = await adminService.getAdminId(req.params.personId);
+
+    await adminService.updateAdminInfo(adminId, req.body);
 
     res.status(200).json({
       ok: true,
@@ -203,8 +206,8 @@ exports.veifyAlumni = async function (req, res) {
 exports.verifyAdmin = async function (req, res) {
   try {
     const { verified } = req.body;
-    const adminId = req.params.adminId;
-
+    const personId = req.params.personId;
+    const adminId = await adminService.getAdminId(personId);
     const affectedRows = await adminService.verifyAdminStatus(
       adminId,
       verified

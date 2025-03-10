@@ -9,7 +9,7 @@ const {
   authRoles,
   verifyRefreshToken,
 } = require("../middleware/auth-middleware");
-const { all, admin, alumni, sysAdmin } = require("../utils/roles");
+const { all, admin, sysAdmin } = require("../utils/roles");
 
 router.get(
   "/admin-list",
@@ -20,7 +20,7 @@ router.get(
 );
 
 router.put(
-  "/verify-admin/:adminId",
+  "/verify-admin/:personId",
   verifyToken,
   verifyRefreshToken,
   authRoles(sysAdmin),
@@ -28,7 +28,7 @@ router.put(
 );
 
 router.put(
-  "/admin/:adminId",
+  "/admin/:personId",
   verifyToken,
   verifyRefreshToken,
   authRoles(sysAdmin),
@@ -79,7 +79,7 @@ router.get(
 );
 
 router.get(
-  "/get-admin/:adminId",
+  "/get-admin/:personId",
   verifyToken,
   verifyRefreshToken,
   authRoles(sysAdmin),

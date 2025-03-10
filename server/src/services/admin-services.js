@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 exports.fetchAdminList = async () => {
   try {
     const [result] = await db.query(
-      "SELECT fullName, gender, createdAt, username, email, verified, role, adminId FROM websiteadmin a JOIN person p on a.personId = p.personId AND isAdmin = ?",
+      "SELECT a.personId, fullName, gender, createdAt, username, email, verified, role, adminId FROM websiteadmin a JOIN person p on a.personId = p.personId AND isAdmin = ?",
       [1]
     );
     return result;
@@ -277,6 +277,17 @@ exports.updateVerified = async (alumniID, verified) => {
   }
 };
 
+exports.getAdminId = async (personId) => {
+  try {
+    const [result] = await db.query(
+      "SELECT adminId FROM Person p JOIN websiteAdmin a ON p.personId = a.personId and p.personId = ?",
+      [personId]
+    );
+    return result[0].adminId;
+  } catch (error) {
+    throw new Error("Error fetching adminId: " + error.message);
+  }
+};
 exports.verifyAdminStatus = async (adminId, verified) => {
   try {
     const [{ affectedRows }] = await db.query(
