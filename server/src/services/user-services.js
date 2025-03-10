@@ -542,30 +542,35 @@ exports.deleteAlumni = async (id) => {
   }
 };
 
-exports.changePassword = async (personId, oldPassword, newPassword) => {
-  // not working i am so confused
+exports.checkUserPassword = async (personId, oldPassword) => {
   try {
     const [result] = await db.query(
       "SELECT password FROM Person WHERE personId = ?",
-      personId
+      [personId]
     );
-    if (!result || !result.length) {
-      throw new Error("Person not found");
-    }
+
+    if (!result.length) return false;
+
     const hashedPassword = result[0].password;
     const passwordMatch = await bcrypt.compare(oldPassword, hashedPassword);
-    if (!passwordMatch) {
-      throw new Error("Current password is incorrect");
-    }
 
+    return passwordMatch;
+  } catch (error) {
+    console.error("Error checking password:", error);
+    throw error;
+  }
+};
+
+exports.changeUserPassword = async (personId, newPassword) => {
+  try {
     const newHashedPassword = await bcrypt.hash(newPassword, 10);
 
-    const [{ affectedRows }] = await db.query(
+    const [result] = await db.query(
       "UPDATE Person SET password = ? WHERE personId = ?",
       [newHashedPassword, personId]
     );
 
-    return affectedRows;
+    return result.affectedRows > 0;
   } catch (error) {
     console.error("Error updating password:", error);
     throw error;
