@@ -62,12 +62,12 @@ const AddUser = () => {
         setFormData((prevData) => ({
           ...prevData,
           graduationYear: null, // Clear graduation year
-          staffRole: "", // Clear staff role
+          staffRole: prevData.staffRole || "contentManager", // Set default staff role if empty
         }));
       } else if (value === "Student") {
         setFormData((prevData) => ({
           ...prevData,
-          staffRole: null, // Clear staff role
+          staffRole: null, // Clear staff role for students
         }));
       }
     }
@@ -137,16 +137,21 @@ const AddUser = () => {
       valid = false;
     } else if (formData.password.length < 8) {
       setPasswordError("Password should be at least 8 characters long");
+      valid = false;
     } else if (!regexUpper.test(formData.password)) {
       setPasswordError("Password should contain at least one uppercase letter");
+      valid = false;
     } else if (!regexLower.test(formData.password)) {
       setPasswordError("Password should contain at least one lowercase letter");
+      valid = false;
     } else if (!regexNumber.test(formData.password)) {
       setPasswordError("Password should contain at least one number");
+      valid = false;
     } else if (!regexSpecial.test(formData.password)) {
       setPasswordError(
         "Password should contain at least one special character"
       );
+      valid = false;
     }
     if (!formData.confirmPassword) {
       setConfirmPasswordError("Confirm your password!");
@@ -162,6 +167,17 @@ const AddUser = () => {
     }
 
     if (valid) {
+      if (
+        !formData.username ||
+        !formData.fullName ||
+        !formData.email ||
+        !formData.password ||
+        !formData.gender ||
+        !formData.role
+      ) {
+        console.log("Validation failed: All fields are required");
+        return;
+      }
       try {
         const role = formData.role === "Student" ? "alumni" : "admin";
         const dataToSend = {
@@ -175,7 +191,6 @@ const AddUser = () => {
           {
             method: "POST",
             credentials: "include",
-
             headers: {
               "Content-Type": "application/json",
             },
@@ -183,26 +198,36 @@ const AddUser = () => {
           }
         );
 
-        await response.json();
+        const responseData = await response.json();
 
-        if (formData.role == "Student") {
-          navigate("/admin/users");
-        } else {
-          navigate("/admin/adminlist");
+        if (!response.ok) {
+          throw new Error(responseData.message || "Failed to add user");
         }
 
+        console.log("User added successfully:", responseData.message);
+
+        // ✅ Ensure the new user is correctly created before navigating
+        if (responseData.ok && responseData.success) {
+          if (formData.role === "Student") {
+            navigate("/admin/users");
+          } else {
+            navigate("/admin/adminlist");
+          }
+        }
+
+        // Reset form data
         setFormData({
           username: "",
-          firstName: "",
+          fullName: "",
           graduationYear: "",
           password: "",
+          confirmPassword: "",
           gender: "",
           role: "",
-          staffRole: "",
+          staffRole: "contentManager", // Ensure contentManager is the default
           email: "",
         });
       } catch (error) {
-        // Handle errors from the server
         console.error("Error sending data to the server:", error.message);
       }
     } else {
@@ -402,7 +427,7 @@ const AddUser = () => {
               <label>Admin Role</label>
               <select
                 name="staffRole"
-                value={formData.staffRole} // Value controlled by state
+                value={formData.staffRole || "contentManager"} // Value controlled by state
                 onChange={handleChangeSingleUser} // Handler for user input
                 className="custom-select" // Apply a custom class if needed
               >
