@@ -563,36 +563,75 @@ exports.checkEmailAvailability = async function (req, res) {
   }
 };
 
-exports.changePassword = async function (req, res) {
+exports.checkPassword = async function (req, res) {
   try {
-    const { newPassword, oldPassword } = req.body;
-    const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
+    const { oldPassword } = req.body;
 
-    const affectedRows = await alumniService.changePassword(
+    const token = req.cookies.token;
+    if (!token) {
+      return res
+        .status(403)
+        .json({ ok: false, success: false, message: "Unauthorized" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const personId = decoded.id;
+
+    const isValidPassword = await alumniService.checkUserPassword(
       personId,
-      oldPassword,
-      newPassword
+      oldPassword
     );
 
-    if (affectedRows === 0) {
-      return res.status(404).json({
-        ok: false,
-        success: false,
-        message: "Alumni not found",
-      });
+    if (!isValidPassword) {
+      return res
+        .status(400)
+        .json({ ok: false, success: false, message: "Invalid credentials" });
+    }
+
+    return res
+      .status(200)
+      .json({ ok: true, success: true, message: "Password verified" });
+  } catch (error) {
+    console.error("Error checking password:", error);
+    return res
+      .status(500)
+      .json({ ok: false, success: false, message: "An error occurred" });
+  }
+};
+
+exports.changePassword = async function (req, res) {
+  try {
+    const { newPassword } = req.body;
+    const token = req.cookies.token;
+    if (!token) {
+      return res
+        .status(403)
+        .json({ ok: false, success: false, message: "Unauthorized" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const personId = decoded.id;
+
+    const isUpdated = await alumniService.changeUserPassword(
+      personId,
+      newPassword
+    );
+    if (!isUpdated) {
+      return res
+        .status(404)
+        .json({ ok: false, success: false, message: "User not found" });
     }
 
     return res.status(200).json({
       ok: true,
       success: true,
-      message: "Password change successful",
+      message: "Password changed successfully",
     });
   } catch (error) {
-    return res.status(500).json({
-      ok: false,
-      success: false,
-      message: "An error occurred while changing the password",
-    });
+    console.error("Error changing password:", error);
+    return res
+      .status(500)
+      .json({ ok: false, success: false, message: "An error occurred" });
   }
 };
 
