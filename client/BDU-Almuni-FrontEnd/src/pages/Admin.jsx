@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import SideBar from "../component/SideBar";
 import Home from "./AdminPages/Home";
@@ -31,6 +30,7 @@ import AdminList from "./AdminPages/AdminList";
 import EditAdmin from "./AdminPages/EditAdmin";
 import { useAuth } from "../component/useAuth";
 import ChangePassword from "../pages/AdminPages/ChangePassword";
+import PageNotFound from "./PageNotFound";
 
 const Admin = () => {
   const { isAuthenticated, role, loading } = useAuth(); // Add `loading` state
@@ -86,6 +86,7 @@ const Admin = () => {
             <Route path="transcript" element={<RequestedTranscript />} />
             <Route path="donation/:id" element={<EditDonation />} />
             <Route path="AddDonation" element={<AddDonation />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
       ) : (
