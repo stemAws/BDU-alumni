@@ -30,6 +30,7 @@ import RequestedTranscript from "./AdminPages/TranscriptList";
 import AdminList from "./AdminPages/AdminList";
 import EditAdmin from "./AdminPages/EditAdmin";
 import { useAuth } from "../component/useAuth";
+import ChangePassword from "../pages/AdminPages/ChangePassword";
 
 const Admin = () => {
   const { isAuthenticated, role, loading } = useAuth(); // Add `loading` state
@@ -44,7 +45,6 @@ const Admin = () => {
 
   return (
     <>
-      {/* Only render this part if user is authenticated and has appropriate role */}
       {role === "contentManager" || role === "systemAdmin" ? (
         <div className="admincontainer">
           <SideBar />
@@ -56,8 +56,12 @@ const Admin = () => {
               element={role === "systemAdmin" && <AdminList />}
             />
             <Route
-              path="edit-admin/:adminId"
+              path="edit-admin/:personId"
               element={role === "systemAdmin" && <EditAdmin />}
+            />
+            <Route
+              path="change-password/:personId"
+              element={role === "systemAdmin" && <ChangePassword />}
             />
             <Route path="News" element={<NewsList />} />
             <Route path="News/edit-news/:newsId" element={<Editnews />} />
