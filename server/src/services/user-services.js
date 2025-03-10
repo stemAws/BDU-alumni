@@ -224,53 +224,59 @@ exports.fakereset = async ({ newpass, personId }) => {
   ]);
 };
 
-exports.addUser = async (alumniData) => {
-  if (alumniData.role === "admin" && !alumniData.adminRole) {
-    throw new Error("adminRole not provided for admin user");
-  }
+exports.createUser = async (alumniData) => {
+  try {
+    if (alumniData.role === "admin" && !alumniData.adminRole) {
+      throw new Error("adminRole not provided for admin user");
+    }
 
-  const hashedPassword = await bcrypt.hash(alumniData.password, 10);
-  const isAdmin = alumniData.role === "admin" ? 1 : 0;
-  const status = isAdmin ? "Active" : "Inactive";
+    const hashedPassword = await bcrypt.hash(alumniData.password, 10);
+    const isAdmin = alumniData.role === "admin" ? 1 : 0;
+    const status = isAdmin ? "Active" : "Inactive";
 
-  await db.query(
-    `
-    INSERT INTO Person (fullName, gender, email, username, password, verified, isAdmin, status)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `,
-    [
-      alumniData.fullName,
-      alumniData.gender,
-      alumniData.email,
-      alumniData.username,
-      hashedPassword,
-      1,
-      isAdmin,
-      status,
-    ]
-  );
-
-  if (alumniData.role === "alumni") {
-    await db.query(
-      `INSERT INTO Alumni (personId, isNotable)
-      VALUES (LAST_INSERT_ID(), ?);`,
-      [0]
+    // Insert into Person and get the inserted ID
+    const [personResult] = await db.query(
+      `INSERT INTO Person (fullName, gender, email, username, password, verified, isAdmin, status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        alumniData.fullName,
+        alumniData.gender,
+        alumniData.email,
+        alumniData.username,
+        hashedPassword,
+        1,
+        isAdmin,
+        status,
+      ]
     );
 
-    await db.query(
-      `INSERT INTO Custom (alumniId)
-      VALUES (LAST_INSERT_ID());`
-    );
-  } else if (alumniData.role === "admin") {
-    await db.query(
-      `
-      INSERT INTO Websiteadmin (personId, role)
-      VALUES (LAST_INSERT_ID(), ?);`,
-      [alumniData.adminRole]
-    );
-  } else {
-    console.log(alumniData.role);
-    throw new Error("Unsupported role");
+    const personId = personResult.insertId; // Get the last inserted ID
+
+    if (!personId) {
+      throw new Error("Failed to insert person");
+    }
+
+    if (alumniData.role === "alumni") {
+      await db.query(
+        `INSERT INTO Alumni (personId, isNotable) VALUES (?, ?);`,
+        [personId, 0]
+      );
+
+      await db.query(`INSERT INTO Custom (alumniId) VALUES (?);`, [personId]);
+    } else if (alumniData.role === "admin") {
+      await db.query(
+        `INSERT INTO Websiteadmin (personId, role) VALUES (?, ?);`,
+        [personId, alumniData.adminRole]
+      );
+    } else {
+      throw new Error("Unsupported role");
+    }
+
+    return personId;
+  } catch (error) {
+    console.error("Error adding user:", error.message);
+
+    throw error;
   }
 };
 

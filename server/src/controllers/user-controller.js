@@ -310,13 +310,20 @@ exports.checkUser = async (req, res) => {
 
 exports.addUser = async function (req, res) {
   try {
-    const affectedRows = await alumniService.addUser(req.body);
-    res
-      .status(201)
-      .json({ message: "Alumni added successfully", affectedRows });
+    const personId = await alumniService.createUser(req.body);
+    res.status(201).json({
+      ok: true,
+      success: true,
+      message: "User added successfully",
+      personId,
+    });
   } catch (error) {
-    console.error("Error adding alumni:", error.message);
-    res.status(400).json({ error: error.message }); // Send error message in response
+    console.error("Error adding user:", error.message);
+    res.status(400).json({
+      ok: false,
+      success: false,
+      message: error.message || "Failed to add User",
+    });
   }
 };
 
