@@ -26,6 +26,7 @@ const EachJob = ({ jobOffer, setopenJODetail, onReadMore }) => {
           }`,
           {
             method: "PUT",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
@@ -62,12 +63,12 @@ const EachJob = ({ jobOffer, setopenJODetail, onReadMore }) => {
       <div className="JO-bottom">
         <p className="job-title">{jobOffer?.jobTitle}</p>
         <p className="job-description">{jobOffer?.description}</p>
-        <div className="job-need">
+        {/* <div className="job-need">
           <FaUsers />
           <p className="people-needed">
             {jobOffer?.peopleNeeded} people needed
           </p>
-        </div>
+        </div> */}
         <div className="job-need">
           <FaCalendarAlt />
           <p className="JO-up-to">up to {dateFormatter(jobOffer?.deadline)}</p>
