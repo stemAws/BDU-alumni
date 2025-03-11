@@ -3,19 +3,18 @@ import "../../styles/AJobOffer.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import { ChevronLeft } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const JobOffer = () => {
-  // const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [organization, setOrganization] = useState("");
-  const [employmentType, setEmploymentType] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [jobLink, setJobLink] = useState("");
+  const navigate = useNavigate();
+
   const [deadline, setDeadline] = useState("");
-  const [address, setAddress] = useState("");
-  const [peopleNeeded, setPeopleNeeded] = useState("");
-  const [salary, setSalary] = useState("");
+
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,20 +23,11 @@ const JobOffer = () => {
   const [descriptionError, setDescriptionError] = useState("");
   const [deadlineError, setDeadlineError] = useState("");
   const [organizationError, setOrganizationError] = useState("");
-  const [employmentTypeError, setEmploymentTypeError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [phoneNumberError, setPhoneNumberError] = useState("");
-  const [addressError, setAddressError] = useState("");
-  const [peopleNeededError, setPeopleNeededError] = useState("");
-  const [salaryError, setSalaryError] = useState("");
+  const [jobLinkError, setJobLinkError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    // if (name === "image") {
-    //   const file = files && files.length > 0 ? files[0] : null;
-    //   setImage(file);
-    // } else {
     switch (name) {
       case "title":
         setTitle(value);
@@ -55,34 +45,22 @@ const JobOffer = () => {
         setOrganization(value);
         setOrganizationError("");
         break;
-      case "employmentType":
-        setEmploymentType(value);
-        setEmploymentTypeError("");
+      case "eventLink":
+        setJobLink(value);
+        setJobLinkError("");
         break;
-      case "email":
-        setEmail(value);
-        setEmailError("");
-        break;
-      case "phoneNumber":
-        setPhoneNumber(value);
-        setPhoneNumberError("");
-        break;
-      case "address":
-        setAddress(value);
-        setAddressError("");
-        break;
-      case "peopleNeeded":
-        setPeopleNeeded(value);
-        setPeopleNeededError("");
-        break;
-      case "salary":
-        setSalary(value);
-        setSalaryError("");
-        break;
+
       default:
         break;
     }
     // }
+  };
+
+  const isValidUrl = (url) => {
+    const urlRegex =
+      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
+
+    return urlRegex.test(url);
   };
 
   const handleSubmit = async (e) => {
@@ -99,6 +77,12 @@ const JobOffer = () => {
         "Title must contain only letters and spaces, with numbers allowed anywhere after letters!"
       );
       valid = false;
+    }
+    if (!isValidUrl(jobLink) && jobLink.trim() !== "") {
+      setJobLinkError("Please enter a valid URL");
+      valid = false;
+    } else {
+      setJobLinkError("");
     }
 
     if (!description) {
@@ -132,72 +116,16 @@ const JobOffer = () => {
       valid = false;
     }
 
-    if (!email) {
-      setEmailError("Email field cannot be empty!");
-      valid = false;
-    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-      setEmailError("Please enter a valid email address!");
-      valid = false;
-    }
-
-    if (!phoneNumber) {
-      setPhoneNumberError("Phone Number field cannot be empty!");
-      valid = false;
-    } else if (!/^\d{10}$/.test(phoneNumber)) {
-      setPhoneNumberError("Please enter a valid 10-digit phone number!");
-      valid = false;
-    }
-
-    if (!employmentType) {
-      setEmploymentTypeError("Employment Type field cannot be empty!");
-      valid = false;
-    } else if (employmentType.length > 20) {
-      setEmploymentTypeError(
-        "Employment Type should be less than 20 characters!"
-      );
-      valid = false;
-    }
-
-    if (!address) {
-      setAddressError("Address field cannot be empty!");
-      valid = false;
-    } else if (address.length > 20) {
-      setAddressError("Address should be less than 20 characters!");
-      valid = false;
-    }
-
-    if (!peopleNeeded) {
-      setPeopleNeededError("People Needed field cannot be empty!");
-      valid = false;
-    } else if (!/^\d+$/.test(peopleNeeded)) {
-      setPeopleNeededError("Please enter a valid number for People Needed!");
-      valid = false;
-    }
-
-    if (!salary) {
-      setSalaryError("Salary field cannot be empty!");
-      valid = false;
-    } else if (!/^\d+(\.\d{1,2})?$/.test(salary)) {
-      setSalaryError("Please enter a valid salary amount!");
-      valid = false;
-    }
-
     if (valid) {
       try {
         setLoading(true);
 
         const formDataToSend = new FormData();
-        // formDataToSend.append("image", image);
-        formDataToSend.append("title", title);
-        formDataToSend.append("description", description);
+        formDataToSend.append("jobTitle", title);
+        formDataToSend.append("jobDescription", description);
         formDataToSend.append("deadline", deadline);
-        formDataToSend.append("organization", organization);
-        formDataToSend.append("employmentType", employmentType);
-        formDataToSend.append("address", address);
-        formDataToSend.append("email", email);
-        formDataToSend.append("phoneNumber", phoneNumber);
-        formDataToSend.append("peopleNeeded", peopleNeeded);
-        formDataToSend.append("salary", salary);
+        formDataToSend.append("companyName", organization);
+        formDataToSend.append("jobLink", jobLink);
 
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/add-job`,
@@ -208,10 +136,10 @@ const JobOffer = () => {
             body: formDataToSend,
           }
         );
-
+        console.log("uploading");
         if (response.ok) {
           toast.success("Job post uploaded successfully");
-          // navigate("/admin/Events");
+          navigate("/admin/job-list");
           setSuccess(true);
         } else {
           console.error("Error uploading job post", response.statusText);
@@ -224,14 +152,17 @@ const JobOffer = () => {
       }
     }
   };
+  const handleClick = () => {
+    navigate("/admin/job-list");
+  };
 
   return (
     <div className="JobUpload">
       <div className="SuggestedJobheader">
-        <h3> JOB POST </h3>
-        <Link to="/admin/suggestedJob">
-          <button className="addJob"> Suggested Job</button>
+        <Link to="/admin/job-list" className="userGoBack">
+          <ChevronLeft className="userGoBackIcon" onClick={handleClick} />
         </Link>
+        <h3> Add Job </h3>
       </div>
       <div className="JobformContainer">
         <ToastContainer autoClose={1500} />
@@ -240,15 +171,6 @@ const JobOffer = () => {
           onSubmit={handleSubmit}
           encType="multipart/form-data"
         >
-          {/* <div className="Jobform">
-            <label className="label">Image:</label>
-            <input
-              className="imageInput"
-              type="file"
-              name="image"
-              onChange={handleInputChange}
-            />
-          </div> */}
           <div className="Jobform">
             <label className="label">Job Title:</label>
             <input
@@ -285,50 +207,7 @@ const JobOffer = () => {
               <p className="errorMessage">{organizationError}</p>
             )}
           </div>
-          <div className="Jobform">
-            <label className="label">Phone Number:</label>
-            <input
-              type="text"
-              name="phoneNumber"
-              value={phoneNumber}
-              onChange={handleInputChange}
-            />
-            {phoneNumberError && (
-              <p className="errorMessage">{phoneNumberError}</p>
-            )}
-          </div>
-          <div className="Jobform">
-            <label className="label">Employment Type:</label>
-            <input
-              type="text"
-              name="employmentType"
-              value={employmentType}
-              onChange={handleInputChange}
-            />
-            {employmentTypeError && (
-              <p className="errorMessage">{employmentTypeError}</p>
-            )}
-          </div>
-          <div className="Jobform">
-            <label className="label">Email:</label>
-            <input
-              type="text"
-              name="email"
-              value={email}
-              onChange={handleInputChange}
-            />
-            {emailError && <p className="errorMessage">{emailError}</p>}
-          </div>
-          <div className="Jobform">
-            <label className="label">Company Address:</label>
-            <input
-              type="text"
-              name="address"
-              value={address}
-              onChange={handleInputChange}
-            />
-            {addressError && <p className="errorMessage">{addressError}</p>}
-          </div>
+
           <div className="Jobform">
             <label className="label">Deadline:</label>
             <input
@@ -340,26 +219,14 @@ const JobOffer = () => {
             {deadlineError && <p className="errorMessage">{deadlineError}</p>}
           </div>
           <div className="Jobform">
-            <label className="label">People Needed:</label>
+            <label className="label">Job Link (Optional):</label>
             <input
               type="text"
-              name="peopleNeeded"
-              value={peopleNeeded}
+              name="email"
+              value={jobLink}
               onChange={handleInputChange}
             />
-            {peopleNeededError && (
-              <p className="errorMessage">{peopleNeededError}</p>
-            )}
-          </div>
-          <div className="Jobform">
-            <label className="label">Salary:</label>
-            <input
-              type="text"
-              name="salary"
-              value={salary}
-              onChange={handleInputChange}
-            />
-            {salaryError && <p className="errorMessage">{salaryError}</p>}
+            {jobLinkError && <p className="errorMessage">{jobLinkError}</p>}
           </div>
           <div className="buttonss">
             <button type="submit" disabled={loading}>
