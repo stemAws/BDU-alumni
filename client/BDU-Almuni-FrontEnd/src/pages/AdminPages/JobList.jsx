@@ -157,12 +157,14 @@ const JobList = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <h3> Bahir Dar University Job offers from BDU </h3>
-          <Link to="/admin/jobOffer">
-            <button className="addEvent">+ Add Job</button>
-          </Link>
-          <Link to="/admin/suggestedJob">
-            <button className="addJob"> Suggested Job</button>
-          </Link>
+          <div className="adminAddEventButtons">
+            <Link to="/admin/jobOffer">
+              <button className="addEvent">+ Add Job</button>
+            </Link>
+            <Link to="/admin/suggestedJob">
+              <button className="addJob"> Suggested Job</button>
+            </Link>
+          </div>
         </div>
         <div className="listCOntainer">
           {loading ? (

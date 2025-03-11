@@ -158,13 +158,13 @@ const JobOffer = () => {
 
   return (
     <div className="JobUpload">
-      <div className="SuggestedJobheader">
-        <Link to="/admin/job-list" className="userGoBack">
-          <ChevronLeft className="userGoBackIcon" onClick={handleClick} />
-        </Link>
-        <h3> Add Job </h3>
-      </div>
       <div className="JobformContainer">
+        <div>
+          <Link to="/admin/job-list" className="userGoBack">
+            <ChevronLeft className="userGoBackIcon" onClick={handleClick} />
+          </Link>
+        </div>
+        <h3 className="adminSuggestedJobheader"> Add Job </h3>
         <ToastContainer autoClose={1500} />
         <form
           className="Jobformform"
