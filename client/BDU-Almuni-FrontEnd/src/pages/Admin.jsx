@@ -31,6 +31,8 @@ import EditAdmin from "./AdminPages/EditAdmin";
 import { useAuth } from "../component/useAuth";
 import ChangePassword from "../pages/AdminPages/ChangePassword";
 import PageNotFound from "./PageNotFound";
+import JobList from "./AdminPages/JobList";
+import EditAdminJobOffer from "./AdminPages/EditAdminJob";
 
 const Admin = () => {
   const { isAuthenticated, role, loading } = useAuth(); // Add `loading` state
@@ -78,6 +80,12 @@ const Admin = () => {
             <Route path="AddEvent" element={<AddEvent />} />
             <Route path="jobOffer" element={<JobOffer />} />
             <Route path="SuggestedJob" element={<SuggestedJob />} />
+            <Route path="job-list" element={<JobList />} />
+            <Route
+              path="edit-job/:jobPostingId"
+              element={<EditAdminJobOffer />}
+            />
+
             <Route path="chapters" element={<ChaptersList />} />
             <Route path="chapters/chapters/:chapterId" element={<EditClub />} />
             <Route path="AddChapter" element={<Chapters />} />
