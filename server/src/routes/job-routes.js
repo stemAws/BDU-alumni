@@ -22,7 +22,7 @@ router.get(
   "/job-list",
   verifyToken,
   verifyRefreshToken,
-  authRoles(admin),
+  authRoles(all),
   jobController.getAdminJobs
 );
 router.get(
@@ -36,18 +36,18 @@ router.put(
   "/update-job/:jobId",
   verifyToken,
   verifyRefreshToken,
-  authRoles(all),
+  authRoles(admin),
   jobController.updateJobById
 );
 router.delete(
   "/delete-job/:jobId",
   verifyToken,
   verifyRefreshToken,
-  authRoles(all),
+  authRoles(admin),
   jobController.deleteJobById
 );
 router.get(
-  "/all-jobs",
+  "/admin-jobs",
   verifyToken,
   verifyRefreshToken,
   authRoles(admin),
