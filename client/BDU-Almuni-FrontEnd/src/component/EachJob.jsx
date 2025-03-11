@@ -74,7 +74,7 @@ const EachJob = ({ jobOffer, setopenJODetail, onReadMore }) => {
           <p className="JO-up-to">up to {dateFormatter(jobOffer?.deadline)}</p>
         </div>
         <div className="JO-btns">
-          <Button text={"Apply"} id={"JO-apply"} />
+          {jobOffer.jobLink && <Button text={"Apply"} id={"JO-apply"} />}
           <Button
             onClick={() => {
               onReadMore(jobOffer?.jobPostingId);
