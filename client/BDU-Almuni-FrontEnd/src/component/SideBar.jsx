@@ -69,7 +69,7 @@ const SideBar = () => {
           </li>
 
           <li className="sidebarListItem">
-            <Link to="/admin/jobOffer">Job Offer</Link>
+            <Link to="/admin/job-list">Admin Job List</Link>
           </li>
 
           <li className="sidebarListItem">
