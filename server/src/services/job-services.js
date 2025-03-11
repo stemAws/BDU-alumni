@@ -1,15 +1,19 @@
 const db = require("../config/db");
 
-exports.addJob = async (jobDetails, personId) => {
+exports.addJob = async (jobDetails, personId, userRole) => {
   try {
+    const isApproved =
+      userRole === "systemAdmin" || userRole === "contentManager" ? 1 : 0;
+
     const [result] = await db.query(
-      "INSERT INTO Jobposting (jobTitle, description,companyName,deadline,jobLink,personId) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO Jobposting (jobTitle, description,companyName,deadline,jobLink,isApproved, personId) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
         jobDetails.jobTitle,
         jobDetails.jobDescription,
         jobDetails.companyName,
         jobDetails.deadline,
         jobDetails.jobLink || "",
+        isApproved,
         personId,
       ]
     );
@@ -30,10 +34,13 @@ exports.getJobs = async () => {
     DATE_FORMAT(Jobposting.updatedAt, '%Y-%m-%d') AS updatedAt, 
     Person.fullName, 
     Person.username, 
-    Alumni.profilePicture
+    Alumni.profilePicture,
+    WebsiteAdmin.role
 FROM Jobposting
 LEFT JOIN Person ON Jobposting.personId = Person.personId
-LEFT JOIN Alumni ON Person.personId = Alumni.personId;
+LEFT JOIN Alumni ON Person.personId = Alumni.personId
+LEFT JOIN WebsiteAdmin ON Jobposting.personId = WebsiteAdmin.personId
+;
 
 `);
 
@@ -84,7 +91,8 @@ exports.deleteJob = async (jobId) => {
 
 exports.getAllJobs = async () => {
   const [jobs] = await db.query(
-    `SELECT *, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline, DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt   FROM jobposting`
+    `SELECT j.*, DATE_FORMAT(deadline, '%Y-%m-%d') AS deadline, DATE_FORMAT(j.createdAt, '%Y-%m-%d') AS createdAt, DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedAt FROM jobposting j, person p WHERE j.personId = p.personId and p.isAdmin= ? `,
+    [1]
   );
   return jobs;
 };

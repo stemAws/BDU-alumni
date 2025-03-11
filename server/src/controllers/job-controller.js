@@ -35,7 +35,9 @@ exports.createJob = async (req, res) => {
 
     // const job = await jobService.addJob(downloadURL, req.body, req.alumni.personId);
     const personId = jwt.verify(req.cookies.token, process.env.JWT_SECRET).id;
-    const job = await jobService.addJob(req.body, personId);
+    const role = jwt.verify(req.cookies.token, process.env.JWT_SECRET).role;
+
+    const job = await jobService.addJob(req.body, personId, role);
 
     res.status(201).json({ message: "Job added successfully", job });
   } catch (error) {
