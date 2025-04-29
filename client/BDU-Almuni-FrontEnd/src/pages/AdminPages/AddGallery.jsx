@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/AddGallery.css";
 import { Link } from "react-router-dom";
 import { ChevronLeft } from "@mui/icons-material";
@@ -7,10 +7,16 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AddGallery = ({ updateCategories }) => {
+  const currentYear = new Date().getFullYear();
+  // Generate years from 1954 to current year
+  const years = Array.from(
+    { length: currentYear - 1954 + 1 },
+    (_, i) => 1954 + i
+  ).reverse();
+
   const [event, setEvent] = useState("");
   const [description, setDescription] = useState("");
-  // const [department, setDepartment] = useState("");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState(currentYear);
   const [images, setImages] = useState("");
   const [eventError, setEventError] = useState("");
   const [yearError, setYearError] = useState("");
@@ -19,8 +25,11 @@ const AddGallery = ({ updateCategories }) => {
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [descriptionError, setDescriptionError] = useState("");
-  // const [departmentError, setDepartmentError] = useState("");
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(year);
+
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
   // Fetch categories or other initial data if needed
   useEffect(() => {
@@ -45,18 +54,13 @@ const AddGallery = ({ updateCategories }) => {
     setEventError("");
   };
 
-  // const handleDepartmentChange = (e) => {
-  //   setDepartment(e.target.value);
-  //   setDepartmentError('');
-  // };
-
   const handleDiscriptionChange = (e) => {
     setDescription(e.target.value);
     setDescriptionError("");
   };
 
-  const handleYearChange = (e) => {
-    setYear(e.target.value);
+  const handleYearChange = (selectedYear) => {
+    setYear(selectedYear);
     setYearError("");
   };
 
@@ -72,35 +76,12 @@ const AddGallery = ({ updateCategories }) => {
     if (!event) {
       setEventError("Event field cannot be empty!");
       valid = false;
-      // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(event)) {
-      //   setEventError("Event must contain only letters and spaces, with numbers allowed anywhere after letters!");
-      //   valid = false;
     } else {
       setEventError("");
     }
-
-    // if (!department) {
-    //   setDepartmentError('Department field cannot be empty!');
-    //   valid = false;
-    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(department)) {
-    //   setDepartmentError("Department must contain only letters and spaces, with numbers allowed anywhere after letters!");
-    //   valid = false;
-    // } else {
-    //   setDepartmentError('');
-    // }
-
     if (!year) {
-      setYearError("Year field cannot be empty!");
+      setYearError("Please select year!");
       valid = false;
-    } else if (isNaN(year)) {
-      setYearError("Year must be a number!");
-      valid = false;
-    } else if (year.length !== 4) {
-      setYearError("Year must be a 4-digit number!");
-      valid = false;
-      // } else if (year < 2019) {
-      //   setYearError('Year must not be before 2019!');
-      //   valid = false;
     } else {
       setYearError("");
     }
@@ -114,9 +95,6 @@ const AddGallery = ({ updateCategories }) => {
       setDescriptionError("Description field cannot be empty!");
       valid = false;
     }
-    // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-    //   setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
-    // valid = false;
 
     if (valid) {
       try {
@@ -125,7 +103,6 @@ const AddGallery = ({ updateCategories }) => {
         const formData = new FormData();
         formData.append("event", event);
         formData.append("description", description);
-        // formData.append('department', department);
         formData.append("year", year);
         Array.from(images).forEach((image) => formData.append("images", image));
 
@@ -182,13 +159,6 @@ const AddGallery = ({ updateCategories }) => {
             />
             {eventError && <p className="errorMessage">{eventError}</p>}
           </div>
-
-          {/* <div className='form'>
-            <label className='label' htmlFor="department">Department:</label>
-            <input type="text" id="department" placeholder='Department' value={department} onChange={handleDepartmentChange} />
-            {departmentError && <p className="errorMessage">{departmentError}</p>}
-          </div> */}
-
           <div className="form">
             <label className="label">Description:</label>
             <textarea
@@ -207,13 +177,27 @@ const AddGallery = ({ updateCategories }) => {
             <label className="label" htmlFor="year">
               Year:
             </label>
-            <input
-              type="text"
-              id="year"
-              placeholder="Batch"
-              value={year}
-              onChange={handleYearChange}
-            />
+            <div className="dropdown-container">
+              <div className="dropdown-selected" onClick={toggleDropdown}>
+                {selectedYear || "Select Year"}
+              </div>
+              {isOpen && (
+                <ul className="dropdown-list">
+                  {years.map((year, index) => (
+                    <li
+                      key={index}
+                      onClick={() => {
+                        handleYearChange(year);
+                        setSelectedYear(year);
+                        setIsOpen(false);
+                      }}
+                    >
+                      {year}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
             {yearError && <p className="errorMessage">{yearError}</p>}
           </div>
 
