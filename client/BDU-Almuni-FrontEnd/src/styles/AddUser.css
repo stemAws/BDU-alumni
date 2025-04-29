@@ -189,3 +189,46 @@ select option {
   padding: 10px; /* Add padding for the options */
   font-size: 16px; /* Option text size */
 }
+
+.dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-selected {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 320px; /* This is about 8 items tall */
+  overflow-y: auto; /* Add scrolling if items exceed max-height */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+.dropdown-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background-color: #f0f0f0;
+}

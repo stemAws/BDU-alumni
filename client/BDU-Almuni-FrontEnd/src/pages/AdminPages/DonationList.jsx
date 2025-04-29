@@ -152,7 +152,9 @@ const DonationList = () => {
           />
           <h3> Bahir Dar University Alumni Donation </h3>
           <Link to="/admin/AddDonation">
-            <button className="addEvent">+ Add Donation</button>
+            <button className="addEvent" style={{ width: "130px" }}>
+              + Add Donation
+            </button>
           </Link>
         </div>
         <div className="listCOntainer">

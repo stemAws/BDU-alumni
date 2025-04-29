@@ -11,6 +11,7 @@
 .adminAddEventButtons {
   display: flex;
 }
+
 .addEventheader {
   display: flex;
   flex-direction: row;

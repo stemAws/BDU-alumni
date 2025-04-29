@@ -150,7 +150,14 @@ const FeedBack = () => {
   return (
     <div className="feedback-cont">
       <div className="SuggestedJobheader">
-        <h3> Feedbacks </h3>
+        <h3
+          style={{
+            marginLeft: "400px",
+          }}
+        >
+          {" "}
+          BDU Alumni Website User Feedbacks{" "}
+        </h3>
       </div>
       <div className="listContainer">
         <ThemeProvider theme={customTheme}>

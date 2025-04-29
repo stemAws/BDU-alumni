@@ -1,130 +1,173 @@
 .galleryUpload {
-    flex: 4;
-    align-items: center;
-    margin: 20px;
-    padding: 20px;
-    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
-    /* height: calc(100vh - 100px); */
-    overflow-y: auto;
+  flex: 4;
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  /* height: calc(100vh - 100px); */
+  overflow-y: auto;
 }
 
 .galleryUpload h2 {
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    flex-direction: column;
-    font-weight: bold;
-    font-size: 50px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 50px;
 }
 
 .form {
-    margin: 10px 20px 10px 60px;
-    font-size: 30px;
+  margin: 10px 20px 10px 60px;
+  font-size: 30px;
 }
-.eventformform{
-    display: flex;
-    flex-wrap: wrap;
+.eventformform {
+  display: flex;
+  flex-wrap: wrap;
 }
-.formContainer{
-    display: flex;
-    flex-wrap: wrap;
+.formContainer {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.form input[type="text"], 
+.form input[type="text"],
 .form input[type="file"] {
-    height: 40px;
-    width: 300px;
-    border: 1px solid #555;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    padding: 10px;
+  height: 40px;
+  width: 300px;
+  border: 1px solid #555;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 10px;
 }
 
 .mediaInput {
-    padding: 10px;
+  padding: 10px;
 }
 
 .label {
-    margin-right: 10px;
-    color: #555;
+  margin-right: 10px;
+  color: #555;
 }
 
 .buttonss {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 2rem;
 }
 
 .formContainer button {
-    border: none;
-    border-radius: 10px;
-    background-color: #037cd3;
-    height: 30px;
-    width: 90px;
-    color: white;
-    font-weight: bold;
-    margin: 3px 0 0 3.7rem;
-    cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  background-color: #037cd3;
+  height: 30px;
+  width: 90px;
+  color: white;
+  font-weight: bold;
+  margin: 3px 0 0 3.7rem;
+  cursor: pointer;
 }
 
 .formContainer button:hover {
-    background-color: #046eba;
+  background-color: #046eba;
 }
 
 .formContainer .edit {
-    display: flex;
-    border: none;
-    border-radius: 10px;
-    background-color: #037cd3;
-    height: 30px;
-    width: 100px;
-    color: white;
-    font-weight: bold;
-    margin: 6px 0 40px 3.7rem;
-    cursor: pointer;
+  display: flex;
+  border: none;
+  border-radius: 10px;
+  background-color: #037cd3;
+  height: 30px;
+  width: 100px;
+  color: white;
+  font-weight: bold;
+  margin: 6px 0 40px 3.7rem;
+  cursor: pointer;
 }
 
 .del {
-    margin: 6px 0 0 3.7rem;
-    color: rgb(255, 0, 0);
-    transition: 0.5s ease;
+  margin: 6px 0 0 3.7rem;
+  color: rgb(255, 0, 0);
+  transition: 0.5s ease;
 }
 
 .del:hover {
-    background-color: rgba(250, 0, 0, 0.3);
-    border-radius: 5px;
+  background-color: rgba(250, 0, 0, 0.3);
+  border-radius: 5px;
 }
 
 .editEdit {
-    margin: 6px 0 0 3.7rem;
-    color: #037cd3;
-    transition: 0.5s ease;
+  margin: 6px 0 0 3.7rem;
+  color: #037cd3;
+  transition: 0.5s ease;
 }
 
 .editEdit:hover {
-    background-color: rgba(3,124,214,0.3);
-    border-radius: 5px;
+  background-color: rgba(3, 124, 214, 0.3);
+  border-radius: 5px;
 }
 
 .userGoBackIcon {
-    color: black;
-    transition: 0.5s ease;
+  color: black;
+  transition: 0.5s ease;
 }
 
 .userGoBackIcon:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-    border: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  border: none;
 }
 
 .form .errorMessage {
-    font-size: 15px;
-    color: red;
-    padding: 0 10px 0 10px;
+  font-size: 15px;
+  color: red;
+  padding: 0 10px 0 10px;
+}
+
+.dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-selected {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 320px; /* This is about 8 items tall */
+  overflow-y: auto; /* Add scrolling if items exceed max-height */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+.dropdown-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background-color: #f0f0f0;
 }
