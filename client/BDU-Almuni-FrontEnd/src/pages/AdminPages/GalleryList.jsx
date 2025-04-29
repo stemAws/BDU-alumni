@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Batches from "./Batches";
 import "../../styles/AdminGallery.css";
 
 const GalleryList = () => {
   const [years, setYears] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
   const [filteredBatches, setFilteredBatches] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const updateCategories = async () => {
     try {
@@ -15,10 +17,7 @@ const GalleryList = () => {
         { credentials: "include" }
       );
       const data = await response.json();
-
-      // Sort the data by year in descending order
       const sortedData = data.sort((a, b) => b.year - a.year);
-
       setYears(sortedData.map((item) => item.year));
       setFilteredBatches(
         sortedData.map((item) => ({ id: item.year, year: item.year }))
@@ -36,11 +35,8 @@ const GalleryList = () => {
           { credentials: "include" }
         );
         const data = await response.json();
-
         const sortedData = data.sort((a, b) => b.year - a.year);
-
         const uniqueYears = [...new Set(sortedData.map((item) => item.year))];
-
         setYears(uniqueYears);
         setFilteredBatches(uniqueYears.map((year) => ({ id: year, year })));
       } catch (error) {
@@ -49,13 +45,31 @@ const GalleryList = () => {
     };
 
     fetchYears();
+
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
-  const handleSearch = (event) => {
-    const term = event.target.value;
-    setSearchTerm(term);
-    const filtered = years.filter((year) => year.toString().includes(term));
-    setFilteredBatches(filtered.map((year) => ({ id: year, year })));
+  const handleSearchClick = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleYearSelect = (year) => {
+    setSelectedYear(year);
+    setFilteredBatches(
+      years
+        .filter((yearItem) => yearItem.toString().includes(year))
+        .map((year) => ({ id: year, year }))
+    );
+    setIsDropdownOpen(false);
   };
 
   const navigate = useNavigate();
@@ -65,22 +79,49 @@ const GalleryList = () => {
   };
 
   return (
-    <div className="admin-gallery">
-      <div className="admin-galleryContainers">
-        <input
-          className="search"
-          type="text"
-          placeholder="Search by year"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-        <h3> Bahir Dar University Alumni Gallery </h3>
-        <Link to="/admin/AddGallery">
-          <button className="addGallery" onClick={handleClick}>
-            + Add Gallery
-          </button>
-        </Link>
+    <div className="admin-gallery" style={{ padding: 0, marginTop: 0 }}>
+      {/* Header Row */}
+      <div className="aadmin-gallery-header">
+        <div className="header-left">
+          <div className="adropdown-container" ref={dropdownRef}>
+            <input
+              type="text"
+              className="asearch"
+              placeholder="Select Year"
+              value={selectedYear}
+              onFocus={handleSearchClick}
+              readOnly
+            />
+            {isDropdownOpen && (
+              <div className="adropdown">
+                {years.map((year) => (
+                  <div
+                    key={year}
+                    className="adropdown-item"
+                    onClick={() => handleYearSelect(year)}
+                  >
+                    {year}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="header-center">
+          <h3>Bahir Dar University Alumni Gallery</h3>
+        </div>
+
+        <div className="header-right">
+          <Link to="/admin/AddGallery">
+            <button className="aaddGallery" onClick={handleClick}>
+              + Add Gallery
+            </button>
+          </Link>
+        </div>
       </div>
+
+      {/* Main Content Area */}
       <Batches
         batchData={filteredBatches}
         updateCategories={updateCategories}
