@@ -3,6 +3,8 @@ import "../../styles/News.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { Link } from "@mui/material";
+import { ChevronLeft } from "@mui/icons-material";
 
 const EventPost = () => {
   const newsCategories = [
@@ -111,8 +113,15 @@ const EventPost = () => {
     }
   };
 
+  const handleClick = () => {
+    navigate("/admin/news");
+  };
+
   return (
     <div className="NewsUpload">
+      <Link to="/admin/Events" className="userGoBack">
+        <ChevronLeft className="userGoBackIcon" onClick={handleClick} />
+      </Link>
       <h2>Add News</h2>
       <div className="formContainer">
         <ToastContainer autoClose={1500} />
