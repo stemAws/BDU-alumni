@@ -325,6 +325,23 @@ exports.getDegreeCount = async (graduatingYear) => {
   }
 };
 
+exports.hiredStudentCount = async (graduatingYear) => {
+  try {
+    const query = `
+      SELECT COUNT(DISTINCT e.alumniId) AS hiredCount
+      FROM Education ed
+      JOIN Experience e ON ed.alumniId = e.alumniId
+      WHERE ed.graduatingYear = ?
+    `;
+
+    const [rows] = await db.execute(query, [graduatingYear]);
+    return rows[0].hiredCount || 0;
+  } catch (error) {
+    console.error("Error fetching hired student count:", error);
+    throw error;
+  }
+};
+
 exports.getAdmissionCount = async (graduatingYear) => {
   try {
     let query = `

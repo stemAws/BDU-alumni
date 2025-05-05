@@ -167,4 +167,12 @@ router.put(
   authRoles(admin),
   adminController.approveJob
 );
+
+router.get(
+  "/hired-students",
+  verifyToken,
+  verifyRefreshToken,
+  authRoles(admin),
+  adminController.getHiredStudent
+);
 module.exports = router;
