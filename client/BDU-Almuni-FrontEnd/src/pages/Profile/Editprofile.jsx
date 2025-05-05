@@ -127,7 +127,6 @@ const Editprofile = () => {
 
     const fetchProfilePictureUrl = async () => {
       try {
-        console.log("Fetching profile picture for user Id:", userId);
         const res = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/getProfilePicture/${userId}`,
           {
@@ -152,7 +151,6 @@ const Editprofile = () => {
 
     const fetchBGPicture = async () => {
       try {
-        console.log("Fetching background picture for user Id:", userId);
         const res = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/getCoverPicture/${userId}`,
           {

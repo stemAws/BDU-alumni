@@ -15,14 +15,12 @@ const Header = ({ logout }) => {
   const [error, setError] = useState(null);
   const [imageUrl, setimageUrl] = useState();
   const { userId } = useAuth();
-  console.log(userId);
 
   useEffect(() => {
-    if (!userId) return; // Prevent fetching with null userId
+    if (!userId) return; 
 
     const fetchProfilePictureUrl = async () => {
       try {
-        console.log("Fetching profile picture for user Id:", userId);
         const res = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/getProfilePicture/${userId}`,
           {
@@ -45,7 +43,6 @@ const Header = ({ logout }) => {
 
     const fetchUserDetails = async () => {
       try {
-        console.log("Fetching user details for user Id:", userId);
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/alumni/${userId}`,
           {
@@ -72,7 +69,7 @@ const Header = ({ logout }) => {
 
     fetchUserDetails();
     fetchProfilePictureUrl();
-  }, [userId]); // Runs only when userId is updated
+  }, [userId]); 
 
   return (
     <div>
