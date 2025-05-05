@@ -54,26 +54,14 @@ const EditNews = () => {
     if (!newsData.title) {
       setTitleError("Title field cannot be empty!");
       valid = false;
-    }
-    // else if (!/^[a-zA-Z0-9\s]+$/.test(newsData.title)) {
-    //   setTitleError(
-    //     "Title field must contain only letters, numbers, and spaces!"
-    //   );
-    //   valid = false;
-    // }
-    else {
+    } else {
       setTitleError("");
     }
 
     if (!newsData.content) {
       setContentError("Content field cannot be empty!");
       valid = false;
-    }
-    // else if (/^[0-9\s]+$/.test(newsData.content)) {
-    //   setContentError("Please include meaningful information in the content");
-    //   valid = false;
-    // }
-    else {
+    } else {
       setContentError("");
     }
     if (!newsData.category) {
