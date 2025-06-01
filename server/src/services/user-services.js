@@ -474,7 +474,12 @@ exports.updateAlumni = async (personId, alumniData) => {
       socialMedia,
     } = alumniData;
 
-    await db.query(
+    if (!personId) {
+      throw new Error("Missing personId.");
+    }
+
+    // Update Person table
+    const [personResult] = await db.query(
       `UPDATE Person
        SET fullName = ?, gender = ?, email = ?, username = ?
        WHERE personId = ?`,
@@ -483,16 +488,19 @@ exports.updateAlumni = async (personId, alumniData) => {
 
     const socialMediaJson = JSON.stringify(socialMedia);
 
-    await db.query(
+    const [alumniResult] = await db.query(
       `UPDATE Alumni
        SET currentLocation = ?, socialMedia = ?, phoneNumber = ?, bio = ?
        WHERE personId = ?`,
       [currentLocation, socialMediaJson, phoneNumber, bio, personId]
     );
 
-    return { success: true };
+    // Sum affected rows from both updates
+    const affectedRows =
+      (personResult.affectedRows || 0) + (alumniResult.affectedRows || 0);
+    return affectedRows;
   } catch (error) {
-    console.error("Error updating alumni:", error);
+    console.error("Error updating alumni:", error.message);
     throw error;
   }
 };

@@ -162,7 +162,10 @@ const JobList = () => {
               <button className="addEvent">+ Add Job</button>
             </Link>
             <Link to="/admin/suggestedJob">
-              <button className="addJob"> Suggested Job</button>
+              <button className="addJob" style={{ width: "120px" }}>
+                {" "}
+                Suggested Job
+              </button>
             </Link>
           </div>
         </div>

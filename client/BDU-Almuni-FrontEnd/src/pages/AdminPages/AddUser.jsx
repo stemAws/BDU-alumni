@@ -1,19 +1,26 @@
 import "../../styles/AddUser.css";
+
 import { ChevronLeft } from "@mui/icons-material";
 import { Link } from "@mui/material";
 import { useState } from "react";
-import { FaEye, FaEyeSlash, FaTimes, FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AddUser = () => {
+  const currentYear = new Date().getFullYear();
+  // Generate years from 1954 to current year
+  const years = Array.from(
+    { length: currentYear - 1954 + 1 },
+    (_, i) => 1954 + i
+  ).reverse();
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
   const [errorUsers, setUsersError] = useState("");
   const [graduationYearMultipleUsers, setGraduationYearMultipleUsers] =
-    useState("");
+    useState(currentYear);
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [visibleConfirmPassword, setVisibleConfirmPassword] = useState(false);
 
@@ -28,13 +35,13 @@ const AddUser = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [genderError, setGenderError] = useState("");
   const [staffRoleError, setStaffRoleError] = useState("");
-
-  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(currentYear);
 
   const [formData, setFormData] = useState({
     username: "",
     fullName: "",
-    graduationYear: "",
+    graduationYear: currentYear,
     password: "",
     confirmPassword: "",
     gender: "",
@@ -42,6 +49,17 @@ const AddUser = () => {
     staffRole: "contentManager",
     email: "",
   });
+
+  const navigate = useNavigate();
+
+  const toggleDropdown = () => setIsOpen(!isOpen);
+
+  const handleSelectYear = (year) => {
+    setSelectedYear(year);
+    setGraduationYearMultipleUsers(year); // Set it to the form data
+    setIsOpen(false); // Close the dropdown after selecting
+  };
+
   const handleChangeSingleUser = (e) => {
     const { name, value, checked } = e.target;
 
@@ -206,7 +224,7 @@ const AddUser = () => {
 
         console.log("User added successfully:", responseData.message);
 
-        // ✅ Ensure the new user is correctly created before navigating
+        // Ensure the new user is correctly created before navigating
         if (responseData.ok && responseData.success) {
           if (formData.role === "Student") {
             navigate("/admin/users");
@@ -445,7 +463,10 @@ const AddUser = () => {
           </button>
         </form>
       </div>
-      <div className="newMultipleUseritem multipleUsers">
+      <div
+        className="newMultipleUseritem multipleUsers"
+        style={{ height: isOpen ? "600px" : "auto" }} // Conditionally set height
+      >
         <h1 className="newUserTitle">Add Multiple Users</h1>
         <ToastContainer autoClose={1500} />
         <label htmlFor="file">Choose File</label>
@@ -455,13 +476,20 @@ const AddUser = () => {
         </div>
         <div className="newUseritem">
           <label>Graduation Year</label>
-          <input
-            type="text"
-            placeholder="Graduation Year"
-            name="graduationYear"
-            value={graduationYearMultipleUsers}
-            onChange={handleChangeMultipleUsers}
-          />
+          <div className="dropdown-container">
+            <div className="dropdown-selected" onClick={toggleDropdown}>
+              {selectedYear || "Select Year"}
+            </div>
+            {isOpen && (
+              <ul className="dropdown-list">
+                {years.map((year, index) => (
+                  <li key={index} onClick={() => handleSelectYear(year)}>
+                    {year}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           {graduationYearError && (
             <p className="errorMessage">{graduationYearError}</p>
           )}

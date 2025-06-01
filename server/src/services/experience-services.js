@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const alumniService = require("../services/user-services");
 const shortenIndustry = (industry) => {
   switch (industry) {
     case "Healthcare and Social Assistance":
@@ -121,11 +122,13 @@ exports.getExperience = async (idorusername) => {
       WHERE p.username = ?`;
     params = [idorusername];
   } else {
+    const alumniId = await alumniService.respondAlumniId(idorusername);
+
     query = `
-      SELECT *
+      SELECT *, DATE_FORMAT(startDate, '%Y-%m-%d') AS startDate, DATE_FORMAT(endDate, '%Y-%m-%d') AS endDate
       FROM Experience
       WHERE alumniId = ?`;
-    params = [parseInt(idorusername, 10)];
+    params = [parseInt(alumniId, 10)];
   }
 
   try {

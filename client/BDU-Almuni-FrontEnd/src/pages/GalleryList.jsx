@@ -80,7 +80,7 @@ const GalleryList = () => {
         className="admin-galleryContainers galleryContainer"
         style={{ position: "fixed", top: "50px" }}
       >
-        <h3 style={{ marginLeft: "400px" }}>
+        <h3 style={{ marginLeft: "100px", width: "100%" }}>
           Bahir Dar University Alumni Gallery
         </h3>
 
@@ -92,7 +92,7 @@ const GalleryList = () => {
             value={selectedYear}
             onFocus={handleSearchClick}
             readOnly
-            style={{ margin: "20px 0 0 9rem" }}
+            style={{ marginLeft: "650px" }}
           />
           {isDropdownOpen && (
             <div className="dropdown">

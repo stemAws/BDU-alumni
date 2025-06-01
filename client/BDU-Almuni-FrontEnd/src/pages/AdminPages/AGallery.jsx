@@ -188,7 +188,7 @@ const Gallery = ({
   }, [selectedImageIndex, selectedCategory]);
 
   return (
-    <div className="Admingallerycont">
+    <div className="Admingallerycont" style={{ padding: 0, marginTop: 0 }}>
       <div>
         <h1 className="batch-header">Class of {batch.year}</h1>
       </div>

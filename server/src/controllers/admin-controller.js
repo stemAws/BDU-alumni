@@ -296,3 +296,14 @@ exports.approveJob = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+exports.getHiredStudent = async (req, res) => {
+  try {
+    const { graduatingYear } = req.query;
+    const hiredCount = await adminService.hiredStudentCount(graduatingYear);
+    res.json({ hiredStudents: hiredCount });
+  } catch (error) {
+    console.error("Error fetching hired student count:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

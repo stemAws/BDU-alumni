@@ -168,7 +168,9 @@ const ChapterList = () => {
           />
           <h3>Bahir Dar University Alumni Clubs</h3>
           <Link to="/admin/AddChapter">
-            <button className="addEvent">+ Add Chapter</button>
+            <button className="addEvent" style={{ width: "120px" }}>
+              + Add Chapter
+            </button>
           </Link>
         </div>
         <div className="listContainer">

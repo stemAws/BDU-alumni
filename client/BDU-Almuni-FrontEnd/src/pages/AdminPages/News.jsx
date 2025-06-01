@@ -3,22 +3,33 @@ import "../../styles/News.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { Link } from "@mui/material";
+import { ChevronLeft } from "@mui/icons-material";
 
 const EventPost = () => {
+  const newsCategories = [
+    "Alumni Highlights",
+    "Campus Updates",
+    "Events & Reunions",
+    "Career & Mentorship",
+    "Giving & Support", // Default selected
+    "Community & Social Impact",
+    "Memorials & Obituaries",
+  ];
+
   const [image, setImage] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const navigate = useNavigate("");
+  const [category, setCategory] = useState("Giving & Support"); // Default
   const [loading, setLoading] = useState(false);
-  // const [postDate, setPostDate] = useState("");
-  const [category, setCategory] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
 
   const [titleError, setTitleError] = useState("");
   const [contentError, setContentError] = useState("");
-  // const [postDateError, setPostDateError] = useState("");
   const [categoryError, setCategoryError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
@@ -36,10 +47,6 @@ const EventPost = () => {
           setContent(value);
           setContentError("");
           break;
-        // case "postDate":
-        //   setPostDate(value);
-        //   setPostDateError("");
-        //   break;
         case "category":
           setCategory(value);
           setCategoryError("");
@@ -52,52 +59,22 @@ const EventPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("clicked");
     let valid = true;
 
     if (!title) {
-      setTitleError(title ? "" : "Title field cannot be empty!");
+      setTitleError("Title field cannot be empty!");
       valid = false;
     }
-    //else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
-    //   setTitleError(
-    //     "Title must contain only letters and spaces, with numbers allowed anywhere after letters!"
-    //   );
-    //   valid = false;
-    // }
+
     if (!content) {
-      setContentError(content ? "" : "Content field cannot be empty!");
+      setContentError("Content field cannot be empty!");
       valid = false;
     }
-    // else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(content)) {
-    //   setContentError(
-    //     "Content must contain only letters and spaces, with numbers allowed anywhere after letters!"
-    //   );
-    //   valid = false;
-    // }
-    // if (!postDate) {
-    //     setPostDateError("Date field cannot be empty!");
-    //     valid = false;
-    //   } else {
-    //     const postDateValue = new Date(postDate);
-    //     const currentDate = new Date();
 
-    //     // Clear the time part of both dates for comparison
-    //     postDateValue.setHours(0, 0, 0, 0);
-    //     currentDate.setHours(0, 0, 0, 0);
-
-    //     if (postDateValue.getTime() !== currentDate.getTime()) {
-    //       setPostDateError("Date should be today!");
-    //       valid = false;
-    //     }
-    //   }
     if (!category) {
-      setCategoryError(category ? "" : "Category field cannot be empty!");
+      setCategoryError("Please select a category!");
       valid = false;
-    } //else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(location)) {
-    //   setLocationError("Location must contain only letters and spaces!");
-    //   valid = false;
-    // }
+    }
 
     if (valid) {
       try {
@@ -108,7 +85,6 @@ const EventPost = () => {
           {
             method: "POST",
             credentials: "include",
-
             headers: {
               "Content-Type": "application/json",
             },
@@ -137,8 +113,15 @@ const EventPost = () => {
     }
   };
 
+  const handleClick = () => {
+    navigate("/admin/news");
+  };
+
   return (
     <div className="NewsUpload">
+      <Link to="/admin/Events" className="userGoBack">
+        <ChevronLeft className="userGoBackIcon" onClick={handleClick} />
+      </Link>
       <h2>Add News</h2>
       <div className="formContainer">
         <ToastContainer autoClose={1500} />
@@ -171,7 +154,6 @@ const EventPost = () => {
           <div className="form">
             <label className="label">Content:</label>
             <textarea
-              type="text"
               placeholder="Content"
               name="content"
               value={content}
@@ -181,25 +163,22 @@ const EventPost = () => {
           </div>
           <div className="form">
             <label className="label">Category:</label>
-            <input
-              type="text"
+            <select
               name="category"
               value={category}
               onChange={handleInputChange}
-            />
+            >
+              <option value="" disabled>
+                Select a Category
+              </option>
+              {newsCategories.map((cat, index) => (
+                <option key={index} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
             {categoryError && <p className="errorMessage">{categoryError}</p>}
           </div>
-          {/* <div className="form">
-            <label className="label">Date:</label>
-            <input
-              type="date"
-              name="postDate"
-              value={postDate}
-              onChange={handleInputChange}
-            />
-            {postDateError && <p className="errorMessage">{postDateError}</p>}
-          </div> */}
-
           <div className="buttonss">
             <button type="submit" disabled={loading}>
               {loading ? "Uploading..." : "Upload"}

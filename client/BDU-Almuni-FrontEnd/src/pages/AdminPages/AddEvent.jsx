@@ -7,6 +7,21 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const EventPost = () => {
+  const eventCategories = [
+    "Reunions", // Annual class reunions, multi-year reunions
+    "Networking Events", // Professional networking meetups
+    "Workshops & Seminars", // Skill-building, career, leadership
+    "Fundraising Events", // Galas, charity events, scholarship fundraisers
+    "Career Fairs", // Alumni hiring fairs, job matching events
+    "Guest Lectures", // Talks by notable alumni or professors
+    "Volunteering & Community Service", // Giving back to the community
+    "Sports & Recreation", // Alumni sports matches, tournaments, fitness events
+    "Award Ceremonies", // Recognizing outstanding alumni
+    "Virtual Meetups", // Online gatherings, webinars, panels
+    "Campus Tours & Open Houses", // Visits for alumni and families
+    "Cultural & Social Events", // Music nights, art shows, movie screenings
+  ];
+
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -14,7 +29,7 @@ const EventPost = () => {
   const [endDate, setEndDate] = useState("");
   const [organizer, setOrganizer] = useState("");
   const [eventLink, setEventLink] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Reunions");
   const [eventLocation, setEventLocation] = useState("");
   const [success, setSuccess] = useState(false);
   const [errorPopup, setErrorPopup] = useState(false);
@@ -93,16 +108,10 @@ const EventPost = () => {
     if (!title) {
       setTitleError("Title field cannot be empty!");
       valid = false;
-      // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(title)) {
-      //   setTitleError("Title must contain only letters and spaces, with numbers allowed anywhere after letters!");
-      //   valid = false;
     }
     if (!description) {
       setDescriptionError("Description field cannot be empty!");
       valid = false;
-      // } else if (!/^(?![0-9])[a-zA-Z0-9\s]+$/.test(description)) {
-      //   setDescriptionError("Description must contain only letters and spaces, with numbers allowed anywhere after letters!");
-      //   valid = false;
     }
     if (!startDate) {
       setStartDateError("StartDate field cannot be empty!");
@@ -144,7 +153,7 @@ const EventPost = () => {
       setLinkError("");
     }
     if (!category) {
-      setCategoryError("Category field cannot be empty!");
+      setCategoryError("Select category!");
       valid = false;
     }
     if (!eventLocation) {
@@ -264,12 +273,20 @@ const EventPost = () => {
           </div>
           <div className="form">
             <label className="label">Category:</label>
-            <input
-              type="text"
+            <select
               name="category"
               value={category}
               onChange={handleInputChange}
-            />
+            >
+              <option value="" disabled>
+                Select a Category
+              </option>
+              {eventCategories.map((cat, index) => (
+                <option key={index} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
             {categoryError && <p className="errorMessage">{categoryError}</p>}
           </div>
           <div className="form">
