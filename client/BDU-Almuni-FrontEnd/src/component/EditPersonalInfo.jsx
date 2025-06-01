@@ -96,11 +96,11 @@ setSelectedCountry(personalInfo[0].currentLocation)
         <div className="personal_info_bottom">
         <ul>
         <li> First Name
-          <input id="personal_info_input" placeholder={firstName} value={firstName} onChange={(e) => handleName(e.target.value,"firstName")}type="text" />
+          <input disabled id="personal_info_input" placeholder={firstName} value={firstName} onChange={(e) => handleName(e.target.value,"firstName")}type="text" />
           
         </li>
         <li> Last Name
-          <input id="personal_info_input" placeholder={lastName} value={lastName} onChange={(e) => handleName(e.target.value,"lastName")}type="text" />
+          <input disabled id="personal_info_input" placeholder={lastName} value={lastName} onChange={(e) => handleName(e.target.value,"lastName")}type="text" />
         </li>
         <li>
         <div className='address'>

@@ -259,7 +259,8 @@ transition: all 0.5s ease-in-out;
     width: 80%;
 }
 .orange{
-color: #ffa500;
+color: #000000;
+font-weight: 700;
 }
 .back_arrow{
     position: absolute;
