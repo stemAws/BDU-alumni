@@ -4,6 +4,15 @@ import { ChevronLeft } from "@mui/icons-material";
 import "../../styles/editNews.css";
 
 const EditNews = () => {
+  const newsCategories = [
+    "Alumni Highlights",
+    "Campus Updates",
+    "Events & Reunions",
+    "Career & Mentorship",
+    "Giving & Support", // Default selected
+    "Community & Social Impact",
+    "Memorials & Obituaries",
+  ];
   const navigate = useNavigate();
   const { newsId } = useParams();
 
@@ -13,7 +22,7 @@ const EditNews = () => {
   const [newsData, setNewsData] = useState({
     title: "",
     content: "",
-    category: "",
+    category: "Giving & Support",
   });
 
   useEffect(() => {
@@ -140,13 +149,20 @@ const EditNews = () => {
           </div>
           <div className="form">
             <label className="label">Category:</label>
-            <input
-              type="text"
-              placeholder="Category"
+            <select
               name="category"
               value={newsData.category}
               onChange={handleInputChange}
-            />
+            >
+              <option value="" disabled>
+                Select a Category
+              </option>
+              {newsCategories.map((cat, index) => (
+                <option key={index} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
             {categoryError && <p className="errorMessage">{categoryError}</p>}
           </div>
           <button type="submit">Save Changes</button>
