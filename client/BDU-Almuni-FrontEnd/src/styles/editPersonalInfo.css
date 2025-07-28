@@ -50,6 +50,9 @@
     color: #000000;
     border: 1px solid #7e7d7d;
 }
+#personal_info_input:disabled{
+    cursor: not-allowed;
+}
 .edit_socail_links{
     margin-bottom: 25px;
     margin-left: -30px;
