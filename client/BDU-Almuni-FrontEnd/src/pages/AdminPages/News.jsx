@@ -83,19 +83,14 @@ const EventPost = () => {
         formData.append("title", title);
         formData.append("content", content);
         formData.append("category", category);
-        formData.append("image", image); // image must be a File object
-
-        // Check what you're sending
-        for (let [key, val] of formData.entries()) {
-          console.log(key, val);
-        }
+        formData.append("image", image);
 
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/add-news`,
           {
             method: "POST",
             credentials: "include",
-            body: formData, // ✅ let browser set the Content-Type
+            body: formData,
           }
         );
 
