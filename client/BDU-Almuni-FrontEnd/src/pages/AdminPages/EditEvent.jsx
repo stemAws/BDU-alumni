@@ -5,6 +5,20 @@ import { Link } from "@mui/material";
 import { ChevronLeft } from "@mui/icons-material";
 
 const EditEvent = () => {
+  const eventCategories = [
+    "Reunions", // Annual class reunions, multi-year reunions
+    "Networking Events", // Professional networking meetups
+    "Workshops & Seminars", // Skill-building, career, leadership
+    "Fundraising Events", // Galas, charity events, scholarship fundraisers
+    "Career Fairs", // Alumni hiring fairs, job matching events
+    "Guest Lectures", // Talks by notable alumni or professors
+    "Volunteering & Community Service", // Giving back to the community
+    "Sports & Recreation", // Alumni sports matches, tournaments, fitness events
+    "Award Ceremonies", // Recognizing outstanding alumni
+    "Virtual Meetups", // Online gatherings, webinars, panels
+    "Campus Tours & Open Houses", // Visits for alumni and families
+    "Cultural & Social Events", // Music nights, art shows, movie screenings
+  ];
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -13,15 +27,19 @@ const EditEvent = () => {
   const [startDateError, setStartDateError] = useState("");
   const [endDateError, setEndDateError] = useState("");
   const [organizerError, setOrganizerError] = useState("");
+  const [categoryError, setCategoryError] = useState("");
+  const [locationError, setLocationError] = useState("");
 
   const [eventData, setEventData] = useState({
     image: null,
     title: "",
     content: "",
+    category: "Reunions",
     startDate: "",
     endDate: "",
     organizer: "",
     eventLink: "",
+    eventLocation: "",
   });
 
   useEffect(() => {
@@ -72,7 +90,14 @@ const EditEvent = () => {
     } else {
       setTitleError("");
     }
-
+    if (!eventData.category) {
+      setCategoryError(eventData.category ? "" : "Select a category!");
+      valid = false;
+    }
+    if (!eventData.eventLocation) {
+      setLocationError("Event Location field cannot be empty!");
+      valid = false;
+    }
     if (!eventData.content) {
       setDescriptionError(
         eventData.content ? "" : "Description field cannot be empty!"
@@ -230,6 +255,35 @@ const EditEvent = () => {
               onChange={handleInputChange}
             />
             {/* {LinkError && <p className="errorMessage">{LinkError}</p>} */}
+          </div>
+          <div className="form">
+            <label className="label">Category:</label>
+            <select
+              name="category"
+              value={eventData.category}
+              onChange={handleInputChange}
+            >
+              <option value="" disabled>
+                Select a Category
+              </option>
+              {eventCategories.map((cat, index) => (
+                <option key={index} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+            {categoryError && <p className="errorMessage">{categoryError}</p>}
+          </div>
+          <div className="form">
+            <label className="label">Event Location:</label>
+            <input
+              type="text"
+              placeholder="Title"
+              name="title"
+              value={eventData.eventLocation}
+              onChange={handleInputChange}
+            />
+            {locationError && <p className="errorMessage">{locationError}</p>}
           </div>
           <div className="form">
             <label className="label">Start Date:</label>
