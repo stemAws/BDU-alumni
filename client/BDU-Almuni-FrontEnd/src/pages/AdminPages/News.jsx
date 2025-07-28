@@ -35,8 +35,8 @@ const EventPost = () => {
     const { name, value, files } = e.target;
 
     if (name === "image") {
-      const filesArray = Array.from(files);
-      setImage(filesArray);
+      const file = files && files.length > 0 ? files[0] : null;
+      setImage(file);
     } else {
       switch (name) {
         case "title":
@@ -79,21 +79,23 @@ const EventPost = () => {
     if (valid) {
       try {
         setLoading(true);
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", content);
+        formData.append("category", category);
+        formData.append("image", image); // image must be a File object
+
+        // Check what you're sending
+        for (let [key, val] of formData.entries()) {
+          console.log(key, val);
+        }
 
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/add-news`,
           {
             method: "POST",
             credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title,
-              content,
-              image,
-              category,
-            }),
+            body: formData, // ✅ let browser set the Content-Type
           }
         );
 
